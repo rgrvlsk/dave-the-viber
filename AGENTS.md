@@ -10,7 +10,8 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
 ## Hard rules
 - Never publish to any gallery (t3skins.dev, t3themes.com) without asking Roger.
 - Never modify `~/.t3/userdata/themes/status-edge.json` or `pixel-sushi.json` (fallbacks).
-- Never touch `/Users/roger/t3code` (main checkout) or the Mac mini's `~/.t3/userdata`.
+- Never touch `/Users/roger/t3code` (main checkout) or the Mac mini's `~/.t3/userdata`, except its
+  `themes/pixel-sushi-rail.json` (installed and active there at Roger's request, 2026-11-17).
   Never point a dev server at live userdata.
 - Size limits: full ≤ 50,000 chars, lite ≤ 20,000 chars (checked by the build + validator).
 - CSS limits: no `@import`, `image-set()`, `src()`; `url()` only `data:` or `#id`; no `:has()` inside `:has()`.

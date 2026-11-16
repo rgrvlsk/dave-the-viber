@@ -6,6 +6,11 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/pixel-sushi-rail/` (call it `$D`). T3 Code project "Pixel Sushi Rail" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path is a symlink to this folder.
 
 ## State
+- Sync + Mac mini (2026-11-17): this folder is a public GitHub repo, https://github.com/rgrvlsk/pixel-sushi-rail
+  (`demo/video.mp4` is git-ignored, 64 MB). Clone on the Mac mini: `~/.t3/projects/pixel-sushi-rail`. The full edition is
+  installed in the Mac mini's main T3 Code (`~/.t3/userdata/themes/pixel-sushi-rail.json`, same sha256 as `out2/full.json`).
+  A Claude Opus High thread on the Mac mini (project t3code) profiles the CSS cost; its work and `REPORT.md` go to
+  `/Users/roger/t3code/.css-perf/` on the Mac mini (untracked via `.git/info/exclude`).
 - Model mark sync (2026-11-16, Roger: on 2-line tickets the model icon moved out of sync with the keys; published locally
   as a full publish from src2/, so the fish tank is live too; previous live file `final2/published-before-2026-11-16-modelsync.json`):
   the base rule for the absolute model mark (core.css, "With no meta line") had specificity (0,5,4), above the hover

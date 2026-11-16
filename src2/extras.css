@@ -1,0 +1,801 @@
+/* ---------- Full edition: the rest of the restaurant ---------- */
+/* One copy of the bubble art and the two common inks, shared by the eight bubble hosts, and a pixelation shader for the
+   ticket stains (SVG filter: average, sample, dilate, posterize; 2 px cells). */
+:root {
+  --sk-bubble: {{bubble}};
+  --sk-ink-a: {{approval_ink}};
+  --sk-ink-i: {{input_ink}};
+  --sk-steam2: {{working2}};
+  --sk-pot-b: {{pot_b}};
+  --sk-pot-c: {{pot_c}};
+  --sk-fish: {{fish}};
+  --sk-weed-a: {{weed_a}};
+  --sk-weed-b: {{weed_b}};
+  --sk-wood: {{counter}};
+  --diff-deletion-foreground: #ff9a8a;
+  --diff-addition-foreground: #8fdc9a;
+  --sk-night: #1a2130;
+  --sk-line: #34405a;
+  --sk-shadow: #0a0f18;
+  /* Shared shapes: the clipped pixel corner, the wood plank, the plate on its board. */
+  --sk-notch: polygon(2px 0, calc(100% - 2px) 0, 100% 2px, 100% calc(100% - 2px), calc(100% - 2px) 100%, 2px 100%, 0 calc(100% - 2px), 0 2px);
+  --sk-plank: repeating-linear-gradient(#c58848 0 3px, #b9783d 3px 7px, #a0662f 7px 8px);
+  --sk-board: linear-gradient(#fbf3e2 0 0) center / 40px 40px no-repeat, linear-gradient(#3a2414 0 0) center / 44px 44px no-repeat, var(--sk-plank);
+  --sk-lacquer: #11131a;
+  --sk-lacquer-edge: #b9862a;
+  --sk-chop: #b07a40;
+  --sk-chop-tip: #e9cf9f;
+}
+
+
+
+/* The ticket's stain is softened with a light blur. */
+[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(1) > :is(:first-child:not([role="img"]), [role="img"]:first-child + *) {
+  filter: blur(0.75px) saturate(1.6);
+  opacity: 0.2;
+}
+/* A ticket with a coloured stamp takes a 10% tint of its ink (core.css --sk-bg). Grey Waiting stays plain. */
+[data-testid="sidebar-row-card"]:has(.group\/sidebar-status-slot .text-warning-foreground) { --sk-t: var(--sk-approval); }
+[data-testid="sidebar-row-card"]:has(.group\/sidebar-status-slot .text-indigo-600) { --sk-t: var(--sk-input); }
+[data-testid="sidebar-row-card"]:has(.group\/sidebar-status-slot .text-guest-foreground) { --sk-t: var(--sk-request); }
+[data-testid="sidebar-row-card"]:has(.group\/sidebar-status-slot .text-info-foreground) { --sk-t: var(--sk-working); }
+[data-testid="sidebar-row-card"]:has(.group\/sidebar-status-slot .text-success-foreground) { --sk-t: var(--sk-done); }
+[data-testid="sidebar-row-card"]:has(.group\/sidebar-status-slot .text-error-foreground) { --sk-t: var(--sk-failed); }
+
+/* Wall controls are glazed tiles: square with stepped pixel corners, a light top-left and dark
+   bottom-right bevel, a crisp cream glyph with a 1 px pixel shadow; pressed tiles sink by 1 px. */
+[data-slot="sidebar-inner"] :is([data-sidebar="menu-button"], [data-sidebar="trigger"]):has(> svg.lucide) {
+  border-radius: 0 !important;
+  background: #24466a !important;
+  box-shadow: inset 2px 2px 0 #3f6c96, inset -2px -2px 0 #14283f;
+  clip-path: var(--sk-notch);
+  color: #fff3dc !important;
+}
+[data-slot="sidebar-inner"] :is([data-sidebar="menu-button"], [data-sidebar="trigger"]):is(:hover, [aria-expanded="true"]):has(> svg.lucide) {
+  background: #2f5a86 !important;
+}
+[data-slot="sidebar-inner"] :is([data-sidebar="menu-button"], [data-sidebar="trigger"]):active:has(> svg.lucide) {
+  box-shadow: inset 2px 2px 0 #14283f, inset -2px -2px 0 #3f6c96;
+}
+[data-slot="sidebar-inner"] :is([data-sidebar="menu-button"], [data-sidebar="trigger"]) > svg.lucide {
+  color: #fff3dc !important;
+  stroke-width: 2.25;
+  shape-rendering: crispEdges;
+  filter: drop-shadow(1px 1px 0 #0b1726);
+}
+/* The search field is a recessed tile: the same glaze, bevel inverted. */
+[data-slot="sidebar-inner"] div:has(> [data-slot="input-control"]) {
+  background: #14283f !important;
+  border-radius: 0 !important;
+  box-shadow: inset 2px 2px 0 #0b1726, inset -2px -2px 0 #3f6c96;
+  clip-path: var(--sk-notch);
+  color: #fff3dc;
+}
+[data-slot="sidebar-inner"] [data-slot="input-control"] {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+/* The logo is a small wooden plaque; Nightly is a paper tag tied to it. */
+[aria-label="T3 Code home"] {
+  padding: 0 8px;
+  border-radius: 0 !important;
+  background: repeating-linear-gradient(#c58848 0 3px, #b9783d 3px 7px);
+  box-shadow: inset 0 0 0 1px #e2a866, 0 0 0 2px #3a2414, 2px 3px 0 2px #0b172680;
+  font-family: var(--sk-round);
+}
+[aria-label="T3 Code home"] * {
+  color: #2a1608 !important;
+}
+[data-slot="sidebar-inner"] [data-slot="badge"] {
+  border-radius: 0 !important;
+  background: #fbf3e2 !important;
+  color: #9c2f27 !important;
+  font: 700 0.6rem/1 var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  clip-path: polygon(5px 0, 100% 0, 100% 100%, 5px 100%, 0 50%);
+  padding-left: 9px !important;
+  rotate: -4deg;
+}
+
+
+
+/* Search results are the collapsed version of live tickets: fresh paper slips pegged to the twine. */
+[aria-label="Thread search results"] {
+  padding: 2px 4px 4px 20px;
+  gap: 4px !important;
+  background: linear-gradient(90deg, #6b4a26 0 1px, #e2c48e 1px 3px, #6b4a26 3px 4px) 7px 0 / 4px 100% no-repeat;
+}
+[aria-label="Thread search results"] [role="option"] {
+  position: relative;
+  border-radius: 0 !important;
+  background: var(--sk-paper) !important;
+  box-shadow: inset 0 0 0 1px var(--sk-edge), inset 0 -3px 0 #e2d2ae, 2px 2px 0 #060e1a73;
+  font-family: var(--sk-cond);
+  rotate: 0.6deg;
+  transform-origin: 0 50%;
+}
+[aria-label="Thread search results"] > :nth-child(2n) [role="option"] {
+  rotate: -0.6deg;
+}
+[aria-label="Thread search results"] [role="option"]:is(:hover, [aria-selected="true"]) {
+  rotate: 0deg;
+  box-shadow: inset 0 0 0 2px var(--sk-pass), 2px 2px 0 #060e1a73;
+}
+[aria-label="Thread search results"] [role="option"] :is(.text-success-foreground, [class*="emerald"]) {
+  color: #2b6236 !important;
+}
+[aria-label="Thread search results"] [role="option"] .text-info-foreground {
+  color: #1d5a85 !important;
+}
+[aria-label="Thread search results"] [role="option"] :is(.text-gray-600, [class*="text-muted-foreground"], [class*="text-secondary-label"]) {
+  color: var(--contrast-secondary-label) !important;
+}
+[aria-label="Thread search results"] [role="option"]::before {
+  content: "";
+  position: absolute;
+  left: -18px;
+  top: calc(50% - 8px);
+  width: 26px;
+  height: 16px;
+  background: var(--sk-peg) center / 26px 16px no-repeat;
+}
+
+/* Orders that need you call out like a customer at the counter: a speech bubble with the
+   status sprite floats past the sidebar's edge beside the ticket, and the stamp leaves the ticket.
+   The sidebar's scroller is masked (its fade) and each ticket has a filter, which clip anything drawn
+   inside them, so each bubble is a page-level pseudo-element placed with anchor positioning. Hosts
+   must come after the sidebar in tree order. One host per call: Approval and Input get three each
+   (the first three tickets of that kind), Request and Woke one. Bubbles sit under popovers (z 140),
+   so the thread detail card covers them. ponytail: a 4th ticket of one kind (2nd for Request) keeps
+   its stamp and gets no bubble; nth-child counts per list, so a sidebar split into several lists
+   would need anchor-scope. Add a host if the owner reports a missed call. */
+[data-thread-item]:nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-shield-question-mark)) {
+  anchor-name: --sk-ask-approval;
+}
+[data-thread-item]:nth-child(2 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-shield-question-mark)) {
+  anchor-name: --sk-ask-approval2;
+}
+[data-thread-item]:nth-child(3 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-shield-question-mark)) {
+  anchor-name: --sk-ask-approval3;
+}
+[data-thread-item]:nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .text-indigo-600)) {
+  anchor-name: --sk-ask-input;
+}
+[data-thread-item]:nth-child(2 of [data-thread-item]:has(.group\/sidebar-status-slot .text-indigo-600)) {
+  anchor-name: --sk-ask-input2;
+}
+[data-thread-item]:nth-child(3 of [data-thread-item]:has(.group\/sidebar-status-slot .text-indigo-600)) {
+  anchor-name: --sk-ask-input3;
+}
+[data-thread-item]:nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .text-guest-foreground)) {
+  anchor-name: --sk-ask-request;
+}
+[data-thread-item]:nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-alarm-clock)) {
+  anchor-name: --sk-ask-woke;
+}
+:is([data-thread-item]:has(.group\/sidebar-status-slot .lucide-shield-question-mark), [data-thread-item]:has(.group\/sidebar-status-slot .text-indigo-600), [data-thread-item]:has(.group\/sidebar-status-slot .text-guest-foreground), [data-thread-item]:has(.group\/sidebar-status-slot .lucide-alarm-clock)) {
+  content-visibility: visible !important;
+}
+[data-thread-item]:nth-child(-n+3 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-shield-question-mark)) .group\/sidebar-status-slot > span:first-child > .text-warning-foreground,
+[data-thread-item]:nth-child(-n+3 of [data-thread-item]:has(.group\/sidebar-status-slot .text-indigo-600)) .group\/sidebar-status-slot > span:first-child > .text-indigo-600,
+[data-thread-item]:nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .text-guest-foreground)) .group\/sidebar-status-slot > span:first-child > .text-guest-foreground {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+/* The ink is centred on the bubble's white body, which sits 2 px above the box centre (tail below).
+   A host without its anchor is not hidden by position-visibility: the -300px fallback parks it off-screen. */
+html::after,
+body::after,
+main[data-slot="sidebar-inset"]::before,
+main[data-slot="sidebar-inset"]::after,
+[data-workspace-area="conversation"]::before,
+[data-workspace-area="conversation"]::after,
+[data-workspace-area="composer"]::before,
+[data-workspace-area="composer"]::after {
+  content: "";
+  position: fixed;
+  left: calc(anchor(right, -300px) + 4px);
+  top: max(112px, calc(anchor(top, -300px) + 6px));
+  width: 40px;
+  height: 30px;
+  background-size: 18px auto, 40px 30px;
+  background-position: 50% calc(50% - 2px), center;
+  background-repeat: no-repeat;
+  filter: drop-shadow(2px 2px 0 rgb(6 14 26 / 0.5));
+  position-visibility: anchors-visible;
+  pointer-events: none;
+  z-index: 30;
+  animation: sk-bob 2.6s ease-in-out infinite;
+}
+html::after {
+  position-anchor: --sk-ask-approval;
+  background-image: var(--sk-ink-a), var(--sk-bubble);
+  animation-delay: 0;
+}
+body::after {
+  position-anchor: --sk-ask-input;
+  background-image: var(--sk-ink-i), var(--sk-bubble);
+  animation-delay: -0.7s;
+}
+main[data-slot="sidebar-inset"]::before {
+  position-anchor: --sk-ask-approval2;
+  background-image: var(--sk-ink-a), var(--sk-bubble);
+  animation-delay: -1.3s;
+}
+main[data-slot="sidebar-inset"]::after {
+  position-anchor: --sk-ask-input2;
+  background-image: var(--sk-ink-i), var(--sk-bubble);
+  animation-delay: -2s;
+}
+[data-workspace-area="conversation"]::before {
+  position-anchor: --sk-ask-request;
+  background-image: {{request_ink}}, var(--sk-bubble);
+  animation-delay: -1.4s;
+}
+[data-workspace-area="conversation"]::after {
+  position-anchor: --sk-ask-woke;
+  background-image: {{woke_ink}}, var(--sk-bubble);
+  animation-delay: -2.1s;
+}
+[data-workspace-area="composer"]::before {
+  position-anchor: --sk-ask-approval3;
+  background-image: var(--sk-ink-a), var(--sk-bubble);
+  animation-delay: -0.4s;
+}
+[data-workspace-area="composer"]::after {
+  position-anchor: --sk-ask-input3;
+  background-image: var(--sk-ink-i), var(--sk-bubble);
+  animation-delay: -1.7s;
+}
+
+/* A collapsed sidebar slides its tickets off-screen without clipping them: hide the bubbles. */
+html:has([data-slot="sidebar"][data-state="collapsed"])::after,
+body:has([data-slot="sidebar"][data-state="collapsed"])::after,
+:root:has([data-slot="sidebar"][data-state="collapsed"]) main[data-slot="sidebar-inset"]::before,
+:root:has([data-slot="sidebar"][data-state="collapsed"]) main[data-slot="sidebar-inset"]::after,
+:root:has([data-slot="sidebar"][data-state="collapsed"]) [data-workspace-area="conversation"]::before,
+:root:has([data-slot="sidebar"][data-state="collapsed"]) [data-workspace-area="conversation"]::after,
+:root:has([data-slot="sidebar"][data-state="collapsed"]) [data-workspace-area="composer"]::before,
+:root:has([data-slot="sidebar"][data-state="collapsed"]) [data-workspace-area="composer"]::after {
+  display: none;
+}
+@keyframes sk-bob {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -3px; }
+}
+
+/* Working: the pot's lid dances on the boil, three frames. */
+@keyframes sk-steam {
+  0%, 100% { -webkit-mask-image: var(--sk-i-pot); mask-image: var(--sk-i-pot); }
+  25% { -webkit-mask-image: var(--sk-pot-b); mask-image: var(--sk-pot-b); }
+  50% { -webkit-mask-image: var(--sk-i-pot); mask-image: var(--sk-i-pot); }
+  75% { -webkit-mask-image: var(--sk-pot-c); mask-image: var(--sk-pot-c); }
+}
+/* Provider marks ship as fill-black / dark:fill-white: on paper they stay ink in both modes. */
+:is([data-thread-item], [data-slot="composer-host"]) svg[class*="dark:fill-white"] {
+  fill: var(--contrast-secondary-label) !important;
+}
+/* Question radios: paper with an ink ring in both modes (the dark variant greys them). */
+[data-composer-banner-surface] span[class*="dark:bg-input"] {
+  background-color: var(--sk-paper) !important;
+}
+[data-composer-banner-surface] [data-slot="scroll-area-scrollbar"] {
+  display: none;
+}
+/* Snoozed slips hang from a peg like live tickets; the timer prints in indigo ink. */
+[data-thread-item]:has(> [data-sidebar-parent="shelf:snoozed"]) {
+  --sk-tilt: -0.8deg;
+  padding-left: 16px;
+}
+[data-thread-item]:has(> [data-sidebar-parent="shelf:snoozed"])::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc(50% - 8px);
+  width: 26px;
+  height: 16px;
+  background: var(--sk-peg) center / 26px 16px no-repeat;
+  z-index: 3;
+}
+[data-sidebar-parent="shelf:snoozed"] :is(svg, span:has(> svg)) {
+  color: #34468c !important;
+  opacity: 1 !important;
+}
+/* Snoozed shelf: the kitchen timer. */
+[data-testid*="snooze"][data-testid$="-shelf-toggle"] > span:first-child::before {
+  mask-image: var(--sk-i-woke);
+}
+/* Dish!: the served bowl still steams, two frames. */
+@keyframes sk-dish {
+  0%, 49.9% { -webkit-mask-image: var(--sk-i-working); mask-image: var(--sk-i-working); }
+  50%, 100% { -webkit-mask-image: var(--sk-steam2); mask-image: var(--sk-steam2); }
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-success-foreground::before {
+  animation: sk-dish 2.4s steps(1) infinite;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-info-foreground::before,
+[data-testid="sidebar-working-shelf-toggle"] > span:first-child::before {
+  animation: sk-steam 1.2s steps(1) infinite;
+}
+
+/* Project tiles keep hard pixel corners. */
+[data-slot="project-monogram"] svg,
+[data-slot="project-monogram"] svg * {
+  shape-rendering: crispEdges;
+}
+[data-slot="project-monogram"] svg rect {
+  rx: 0;
+  ry: 0;
+}
+
+/* Icons: square caps and mitred joins, closer to an 8-bit stroke. */
+svg.lucide {
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+/* ---------- The dining room at night ---------- */
+[data-workspace-area="conversation"] {
+  background-color: var(--sk-night);
+  background-image: radial-gradient(70% 50% at 50% 0, rgb(255 170 96 / 0.07), transparent 70%);
+}
+
+/* Noren: an indigo curtain under the chat header, split into panels with a wave crest. */
+/* The header keeps room for the curtain, so it never hides conversation text. */
+[data-chat-header] {
+  position: relative;
+  margin-bottom: 36px;
+  overflow-x: clip;
+  overflow-y: visible;
+  font-family: var(--sk-round);
+}
+[data-chat-header]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -36px;
+  height: 36px;
+  background: {{noren}} 0 0 / 80px 36px repeat-x;
+  pointer-events: none;
+}
+/* The shop sign (kanban): the project's mark leaves the breadcrumb and hangs from the noren rod on
+   two cords, a framed wooden board bigger than the curtain; it may cover the start of the chat's
+   first line, which the owner accepted. Favicons, emoji and monograms all work;
+   "No project" keeps the fish. */
+[data-chat-header] nav li:first-child > button > :first-child:not([data-slot="workspace-breadcrumb-text"]) {
+  position: absolute !important;
+  top: calc(100% + 12px);
+  left: 48px;
+  width: 64px !important;
+  height: 64px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background: var(--sk-plank);
+  box-shadow: inset 0 0 0 2px #e2a866, inset 0 -3px 0 2px #8f5a2b, 0 0 0 3px #3a2414, 4px 5px 0 3px rgb(6 14 26 / 0.5);
+  z-index: 6;
+  pointer-events: none;
+}
+[data-chat-header]::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 60px;
+  width: 36px;
+  height: 12px;
+  border-inline: 2px solid #3a2414;
+  z-index: 6;
+}
+/* No project: the sign shows the house koi on a paper label. */
+[data-chat-header] nav li:first-child > button > span:first-child:has(> svg.lucide) {
+  background: var(--sk-fish) center / 36px 21px no-repeat, var(--sk-board) !important;
+}
+[data-chat-header] nav li:first-child > button > span:first-child > svg.lucide {
+  display: none;
+}
+/* A favicon is its own element: the board is drawn around it with padding and layered fills. */
+[data-chat-header] nav li:first-child > button > img:first-child {
+  border-radius: 0 !important;
+  padding: 12px;
+  box-sizing: border-box;
+  object-fit: contain;
+  background: var(--sk-board) !important;
+}
+[data-chat-header] nav li:first-child > button > :first-child:not([data-slot="workspace-breadcrumb-text"], :has(> svg.lucide)) > * {
+  width: 36px !important;
+  height: 36px !important;
+  font-size: 30px !important;
+  line-height: 36px !important;
+  text-align: center;
+}
+
+/* A favicon or emoji mark is a printed label pinned to the sign. */
+[data-chat-header] nav li:first-child > button > span:first-child:not([data-slot]):not(:has(> svg.lucide)) > * {
+  background: #fbf3e2;
+  box-shadow: 0 0 0 2px #3a2414;
+  image-rendering: auto;
+}
+/* Projects without an icon show their letter monogram: painted on a dark lacquer plate. */
+[data-chat-header] nav li:first-child > button > [data-slot="project-monogram"] > svg {
+  background-color: #1d2b52 !important;
+  border-radius: 0 !important;
+  box-shadow: 0 0 0 2px #e2a866;
+}
+
+/* Headings in the menu board's rounded type. */
+.chat-markdown :is(h1, h2, h3, h4) {
+  font-family: var(--sk-round);
+  letter-spacing: 0.02em;
+}
+.chat-markdown a {
+  color: #ffb08a !important;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
+
+/* Your message is the order slip you hand to the kitchen. */
+[data-user-message-bubble] {
+  background-color: var(--sk-paper) !important;
+  color: var(--contrast-foreground) !important;
+  border-radius: 0 !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--sk-edge);
+  filter: drop-shadow(3px 3px 0 var(--sk-shadow));
+  -webkit-mask: linear-gradient(#000 0 0) top / 100% calc(100% - 4px) no-repeat, var(--sk-tear) bottom left / 8px 4px repeat-x;
+  mask: linear-gradient(#000 0 0) top / 100% calc(100% - 4px) no-repeat, var(--sk-tear) bottom left / 8px 4px repeat-x;
+  padding-top: 1.5rem !important;
+  padding-bottom: calc(0.625rem + 4px) !important;
+  position: relative;
+}
+[data-user-message-bubble]::before {
+  content: "ORDER · 注文" / "";
+  position: absolute;
+  top: 0.4rem;
+  left: 0.75rem;
+  right: 0.75rem;
+  padding-bottom: 0.2rem;
+  font: 700 0.6rem/1 var(--font-mono);
+  letter-spacing: 0.14em;
+  color: var(--sk-pass);
+  background: repeating-linear-gradient(90deg, var(--sk-rule) 0 3px, transparent 3px 6px) left bottom / 100% 1px no-repeat;
+}
+[data-user-message-bubble] :is(a, code) {
+  color: inherit;
+}
+
+/* Code blocks: a black lacquer tray with an akane rim. */
+.chat-markdown .chat-markdown-codeblock {
+  border-radius: 0 !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 2px var(--sk-lacquer-edge), inset 0 0 0 3px #000, 4px 4px 0 var(--sk-shadow);
+  background-color: var(--sk-lacquer) !important;
+}
+.chat-markdown .chat-markdown-codeblock pre,
+.chat-markdown .chat-markdown-codeblock code {
+  background: transparent !important;
+}
+/* In OS light mode the highlighter paints light-theme tokens; turned inside out they read on the black tray. */
+:root:not(.dark) .chat-markdown .chat-markdown-codeblock pre {
+  filter: invert(1) hue-rotate(180deg);
+}
+[data-thread-details-card] {
+  border-radius: 0 !important;
+  box-shadow: 0 0 0 1px var(--sk-line), 3px 3px 0 1px var(--sk-shadow) !important;
+}
+.chat-markdown :not(pre) > code {
+  border-radius: 0 !important;
+  background-color: rgb(240 138 93 / 0.14) !important;
+  box-shadow: inset 0 -1px 0 rgb(240 138 93 / 0.5);
+}
+
+/* The composer is the order pad: cream paper, pixel shadow, a perforated top.
+   The app paints the composer on a glass ::before; the pad replaces that glass. */
+[data-slot="composer-host"] {
+  border-radius: 0 !important;
+  color: var(--contrast-foreground);
+  box-shadow: 0 0 0 2px #0e1620, 5px 5px 0 2px var(--sk-shadow) !important;
+  --background: var(--sk-paper);
+  --border: var(--sk-edge);
+  --input: var(--sk-rule);
+  --accent: #efe2c4;
+  --muted: #efe2c4;
+  --secondary: #efe2c4;
+  --contrast-secondary-foreground: var(--contrast-foreground);
+  --contrast-accent-foreground: var(--contrast-foreground);
+}
+[data-slot="composer-host"]::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+  border-radius: 0 !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  background: radial-gradient(circle at 4px 3px, #0e1620 0 1.5px, transparent 2px) 0 0 / 12px 8px repeat-x, var(--sk-paper) !important;
+  display: block !important;
+}
+[data-slot="composer-host"]::after {
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+[data-slot="composer-host"] > * {
+  border-radius: 0 !important;
+}
+[data-slot="composer-host"]:focus-within {
+  box-shadow: 0 0 0 2px #f2c25c, 5px 5px 0 2px var(--sk-shadow) !important;
+}
+[data-slot="composer-host"] button svg {
+  opacity: 1 !important;
+}
+[data-slot="composer-host"] svg.lucide-paperclip {
+  color: var(--contrast-secondary-label) !important;
+  opacity: 1 !important;
+}
+[data-slot="composer-host"] .composer-tiptap {
+  color: var(--contrast-foreground);
+  caret-color: var(--sk-pass);
+}
+
+/* The question banner and the pad share the paper: no glass, square corners. */
+[data-slot="composer-shell"] {
+  --chat-composer-glass-surface: #fbf3e2;
+  --glass-opacity: 1;
+  --composer-banner-corner-top: 0px;
+}
+/* Square the pad's own layers only: the question's round radios and square checkboxes keep their shape. */
+[data-slot="composer-shell"]::before,
+[data-composer-banner-surface],
+[data-composer-banner-surface]::before,
+[data-composer-banner-surface]::after,
+[data-slot="composer-host"] div:not([data-composer-banner-surface] *),
+[data-slot="composer-host"] div:not([data-composer-banner-surface] *)::before,
+[data-slot="composer-host"] div:not([data-composer-banner-surface] *)::after {
+  border-radius: 0 !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+[data-slot="composer-host"] div:not([data-composer-banner-surface] *)::after {
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+[data-composer-banner-surface],
+[data-composer-banner-surface]::before {
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+/* Pad glyphs: thick, crisp strokes; the send key is an ink tile. */
+:is([data-slot="composer-host"], [data-composer-banner-surface]) svg.lucide {
+  stroke-width: 2.25;
+  shape-rendering: crispEdges;
+}
+[data-slot="composer-host"] button[type="submit"],
+[data-slot="composer-host"] button[type="submit"] * {
+  border-radius: 0 !important;
+}
+[data-slot="composer-host"] button[type="submit"] {
+  background: #241b15 !important;
+  color: #fbf3e2 !important;
+  clip-path: var(--sk-notch);
+}
+/* Stop is a red-ink tile on the pad. */
+[data-slot="composer-host"] button[aria-label*="stop" i] {
+  border-radius: 0 !important;
+  background: #9c2f27 !important;
+  color: #fbf3e2 !important;
+}
+/* Update notice: a stamped tag; spinners turn in eight frames. */
+:is(button, a, span).text-update-foreground {
+  border-radius: 0 !important;
+  box-shadow: inset 0 0 0 1px currentColor;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+svg.lucide[class*="loader"] {
+  animation-timing-function: steps(8) !important;
+  shape-rendering: crispEdges;
+}
+
+/* ---------- Controls: chunky 8-bit windows ---------- */
+[data-slot="dialog-popup"],
+[data-slot="popover-popup"],
+[data-slot="menu-popup"] {
+  border-radius: 0 !important;
+  border: 0 !important;
+  box-shadow: 0 0 0 2px #0e1620, inset 0 0 0 1px #3f4c69, inset 0 2px 0 1px rgb(255 255 255 / 0.06), 5px 5px 0 2px rgb(0 0 0 / 0.45) !important;
+}
+[data-slot="tooltip-popup"] {
+  border-radius: 0 !important;
+  font-family: var(--font-mono);
+  box-shadow: 0 0 0 1px #0e1620, 2px 2px 0 1px rgb(0 0 0 / 0.45) !important;
+}
+[data-slot="button"],
+[data-slot="input"],
+[data-slot="select-trigger"] {
+  border-radius: 0 !important;
+}
+
+/* ---------- Scrollbars: chopsticks ---------- */
+[data-slot="scroll-area-thumb"] {
+  border-radius: 0 !important;
+  background: var(--sk-chop) !important;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 0;
+  border: 3px solid transparent;
+  background: var(--sk-chop) padding-box;
+}
+::-webkit-scrollbar-thumb:vertical {
+  background: linear-gradient(var(--sk-chop) 0 calc(100% - 6px), var(--sk-chop-tip) 0) padding-box;
+}
+
+::selection {
+  background-color: rgb(240 138 93 / 0.38);
+}
+
+/* The terminal is the back kitchen: a lacquer rim on top. */
+[data-thread-terminal-drawer] {
+  border-top: 0 !important;
+  box-shadow: inset 0 2px 0 var(--sk-lacquer-edge);
+}
+
+
+
+/* The sidebar ends on the wooden counter with a fish tank on it: the tank rises 56 px over the end of the
+   ticket list, so tickets that scroll down sink into the water (the list gets 56 px of bottom padding, so the
+   last ticket can still rest above it). Tank 0..70 px from -56 px: lacquer rim, water, kelp, coral, sand on the
+   plank (14..30 px, 2 px shadow); the keys hang on the front below with 6 px above and below.
+   ::before is the tank (kelp sways in two frames), ::after the life: a koi swims there and back, bubbles rise. */
+@keyframes sk-swim {
+  0% { background-position-x: -26px, calc(100% + 26px), var(--sk-bx); }
+  45%, 50% { background-position-x: calc(100% + 26px), calc(100% + 26px), var(--sk-bx); }
+  95%, 100% { background-position-x: calc(100% + 26px), -26px, var(--sk-bx); }
+}
+@keyframes sk-rise {
+  from { background-position-y: 14px, 32px, 0, 20px, 8px; }
+  to { background-position-y: 14px, 32px, -96px, -28px, -136px; }
+}
+@keyframes sk-sway {
+  0%, 100% { --sk-w1: var(--sk-weed-a); --sk-w2: var(--sk-weed-b); }
+  50% { --sk-w1: var(--sk-weed-b); --sk-w2: var(--sk-weed-a); }
+}
+[data-slot="sidebar-inner"] [data-slot="sidebar-content"] {
+  padding-bottom: 56px;
+}
+[data-slot="sidebar-footer"] {
+  position: relative;
+  padding: 36px 8px 6px !important;
+  background: var(--sk-wood) left 0 top 14px / 64px 16px repeat-x, linear-gradient(transparent 30px, #6e4220 30px 32px, #8f5a2b 32px) !important;
+}
+[data-slot="sidebar-footer"] > * {
+  position: relative;
+  z-index: 1;
+}
+[data-slot="sidebar-footer"] > ul {
+  gap: 6px !important;
+}
+[data-slot="sidebar-footer"] :is(button, a, [data-slot="button"]),
+[data-slot="sidebar-footer"] svg {
+  color: #fff3dc !important;
+  opacity: 1 !important;
+}
+/* Footer keys are menu tags hung on the counter front: the ticket keys' recipe (1 px ink outline,
+   clipped corners, lit top, shaded bottom) in slip paper with an ink glyph; lamp-lit on hover;
+   pressed, the light moves down. The desktop update button is the same key in gold. */
+[data-slot="sidebar-inner"] [data-slot="sidebar-footer"] li > button:is([data-size="icon"], .size-8) {
+  --sk-c: #fbf3e2;
+  --sk-h: #ffdf9e;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 0 !important;
+  color: #241b15 !important;
+  background: var(--sk-c) !important;
+  box-shadow: inset 0 0 0 1px #241b15, inset 0 -3px #0003, inset 0 2px #fff9;
+  clip-path: polygon(0 1px, 1px 1px, 1px 0, calc(100% - 1px) 0, calc(100% - 1px) 1px, 100% 1px, 100% calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) 100%, 1px 100%, 1px calc(100% - 1px), 0 calc(100% - 1px));
+}
+[data-slot="sidebar-inner"] [data-slot="sidebar-footer"] li.ml-auto > button:is([data-size="icon"], .size-8) {
+  --sk-c: #f2c25c;
+  --sk-h: #ffe08f;
+}
+[data-slot="sidebar-inner"] [data-slot="sidebar-footer"] li > button:is([data-size="icon"], .size-8):is(:hover, [aria-expanded="true"]) {
+  background: var(--sk-h) !important;
+}
+[data-slot="sidebar-inner"] [data-slot="sidebar-footer"] li > button:is([data-size="icon"], .size-8):active {
+  box-shadow: inset 0 0 0 1px #241b15, inset 0 2px #0003;
+}
+[data-slot="sidebar-inner"] [data-slot="sidebar-footer"] li > button:is([data-size="icon"], .size-8):focus-visible {
+  outline: 2px solid #fff3dc;
+  outline-offset: 2px;
+}
+[data-slot="sidebar-inner"] [data-slot="sidebar-footer"] li > button:is([data-size="icon"], .size-8) svg {
+  color: #241b15 !important;
+  stroke-width: 2.25;
+  filter: none;
+}
+/* The update dot is a square ink pixel with a ring in the key colour. */
+[data-slot="sidebar-footer"] li > button:is([data-size="icon"], .size-8) span > span {
+  border-radius: 0 !important;
+  --tw-ring-color: var(--sk-c);
+}
+[data-slot="sidebar-inner"] [data-slot="sidebar-footer"] li > button:is([data-size="icon"], .size-8):active > * {
+  translate: 0 1px;
+}
+
+[data-slot="sidebar-footer"]::before,
+[data-slot="sidebar-footer"]::after {
+  content: "";
+  position: absolute;
+  inset: -56px 0 calc(100% - 14px);
+  pointer-events: none;
+}
+[data-slot="sidebar-footer"]::before {
+  --sk-w1: var(--sk-weed-a);
+  --sk-w2: var(--sk-weed-b);
+  background:
+    linear-gradient(#11131a 0 0) top / 100% 3px no-repeat,
+    linear-gradient(var(--sk-lacquer-edge) 0 0) 0 3px / 100% 1px no-repeat,
+    linear-gradient(#bff3ffb3 0 0) 0 6px / 100% 1px no-repeat,
+    var(--sk-w1) left 12px bottom 4px / 14px 44px no-repeat,
+    var(--sk-w2) 58% calc(100% - 4px) / 14px 44px no-repeat,
+    var(--sk-w1) right 36px bottom 4px / 14px 44px no-repeat,
+    {{coral}} right 8px bottom 6px / 22px 20px no-repeat,
+    {{brain}} 34% calc(100% - 6px) / 18px 10px no-repeat,
+    {{sand}} left bottom / 16px 8px repeat-x,
+    linear-gradient(90deg, #bff3ff59 1px, #0000 0 calc(100% - 1px), #bff3ff59 0),
+    linear-gradient(#0000 6px, #006a8c1f 6px, #00587a2e 30px, #00334f8c);
+  animation: sk-sway 2.4s infinite;
+}
+[data-slot="sidebar-footer"]::after {
+  --sk-bx: 32px, calc(100% - 22px), 66%;
+  inset: -49px 1px calc(100% - 8px);
+  background: var(--sk-fish) -26px 14px / 24px 14px no-repeat, {{fish_l}} -26px 32px / 24px 14px no-repeat, {{bubbles}} 0 0 / 10px 48px repeat-y, {{bubbles}} 0 0 / 10px 48px repeat-y, {{bubbles}} 0 0 / 10px 48px repeat-y;
+  background-position-x: -26px, -26px, var(--sk-bx);
+  animation: sk-swim 40s linear infinite, sk-rise 8s linear infinite;
+}
+/* The pad rests on the counter. */
+[data-chat-composer-form] {
+  position: relative;
+}
+[data-chat-composer-form]::after {
+  content: "";
+  position: absolute;
+  left: -10px;
+  right: -10px;
+  bottom: -64px;
+  height: 66px;
+  background: var(--sk-wood) left top / 64px 16px repeat-x, linear-gradient(transparent 16px, #8f5a2b 16px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-thread-item] .group\/sidebar-status-slot > span:first-child > :is(span, button)::before,
+  [data-testid="sidebar-working-shelf-toggle"] > span:first-child::before,
+  [data-slot="sidebar-footer"]::before,
+  [data-slot="sidebar-footer"]::after {
+    animation: none !important;
+  }
+  html::after,
+  body::after,
+  main[data-slot="sidebar-inset"]::before,
+  main[data-slot="sidebar-inset"]::after,
+  [data-workspace-area="conversation"]::before,
+  [data-workspace-area="conversation"]::after,
+  [data-workspace-area="composer"]::before,
+  [data-workspace-area="composer"]::after {
+    animation: none !important;
+  }
+}

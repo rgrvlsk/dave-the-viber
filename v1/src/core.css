@@ -1,0 +1,285 @@
+/* Pixel Sushi Counter. Each sidebar thread is a kitchen order ticket on a
+   hinoki counter (light) or an izakaya counter at night (dark).
+   Line 1 title, line 2 project and status, line 3 branch and model.
+   Status = pixel sprite + label, so shape tells it apart without colour. */
+
+[data-thread-item] {
+  --sk-paper: #fdf8ec;
+  --sk-paper-hover: #fff1d2;
+  --sk-edge: #d9c49c;
+  --sk-pass: #b5452f;
+  --sk-ink: #2a211b;
+  --sk-approval: #7a4d00;
+  --sk-input: #34468c;
+  --sk-request: #84295f;
+  --sk-working: #1d5a85;
+  --sk-waiting: #5d544c;
+  --sk-done: #2b6236;
+  --sk-failed: #9c2f27;
+  --sk-boost: var(--appearance-contrast-boost, 0%);
+  --sk-target: var(--appearance-contrast-target, black);
+  --contrast-foreground: color-mix(in oklab, var(--sk-ink), var(--sk-target) var(--sk-boost));
+  /* Project and branch: the title ink mixed toward the paper, so they stay one step below the
+     title at any Appearance contrast. */
+  --contrast-secondary-label: color-mix(in oklab, var(--contrast-foreground) 64%, var(--sk-paper));
+  --contrast-muted-foreground: var(--contrast-secondary-label);
+  --contrast-sidebar-foreground: var(--contrast-foreground);
+  --contrast-sidebar-muted-foreground: var(--contrast-secondary-label);
+  padding-block: 3px !important;
+}
+.dark [data-thread-item] {
+  --sk-paper: #2c2621;
+  --sk-paper-hover: #3a3129;
+  --sk-edge: #4a3f35;
+  --sk-pass: #f08a5d;
+  --sk-ink: #f6ecda;
+  --sk-approval: #f2c25c;
+  --sk-input: #aab6ff;
+  --sk-request: #f3a3d2;
+  --sk-working: #8ccaf2;
+  --sk-waiting: #c2b8ad;
+  --sk-done: #a3dc8f;
+  --sk-failed: #ff958a;
+}
+
+/* The ticket: washi paper, notched pixel corners on top, torn edge at the bottom. */
+[data-thread-item] > [data-testid="sidebar-row-card"] {
+  background-color: var(--sk-paper) !important;
+  border-radius: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--sk-edge);
+  clip-path: polygon(0 2px, 2px 2px, 2px 0, calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px, 100% 100%, 0 100%);
+  -webkit-mask: linear-gradient(#000 0 0) top / 100% calc(100% - 4px) no-repeat, {{tear}} bottom left / 8px 4px repeat-x;
+  mask: linear-gradient(#000 0 0) top / 100% calc(100% - 4px) no-repeat, {{tear}} bottom left / 8px 4px repeat-x;
+  transition: background-color 180ms ease-out;
+}
+[data-thread-item]:hover > [data-testid="sidebar-row-card"] {
+  background-color: var(--sk-paper-hover) !important;
+}
+/* The current order sits on the pass: a 2 px akane frame. */
+[data-thread-item] > [data-testid="sidebar-row-card"][aria-current]:not([aria-current="false"]) {
+  box-shadow: inset 0 0 0 2px var(--sk-pass);
+}
+/* Keyboard focus: a dashed pixel frame in ink, plus the pass frame inside it. */
+[data-thread-item] > [data-testid="sidebar-row-card"]:focus-visible {
+  outline: 2px dashed var(--contrast-foreground) !important;
+  outline-offset: -4px;
+}
+
+/* Layout hooks are structural: the card's inner div holds the project line, the title line and the
+   optional meta line, in that order (verified on 0.1.10 nightly). ponytail: if the app adds a wrapper
+   or reorders these lines, the three-line layout breaks; re-check after app updates.
+   Layout: title alone on line 1, project and status on line 2, branch and model on line 3. */
+[data-thread-item] > [data-testid="sidebar-row-card"] > div {
+  display: flex;
+  flex-direction: column;
+  height: 4.875rem !important;
+}
+[data-thread-item] > [data-testid="sidebar-row-card"] > div > div {
+  flex: none;
+  white-space: nowrap;
+}
+[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(2) {
+  order: -1;
+  height: 1.25rem;
+  margin-top: 0 !important;
+}
+[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(1) {
+  margin-top: 0.25rem;
+}
+[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(3) {
+  padding-inline-start: 1.375rem;
+  height: 1rem;
+  transition: padding-inline-end 0s linear 160ms;
+}
+/* Branch: printed by the ticket printer. */
+[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(3) > :first-child {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+}
+/* With no meta line the app puts the model icon on the title line: move it to line 3. */
+[data-thread-item] > [data-testid="sidebar-row-card"] > div:not(:has(> div:nth-child(3))) > div:nth-child(2) > span:not(:first-child) {
+  position: absolute;
+  right: var(--sidebar-row-content-inset);
+  bottom: var(--sidebar-content-inset);
+  height: 1rem;
+}
+
+/* The status label always stays on line 2; the app would hide it under the buttons. */
+[data-thread-item] .group\/sidebar-status-slot:not(:has(> [data-jump-hint])) > span:first-child {
+  position: static !important;
+  opacity: 1 !important;
+}
+
+/* Status chip: sprite + label on a tint of its own colour. */
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > :is(span, button) {
+  --sk-c: var(--sk-waiting);
+  gap: 0.25rem;
+  height: 1rem;
+  padding: 0 0.3125rem 0 0.25rem;
+  color: var(--sk-c) !important;
+  background: color-mix(in srgb, var(--sk-c) 13%, transparent);
+  clip-path: polygon(0 1px, 1px 1px, 1px 0, calc(100% - 1px) 0, calc(100% - 1px) 1px, 100% 1px, 100% calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) 100%, 1px 100%, 1px calc(100% - 1px), 0 calc(100% - 1px));
+  text-decoration: none;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > :is(span, button) > svg.lucide {
+  display: none;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > :is(span, button)::before {
+  content: "";
+  flex: none;
+  width: 12px;
+  height: 12px;
+  background-color: currentColor;
+  -webkit-mask: var(--sk-icon, {{waiting}}) center / 12px auto no-repeat;
+  mask: var(--sk-icon, {{waiting}}) center / 12px auto no-repeat;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > button:is(:hover, :focus-visible) {
+  background: color-mix(in srgb, var(--sk-c) 24%, transparent);
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > button:focus-visible {
+  box-shadow: inset 0 0 0 1px currentColor;
+  text-decoration: underline;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-warning-foreground:has(> .lucide-shield-question-mark) {
+  --sk-c: var(--sk-approval);
+  --sk-icon: {{approval}};
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-indigo-600 {
+  --sk-c: var(--sk-input);
+  --sk-icon: {{input}};
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-guest-foreground {
+  --sk-c: var(--sk-request);
+  --sk-icon: {{request}};
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-info-foreground {
+  --sk-c: var(--sk-working);
+  --sk-icon: {{working}};
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-muted-foreground {
+  --sk-c: var(--sk-waiting);
+  --sk-icon: {{waiting}};
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-warning-foreground:has(> .lucide-circle-alert) {
+  --sk-c: var(--sk-approval);
+  --sk-icon: {{limited}};
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-success-foreground {
+  --sk-c: var(--sk-done);
+  --sk-icon: {{done}};
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-error-foreground {
+  --sk-c: var(--sk-failed);
+  --sk-icon: {{failed}};
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-warning-foreground:has(> .lucide-alarm-clock) {
+  --sk-c: var(--sk-approval);
+  --sk-icon: {{woke}};
+}
+
+/* Snooze, Settle, Discard: icon buttons at the end of line 3, over the model icon, never over
+   the status. They wait 300 ms under the pointer; keyboard focus and an open menu show them at once. */
+[data-thread-item] > [data-testid="sidebar-row-card"] .group\/sidebar-status-slot > span:not(:first-child) {
+  position: absolute !important;
+  inset: 100% -0.3125rem auto auto !important;
+  height: 1.25rem;
+  margin-top: 0.125rem;
+  align-items: center !important;
+  opacity: 0 !important;
+  visibility: hidden;
+  pointer-events: auto !important;
+  transition: opacity 160ms ease, visibility 0s linear 160ms;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button {
+  width: 1.5rem;
+  height: 1.25rem;
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  justify-content: center;
+  border-radius: 0 !important;
+  font-size: 0 !important;
+  color: var(--contrast-secondary-label);
+}
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button:is(:hover, :focus-visible) {
+  background-color: color-mix(in srgb, currentColor 14%, transparent);
+  color: var(--contrast-foreground);
+}
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button svg {
+  width: 0.875rem !important;
+  height: 0.875rem !important;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button[aria-label="Settle thread"] {
+  color: var(--sk-done);
+}
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button[aria-label="Snooze thread"] {
+  color: var(--sk-approval);
+}
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button[aria-label="Discard draft"] {
+  color: var(--sk-failed);
+}
+[data-thread-item] > [data-testid="sidebar-row-card"] > div:has(.group\/sidebar-status-slot > span:not(:first-child) > :nth-child(1)) {
+  --sk-actions: 1.5rem;
+}
+[data-thread-item] > [data-testid="sidebar-row-card"] > div:has(.group\/sidebar-status-slot > span:not(:first-child) > :nth-child(2)) {
+  --sk-actions: 3rem;
+}
+[data-thread-item] > [data-testid="sidebar-row-card"] > div:has(.group\/sidebar-status-slot > span:not(:first-child) > :nth-child(3)) {
+  --sk-actions: 4.5rem;
+}
+@media (any-hover: hover) {
+  [data-thread-item]:hover > [data-testid="sidebar-row-card"] .group\/sidebar-status-slot:not(:has(> [data-jump-hint])) > span:not(:first-child) {
+    opacity: 1 !important;
+    visibility: visible;
+    transition: opacity 160ms ease 300ms, visibility 0s linear 300ms;
+  }
+  [data-thread-item]:hover > [data-testid="sidebar-row-card"] > div > div:nth-child(3) {
+    padding-inline-end: var(--sk-actions, 0);
+    transition: padding-inline-end 0s linear 300ms;
+  }
+  [data-thread-item]:hover > [data-testid="sidebar-row-card"] > div > div:nth-child(3) > :first-child ~ *,
+  [data-thread-item]:hover > [data-testid="sidebar-row-card"] > div > div:nth-child(2) > span:not(:first-child) {
+    visibility: hidden;
+    transition: visibility 0s linear 300ms;
+  }
+}
+[data-thread-item] > [data-testid="sidebar-row-card"]:is(:focus-visible, :has(:focus-visible)) .group\/sidebar-status-slot:not(:has(> [data-jump-hint])) > span:not(:first-child),
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child):has([data-popup-open], [aria-expanded="true"]) {
+  opacity: 1 !important;
+  visibility: visible;
+  transition: none;
+}
+[data-thread-item] > [data-testid="sidebar-row-card"]:is(:focus-visible, :has(:focus-visible)) > div > div:nth-child(3) {
+  padding-inline-end: var(--sk-actions, 0);
+  transition: none;
+}
+[data-thread-item] > [data-testid="sidebar-row-card"]:is(:focus-visible, :has(:focus-visible)) > div > div:nth-child(3) > :first-child ~ *,
+[data-thread-item] > [data-testid="sidebar-row-card"]:is(:focus-visible, :has(:focus-visible)) > div > div:nth-child(2) > span:not(:first-child) {
+  visibility: hidden;
+}
+
+/* The counter: hinoki grain by day, seigaiha waves at night. */
+[data-slot="sidebar-inner"] {
+  background-image: {{wood}};
+  background-size: 32px 16px;
+  image-rendering: pixelated;
+}
+[data-slot="sidebar-inner"] * {
+  image-rendering: auto;
+}
+.dark [data-slot="sidebar-inner"] {
+  background-image: {{waves}};
+  background-size: 32px 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-thread-item] *,
+  [data-thread-item] > [data-testid="sidebar-row-card"] {
+    transition-duration: 0s !important;
+    animation: none !important;
+  }
+}

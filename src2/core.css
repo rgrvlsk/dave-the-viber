@@ -1,0 +1,662 @@
+/* Pixel Sushi Counter v2: the order rail.
+   One restaurant in light and dark mode. The sidebar is the kitchen's tiled wall:
+   each thread is an order ticket held by a wooden peg on a steel rail, settled threads are
+   pierced on the spike. Line 1 title, line 2 table (project) and stamp (status), line 3 notes
+   (branch) and model. Status = pixel sprite + stamped word, so shape tells it apart. */
+
+/* One look in both modes: text tokens mix toward white on the night surfaces at any
+   Appearance contrast, never toward black, so light mode cannot darken them. */
+:root,
+[data-app-sidebar] {
+  --sk-up: var(--appearance-contrast-boost, 0%);
+  --sk-base: var(--appearance-contrast-base, 100%);
+  --contrast-foreground: color-mix(in oklab, color-mix(in oklab, var(--foreground) var(--sk-base), var(--background)), #fff var(--sk-up));
+  --contrast-muted-foreground: color-mix(in oklab, color-mix(in oklab, var(--muted-foreground) var(--sk-base), var(--background)), #fff var(--sk-up));
+  --contrast-placeholder: color-mix(in oklab, color-mix(in oklab, var(--placeholder) var(--sk-base), var(--background)), #fff var(--sk-up));
+  --contrast-secondary-label: color-mix(in oklab, color-mix(in oklab, var(--secondary-label) var(--sk-base), var(--background)), #fff var(--sk-up));
+  --contrast-icon-muted: color-mix(in oklab, color-mix(in oklab, var(--icon-muted) var(--sk-base), var(--background)), #fff var(--sk-up));
+  --contrast-card-foreground: color-mix(in oklab, var(--card-foreground), #fff var(--sk-up));
+  --contrast-popover-foreground: color-mix(in oklab, var(--popover-foreground), #fff var(--sk-up));
+  --contrast-secondary-foreground: color-mix(in oklab, var(--secondary-foreground), #fff var(--sk-up));
+  --contrast-accent-foreground: color-mix(in oklab, var(--accent-foreground), #000 var(--sk-up));
+  --contrast-message-foreground: color-mix(in oklab, var(--message-foreground), #000 var(--sk-up));
+  --contrast-sidebar-foreground: color-mix(in oklab, var(--sidebar-foreground), #fff var(--sk-up));
+  --contrast-sidebar-muted-foreground: color-mix(in oklab, var(--sidebar-muted-foreground), #fff var(--sk-up));
+  --sk-round: "Hiragino Maru Gothic ProN", "Arial Rounded MT Bold", "Nunito", var(--font-sans);
+  --sk-cond: "Avenir Next Condensed", "Roboto Condensed", "Arial Narrow", var(--font-sans);
+  /* The app's light-dark() switch: always the night palette. */
+  --lightningcss-light: ;
+  --lightningcss-dark: initial;
+  --sk-i-waiting: {{waiting}};
+  --sk-i-working: {{working}};
+  --sk-i-pot: {{pot_a}};
+  --sk-i-woke: {{woke}};
+  --sk-peg: {{peg_h}};
+  --sk-tear: {{tear}};
+  /* Sprites are lossless WebP bitmaps: nearest-neighbour scaling keeps every pixel square. */
+  image-rendering: pixelated;
+}
+/* Real pictures (favicons, chat images, terminals) keep smooth scaling unless a rule asks otherwise. */
+img, video, canvas {
+  image-rendering: auto;
+}
+
+/* A boot stylesheet sets a fixed body colour per OS mode; the night ink replaces it. */
+body {
+  color: var(--contrast-foreground);
+}
+
+/* Paper and ink, shared by tickets, slips, the order slip and the order pad. */
+[data-thread-item] > [data-testid="sidebar-row-card"],
+[data-thread-item] > [data-testid="sidebar-row-slim"]/*full*/,
+[data-user-message-bubble],
+[data-slot="composer-host"],
+[data-composer-banner-surface],
+[aria-label="Thread search results"] [role="option"]/*/full*/ {
+  --sk-paper: #fbf3e2;
+  --sk-paper-hover: #fff9ec;
+  --sk-paper-old: #d9c9a3;
+  --sk-edge: #d6c39b;
+  --sk-rule: #b9a47a;
+  --sk-pass: #c2412b;
+  --sk-ink: #241b15;
+  --sk-approval: #7a4d00;
+  --sk-input: #34468c;
+  --sk-request: #84295f;
+  --sk-working: #1d5a85;
+  --sk-waiting: #5d544c;
+  --sk-done: #2b6236;
+  --sk-failed: #9c2f27;
+  --contrast-foreground: color-mix(in oklab, var(--sk-ink), #000 var(--sk-up));
+  --contrast-secondary-label: color-mix(in oklab, var(--contrast-foreground) 70%, var(--sk-paper));
+  --contrast-muted-foreground: var(--contrast-secondary-label);
+  --contrast-placeholder: color-mix(in oklab, var(--contrast-foreground) 62%, var(--sk-paper));
+  --contrast-icon-muted: var(--contrast-secondary-label);
+  --contrast-sidebar-foreground: var(--contrast-foreground);
+  --contrast-sidebar-muted-foreground: var(--contrast-secondary-label);
+}
+
+/* ---------- The wall and the rails ---------- */
+[data-slot="sidebar-inner"] {
+  background-color: #1b3350;
+  background-image: radial-gradient(46% 20% at 50% -6%, rgb(255 140 40 / 0.3), transparent 75%), {{tile}};
+  background-size: 100% 100%, 32px 32px;
+  /*full*/
+  background-blend-mode: screen, normal;
+  background-attachment: local, local;
+  /*/full*/
+}
+
+/* A twine runs down the left of the wall; each ticket is pegged to it at its top-left corner. */
+[data-thread-item]:has(> [data-testid="sidebar-row-card"]) {
+  position: relative;
+  padding: 4px 4px 5px 20px !important;
+  filter: drop-shadow(2px 3px 0 rgb(6 14 26 / 0.45));
+}
+[data-thread-item]:has(> [data-testid="sidebar-row-card"])::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 0;
+  bottom: -1px;
+  width: 4px;
+  background: repeating-linear-gradient(#e2c48e 0 2px, #a37a45 2px 3px, #6b4a26 3px 4px);
+  box-shadow: 1px 0 0 #1b120a, -1px 0 0 #1b120a;
+}
+[data-thread-item]:has(> [data-testid="sidebar-row-card"])::after {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 2px;
+  width: 26px;
+  height: 16px;
+  background: var(--sk-peg) center / 26px 16px no-repeat;
+  pointer-events: none;
+  z-index: 3;
+}
+/*full*/
+/* Pinned orders get the red peg; the order you are on gets the brass one. */
+[data-thread-item]:has(~ [data-testid="sidebar-pinned-divider"])::after {
+  filter: hue-rotate(-30deg) saturate(2.6) brightness(0.85);
+}
+[data-thread-item]:has(> [data-testid="sidebar-row-card"][aria-current]:not([aria-current="false"]))::after {
+  filter: hue-rotate(8deg) saturate(1.8) brightness(1.3);
+}
+
+/*/full*/
+/* Pinned orders: kraft paper instead of the app's pin icon. Stamps keep a cream label so their ink stays above 4.5:1. */
+[data-thread-item]:has(~ [data-testid="sidebar-pinned-divider"]) > [data-testid="sidebar-row-card"] {
+  --sk-paper: #d9b585;
+  --sk-paper-hover: #e2c398;
+  --sk-edge: #b08a58;
+  --sk-stamp: #fbf3e2;
+  --sk-read: 75%;
+  --contrast-secondary-label: color-mix(in oklab, var(--contrast-foreground) 82%, var(--sk-paper));
+}
+[data-thread-item] svg[aria-label="Pinned"] {
+  display: none;
+}
+/* ---------- The ticket ---------- */
+[data-thread-item] > [data-testid="sidebar-row-card"] {
+  /* --sk-t: the status ink, set in extras.css; tickets with a coloured stamp get paper tinted 10% with it. */
+  --sk-bg: color-mix(in srgb, var(--sk-t, var(--sk-paper)) 10%, var(--sk-paper));
+  background-color: var(--sk-bg) !important;
+  border-radius: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--sk-edge);
+  -webkit-mask: linear-gradient(#000 0 0) top / 100% calc(100% - 4px) no-repeat, var(--sk-tear) bottom left / 8px 4px repeat-x;
+  mask: linear-gradient(#000 0 0) top / 100% calc(100% - 4px) no-repeat, var(--sk-tear) bottom left / 8px 4px repeat-x;
+  transform-origin: 0 14px;
+  rotate: var(--sk-tilt, 0deg);
+  /*full*/
+  transition: background-color 180ms ease-out, rotate 320ms cubic-bezier(0.34, 1.4, 0.64, 1);
+  /*/full*/
+}
+/* Hand-hung: no two tickets hang at quite the same angle. */
+[data-thread-item]:nth-child(3n) { --sk-tilt: -1.5deg; }
+[data-thread-item]:nth-child(3n + 1) { --sk-tilt: 1.1deg; }
+[data-thread-item]:nth-child(5n + 2) { --sk-tilt: -0.6deg; }
+[data-thread-item]:hover > [data-testid="sidebar-row-card"] {
+  --sk-paper: var(--sk-paper-hover);
+  rotate: 0deg;
+}
+/* The order you are on: straight, framed in akane. */
+[data-thread-item] > [data-testid="sidebar-row-card"][aria-current]:not([aria-current="false"]) {
+  rotate: 0deg;
+  box-shadow: inset 0 0 0 2px var(--sk-pass), inset 0 0 0 4px var(--sk-bg),inset 0 0 0 5px color-mix(in srgb, var(--sk-pass) 45%, transparent);
+}
+[data-thread-item] > [data-testid="sidebar-row-card"]:focus-visible {
+  outline: 2px dashed var(--contrast-foreground) !important;
+  outline-offset: -4px;
+  rotate: 0deg;
+}
+
+/* Layout hooks are structural: the card's inner div holds the project line, the title line and the
+   optional meta line, in that order (verified on 0.1.10 nightly). ponytail: if the app adds a wrapper
+   or reorders these lines, the three-line layout breaks; re-check after app updates.
+   Layout: title alone on line 1, project and status on line 2, branch and model on line 3. */
+[data-thread-item] > [data-testid="sidebar-row-card"] > div {
+  display: flex;
+  flex-direction: column;
+  height: calc(4.875rem + 4px) !important;
+  /* The printer's dashed rule under the dish name. */
+  background: repeating-linear-gradient(90deg, var(--sk-rule) 0 3px, transparent 3px 6px) 0 calc(6px + 1.75rem) / 100% 1px no-repeat;
+}
+[data-thread-item] > [data-testid="sidebar-row-card"] > div > div {
+  flex: none;
+  white-space: nowrap;
+}
+/* Line 1: the dish, in condensed print. */
+[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(2) {
+  order: -1;
+  height: 1.25rem;
+  margin-top: 4px !important;
+  font-family: var(--sk-cond);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+/* The dish name is printed bold; unread orders keep the full ink, read ones fade to --sk-read
+   (65%; 75% on kraft, the floor for 4.5:1). Hover and focus give the full ink back. */
+[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(2) > span:first-child {
+  font-weight: 700;
+}
+[data-thread-item]:not(:hover) > [data-testid="sidebar-row-card"]:not(:focus-visible) > div > div:nth-child(2) > .font-normal:first-child {
+  color: color-mix(in srgb, var(--contrast-foreground) var(--sk-read, 65%), #0000);
+}
+/* The project's mark soaks into the paper as a big, faint, pixelated stain: each order gets its
+   own tint without a second icon on the line. The mark is the line's first child, except when the
+   app puts the unsent-draft marker (the only leading role="img") in front of it. */
+[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(1) > :is(:first-child:not([role="img"]), [role="img"]:first-child + *) {
+  position: absolute !important;
+  right: 18px;
+  top: 30px;
+  scale: 4;
+  rotate: -12deg;
+  opacity: 0.17;
+  z-index: -1;
+  mix-blend-mode: multiply;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+/*full*/
+[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(1) > :is(:first-child:not([role="img"]), [role="img"]:first-child + *) * {
+  image-rendering: pixelated;
+}
+/*/full*/
+/* Line 2: the table, printed in capitals. */
+[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(1) {
+  margin-top: 0.3rem;
+}
+[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(1) > .flex-1 {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(3) {
+  padding-inline-start: 1.375rem;
+  height: 1rem;
+  transition: padding-inline-end 160ms cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+/* Line 3: the notes, from the ticket printer. */
+[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(3) > :first-child {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+}
+/* Read tickets: the app fades the title with alpha; keep it at the notes ink so it stays above 4.5:1. */
+[data-thread-item] > [data-testid="sidebar-row-card"] [class*="text-secondary-label/"] {
+  color: var(--contrast-secondary-label) !important;
+}
+/* The model mark is printed in the same ink as the notes. */
+[data-thread-item] > [data-testid="sidebar-row-card"] span[aria-hidden="true"] svg {
+  color: var(--contrast-secondary-label) !important;
+  opacity: 1 !important;
+}
+/* The PR mark on line 3 in a green that holds on paper. */
+[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(3) > :is(a, button) :is(svg, span) {
+  color: var(--sk-done) !important;
+  opacity: 1 !important;
+}
+/* With no meta line the app puts the model icon on the title line: move it to line 3.
+   :where() keeps this rule weaker than the hover/focus rules, so the mark moves with the keys. */
+[data-thread-item] > [data-testid="sidebar-row-card"] > div:where(:not(:has(> div:nth-child(3)))) > div:nth-child(2) > span:not(:first-child) {
+  position: absolute;
+  right: var(--sidebar-row-content-inset);
+  bottom: var(--sidebar-content-inset);
+  height: 1rem;
+  transition: padding-inline-end 160ms cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+/* The status label always stays on line 2; the app would hide it under the buttons. */
+[data-thread-item] .group\/sidebar-status-slot:not(:has(> [data-jump-hint])) > span:first-child {
+  position: static !important;
+  opacity: 1 !important;
+}
+
+/* Status: a rubber stamp, sprite + word, slightly crooked. */
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > :is(span, button),
+[data-thread-item] [data-testid^="sidebar-draft-indicator"] {
+  --sk-c: var(--sk-waiting);
+  gap: 0.25rem;
+  height: 1rem;
+  padding: 0 0.3125rem 0 0.25rem;
+  color: var(--sk-c) !important;
+  background: color-mix(in srgb, var(--sk-c) 10%, var(--sk-stamp, var(--sk-paper)));
+  box-shadow: inset 0 0 0 1px currentColor;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  text-decoration: none;
+  rotate: -2deg;
+}
+/* The timer keeps its units in lowercase: "26s", "1m 5s". */
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > span > span[aria-hidden] {
+  text-transform: none;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > :is(span, button) > svg.lucide,
+[data-thread-item] [data-testid^="sidebar-draft-indicator"] > svg {
+  display: none;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > :is(span, button)::before,
+[data-thread-item] [data-testid^="sidebar-draft-indicator"]::before {
+  content: "";
+  flex: none;
+  width: 12px;
+  height: 12px;
+  background-color: currentColor;
+  -webkit-mask: var(--sk-icon, var(--sk-i-waiting)) center / 12px auto no-repeat;
+  mask: var(--sk-icon, var(--sk-i-waiting)) center / 12px auto no-repeat;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > button:is(:hover, :focus-visible) {
+  background: color-mix(in srgb, var(--sk-c) 22%, var(--sk-stamp, var(--sk-paper)));
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > button:focus-visible {
+  box-shadow: inset 0 0 0 2px currentColor;
+  text-decoration: underline;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-warning-foreground:has(> .lucide-shield-question-mark) {
+  --sk-c: var(--sk-approval);
+  --sk-icon: {{approval}};
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-indigo-600 {
+  --sk-c: var(--sk-input);
+  --sk-icon: {{input}};
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-guest-foreground {
+  --sk-c: var(--sk-request);
+  --sk-icon: {{request}};
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-info-foreground {
+  --sk-c: var(--sk-working);
+  --sk-icon: var(--sk-i-pot);
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-muted-foreground {
+  --sk-c: var(--sk-waiting);
+  --sk-icon: var(--sk-i-waiting);
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-warning-foreground:has(> .lucide-circle-alert) {
+  --sk-c: var(--sk-approval);
+  --sk-icon: {{limited}};
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-success-foreground {
+  --sk-c: var(--sk-done);
+  --sk-icon: var(--sk-i-working);
+  font-size: 0 !important;
+}
+/* Done is served: the stamp reads "Dish!" (the app's own "Done" stays for screen readers). */
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-success-foreground::after {
+  content: "Dish!" / "";
+  font-size: 0.625rem;
+}
+/* An unsent draft is stamped in pencil, just before the status stamp. */
+[data-thread-item] [data-testid^="sidebar-draft-indicator"] {
+  --sk-c: var(--sk-ink);
+  --sk-icon: {{draft}};
+  order: 1;
+}
+[data-thread-item] [data-testid^="sidebar-draft-indicator"]::after {
+  content: "Draft" / "";
+}
+[data-thread-item] :is(.group\/sidebar-status-slot, .group\/sidebar-status-slot ~ *) {
+  order: 2;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-error-foreground {
+  --sk-c: var(--sk-failed);
+  --sk-icon: {{failed}};
+}
+[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-warning-foreground:has(> .lucide-alarm-clock) {
+  --sk-c: var(--sk-approval);
+  --sk-icon: var(--sk-i-woke);
+}
+/*full*/
+/* The age of a quiet ticket reads like a printed time. */
+[data-thread-item] .group\/sidebar-status-slot > span:first-child time {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+}
+
+/*/full*/
+/* Snooze, Settle, Discard: keys at the end of line 3, never over the status; line 3 makes room
+   for them, so the branch truncates and the PR and model marks move left. After 300 ms under the pointer
+   the keys slide in from the paper edge and push those marks on the same curve (constant 7 px gap);
+   they slide out on leave. Keyboard focus and an open menu show them at once. */
+[data-thread-item] > [data-testid="sidebar-row-card"] .group\/sidebar-status-slot > span:not(:first-child) {
+  position: absolute !important;
+  inset: 100% -0.3125rem auto auto !important;
+  z-index: 31;
+  height: 1.25rem;
+  align-items: center !important;
+  opacity: 0 !important;
+  visibility: hidden;
+  pointer-events: auto !important;
+  clip-path: inset(0 -0.3125rem 0 0);
+  --sk-kx: var(--sk-actions);
+  --sk-kt: 160ms cubic-bezier(0.2, 0.9, 0.3, 1);
+  transition: opacity 0s linear 160ms, visibility 0s linear 160ms;
+}
+/* Each is a pixel key in the peg colours: a 1-px outline with clipped corners, a lit top, a shaded
+   bottom and an ink sprite. Pressed, the light moves to the bottom. 22 px + 2 px gap = 1.5rem a key. */
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button {
+  --sk-c: #c9d1d8;
+  --sk-k: #3a4652;
+  width: 1.375rem;
+  height: 1.125rem;
+  margin: 0 0 0 0.125rem !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  justify-content: center;
+  border-radius: 0 !important;
+  font-size: 0 !important;
+  color: var(--sk-ink) !important;
+  background: var(--sk-c) !important;
+  box-shadow: inset 0 0 0 1px var(--sk-k), inset 0 -3px #0003, inset 0 2px #fff6;
+  translate: var(--sk-kx) 0;
+  transition: translate var(--sk-kt);
+  clip-path: polygon(0 1px, 1px 1px, 1px 0, calc(100% - 1px) 0, calc(100% - 1px) 1px, 100% 1px, 100% calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) 100%, 1px 100%, 1px calc(100% - 1px), 0 calc(100% - 1px));
+}
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button:hover {
+  background: color-mix(in srgb, var(--sk-c) 80%, #fff) !important;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button:active {
+  box-shadow: inset 0 0 0 1px var(--sk-k), inset 0 2px #0003;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button:focus-visible {
+  outline: 2px solid var(--sk-ink);
+  outline-offset: -3px;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button svg {
+  width: 0.875rem !important;
+  height: 0.875rem !important;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button:is([aria-label^="Settle"], [aria-label^="Snooze"], [aria-label^="Discard"]) svg {
+  display: none;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button:is([aria-label^="Settle"], [aria-label^="Snooze"], [aria-label^="Discard"])::before {
+  content: "";
+  width: 12px;
+  height: 10px;
+  background-color: currentColor;
+  -webkit-mask: var(--sk-icon) center / 12px auto no-repeat;
+  mask: var(--sk-icon) center / 12px auto no-repeat;
+}
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button[aria-label^="Settle"] {
+  --sk-c: #6cbf5a;
+  --sk-k: #10301a;
+  --sk-icon: {{settle}};
+}
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button[aria-label^="Snooze"] {
+  --sk-c: #f2c25c;
+  --sk-k: #3a2a0a;
+  --sk-icon: var(--sk-i-woke);
+}
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button[aria-label^="Discard"] {
+  --sk-c: #e86f55;
+  --sk-k: #3a1410;
+  --sk-icon: {{discard}};
+}
+[data-thread-item] > [data-testid="sidebar-row-card"] > div:has(.group\/sidebar-status-slot > span:not(:first-child) > :nth-child(1)) {
+  --sk-actions: 1.5rem;
+}
+[data-thread-item] > [data-testid="sidebar-row-card"] > div:has(.group\/sidebar-status-slot > span:not(:first-child) > :nth-child(2)) {
+  --sk-actions: 3rem;
+}
+[data-thread-item] > [data-testid="sidebar-row-card"] > div:has(.group\/sidebar-status-slot > span:not(:first-child) > :nth-child(3)) {
+  --sk-actions: 4.5rem;
+}
+@media (any-hover: hover) {
+  [data-thread-item]:hover > [data-testid="sidebar-row-card"] .group\/sidebar-status-slot:not(:has(> [data-jump-hint])) > span:not(:first-child) {
+    opacity: 1 !important;
+    visibility: visible;
+    --sk-kx: 0px;
+    --sk-kt: 180ms cubic-bezier(0.2, 0.9, 0.3, 1) 300ms;
+    transition: opacity 0s linear 300ms, visibility 0s linear 300ms;
+  }
+  [data-thread-item]:hover > [data-testid="sidebar-row-card"] > div > div:nth-child(3),
+  [data-thread-item]:hover > [data-testid="sidebar-row-card"] > div > div:nth-child(2) > span:not(:first-child) {
+    padding-inline-end: var(--sk-actions, 0);
+    transition: padding-inline-end 180ms cubic-bezier(0.2, 0.9, 0.3, 1) 300ms;
+  }
+}
+[data-thread-item] > [data-testid="sidebar-row-card"]:is(:focus-visible, :has(:focus-visible)) .group\/sidebar-status-slot:not(:has(> [data-jump-hint])) > span:not(:first-child),
+[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child):has([data-popup-open], [aria-expanded="true"]) {
+  opacity: 1 !important;
+  visibility: visible;
+  --sk-kx: 0px;
+  --sk-kt: 0s;
+  transition: none;
+}
+[data-thread-item] > [data-testid="sidebar-row-card"]:is(:focus-visible, :has(:focus-visible)) > div > div:nth-child(3),
+[data-thread-item] > [data-testid="sidebar-row-card"]:is(:focus-visible, :has(:focus-visible)) > div > div:nth-child(2) > span:not(:first-child) {
+  padding-inline-end: var(--sk-actions, 0);
+  transition: none;
+}
+
+/* ---------- Shelves: the pass and the spike ---------- */
+[data-testid$="-shelf-toggle"] {
+  font-family: var(--sk-round);
+  font-size: 0.7rem !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--contrast-sidebar-foreground) !important;
+  border-radius: 0 !important;
+}
+[data-testid="sidebar-settled-shelf-toggle"] > span:first-child::before {
+  content: "";
+  display: inline-block;
+  vertical-align: -10px;
+  width: 28px;
+  height: 32px;
+  margin-left: -3px;
+  margin-right: 0.3rem;
+  background: {{spike}} 0 0 / 28px 32px no-repeat;
+}
+[data-testid="sidebar-settled-shelf-toggle"] > span:first-child {
+  overflow: visible;
+}
+/*full*/
+[data-testid$="-shelf-toggle"]:not([data-testid*="settled"]) > span:first-child::before {
+  content: "";
+  display: inline-block;
+  margin-right: 0.5rem;
+  width: 12px;
+  height: 12px;
+  vertical-align: -1px;
+  background: #ffb877;
+  -webkit-mask: var(--sk-i-pot) center / 12px auto no-repeat;
+  mask: var(--sk-i-pot) center / 12px auto no-repeat;
+}
+[data-testid$="-shelf-toggle"] > span:nth-child(2) {
+  visibility: visible !important;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, #a9b4bf 0 2px, transparent 2px 4px) !important;
+}
+/*/full*/
+[data-testid$="-shelf-toggle"]:focus-visible {
+  outline: 2px dashed currentColor;
+  outline-offset: -3px;
+}
+
+/* Slips in the shelves: old paper. Settled slips are stacked on the spike, quieter than live tickets. */
+[data-thread-item]:has(> [data-testid="sidebar-row-slim"]) {
+  position: relative;
+  padding: 3px 0;
+}
+[data-thread-item] > [data-testid="sidebar-row-slim"] > div > span:nth-child(2) {
+  font-family: var(--sk-cond);
+  font-size: 0.875rem;
+  /*full*/
+  font-weight: 500;
+  /*/full*/
+}
+[data-thread-item] > [data-testid="sidebar-row-slim"] {
+  --sk-paper: var(--sk-paper-old);
+  width: calc(100% - 8px);
+  margin-inline: 4px;
+  background-color: var(--sk-paper) !important;
+  color: var(--contrast-foreground) !important;
+  border-radius: 0 !important;
+  /* Paper edge, a thicker bottom lip and a dark seam: each slip reads as its own sheet on the stack. */
+  box-shadow: inset 0 0 0 1px var(--sk-edge), inset 0 -3px 0 #b5a277, 0 1px 0 #3a2e22/*full*/, 1px 3px 0 rgb(6 14 26 / 0.45)/*/full*/;
+  transform-origin: 18px 50%;
+  rotate: var(--sk-tilt, 0deg);
+  /*full*/
+  transition: rotate 320ms cubic-bezier(0.34, 1.4, 0.64, 1), background-color 180ms ease-out;
+  /*/full*/
+}
+[data-thread-item]:hover > [data-testid="sidebar-row-slim"],
+[data-thread-item] > [data-testid="sidebar-row-slim"]:focus-visible {
+  --sk-paper: #efe4c8;
+  rotate: 0deg;
+}
+/*full*/
+[data-thread-item] > [data-testid="sidebar-row-slim"]:focus-visible {
+  outline: 2px dashed var(--contrast-foreground);
+  outline-offset: -4px;
+}
+/*/full*/
+[data-thread-item]:has(> [data-sidebar-parent="shelf:settled"]) {
+  --sk-tilt: 0.9deg;
+  padding: 0;
+  background: linear-gradient(90deg, #0e1620 0 2px, #c9d1d8 2px 4px, #0e1620 4px) 15px 0 / 6px 100% no-repeat;
+}
+[data-thread-item]:has(> [data-sidebar-parent="shelf:settled"]) + [data-thread-item]:has(> [data-sidebar-parent="shelf:settled"]) {
+  margin-top: -7px;
+}
+/* The newest slip went on the spike last, so it lies on top: z-order runs against DOM order. */
+[data-thread-item]:has(> [data-sidebar-parent="shelf:settled"]) {
+  z-index: calc(1000 - sibling-index());
+}
+/*full*/
+[data-thread-item]:has(> [data-sidebar-parent="shelf:settled"]):nth-child(2n) { --sk-tilt: -1.1deg; }
+[data-thread-item]:has(> [data-sidebar-parent="shelf:settled"]):nth-child(3n) { --sk-tilt: 0.3deg; }
+/*/full*/
+[data-thread-item] > [data-sidebar-parent="shelf:settled"] {
+  padding-inline: 1.75rem 0.375rem !important;
+  gap: 0.375rem !important;
+}
+/*full*/
+[data-thread-item] > [data-sidebar-parent="shelf:settled"] > div > span:last-child {
+  min-width: 1.25rem !important;
+}
+/*/full*/
+[data-thread-item] > [data-sidebar-parent="shelf:settled"] > div > span:nth-child(2) {
+  color: var(--contrast-secondary-label) !important;
+}
+/*full*/
+/* The rod stays plumb in front of each slip down to its hole; only the paper tilts. */
+[data-thread-item]:has(> [data-sidebar-parent="shelf:settled"])::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 0;
+  width: 6px;
+  height: 50%;
+  background: linear-gradient(90deg, #0e1620 0 2px, #c9d1d8 2px 4px, #0e1620 4px);
+  z-index: 1;
+  pointer-events: none;
+}
+[data-thread-item] > [data-sidebar-parent="shelf:settled"]::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: calc(50% - 3px);
+  width: 8px;
+  height: 6px;
+  background: #2b2118;
+}
+/* Settled project marks stay readable on the old paper. */
+[data-thread-item] > [data-sidebar-parent="shelf:settled"] > div > span:first-child {
+  opacity: 0.85 !important;
+}
+/*/full*/
+/*full*/
+/* The spike's base under the last slip. */
+[data-thread-item]:has(> [data-sidebar-parent="shelf:settled"]):not(:has(+ [data-thread-item])) {
+  padding-bottom: 14px;
+}
+[data-thread-item]:has(> [data-sidebar-parent="shelf:settled"]):not(:has(+ [data-thread-item]))::before {
+  height: calc(50% - 7px);
+}
+[data-thread-item]:has(> [data-sidebar-parent="shelf:settled"]):not(:has(+ [data-thread-item]))::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  bottom: 0;
+  width: 36px;
+  height: 12px;
+  background: {{base}} 0 0 / 36px 12px no-repeat;
+}
+/* Open shelf: the header's spike loses its base and runs on down through the slips. */
+[data-testid="sidebar-settled-shelf-toggle"][aria-expanded="true"] > span:first-child::before {
+  background-image: {{spike_open}};
+}
+/*/full*/
+@media (prefers-reduced-motion: reduce) {
+  [data-thread-item] *,
+  [data-thread-item] > [data-testid] {
+    transition-duration: 0s !important;
+    animation: none !important;
+  }
+}

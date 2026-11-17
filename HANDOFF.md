@@ -17,7 +17,16 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   6f0ac45 = only the current ticket's peg (+ the composer caret); hover: keys visible, translate none, below the status.
   Not checked: OS light (no colour change), desktop app. Council patches: /private/tmp/council-cards-12964 (Fable),
   /private/tmp/council-cards-M3AY0n (Astra). Seen, pre-existing in 6f0ac45: the Woke ticket shows its WOKE stamp
-  and the bubble at once. Open: the row `drop-shadow` (Roger asks for a lighter equivalent; measure it alone first).
+  and the bubble at once.
+- Row `drop-shadow` measured (2026-11-17, Mac mini harness `/Users/roger/t3code/.css-perf`, plans `shadow-3f0d021`
+  and `listshadow-3f0d021`, 5 reps, 50/200/500 tickets, results in `data/*-3f0d021.md`). Without the row shadow:
+  hover GPU -206 ms [102, 304] and -162 [129, 197] per run (two runs), wheel@500 CPU -447 [326, 790] and -215
+  [29, 666]; idle, status, wheel@200 n.s.; dropped frames and p95 unchanged (energy, not jank). All card filters
+  (shadow + red peg + stain blur): wheel@500 -477 [369, 932]. Tried: ONE drop-shadow on the list `ul` instead of one
+  per row (+54 chars): tickets pixel-identical (settled header/stack gain a shadow), rail hit-test OK, but it is
+  WORSE when scrolling: wheel@500 GPU +244 ms [144, 274], wheel@200 +106 [63, 145] (the big filtered surface
+  re-renders every scroll frame). Rejected. Not tried: a tilted `linear-gradient` shadow on the row (loses the torn
+  edge in the shadow and snaps on hover).
 - Settled stack under the water + spike foot (2026-11-17, Roger): the settled slips (z 1000 - sibling-index(), up to
   999) painted over the fish tank, because the footer had z 22 in the same stacking context (sidebar-container); this
   predates today's changes (seen in e04711c). Footer z 22 -> 1000. Closed settled header: the rod stands on its foot

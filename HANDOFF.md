@@ -63,6 +63,13 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   core.css (both editions) on `[data-slot=sidebar-inner] > div > div:first-child` (the 52 px top bar). +659 chars in
   each edition: full 41,985, lite 15,996 (flat 19,190). Toggle icon on the sky 9.28:1 (brightest ring pixel); light ==
   dark 0 px; check.js 0 invalid, l3Lost 0 in full and lite. Capture `demo/textures/sidebar-night-window.png`.
+  Moved into the artwork slot (Roger: "posa'l a lloc"; Environment identification = nightly): the app draws its own
+  `.sidebar-stage-backdrop` only for built-in palettes (`sidebarArtwork: true`); a custom CSS theme always falls back
+  to the "Nightly" pill (`Et()` in useSettings). So the window now covers the slot itself: `night` is 128x50 (256x100
+  px) on `[data-slot=sidebar-inner] > div:first-child`, top bar + search row, sill under the search row.
+  Search (full only): rests as a glazed magnifier tile (28 px, 2 px margins keep the 32 px row, list top stays 100);
+  the invisible input covers the tile, so click/Tab/shortcut focus it; focus or a query opens the recessed field, an
+  empty blur folds it back. Magnifier 8.90:1. Full 42,761 (flat 49,143: the flat fallback is nearly full), lite 16,146.
   Not done: the terminal (the web preview cannot open it; xterm paints its own `#11131a`). Found, not mine: the fish
   tank footer also renders inside Settings' side nav (`[data-slot=sidebar-footer]`), over the last nav items; the thread
   details card's muted rows are 3.55-4.08:1 (same before and after).

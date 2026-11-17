@@ -74,9 +74,12 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   halo (two drop-shadows) and a 2 px drift (`sk-float`, 3.2 s alternate; off under reduced motion), focus outline
   cream. "Code" 12.33:1 on the sky (6.70 against the halo's brightest pixel); light == dark 0 px. Full 42,941
   (flat 49,348).
-  Not done: the terminal (the web preview cannot open it; xterm paints its own `#11131a`). Found, not mine: the fish
-  tank footer also renders inside Settings' side nav (`[data-slot=sidebar-footer]`), over the last nav items; the thread
-  details card's muted rows are 3.55-4.08:1 (same before and after).
+  Rebased on main 7de285d (house menu card, rename, Usage, changed-files board): full 47,590 nested (flat 54,403;
+  a flat build no longer fits 50,000), lite 16,183. check.js 0 invalid / l3Lost 0; scan.js only the decorative ticket
+  stains; light == dark 0 px in sidebar and header. PUBLISHED locally 2026-11-17 as `dave-the-viber` (server file =
+  build, sha256 fb876c81…); previous live file `final2/published-before-2026-11-17-nightwindow.json` (= main's build).
+  Not done: the terminal (the web preview cannot open it; xterm paints its own `#11131a`). The fish tank in Settings'
+  side nav was fixed on main (scoped to `sidebar-inner`). Found, not mine: the thread details card's muted rows are 3.55-4.08:1 (same before and after).
 - Open ticket off the peg (2026-11-17, Roger: "el ticket obert separat de l'agulla, desplaçat a la dreta, sortint una
   mica de la barra lateral"; published locally, previous live file `final2/published-before-2026-11-17-offpeg.json`):
   the current ticket gets `translate: 20px 0` (320 ms, same curve as rotate), so it leaves the peg (12 px gap) and its

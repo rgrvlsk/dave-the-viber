@@ -7,6 +7,20 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Model picker as the house menu + build size passes (2026-11-17, Roger chose proposals 1, 2, 3, 5; size ideas from a
+  Fable Low consult at Roger's request). Build (tools/build2.py): data URIs are `url(data:;base64,…)` unquoted,
+  MIME-less and unpadded; `^= $= *= ~= |=` values unquoted; @keyframes renamed to one letter (whole-name match);
+  single rules with a shared-prefix selector list nest; `::before/::after` → `:before/:after`. Dead
+  `[data-thread-details-card]{border-radius;box-shadow}` removed. Full 49,414 → 48,393, lite 16,234 → 15,859, with
+  no source change in the look: computed style of all 3,721 elements + ::before/::after equal (custom properties
+  excluded, URIs and keyframe names normalised), frozen screenshot pixel diff 0, out2/sprites/*.webp byte-equal.
+  Picker (extras.css, after the kbd rule): key caps for shortcuts; model rows framed with the mark on a dark plate,
+  the row under the cursor named on the pink brush (`--sk-brush`, now shared with section labels); the Reasoning
+  header a navy band "◆ REASONING" in Silom gold; level pips 1-6 via `sibling-index()`; the chosen level on the brush.
+  Full 49,513 (487 free). check.js 0 invalid, l3Lost 0; no text under 4.5 inside the picker; picker body light ==
+  dark (differences only at its bottom edge over the pad, cause not isolated). Unknown: whether gallery importers
+  accept MIME-less data URIs. Reserve ideas from Fable: `!important` pruning with a computed-style oracle
+  (−800…−1,600 est.), a mask atlas (~−550 est.).
 - Sprite derivations (2026-11-17, Roger chose A+B+C): Dish's 2nd frame and the pot's 4th frame are the mirrored
   sprite (`scale: -1 1` in `sk-dish` / `sk-steam`); `working2.png` and `pot_c.png` removed. The bubble inks are
   the status masks under a `lighten`-blended ink rectangle (18x18 px, inside the white body); the four `*_ink`

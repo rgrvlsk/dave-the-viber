@@ -5,7 +5,8 @@ from sprites import S as SPR, uri, grid, png, webp
 
 def multi(art, colors, w_css=None):
     rows, w, h = grid(art)
-    return "url(\"" + webp(rows, w, h, colors) + "\")"
+    # Unquoted, MIME-less, unpadded: Chromium sniffs the WebP and accepts base64 without "=" padding.
+    return "url(" + webp(rows, w, h, colors).replace("data:image/webp;base64,", "data:;base64,").rstrip("=") + ")"
 
 WOOD_P = {"a": "#dcc59c", "b": "#e9d7b3"}
 WAVES_P = {"a": "#ffffff06", "b": "#ffffff03"}
@@ -46,7 +47,10 @@ def minify(css, full=False):
     css = re.sub(r"\s*([{};,])\s*", r"\1", css)
     css = css.replace(";}", "}").replace(" !important", "!important")
     css = re.sub(r"\s*>\s*", ">", css)
-    css = re.sub(r'\[([\w-]+)="([A-Za-z_][\w-]*)"\]', r"[\1=\2]", css)
+    css = re.sub(r'\[([\w-]+)([\^$*~|]?)="(-?[A-Za-z_][\w-]*)"\]', r"[\1\2=\3]", css)
+    # Keyframes get one-letter names; whole-name matches only, so --sk-pot-b stays intact.
+    for i, n in enumerate(dict.fromkeys(re.findall(r"@keyframes ([\w-]+)", css))):
+        css = re.sub(r"(?<![\w-])" + re.escape(n) + r"(?![\w-])", "abcdefghij"[i], css)
     css = re.sub(r"([{;])(-?-?[\w-]+): ", r"\1\2:", css)
     css = re.sub(r"rgb\((\d+) (\d+) (\d+) / (0?\.\d+)\)", lambda m: "#%02x%02x%02x%02x" % (int(m[1]), int(m[2]), int(m[3]), round(float(m[4]) * 255)), css)
     css = re.sub(r"-webkit-(?:mask[\w-]*|backdrop-filter):(?:[^;{}]|\{\{\w+\}\})*;", "", css)
@@ -144,7 +148,7 @@ def _emit(rules):
             if P.lstrip(">+~& ") == "": continue
             j = i
             while j < len(rules) and all(s.startswith(P) and (s == P or len(P) in _cuts(s)) for s in rules[j][0]): j += 1
-            if j - i < 2: continue
+            if j - i < (1 if len(rules[i][0]) > 1 else 2): continue
             flat = sum(len(",".join(s)) + len(b) + 2 for s, b in rules[i:j])
             saving = flat - len(P) - 2 - len(_kids(rules[i:j], P))
             if saving > best[0]: best = (saving, P, j)
@@ -194,6 +198,7 @@ for name, css, title in [("lite", lite, "Dave the Viber Lite"), ("full", fill(mi
         nested = nest(css)
         if flatten(nested) != flatten(css): raise SystemExit(f"{name}: nested CSS does not expand to the flat CSS")
         css = nested
+    css = re.sub(r"::(before|after)\b", r":\1", css)
     if len(css) > LIMIT[name]: raise SystemExit(f"{name}: {len(css)} chars > limit {LIMIT[name]}")
     open(os.path.join(root, f"out2/{name}.css"), "w").write(css)
     theme = {"version": 1, "name": title, "appearance": "dark", "canvas": colors["canvas"], "accent": colors["accent"], "colors": colors["colors"], "variants": {"light": colors["colors"]}, "css": css}
@@ -207,4 +212,5 @@ for f in os.listdir(sprite_dir):
     if f.endswith((".svg", ".webp")): os.remove(os.path.join(sprite_dir, f))
 for k, v in tok.items():
     if v in css:
-        open(os.path.join(sprite_dir, k + ".webp"), "wb").write(__import__("base64").b64decode(v[len('url("data:image/webp;base64,'):-2]))
+        b64 = v[len("url(data:;base64,"):-1]
+        open(os.path.join(sprite_dir, k + ".webp"), "wb").write(__import__("base64").b64decode(b64 + "=" * (-len(b64) % 4)))

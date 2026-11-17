@@ -2,3 +2,14 @@
 .claude/
 __pycache__/
 demo/video.mp4
+# Screenshots, captures and videos never go to GitHub (Roger, 2026-11-17).
+# Only sprite art (src2/sprites) and built sprites (out2/sprites) are tracked.
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.mp4
+*.mov
+!src2/sprites/*.png
+!out2/sprites/*.webp

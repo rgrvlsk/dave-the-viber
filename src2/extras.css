@@ -989,15 +989,20 @@ svg.lucide[class*="loader"] {
 .chat-composer-lane::after {
   background: var(--sk-wood) 0 0 / 64px 16px repeat-x, linear-gradient(#0000 16px, #6e4220 0 18px, #b9783d 0);
 }
-/* Dave's PNG ends in six transparent pixel rows: 12px down at 2x puts the laptop base on the plank. */
+/* Dave's PNG ends in six transparent pixel rows: 12px down at 2x puts the laptop base on the plank.
+   Dave needs 120 px right of the pad, or a partial Dave pokes out behind it. --sk-d is (gap - 120 px) x 1000: the
+   gap is the lane's 3rem end padding, the app's end inset and half the room the pad cannot fill (100% = lane + 10 px).
+   As a clamp() bound it gives Dave and his glow full width or none. */
 .chat-composer-lane::before {
+  --sk-i: var(--chat-lane-inset-end, 0px);
+  --sk-d: calc((var(--sk-i) + max(0px, (100% - 842px - var(--sk-i)) / 2) - 72px) * 1e3);
   bottom: 60px;
   height: 120px;
-  background: radial-gradient(closest-side, #bff3ff40, #0000) right 30px top 48px / 80px 48px no-repeat, {{dave}} right 14px top 12px / 112px 120px no-repeat, {{stool}} right 30px bottom -4px / 80px 28px repeat-x;
+  background: radial-gradient(closest-side, #bff3ff40, #0000) right 30px top 48px / clamp(0px, var(--sk-d), 80px) 48px no-repeat, {{dave}} right 14px top 12px / clamp(0px, var(--sk-d), 112px) 120px no-repeat, {{stool}} right 30px bottom -4px / 80px 28px repeat-x;
   animation: sk-screen 0.8s steps(1) infinite;
 }
 @keyframes sk-screen {
-  50% { background-size: 88px 56px, 112px 120px, 80px 28px; }
+  50% { background-size: clamp(0px, var(--sk-d), 88px) 56px, clamp(0px, var(--sk-d), 112px) 120px, 80px 28px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

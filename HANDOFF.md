@@ -38,7 +38,10 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   context strip (checkout / branch / access) rests on the plank with a night background over the stool backs.
   Pad bottom on the plank: thread 741, new thread strip bottom 740. Last message stays above the pad. Light == dark
   0 px on the bar band; check.js 0 invalid, l3Lost 0. Full 48,629 (flat 55,482); lite unchanged. Capture
-  `demo/menus/bar.png`. Not checked: narrow windows (Dave goes behind the pad), right panel open, desktop app.
+  `demo/menus/bar.png`. Stools tile from the right edge (one hidden behind Dave), so narrowing slides them behind
+  the pad. The app pushes the pad left by `--chat-lane-inset-end` (276 px at 1280, 0 at 1240); Dave and his glow get
+  width 0 when the gap right of the pad is under 120 px (`--sk-d` clamp; checked 1280/1240 shown, 1228/1120 hidden).
+  Full 49,913: 87 chars left. Not checked: right panel open, desktop app.
 - House menu card (2026-11-17, Roger: "personalitza la interfície i els menús amb els colors, formes i tipografia
   d'aquestes captures", 4 screenshots of a pixel sushi-bar game UI; mood, palette and shapes only, no copied art).
   NOT published yet. extras.css "Controls: the house menu card":

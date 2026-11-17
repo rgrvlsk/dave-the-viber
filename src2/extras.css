@@ -226,6 +226,7 @@ main[data-slot="sidebar-inset"]::after,
   pointer-events: none;
   z-index: 30;
   animation: sk-bob 2.6s ease-in-out infinite;
+  display: var(--sk-bub, block);
 }
 html::after {
   position-anchor: --sk-ask-approval;
@@ -268,16 +269,9 @@ main[data-slot="sidebar-inset"]::after {
   animation-delay: -1.7s;
 }
 
-/* A collapsed sidebar slides its tickets off-screen without clipping them: hide the bubbles. */
-html:has([data-slot="sidebar"][data-state="collapsed"])::after,
-body:has([data-slot="sidebar"][data-state="collapsed"])::after,
-:root:has([data-slot="sidebar"][data-state="collapsed"]) main[data-slot="sidebar-inset"]::before,
-:root:has([data-slot="sidebar"][data-state="collapsed"]) main[data-slot="sidebar-inset"]::after,
-:root:has([data-slot="sidebar"][data-state="collapsed"]) [data-workspace-area="conversation"]::before,
-:root:has([data-slot="sidebar"][data-state="collapsed"]) [data-workspace-area="conversation"]::after,
-:root:has([data-slot="sidebar"][data-state="collapsed"]) [data-workspace-area="composer"]::before,
-:root:has([data-slot="sidebar"][data-state="collapsed"]) [data-workspace-area="composer"]::after {
-  display: none;
+/* A collapsed sidebar slides its tickets off-screen without clipping them: the hosts hide their bubbles. */
+:root:has([data-slot="sidebar"][data-state="collapsed"]) {
+  --sk-bub: none;
 }
 @keyframes sk-bob {
   0%, 100% { translate: 0 0; }

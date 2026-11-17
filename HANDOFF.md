@@ -117,6 +117,10 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   moon): rules keyed on `[aria-label="Go back"]` (desktop only), +622 chars. Real desktop app (relay capture):
   icon 98.5-111, "T3 Code" 118-173.5, moon ~183-203, keys 214.5+. Web unchanged (logo x 52). Full 49,789 of
   50,000. PUBLISHED locally; previous live file `final2/published-before-2026-11-17-desktopbar.json`.
+  Size cut (Roger chose the measured cuts): the 8 collapsed-sidebar bubble selectors became one `--sk-bub: none`
+  on `:root:has(collapsed sidebar)` read by the hosts' `display` (-597, full 49,192). Computed display/left/top of
+  all 8 hosts equal old vs new, open and collapsed; check.js 0 invalid. The "raw <> in data URIs" item is obsolete
+  (no SVG URIs since the WebP pass); single-use hex vars (~-150) not applied (scope risk, small gain).
   Not done: the terminal (the web preview cannot open it; xterm paints its own `#11131a`). The fish tank in Settings'
   side nav was fixed on main (scoped to `sidebar-inner`). Found, not mine: the thread details card's muted rows are 3.55-4.08:1 (same before and after).
 - Open ticket off the peg (2026-11-17, Roger: "el ticket obert separat de l'agulla, desplaçat a la dreta, sortint una
@@ -308,7 +312,7 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
 ## Open items
 - Ticket move to the Working shelf shows a clipped remainder/jump (app animation; left alone).
 - Breadcrumb emoji is part of the project name (CSS cannot remove it).
-- Unapplied size items (if room is needed): bubble left/top in the shared rule + collapsed-hide var (~−520),
+- Unapplied size items (if room is needed; collapsed-hide var applied 2026-11-17, −597):
   inline single-use hex vars (−153 full / −90 lite measured, var scope risk), dead rules list, raw `<>` in data URIs
   (~−500, risky). Rejected with numbers: reordering rules to nest more (−418/−159, cascade risk), one merged
   `border-radius:0!important` rule (+753), `[class*=status-slot]` (matches `group-hover/...` utilities).

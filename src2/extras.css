@@ -1025,8 +1025,9 @@ svg.lucide[class*="loader"] {
 }
 [data-slot="sidebar-footer"] {
   position: relative;
-  /* Above the open ticket (z 21 in core.css), which still scrolls into the water. */
-  z-index: 22;
+  /* Above every ticket, which all scroll into the water: the open ticket (z 21) and the settled stack, whose
+     inverted order uses z up to 999 (1000 - sibling-index(), core.css). */
+  z-index: 1000;
   padding: 36px 8px 6px;
   background: var(--sk-wood) left 0 top 14px / 64px 16px repeat-x, linear-gradient(transparent 30px, #6e4220 30px 32px, #8f5a2b 32px);
 }

@@ -7,6 +7,11 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Settled stack under the water + spike foot (2026-11-17, Roger): the settled slips (z 1000 - sibling-index(), up to
+  999) painted over the fish tank, because the footer had z 22 in the same stacking context (sidebar-container); this
+  predates today's changes (seen in e04711c). Footer z 22 -> 1000. Closed settled header: the rod stands on its foot
+  again ({{base}} at the box bottom, x 0..36 with the rod at 12); open: no foot, the rod runs down (rod x 23 = slips 23).
+  Full 49,176 -> 49,322, lite 14,843 -> 14,986. Previous live file: `final2/published-before-2026-11-17-tankz.json`.
 - Spike tip (2026-11-17, Roger: the settled header should be only the spike's point, smaller): the header ::before
   is a 2 px tip on the rod drawn with two gradients in the rod colours (no sprite), level with the label; open, the
   rod runs down to the slips (x 23 = slips' rod x 23, measured). The box keeps 32 px, so the header does not move.

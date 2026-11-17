@@ -4,9 +4,6 @@
    an ink rectangle blended with lighten: black turns ink, the bubble's white and grey stay (both lighter per channel). */
 :root {
   --sk-bubble: {{bubble}};
-  --sk-ink-a: linear-gradient(#7a4d00 0 0), var(--sk-i-approval);
-  --sk-ink-i: linear-gradient(#34468c 0 0), var(--sk-i-input);
-  --sk-pot-b: {{pot_b}};
   --sk-fish: {{fish}};
   --sk-weed-a: {{weed_a}};
   --sk-weed-b: {{weed_b}};
@@ -218,10 +215,10 @@ main[data-slot="sidebar-inset"]::after,
   top: max(112px, calc(anchor(top, -300px) + 6px));
   width: 40px;
   height: 30px;
-  background-size: 18px 18px, 18px auto, 40px 30px;
-  background-position: 50% calc(50% - 2px), 50% calc(50% - 2px), center;
+  padding: 4px 11px 8px;
+  box-sizing: border-box;
+  background: linear-gradient(var(--sk-c) 0 0) content-box, var(--sk-m, var(--sk-atlas)) 0 var(--sk-y) / 18px auto no-repeat content-box, var(--sk-bubble) center / 40px 30px;
   background-blend-mode: lighten, normal;
-  background-repeat: no-repeat;
   filter: drop-shadow(2px 2px 0 rgb(6 14 26 / 0.5));
   position-visibility: anchors-visible;
   pointer-events: none;
@@ -231,42 +228,53 @@ main[data-slot="sidebar-inset"]::after,
 }
 html::after {
   position-anchor: --sk-ask-approval;
-  background-image: var(--sk-ink-a), var(--sk-bubble);
+  --sk-c: #7a4d00;
+  --sk-m: var(--sk-i-approval);
+  --sk-y: 50%;
   animation-delay: 0;
 }
 body::after {
   position-anchor: --sk-ask-input;
-  background-image: var(--sk-ink-i), var(--sk-bubble);
+  --sk-c: #34468c;
+  --sk-y: -190.5px;
   animation-delay: -0.7s;
 }
 main[data-slot="sidebar-inset"]::before {
   position-anchor: --sk-ask-approval2;
-  background-image: var(--sk-ink-a), var(--sk-bubble);
+  --sk-c: #7a4d00;
+  --sk-m: var(--sk-i-approval);
+  --sk-y: 50%;
   animation-delay: -1.3s;
 }
 main[data-slot="sidebar-inset"]::after {
   position-anchor: --sk-ask-input2;
-  background-image: var(--sk-ink-i), var(--sk-bubble);
+  --sk-c: #34468c;
+  --sk-y: -190.5px;
   animation-delay: -2s;
 }
 [data-workspace-area="conversation"]::before {
   position-anchor: --sk-ask-request;
-  background-image: linear-gradient(#84295f 0 0), var(--sk-i-request), var(--sk-bubble);
+  --sk-c: #84295f;
+  --sk-y: -213px;
   animation-delay: -1.4s;
 }
 [data-workspace-area="conversation"]::after {
   position-anchor: --sk-ask-woke;
-  background-image: linear-gradient(#7a4d00 0 0), var(--sk-i-woke), var(--sk-bubble);
+  --sk-c: #7a4d00;
+  --sk-y: -234px;
   animation-delay: -2.1s;
 }
 [data-workspace-area="composer"]::before {
   position-anchor: --sk-ask-approval3;
-  background-image: var(--sk-ink-a), var(--sk-bubble);
+  --sk-c: #7a4d00;
+  --sk-m: var(--sk-i-approval);
+  --sk-y: 50%;
   animation-delay: -0.4s;
 }
 [data-workspace-area="composer"]::after {
   position-anchor: --sk-ask-input3;
-  background-image: var(--sk-ink-i), var(--sk-bubble);
+  --sk-c: #34468c;
+  --sk-y: -190.5px;
   animation-delay: -1.7s;
 }
 
@@ -281,8 +289,8 @@ main[data-slot="sidebar-inset"]::after {
 
 /* Working: the pot's lid dances on the boil, three frames; the fourth is the second mirrored (the pot is symmetric). */
 @keyframes sk-steam {
-  25%, 75% { -webkit-mask-image: var(--sk-pot-b); mask-image: var(--sk-pot-b); }
-  50% { -webkit-mask-image: var(--sk-i-pot); mask-image: var(--sk-i-pot); }
+  25%, 75% { mask-position: 0 -44px; }
+  50% { mask-position: 0 -28px; }
   75% { scale: -1 1; }
 }
 /* Provider marks ship as fill-black / dark:fill-white: on paper they stay ink in both modes. */
@@ -317,7 +325,7 @@ main[data-slot="sidebar-inset"]::after {
 }
 /* Snoozed shelf: the kitchen timer. */
 [data-testid*="snooze"][data-testid$="-shelf-toggle"] > span:first-child::before {
-  mask-image: var(--sk-i-woke);
+  mask: var(--sk-atlas) 0 -156px / 12px auto no-repeat;
 }
 /* Dish!: the served bowl still steams, two frames: the bowl and its mirror. */
 @keyframes sk-dish {
@@ -676,7 +684,9 @@ svg.lucide[class*="loader"] {
   color: #c8346e !important;
 }
 /* Section labels are pink brush strokes; titles hang on a gold ribbon. Both in the shop's pixel type. */
-[data-slot$="popup"] :is([data-slot$="-label"], [data-slot$="group-label"]) {
+[data-slot$="popup"] :is([data-slot$="-label"], [data-slot$="group-label"]),
+[data-slot$="popup"] [role="listbox"]::before,
+[data-model-picker-sidebar]::before {
   width: fit-content;
   margin: 4px 0 2px 2px;
   padding: 2px 16px 2px 6px !important;
@@ -785,23 +795,91 @@ svg.lucide[class*="loader"] {
   box-shadow: 0 0 0 1px #2a1d16, inset 0 -2px #c0b4a8;
   font-family: var(--sk-pixel);
 }
-/* Model picker as the house menu: each model a dish row with its mark on a dark plate, the row under the cursor
-   named on the pink brush; the reasoning column has a navy title band and level pips. */
-[data-slot="combobox-item"]:has(> [data-slot="combobox-item-content"] > span:first-child) {
-  margin-block: 2px;
-  background: #f4ece0;
-  box-shadow: inset 0 0 0 1px #c0b4a8;
+/* The model picker is the house's printed menu: paper with a perforated top under the restaurant's own sign (the
+   house koi), the models as the main course with dotted leaders to their shortcut "price" and tiny allergen
+   badges for their provider marks, the provider column as the allergen key, the reasoning levels as sides with
+   pips, the app's default level stamped "Chef recommends", and a note at the foot. */
+[data-slot="popover-popup"]:has([data-model-picker-effort]) {
+  --muted: #0000;
+  background: radial-gradient(circle at 6px 0, var(--sk-night) 3px, #0000 3.5px) 0 0 / 12px 6px repeat-x, #fbf3e2 !important;
+  & [data-current] > div::before {
+    content: "\25C6  VIBER AGENTS  \25C6";
+    margin: 0 14px;
+    padding: 26px 0 8px;
+    border-bottom: 3px double #2a1d16;
+    background: var(--sk-fish) 50% 8px / 24px 14px no-repeat;
+    color: #c8346e;
+    font: 400 22px/1 var(--sk-pixel);
+    letter-spacing: 0.1em;
+    text-align: center;
+    text-shadow: 2px 2px #f0cc90;
+    white-space: pre;
+  }
+  & [data-current] > div::after {
+    content: "Prices in tokens. May contain traces of slop. Ask Theo about the full allergen list.";
+    margin: 0 14px;
+    padding: 6px 0 8px;
+    border-top: 1px dashed #b3a08c;
+    color: #5e4a3c;
+    font: italic 11px var(--font-sans);
+    text-align: center;
+  }
 }
-/* Only a mark gets the plate: "Show more" is a text span in the same place. */
-[data-slot="combobox-item-content"] > span:first-child:has(svg) {
-  width: 24px;
-  height: 24px;
-  background: #2a1d16;
-  box-shadow: inset 0 0 0 1px #a86030;
-  color: #f3e7d3;
+[role="listbox"]::before {
+  content: "MAIN COURSE";
 }
-[data-slot="combobox-item-content"] > span:first-child svg {
-  fill: #f3e7d3 !important;
+/* The provider column is the allergen key: a vertical label over round badges. */
+[data-model-picker-sidebar] {
+  position: relative;
+  &::before {
+    content: "ALLERGENS";
+    position: absolute;
+    bottom: 8px;
+    left: 12px;
+    margin: 0;
+    padding: 12px 2px 6px;
+    writing-mode: sideways-lr;
+    clip-path: polygon(0 8px, 50% 0, 100% 8px, 100% 100%, 0 100%);
+  }
+}
+:is([data-model-picker-provider] button, [data-slot="combobox-item-content"] > span:first-child:has(svg)) {
+  border-radius: 50% !important;
+  box-shadow: inset 0 0 0 1.5px #2a1d16;
+}
+[data-model-picker-provider] button[aria-pressed="true"] {
+  background: #f0cc90;
+}
+/* A dish line: name, allergen badge, dotted leader, price. */
+[data-slot="combobox-item-content"] {
+  & > div:nth-child(2) {
+    flex: none;
+    font-family: var(--sk-pixel);
+  }
+  & > span:first-child:has(svg) {
+    order: 1;
+    width: 16px;
+    height: 16px;
+    & svg {
+      width: 10px;
+    }
+  }
+  & > :last-child {
+    order: 2;
+    flex: 1;
+    &::before {
+      content: "";
+      flex: 1;
+      align-self: end;
+      margin-bottom: 5px;
+      border-bottom: 2px dotted #b3a08c;
+    }
+  }
+  & [data-slot="kbd"] {
+    background: none;
+    box-shadow: none;
+    color: #a01e55;
+    font-size: 13px;
+  }
 }
 [data-slot="combobox-item"]:is([data-highlighted], :hover) .truncate {
   padding: 1px 14px 1px 6px;
@@ -809,36 +887,76 @@ svg.lucide[class*="loader"] {
   color: #fff;
   clip-path: var(--sk-brush);
 }
-[data-model-picker-effort] .border-b {
-  margin-inline: -12px;
-  padding-inline: 12px;
-  border: 0 !important;
-  background: #18243c;
-  font-family: var(--sk-pixel);
+[data-model-picker-effort] {
+  border-left-style: dashed;
+  & .border-b {
+    margin-inline: -12px;
+    padding-inline: 12px;
+    border: 0 !important;
+    background: #18243c;
+    font-family: var(--sk-pixel);
+    & > * {
+      color: #f0cc90 !important;
+    }
+    & > :first-child {
+      font-size: 0;
+      &::before {
+        content: "\25C6\a0SIDES";
+        font-size: 12px;
+      }
+    }
+  }
 }
-[data-model-picker-effort] .border-b > * {
-  color: #f0cc90 !important;
-}
-[data-model-picker-effort] .border-b > :first-child {
-  text-transform: uppercase;
-}
-[data-model-picker-effort] .border-b > :first-child::before {
-  content: "\25C6\a0";
-}
-[aria-label="Reasoning"] > [role="radio"]::after {
-  content: "";
-  width: calc(sibling-index() * 6px);
-  height: 6px;
-  background: repeating-linear-gradient(90deg, #c8346e 0 4px, #0000 0 6px);
-}
-/* The chosen label hugs its text; the auto margin keeps the check and the pips at the right edge. */
-[aria-label="Reasoning"] > [aria-checked="true"] > span:first-child {
-  flex: none;
-  margin-right: auto;
-  padding: 1px 14px 1px 6px;
-  background: #c8346e;
-  color: #fff;
-  clip-path: var(--sk-brush);
+/* A side: label, dotted leader, pips, check. The chosen one is on the brush. */
+[aria-label="Reasoning"] > [role="radio"] {
+  position: relative;
+  & > span:first-child {
+    flex: none;
+  }
+  &::before {
+    content: "";
+    flex: 1;
+    order: 2;
+    align-self: end;
+    margin-bottom: 9px;
+    border-bottom: 2px dotted #b3a08c;
+  }
+  &::after {
+    content: "";
+    order: 3;
+    width: calc(sibling-index() * 6px);
+    height: 6px;
+    background: repeating-linear-gradient(90deg, #c8346e 0 4px, #0000 0 6px);
+  }
+  & > svg {
+    order: 4;
+  }
+  &[aria-checked="true"] > span:first-child {
+    padding: 1px 14px 1px 6px;
+    background: #c8346e;
+    color: #fff;
+    clip-path: var(--sk-brush);
+  }
+  /* The app's hidden "Default" becomes a rubber stamp slapped across the line. */
+  & > .sr-only {
+    top: -5px;
+    left: 76px;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0 3px;
+    clip-path: none;
+    border: 2px solid;
+    background: #fbf3e2;
+    color: #c8346e;
+    font-size: 0;
+    rotate: -8deg;
+    &::before {
+      content: "CHEF\A RECOMMENDS";
+      font: 400 8px/1.1 var(--sk-pixel);
+      white-space: pre;
+    }
+  }
 }
 
 /* ---------- Scrollbars: chopsticks ---------- */

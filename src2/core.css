@@ -27,13 +27,8 @@
   /* The app's light-dark() switch: always the night palette. */
   --lightningcss-light: ;
   --lightningcss-dark: initial;
-  --sk-i-waiting: {{waiting}};
-  --sk-i-working: {{working}};
-  --sk-i-pot: {{pot_a}};
-  --sk-i-woke: {{woke}};
+  --sk-atlas: {{atlas}};
   --sk-i-approval: {{approval}};
-  --sk-i-input: {{input}};
-  --sk-i-request: {{request}};
   --sk-peg: {{peg_h}};
   --sk-tear: {{tear}};
   /* Sprites are lossless WebP bitmaps: nearest-neighbour scaling keeps every pixel square. */
@@ -340,8 +335,8 @@ body {
   width: 12px;
   height: 12px;
   background-color: currentColor;
-  -webkit-mask: var(--sk-icon, var(--sk-i-waiting)) center / 12px auto no-repeat;
-  mask: var(--sk-icon, var(--sk-i-waiting)) center / 12px auto no-repeat;
+  -webkit-mask: var(--sk-m, var(--sk-atlas)) 0 calc(6px - var(--sk-y, 5px)) / 12px auto no-repeat;
+  mask: var(--sk-m, var(--sk-atlas)) 0 calc(6px - var(--sk-y, 5px)) / 12px auto no-repeat;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > button:is(:hover, :focus-visible) {
   background: color-mix(in srgb, var(--sk-c) 22%, var(--sk-stamp, var(--sk-paper)));
@@ -352,31 +347,31 @@ body {
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-warning-foreground:has(> .lucide-shield-question-mark) {
   --sk-c: var(--sk-approval);
-  --sk-icon: var(--sk-i-approval);
+  --sk-m: var(--sk-i-approval);
+  --sk-y: 4.5px;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-indigo-600 {
   --sk-c: var(--sk-input);
-  --sk-icon: var(--sk-i-input);
+  --sk-y: 133px;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-guest-foreground {
   --sk-c: var(--sk-request);
-  --sk-icon: var(--sk-i-request);
+  --sk-y: 148px;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-info-foreground {
   --sk-c: var(--sk-working);
-  --sk-icon: var(--sk-i-pot);
+  --sk-y: 34px;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-muted-foreground {
   --sk-c: var(--sk-waiting);
-  --sk-icon: var(--sk-i-waiting);
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-warning-foreground:has(> .lucide-circle-alert) {
   --sk-c: var(--sk-approval);
-  --sk-icon: {{limited}};
+  --sk-y: 102px;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-success-foreground {
   --sk-c: var(--sk-done);
-  --sk-icon: var(--sk-i-working);
+  --sk-y: 19px;
   font-size: 0;
 }
 /* Done is served: the stamp reads "Dish!" (the app's own "Done" stays for screen readers). */
@@ -387,7 +382,7 @@ body {
 /* An unsent draft is stamped in pencil, just before the status stamp. */
 [data-thread-item] [data-testid^="sidebar-draft-indicator"] {
   --sk-c: var(--sk-ink);
-  --sk-icon: {{draft}};
+  --sk-y: 117px;
   order: 1;
 }
 [data-thread-item] [data-testid^="sidebar-draft-indicator"]::after {
@@ -398,11 +393,11 @@ body {
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-error-foreground {
   --sk-c: var(--sk-failed);
-  --sk-icon: {{failed}};
+  --sk-y: 90.5px;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-warning-foreground:has(> .lucide-alarm-clock) {
   --sk-c: var(--sk-approval);
-  --sk-icon: var(--sk-i-woke);
+  --sk-y: 162px;
 }
 /*full*/
 /* The age of a quiet ticket reads like a printed time. */
@@ -472,23 +467,23 @@ body {
   width: 12px;
   height: 10px;
   background-color: currentColor;
-  -webkit-mask: var(--sk-icon) center / 12px auto no-repeat;
-  mask: var(--sk-icon) center / 12px auto no-repeat;
+  -webkit-mask: var(--sk-atlas) 0 calc(5px - var(--sk-y)) / 12px auto no-repeat;
+  mask: var(--sk-atlas) 0 calc(5px - var(--sk-y)) / 12px auto no-repeat;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button[aria-label^="Settle"] {
   --sk-c: #6cbf5a;
   --sk-k: #10301a;
-  --sk-icon: {{settle}};
+  --sk-y: 65px;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button[aria-label^="Snooze"] {
   --sk-c: #f2c25c;
   --sk-k: #3a2a0a;
-  --sk-icon: var(--sk-i-woke);
+  --sk-y: 162px;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button[aria-label^="Discard"] {
   --sk-c: #e86f55;
   --sk-k: #3a1410;
-  --sk-icon: {{discard}};
+  --sk-y: 79px;
 }
 [data-thread-item] > [data-testid="sidebar-row-card"] > div:has(.group\/sidebar-status-slot > span:not(:first-child) > :nth-child(1)) {
   --sk-actions: 1.5rem;
@@ -558,8 +553,8 @@ body {
   height: 12px;
   vertical-align: -1px;
   background: #ffb877;
-  -webkit-mask: var(--sk-i-pot) center / 12px auto no-repeat;
-  mask: var(--sk-i-pot) center / 12px auto no-repeat;
+  -webkit-mask: var(--sk-atlas) 0 -28px / 12px auto no-repeat;
+  mask: var(--sk-atlas) 0 -28px / 12px auto no-repeat;
 }
 [data-testid$="-shelf-toggle"] > span:nth-child(2) {
   visibility: visible !important;

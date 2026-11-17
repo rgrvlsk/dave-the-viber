@@ -39,11 +39,15 @@ def rot90(art):
     rows = [r for r in art.strip("\n").split("\n")]
     return "\n".join("".join(rows[len(rows) - 1 - y][x] for y in range(len(rows))) for x in range(len(rows[0])))
 mask = lambda name: multi(png(name), {"#": None})
+# One mask atlas for the status, key, pot and bubble icons (12 px wide, 4 empty rows between). Masks centre an icon in
+# their box with `calc(box/2 - centre)`; centres: waiting 5, working 19, pot_a 34, pot_b 50, settle 65, discard 79,
+# failed 90.5, limited 102, draft 117, input 133, request 148, woke 162. Bubbles clip each background layer to an
+# 18 px content box, so one slot shows. Approval stays a single image: at 1.5x its 9 rows land on a half device
+# pixel, and the atlas offset cannot reproduce the old rounding for every anchor position.
+ATLAS = "\n".join(("." * 12 + "\n") * 4 * (i > 0) + png(n).strip("\n") for i, n in enumerate(
+    ("waiting", "working", "pot_a", "pot_b", "settle", "discard", "failed", "limited", "draft", "input", "request", "woke")))
 TOKENS = {
-    "settle": mask("settle"),
-    "discard": mask("discard"),
-    "pot_a": mask("pot_a"),
-    "pot_b": mask("pot_b"),
+    "atlas": multi(ATLAS, {"#": None}),
     "peg_h": multi(rot90(PEG), PEG_P),
     "bubble": multi(png("bubble", BUBBLE_P), BUBBLE_P),
     "spike_open": multi(png("spike_open", SPIKE_P), SPIKE_P),

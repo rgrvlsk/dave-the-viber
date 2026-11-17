@@ -7,6 +7,23 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Menu-card model picker + mask atlas (2026-11-17, Roger: "B, but even more exaggerated … make it pop"; size via a
+  council of Fable Low + Astra Medium at Roger's request). The picker is the house's printed menu: paper with a
+  perforated top, the restaurant's own sign "◆ VIBER AGENTS ◆" with the house koi (not the game's sign), "MAIN COURSE"
+  dish lines (name, provider mark as a round allergen badge, dotted leader, shortcut as the price in #a01e55), the
+  provider column as the "ALLERGENS" key, "◆ SIDES" for reasoning (leaders, 1-6 pips via sibling-index(), chosen on
+  the brush), the app's hidden "Default" shown as a rubber stamp "CHEF RECOMMENDS", and Roger's foot note "Prices in
+  tokens. May contain traces of slop. Ask Theo about the full allergen list." No text under 4.5 in the picker.
+  Mask atlas (`atlas` in src2/sprites2.py): 12 icons (waiting, working, pot_a, pot_b, settle, discard, failed,
+  limited, draft, input, request, woke), 12 px wide, 4 empty rows between; masks use `var(--sk-m, var(--sk-atlas)) 0
+  calc(box/2 - var(--sk-y))`; bubbles clip each background layer to an 18 px content box (Fable's method; my first
+  claim that bubbles could not use an atlas was wrong). Approval stays its own image (half-device-pixel tie at 1.5x).
+  Full 48,762 → 49,625, lite 15,609 → 14,931. Proof vs HEAD: bubbles and main view 0 px; sidebar 36 device px differ
+  on the edges of three tilted stamps (a 1 px grey halo on the steam is gone): ACCEPTED by Roger as a known deviation
+  from the pixel-diff-0 rule. check.js 0 invalid, l3Lost 0. Not checked: light vs dark for the new picker, DPR 1,
+  approval/request/woke bubbles live (only Input was on screen), desktop app.
+  `!important` pruning in picker and Settings states found ~14 flags safe beyond the static guard (~140 chars), not
+  applied (method: flat build, flag k in out2 = k-th source flag except the two dropped -webkit-backdrop-filter).
 - Picker fixes (2026-11-17, Roger's screenshot): "Show more" is a text span where a model row has its mark, so it
   got the 24 px dark plate and wrapped. The plate now needs a mark (`span:first-child:has(svg)`). The chosen
   reasoning level's label has `margin-right: auto`, so its check and pips stay at the right edge like the other

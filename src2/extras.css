@@ -833,13 +833,14 @@ svg.lucide[class*="loader"] {
       color: #fbf3e2;
     }
   }
+  /* Only this listbox is the main course; other lists keep no label. */
+  & [role="listbox"]::before {
+    content: "MAIN COURSE";
+  }
   /* With a short list, the house koi swims in the empty part of the card. */
   & [role="listbox"]:not(:has(:nth-child(5) > [role="option"])) {
     background: var(--sk-fish) 90% 90% / 72px 42px no-repeat;
   }
-}
-[role="listbox"]::before {
-  content: "MAIN COURSE";
 }
 /* The provider column is the allergen key: under the round badges hangs a ribbon down to the foot of the card,
    its label at the top and a swallowtail at the end. */

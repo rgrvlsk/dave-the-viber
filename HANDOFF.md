@@ -7,6 +7,9 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- "MAIN COURSE" leaked (2026-11-17, Roger): since 6db2d13 the label rule was a top-level `[role="listbox"]::before`,
+  so every listbox (command palette, selects) showed it. It is now nested in the picker popup rule. Live: command
+  palette listbox `::before` content none, picker "MAIN COURSE". Full 49,997 (3 free). PUBLISHED locally.
 - Allergen ribbon (2026-11-17, Roger: "Millora-ho" on the provider rail). The ALLERGENS label floated at the rail's
   foot, far from the badges, with the shared brush padding (right 16px) pushing it off-centre. It is now the
   `::after` of the rail's flex column (`.min-h-full`), so it follows the last badge in flow: `flex: 1` makes it a

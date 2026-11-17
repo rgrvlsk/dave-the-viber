@@ -202,6 +202,12 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   Ink centred on the white body (`50% calc(50% - 2px)`; it sat 5 px low and touched the bottom edge).
   Full 40,564 css chars; lite 16,579 (only var renames shift). Previous live file:
   `final2/published-before-2026-11-16-bubbles.json`.
+  Missing bubble report (2026-11-17, Roger's screenshot: an Input ticket with no bubble and no stamp). The stamp is
+  hidden on the first 3 tickets of a kind whether or not the bubble paints, so a failed bubble leaves no signal.
+  Not reproduced: with tickets in the viewport, Input bubbles 1–3 (incl. the composer host with a question open)
+  paint. Cause unknown. Roger chose to keep only the bubble; investigate when it repeats. Then capture at once:
+  screenshot, sidebar scrollTop and collapsed state, ticket index of that kind, open thread, and the host's
+  computed `display` / `left` / `top` / `position-anchor`.
 - Footer (2026-11-16 22:30, council Opus + Sol, Opus design chosen): wall strip 0..14 px (koi), plank 14..30 + 2 px
   shadow, keys on the brown front with 6 px above/below (footer 70 → 74 px; before, the keys overlapped the plank by 2 px).
   Footer keys are slip-paper pixel keys (ink glyph 15.3:1, hover lamp `#ffdf9e`); the desktop update button

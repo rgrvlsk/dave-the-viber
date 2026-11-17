@@ -974,9 +974,33 @@ svg.lucide[class*="loader"] {
 [data-timeline-loading] {
   background: none;
 }
-/* The changed-files card's sticky header hides the rows under it: same wallpaper and the card's tint. */
+/* The changed-files card is a navy order board in the copper frame; its sticky header is the board's title bar,
+   opaque so the rows scroll under it. Rows light up with the menus' gold edge. */
+[data-changed-files-state] {
+  background: #283246 !important;
+  border: 3px solid #a86030;
+  border-radius: 0 !important;
+  box-shadow: 0 0 0 2px #2a1810, 0 6px 0 2px rgb(0 0 0 / 0.5);
+}
 [data-changed-files-header] {
-  background: linear-gradient(#45526e33 0 0), var(--sk-seig);
+  background: #1c2436 !important;
+  border-radius: 0 !important;
+  box-shadow: inset 0 1px #f0cc90, inset 0 -2px #a86030;
+}
+[data-changed-files-header] > :first-child > :first-child {
+  font: 400 0.8125rem var(--sk-pixel);
+  color: #f0cc90;
+}
+[data-changed-files-state] > :last-child button {
+  border-radius: 0 !important;
+}
+/* File-type icons get an inline colour per OS mode (light-mode ones fall under 2:1 on navy): one gold for all. */
+[data-changed-files-state] svg[style*="color"] {
+  color: #e4b460 !important;
+}
+[data-changed-files-state] > :last-child button:hover {
+  background: #303c54;
+  box-shadow: inset 0 0 0 1px #e4b460;
 }
 [data-chat-header],
 [data-right-panel-tabbar] {

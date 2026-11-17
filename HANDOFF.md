@@ -37,6 +37,14 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   mark a 4 px pink pin, reset chips navy tags with a gold edge, the pressed view toggle pink. Light == dark 0 px in
   the dialog; check.js 0 invalid. Cost/Tokens views not seen: this connection has no diagnostics access. Full 45,469
   (flat 51,803). Capture `demo/menus/usage.png`.
+  Changed-files card (Roger: "needs to be stylized and opaque"; `[data-changed-files-state]`, sticky
+  `[data-changed-files-header]`): opaque navy board #283246, 3 px copper border, dark outline, 6 px drop shadow
+  (fits the 4 px gap inside the lane's `overflow-x: clip`); header #1c2436 with a gold top hairline and copper
+  bottom rule, title in Silom gold; square rows, hover #303c54 + 1 px gold edge. File-type icons get a per-mode
+  inline colour from the app (light-mode CSS icon 1.9:1, image 2.6:1 on navy), so all are gold `!important`.
+  Text ≥ 5.39:1, icons ≥ 3.9:1; light == dark on the card (only diff: the swinging sign); sticky header hides rows;
+  check.js 0 invalid, l3Lost 0. Full 45,975. PUBLISHED locally 2026-11-17 (previous live file
+  `final2/published-before-2026-11-17-changedfiles.json`). Not checked: hover contrast of folder names on #303c54 by pixel.
 - Textures and backgrounds (2026-11-17, branch `textures-backgrounds`, NOT published; Roger: "patterns/textures i imatges
   de fons per a la resta de la interfície … i també el fons de la barra lateral"): sprites `wall` (32x32, four glazed
   tiles with grout, bevel, glints, a chipped corner; replaces `tile`, shown at 64 px), `seigaiha` (24x12 wave scales in

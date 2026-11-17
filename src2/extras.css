@@ -803,13 +803,13 @@ svg.lucide[class*="loader"] {
   --muted: #0000;
   background: radial-gradient(circle at 6px 0, var(--sk-night) 3px, #0000 3.5px) 0 0 / 12px 6px repeat-x, #fbf3e2 !important;
   & [data-current] > div::before {
-    content: "\25C6  VIBER AGENTS  \25C6";
+    content: "◆ VIBER AGENTS ◆";
     margin: 0 14px;
     padding: 26px 0 8px;
     border-bottom: 3px double #2a1d16;
     background: var(--sk-fish) 50% 8px / 24px 14px no-repeat;
     color: #c8346e;
-    font: 400 22px/1 var(--sk-pixel);
+    font: 400 22px/1 Phosphate, var(--sk-pixel);
     letter-spacing: 0.1em;
     text-align: center;
     text-shadow: 2px 2px #f0cc90;
@@ -823,6 +823,19 @@ svg.lucide[class*="loader"] {
     color: #5e4a3c;
     font: italic 11px var(--font-sans);
     text-align: center;
+  }
+  /* Footer toggles are printed boxes; the one in force is inked in. */
+  & [data-current] > div > :last-child > div {
+    background: none;
+    box-shadow: inset 0 0 0 1px #2a1d16;
+    & :is([aria-checked="true"], [aria-pressed="true"]) {
+      background: #2a1d16;
+      color: #fbf3e2;
+    }
+  }
+  /* With a short list, the house koi swims in the empty part of the card. */
+  & [role="listbox"]:not(:has(:nth-child(5) > [role="option"])) {
+    background: var(--sk-fish) 90% 90% / 72px 42px no-repeat;
   }
 }
 [role="listbox"]::before {
@@ -849,6 +862,9 @@ svg.lucide[class*="loader"] {
 [data-model-picker-provider] button[aria-pressed="true"] {
   background: #f0cc90;
 }
+[data-model-picker-selected-indicator] {
+  display: none;
+}
 /* A dish line: name, allergen badge, dotted leader, price. */
 [data-slot="combobox-item-content"] {
   & > div:nth-child(2) {
@@ -872,6 +888,9 @@ svg.lucide[class*="loader"] {
       align-self: end;
       margin-bottom: 5px;
       border-bottom: 2px dotted #b3a08c;
+    }
+    & > button {
+      order: 1;
     }
   }
   & [data-slot="kbd"] {
@@ -901,7 +920,7 @@ svg.lucide[class*="loader"] {
     & > :first-child {
       font-size: 0;
       &::before {
-        content: "\25C6\a0SIDES";
+        content: "◆ SIDES";
         font-size: 12px;
       }
     }
@@ -929,7 +948,7 @@ svg.lucide[class*="loader"] {
     background: repeating-linear-gradient(90deg, #c8346e 0 4px, #0000 0 6px);
   }
   & > svg {
-    order: 4;
+    order: 1;
   }
   &[aria-checked="true"] > span:first-child {
     padding: 1px 14px 1px 6px;
@@ -937,8 +956,9 @@ svg.lucide[class*="loader"] {
     color: #fff;
     clip-path: var(--sk-brush);
   }
-  /* The app's hidden "Default" becomes a rubber stamp slapped across the line. */
-  & > .sr-only {
+  /* The app's "Default" label (visible, or sr-only on the chosen level) becomes a rubber stamp across the line. */
+  & > span + span {
+    position: absolute;
     top: -5px;
     left: 76px;
     width: auto;
@@ -950,10 +970,10 @@ svg.lucide[class*="loader"] {
     background: #fbf3e2;
     color: #c8346e;
     font-size: 0;
-    rotate: -8deg;
+    rotate: -12deg;
     &::before {
       content: "CHEF\A RECOMMENDS";
-      font: 400 8px/1.1 var(--sk-pixel);
+      font: 400 10px/1.1 var(--sk-pixel);
       white-space: pre;
     }
   }

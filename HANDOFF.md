@@ -7,6 +7,21 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Picker council fixes (2026-11-17, Roger: "/impeccable council" on a screenshot, then "7 punts + koi gran"). Council
+  Fable Low + Sol High (plan-pace routes), blind to each other. Fixed: (1) the "Default" label is a visible
+  `span + span` when another level is chosen and `.sr-only` only when it is chosen, so the stamp now targets
+  `> span + span` with `position: absolute` (10px, -12deg); (2) Silom's V read "UIBER": the sign uses `Phosphate,
+  var(--sk-pixel)`; (3) the chosen level's check is `order: 1` (after the label), so all pips end at one x;
+  (4) the hidden favourite toggle (24px) sat between leader and price: it is now `order: 1` in the actions box, after
+  the price; (5) the build collapses double spaces inside strings and `\25C6 ` eats one space, so the sign was
+  lopsided: literal "◆" (also in "◆ SIDES"); (6) the app's selected-tab bar `[data-model-picker-selected-indicator]`
+  is hidden (the gold disc marks the tab); (7) footer toggle groups are printed boxes, the active one inked in;
+  plus the house koi 72×42 in the list's empty corner while the list has fewer than 5 options.
+  Rejected from the council: badge before the name (menus list allergens after the dish), shrinking the popup
+  (app-owned height), dropping the check. Known: when Medium (default) is chosen, the stamp covers its check; the
+  brush still marks the choice. Full 49,625 → 49,985 (15 free), lite unchanged. Live inject: check.js 0 invalid,
+  scan.js nothing under 4.5 in the picker, picker light == dark 0 px. The list is virtualised (each option in its own
+  wrapper), so the koi guard counts wrappers: koi with 2 and 4 options, none with 5. Not checked: DPR 1, desktop app. PUBLISHED locally; previous live file `final2/published-before-2026-11-17-council.json`.
 - Menu-card model picker + mask atlas (2026-11-17, Roger: "B, but even more exaggerated … make it pop"; size via a
   council of Fable Low + Astra Medium at Roger's request). The picker is the house's printed menu: paper with a
   perforated top, the restaurant's own sign "◆ VIBER AGENTS ◆" with the house koi (not the game's sign), "MAIN COURSE"

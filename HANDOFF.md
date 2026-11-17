@@ -24,7 +24,10 @@ Folder: `/Users/roger/.t3/projects/pixel-sushi-rail/` (call it `$D`). T3 Code pr
   desktop app, Windows/Linux fonts.
   Merged with the textures branch (2026-11-17): the Settings dialog keeps the seigaiha wallpaper (the navy board fill
   excludes `[aria-label=Settings]`); group cards sit on it. Combined check: check.js 0 invalid / l3Lost 0; Settings
-  light == dark except the pre-existing left-nav/fish-tank gaps.
+  light == dark except the pre-existing left-nav/fish-tank gaps. PUBLISHED locally 2026-11-17 (previous live file
+  `final2/published-before-2026-11-17-menus.json`).
+  Settings tank fix: the fish tank pseudo-elements are scoped to `sidebar-inner`, so Settings' side nav (its own empty
+  `sidebar-footer`) keeps only the wood counter; its last items are no longer covered. Full 44,763.
 - Textures and backgrounds (2026-11-17, branch `textures-backgrounds`, NOT published; Roger: "patterns/textures i imatges
   de fons per a la resta de la interfície … i també el fons de la barra lateral"): sprites `wall` (32x32, four glazed
   tiles with grout, bevel, glints, a chipped corner; replaces `tile`, shown at 64 px), `seigaiha` (24x12 wave scales in
@@ -93,7 +96,7 @@ Folder: `/Users/roger/.t3/projects/pixel-sushi-rail/` (call it `$D`). T3 Code pr
   Checked: Dish! #e6e4d1, Input #e7e2d9, pinned Input #c8aa86; project text ≥ 5.55, stamp 5.64; light == dark.
 - Timer (2026-11-16 22:00): the status timer (`span[aria-hidden]` after the label) has `text-transform: none`,
   so the stamp reads "WORKING 26s". Previous live file: `final2/published-before-2026-11-16-timer.json`.
-- Full edition `out2/full.json` / `full.css`: **44,762 chars** nested, 50,842 flat (OVER the limit if a flat build is ever needed) (limit 50,000, for t3skins.dev).
+- Full edition `out2/full.json` / `full.css`: **44,763 chars** nested, 50,894 flat (OVER the limit if a flat build is ever needed) (limit 50,000, for t3skins.dev).
 - Lite edition `out2/lite.json` / `lite.css`: **15,374 chars** nested, 18,568 flat (limit 20,000, for t3themes.com). Sidebar only.
 - CSS nesting (2026-11-16 21:45): the minifier nests consecutive rules with a shared selector prefix, never reorders
   them, and refuses output that does not expand to the flat CSS. With `--sk-notch`/`--sk-plank`/`--sk-board` and

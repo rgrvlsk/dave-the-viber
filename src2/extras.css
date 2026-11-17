@@ -854,8 +854,9 @@ svg.lucide[class*="loader"] {
   translate: 0 1px;
 }
 
-[data-slot="sidebar-footer"]::before,
-[data-slot="sidebar-footer"]::after {
+/* Only the main sidebar's counter holds the tank: Settings' side nav has an empty footer of its own. */
+[data-slot="sidebar-inner"] [data-slot="sidebar-footer"]::before,
+[data-slot="sidebar-inner"] [data-slot="sidebar-footer"]::after {
   content: "";
   position: absolute;
   inset: -56px 0 calc(100% - 14px);

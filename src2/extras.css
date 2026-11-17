@@ -429,6 +429,10 @@ svg.lucide {
   box-shadow: 0 0 0 2px #e2a866;
 }
 
+/* The breadcrumb is painted on the beam in the shop's pixel type. */
+[data-chat-header] [data-slot="workspace-breadcrumb-text"] {
+  font-family: var(--sk-pixel);
+}
 /* Headings in the menu board's rounded type. */
 .chat-markdown :is(h1, h2, h3, h4) {
   font-family: var(--sk-round);

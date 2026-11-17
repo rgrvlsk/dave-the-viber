@@ -29,6 +29,8 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   `final2/published-before-2026-11-17-menus.json`).
   Settings tank fix: the fish tank pseudo-elements are scoped to `sidebar-inner`, so Settings' side nav (its own empty
   `sidebar-footer`) keeps only the wood counter; its last items are no longer covered. Full 44,763.
+  Breadcrumb (Roger: "posa el breadcrumb també en silom"): `[data-chat-header] [data-slot=workspace-breadcrumb-text]`
+  uses `--sk-pixel`; the header's buttons keep `--sk-round`. Full 44,823 (flat 50,973). check.js 0 invalid, l3Lost 0.
 - Textures and backgrounds (2026-11-17, branch `textures-backgrounds`, NOT published; Roger: "patterns/textures i imatges
   de fons per a la resta de la interfície … i també el fons de la barra lateral"): sprites `wall` (32x32, four glazed
   tiles with grout, bevel, glints, a chipped corner; replaces `tile`, shown at 64 px), `seigaiha` (24x12 wave scales in

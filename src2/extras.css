@@ -1110,3 +1110,31 @@ svg.lucide[class*="loader"] {
   shape-rendering: crispEdges;
   filter: drop-shadow(1px 1px 0 #0b1726);
 }
+/* Desktop app (only it has the Go back / Go forward keys): collapser | logo | moon | keys, in 256 px. With L =
+   --workspace-controls-left (the collapser's box starts at L+1, its icon ends at L+23): the logo text starts 5 px
+   after the icon, the night sky slides so the moon (sprite centre 212 px) sits at L+103, and the two 22 px keys
+   (24 px pitch, the WCAG 2.2 target spacing) start right after it. The Nightly pill never fit there; it stays out. */
+[data-slot="sidebar-inner"] > div:first-child:has([aria-label="Go back"]) {
+  background-position-x: calc(var(--workspace-controls-left) - 109px);
+}
+[data-slot="sidebar-inner"] > div:first-child > div:first-child:has([aria-label="Go back"]) {
+  padding-right: 0;
+}
+[data-slot="sidebar-inner"] [aria-label="T3 Code home"]:has(+ div [aria-label="Go back"]) {
+  margin-left: calc(var(--workspace-controls-left) + 20px);
+}
+[data-slot="sidebar-inner"] [aria-label="T3 Code home"] + div:has([aria-label="Go back"]) {
+  position: absolute;
+  top: 50%;
+  left: calc(var(--workspace-controls-left) + 118px);
+  translate: 0 -50%;
+  gap: 2px;
+}
+[data-slot="sidebar-inner"] :is([aria-label="Go back"], [aria-label="Go forward"]) {
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+}
+[data-slot="sidebar-inner"] > div:first-child:has([aria-label="Go back"]) [data-environment-identification="pill"] {
+  display: none;
+}

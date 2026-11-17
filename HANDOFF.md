@@ -6,6 +6,22 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/pixel-sushi-rail/` (call it `$D`). T3 Code project "Pixel Sushi Rail" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path is a symlink to this folder.
 
 ## State
+- Open ticket off the peg (2026-11-17, Roger: "el ticket obert separat de l'agulla, desplaçat a la dreta, sortint una
+  mica de la barra lateral"; published locally, previous live file `final2/published-before-2026-11-17-offpeg.json`):
+  the current ticket gets `translate: 20px 0` (320 ms, same curve as rotate), so it leaves the peg (12 px gap) and its
+  right edge sits at 263 px, 8 px past the 255 px sidebar. To avoid the clip, the sidebar scroll root gets
+  `overflow: visible` and the viewport `margin-right: -12px; padding-right: 12px` (ticket column width unchanged, no
+  horizontal scroll). Only under `[data-state=expanded]`: a collapsed offcanvas sidebar showed 7 px of the slip at the
+  screen's left edge. The app's resize rail (`sidebar-rail`, 247..263 px, z 20) took clicks on the slip's last 16 px,
+  so the open slip's row gets `z-index: 21`; that needs the scroller's mask removed (a mask is a stacking context; it
+  was a 12 px bottom fade under the fish tank, diff = only that band), and the footer gets `z-index: 22` (extras.css)
+  so the open slip still scrolls into the water. Hit test on the live file: 0 px of the slip lost to the rail.
+  Checked: check.js 0 invalid, l3Lost 0, no hover overlap; light == dark on the ticket (0 px; the app's own sidebar
+  border differs, alpha 0.10 vs 0.08, before this change too); bubble follows the ticket. Side effect: the open
+  slip's drop shadow falls 1-2 px over the next peg. Not checked: desktop app, mobile sheet sidebar.
+  Roger: only the first recent overhung, the others were clipped. Cause: rows have `content-visibility: auto`
+  (paint containment clips to the row); only bubble rows had `visible`. The open row now gets `visible !important`.
+  Checked on a non-bubble 5th row: clipped at 247 px before, paper to 263 px after; check.js 0 invalid, l3Lost 0.
 - Sync + Mac mini (2026-11-17): this folder is a public GitHub repo, https://github.com/rgrvlsk/pixel-sushi-rail
   (`demo/video.mp4` is git-ignored, 64 MB). Clone on the Mac mini: `~/.t3/projects/pixel-sushi-rail`. The full edition is
   installed in the Mac mini's main T3 Code (`~/.t3/userdata/themes/pixel-sushi-rail.json`, same sha256 as `out2/full.json`).
@@ -43,8 +59,8 @@ Folder: `/Users/roger/.t3/projects/pixel-sushi-rail/` (call it `$D`). T3 Code pr
   Checked: Dish! #e6e4d1, Input #e7e2d9, pinned Input #c8aa86; project text ≥ 5.55, stamp 5.64; light == dark.
 - Timer (2026-11-16 22:00): the status timer (`span[aria-hidden]` after the label) has `text-transform: none`,
   so the stamp reads "WORKING 26s". Previous live file: `final2/published-before-2026-11-16-timer.json`.
-- Full edition `out2/full.json` / `full.css`: **41,766 chars** nested, 47,601 flat (limit 50,000, for t3skins.dev).
-- Lite edition `out2/lite.json` / `lite.css`: **16,579 chars** nested, 19,701 flat (limit 20,000, for t3themes.com). Sidebar only.
+- Full edition `out2/full.json` / `full.css`: **40,323 chars** nested, 46,302 flat (limit 50,000, for t3skins.dev).
+- Lite edition `out2/lite.json` / `lite.css`: **15,290 chars** nested, 18,484 flat (limit 20,000, for t3themes.com). Sidebar only.
 - CSS nesting (2026-11-16 21:45): the minifier nests consecutive rules with a shared selector prefix, never reorders
   them, and refuses output that does not expand to the flat CSS. With `--sk-notch`/`--sk-plank`/`--sk-board` and
   `a / b` → `a/b`, on the same sources: full 44,260 → 38,521, lite 19,682 → 16,540. Proof: Chrome CSSOM leaf rules

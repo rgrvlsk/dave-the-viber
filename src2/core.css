@@ -77,10 +77,12 @@ body {
 }
 
 /* ---------- The wall and the rails ---------- */
-[data-slot="sidebar-inner"] {
+/* Glazed tiles: four per sprite, each 32 px, with a lamp glow at the top. Settings' side nav is the same wall. */
+[data-slot="sidebar-inner"]/*full*/,
+[data-workspace-area="settings-nav"]/*/full*/ {
   background-color: #1b3350;
-  background-image: radial-gradient(46% 20% at 50% -6%, rgb(255 140 40 / 0.3), transparent 75%), {{tile}};
-  background-size: 100% 100%, 32px 32px;
+  background-image: radial-gradient(46% 20% at 50% -6%, rgb(255 140 40 / 0.3), transparent 75%), {{wall}};
+  background-size: 100% 100%, 64px 64px;
   /*full*/
   background-blend-mode: screen, normal;
   background-attachment: local, local;

@@ -22,8 +22,24 @@ Folder: `/Users/roger/.t3/projects/pixel-sushi-rail/` (call it `$D`). T3 Code pr
   settings except pre-existing gaps (left settings nav/fish tank, identical in the HEAD build). Captures `demo/menus/`.
   Not checked: alert dialogs with a real title + primary button (none reachable without a destructive action),
   desktop app, Windows/Linux fonts.
-- Textures thread (2026-11-17): a separate T3 thread on branch `textures-backgrounds` (worktree) draws patterns and
-  backgrounds for the plain surfaces and the sidebar wall; budget +4,500 full / +2,500 lite; it does not publish or merge.
+  Merged with the textures branch (2026-11-17): the Settings dialog keeps the seigaiha wallpaper (the navy board fill
+  excludes `[aria-label=Settings]`); group cards sit on it. Combined check: check.js 0 invalid / l3Lost 0; Settings
+  light == dark except the pre-existing left-nav/fish-tank gaps.
+- Textures and backgrounds (2026-11-17, branch `textures-backgrounds`, NOT published; Roger: "patterns/textures i imatges
+  de fons per a la resta de la interfície … i també el fons de la barra lateral"): sprites `wall` (32x32, four glazed
+  tiles with grout, bevel, glints, a chipped corner; replaces `tile`, shown at 64 px), `seigaiha` (24x12 wave scales in
+  3-5% white, 48x24 px) and `beam` (32x26 dark wood, 64x52 px). Wall in core.css (both editions; Settings' side nav
+  shares it in full, under a 30% inset shade). extras.css "Textures and backgrounds": seigaiha wallpaper (fixed to the
+  window, so it lines up across panes) on the conversation, the right panel, the Settings dialog, the empty/loading
+  timeline (`[data-timeline-loading]` made transparent) and the changed-files sticky header; the chat header and the
+  right panel's tab bar are one wood beam. Full 40,286 → 41,326 (+1,040); lite 15,253 → 15,337 (+84).
+  Pixel contrast (tools/pixcheck.py, median ring / brightest ring pixel): header 4.86 / ≥4.7 (the "/" separator; the
+  beam's light streak was darkened to `#4f321f` for it), conversation 5.97 / 5.34, panel 6.57 / 5.74, wall labels
+  9.57 / 5.87, Settings nav 6.68 / 5.53 (4.33 before the shade), empty state 7.33. Light == dark: 0 px on every textured
+  surface. check.js full + lite: 0 invalid, l3Lost 0, no overlap. Captures `demo/textures/`.
+  Not done: the terminal (the web preview cannot open it; xterm paints its own `#11131a`). Found, not mine: the fish
+  tank footer also renders inside Settings' side nav (`[data-slot=sidebar-footer]`), over the last nav items; the thread
+  details card's muted rows are 3.55-4.08:1 (same before and after).
 - Open ticket off the peg (2026-11-17, Roger: "el ticket obert separat de l'agulla, desplaçat a la dreta, sortint una
   mica de la barra lateral"; published locally, previous live file `final2/published-before-2026-11-17-offpeg.json`):
   the current ticket gets `translate: 20px 0` (320 ms, same curve as rotate), so it leaves the peg (12 px gap) and its
@@ -77,8 +93,8 @@ Folder: `/Users/roger/.t3/projects/pixel-sushi-rail/` (call it `$D`). T3 Code pr
   Checked: Dish! #e6e4d1, Input #e7e2d9, pinned Input #c8aa86; project text ≥ 5.55, stamp 5.64; light == dark.
 - Timer (2026-11-16 22:00): the status timer (`span[aria-hidden]` after the label) has `text-transform: none`,
   so the stamp reads "WORKING 26s". Previous live file: `final2/published-before-2026-11-16-timer.json`.
-- Full edition `out2/full.json` / `full.css`: **40,323 chars** nested, 46,302 flat (limit 50,000, for t3skins.dev).
-- Lite edition `out2/lite.json` / `lite.css`: **15,290 chars** nested, 18,484 flat (limit 20,000, for t3themes.com). Sidebar only.
+- Full edition `out2/full.json` / `full.css`: **44,762 chars** nested, 50,842 flat (OVER the limit if a flat build is ever needed) (limit 50,000, for t3skins.dev).
+- Lite edition `out2/lite.json` / `lite.css`: **15,374 chars** nested, 18,568 flat (limit 20,000, for t3themes.com). Sidebar only.
 - CSS nesting (2026-11-16 21:45): the minifier nests consecutive rules with a shared selector prefix, never reorders
   them, and refuses output that does not expand to the flat CSS. With `--sk-notch`/`--sk-plank`/`--sk-board` and
   `a / b` → `a/b`, on the same sources: full 44,260 → 38,521, lite 19,682 → 16,540. Proof: Chrome CSSOM leaf rules

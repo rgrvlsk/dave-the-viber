@@ -646,7 +646,6 @@ svg.lucide[class*="loader"] {
 [data-thread-details-card] {
   border: 0 !important;
   border-radius: 0 !important;
-  background: #283246 !important;
   backdrop-filter: none !important;
   box-shadow: inset 0 0 0 3px #a86030, inset 0 0 0 4px #f0cc90, 0 0 0 2px #2a1810, 8px 8px 0 2px rgb(0 0 0 / 0.5) !important;
 }
@@ -706,6 +705,10 @@ svg.lucide[class*="loader"] {
   box-shadow: 0 0 0 1px #e4b460, 3px 3px 0 1px rgb(0 0 0 / 0.5) !important;
 }
 /* Settings: group titles in the pixel type and gold; switches are square keys, pink when on, in a gold ring. */
+/* Settings keeps the room's wallpaper (Textures section); the other boards are plain navy. */
+:is([data-slot="dialog-popup"]:not([aria-label="Settings"]), [data-slot="alert-dialog-popup"], [data-thread-details-card]) {
+  background: #283246 !important;
+}
 [data-slot="settings-group"] {
   background: #303c54 !important;
 }
@@ -915,4 +918,34 @@ svg.lucide[class*="loader"] {
   [data-workspace-area="composer"]::after {
     animation: none !important;
   }
+}
+
+/* ---------- Textures and backgrounds ---------- */
+/* The dining room, the side panel and the settings room share one wallpaper: seigaiha waves in 3-5% white over
+   the night colour, anchored to the window so it lines up across panels and stays put while content scrolls. The top bars are one dark
+   wood beam the noren hangs from. */
+:root {
+  --sk-seig: {{seigaiha}} 0 0 / 48px 24px fixed var(--sk-night);
+}
+[data-workspace-area="conversation"],
+[data-workspace-area="panel"],
+[data-slot="dialog-popup"][aria-label="Settings"] {
+  background: radial-gradient(70% 50% at 50% 0, rgb(255 170 96 / 0.07), transparent 70%), var(--sk-seig);
+}
+/* An empty or loading timeline paints its own night fill over the room: let the wallpaper through. */
+[data-timeline-loading] {
+  background: none;
+}
+/* The changed-files card's sticky header hides the rows under it: same wallpaper and the card's tint. */
+[data-changed-files-header] {
+  background: linear-gradient(#45526e33 0 0), var(--sk-seig);
+}
+[data-chat-header],
+[data-right-panel-tabbar] {
+  background: linear-gradient(transparent 50px, #1a110a 0) 0 0 / 100% 52px no-repeat, {{beam}} 0 0 / 64px 52px #4a2f1e;
+}
+/* Settings' side nav is the kitchen wall (core.css) under a 30% shade: its grey section labels stay above 4.5:1
+   on the tile bevels and glints. */
+[data-workspace-area="settings-nav"] {
+  box-shadow: inset 0 0 0 100vmax rgb(8 16 28 / 0.3);
 }

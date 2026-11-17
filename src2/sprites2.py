@@ -7,7 +7,13 @@ BUBBLE_P = {"o": "#10202f", "w": "#fffdf6", "g": "#d9d2c3"}
 COUNTER_P = {"h": "#e2a866", "w": "#b9783d", "g": "#a0662f", "s": "#5e3818"}
 BASE_P = {"k": "#0e1620", "s": "#c9d1d8", "b": "#8a5a2b", "h": "#b07a40"}
 TIP_P = {"k": "#0e1620", "s": "#dfe5ea", "c": "#7d8994"}
-TILE_P = {"g": "#3a5a7e", "h": "#2b4d74", "t": "#1d3a5a"}
+# Kitchen wall: glazed tiles (2x2 per sprite), dark grout, lit top-left bevel, glints, one chipped corner.
+WALL_P = {"g": "#13253b", "h": "#2b4d74", "t": "#1d3a5a", "u": "#1a3452", "s": "#3a5a7e"}
+# Header beam: dark wood, dark enough that muted text on its lightest streak stays above 4.5:1.
+BEAM_P = {"h": "#6e4630", "w": "#4a2f1e", "d": "#3e2718", "l": "#4f321f", "k": "#2e1d12"}
+# Dining-room wallpaper: seigaiha waves. The PNG marks outer rings white, inner rings grey;
+# the token paints both in faint white, so the pattern stays low-contrast behind text on any night surface.
+SEIG_P = {"a": "#ffffff", "b": "#c0c0c0"}
 NOREN_P = {"n": "#2a3f73", "w": "#efe2c8", "d": "#1a2b55", "r": "#8a5a2b"}
 FISH_P = {"o": "#10202f", "y": "#f08a5d", "w": "#ffd2b8"}
 # Footer fish tank: kelp (two sway frames), branch and brain coral, sand, rising bubbles.
@@ -39,7 +45,9 @@ TOKENS = {
     "spike": multi(png("spike", SPIKE_P), SPIKE_P),
     "base": multi(png("base", BASE_P), BASE_P),
     "tip": multi(png("tip", TIP_P), TIP_P),
-    "tile": multi(png("tile", TILE_P), TILE_P),
+    "wall": multi(png("wall", WALL_P), WALL_P),
+    "beam": multi(png("beam", BEAM_P), BEAM_P),
+    "seigaiha": multi(png("seigaiha", SEIG_P), {"a": "#ffffff0c", "b": "#ffffff07"}),
     "noren": multi(png("noren", NOREN_P), NOREN_P),
     "fish": multi(FISH, FISH_P),
     "fish_l": multi("\n".join(r[::-1] for r in FISH.split("\n")), FISH_P),

@@ -7,6 +7,11 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Picker fixes (2026-11-17, Roger's screenshot): "Show more" is a text span where a model row has its mark, so it
+  got the 24 px dark plate and wrapped. The plate now needs a mark (`span:first-child:has(svg)`). The chosen
+  reasoning level's label has `margin-right: auto`, so its check and pips stay at the right edge like the other
+  rows. Full 48,762 (1,238 free), lite unchanged. Live inject: plate gone, label 72 px on one line, 5.9:1+ ink on
+  the row; pips of all 6 levels end at the same x. Both validators pass. Not published.
 - `!important` pruning (2026-11-17, Fable, at Roger's request "fix everything"): 74 of 197 flags removed from
   `src2/core.css` (26) and `src2/extras.css` (48). Full 49,513 → 48,749 (1,251 free), lite 15,859 → 15,609.
   Why it is safe: the app puts Tailwind in `@layer`s and the theme is an unlayered adopted stylesheet, so a normal

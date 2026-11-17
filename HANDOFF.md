@@ -7,6 +7,17 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Dave fan-art (2026-11-17): newly drawn from the official Digital
+  Extra character sheet's SUSHI BAR poses, found by Luna Low. Straw hat, pale blue shirt, broad build and goatee;
+  programming behind a silver laptop with a cyan fish. Roger kept the original broad goatee, with its uneven side
+  corrected, and asked for black hair. `src2/sprites/dave.png` is now 56x60, 17 opaque colours,
+  binary alpha; `DAVE_P` matches it. The old 28x30 reduction lost the eyes and fish. CSS and the displayed 56x60
+  size stay unchanged. Isolated build of the shared sources: full 49,659, lite unchanged at 16,183. Built-in imagegen prompt and conversion
+  notes: `demo/menus/dave-fanart-prompt.md`. Build and both validators pass; lossless WebP matches the PNG.
+  NOT activated: the installed theme still has the prior sprite. No new browser or desktop check for this sprite.
+  The bar capture below shows the prior artwork. Sprite preview: `demo/menus/dave-fanart.png`.
+  Source-only commit: shared `out2/` and `src2/extras.css` contain concurrent work and are left unstaged.
+  Before activation, rebuild with the other threads' latest changes and preserve the live desktop titlebar rules.
 - Restaurant bar (2026-11-17, Roger: the bottom bar is the restaurant counter, same height as the sidebar's, the pad
   stays down in a new thread too, stools, Dave at the right behind a laptop with a lit fish). extras.css "The
   restaurant bar": `.chat-composer-lane` gets `position: relative; padding-bottom: 40px`; its `::after` is the counter

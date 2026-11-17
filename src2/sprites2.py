@@ -26,12 +26,12 @@ CORAL_P = {"p": "#e8607a", "h": "#ffa0ac", "s": "#a8344e"}
 BRAIN_P = {"y": "#e9b44c", "l": "#ffe08f", "o": "#b8742a"}
 SAND_P = {"a": "#d9b77a", "b": "#c49a5c", "c": "#a87d45"}
 BUB_P = {"b": "#bff3ff", "w": "#ffffff"}
-# The restaurant bar under the chat: wooden stools with a back, and Dave (an original cook-coder: white headband with a
-# pink stripe, indigo happi) behind his laptop, whose lid shows a lit fish.
+# The restaurant bar under the chat: wooden stools with a back, and newly drawn fan-art of Dave in his sushi-bar
+# outfit (straw hat, pale blue shirt, goatee) behind a laptop with a lit fish. Art is 56x60, displayed at native size.
 STOOL_P = {"k": "#3a2414", "w": "#c58848", "h": "#e2a866", "d": "#8a5a2b"}
-DAVE_P = {"k": "#1a1210", "h": "#3b2a20", "H": "#6a4a34", "w": "#f3e7d3", "p": "#e4106c", "s": "#e8b48a", "S": "#c98c66",
-          "e": "#1a1210", "q": "#e48a7a", "m": "#8a3a2a", "j": "#2a3f73", "J": "#1a2b55", "c": "#efe2c8", "l": "#c9d1d8",
-          "L": "#8a949e", "f": "#bff3ff", "g": "#ffffff"}
+DAVE_P = {"a": "#29282f", "b": "#2e211c", "c": "#4a3d38", "d": "#546973", "e": "#554436", "f": "#825965",
+          "g": "#9cbbc2", "h": "#a4a5ab", "i": "#acc9d1", "j": "#b0b6c2", "k": "#b59065", "l": "#baf5f7",
+          "m": "#e3aa6b", "n": "#f2ebd3", "o": "#fadbab", "p": "#fdc38d", "q": "#fdc994"}
 FISH = png("fish", FISH_P)
 PEG = png("peg", PEG_P)
 def rot90(art):

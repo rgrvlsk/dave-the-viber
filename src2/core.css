@@ -148,7 +148,7 @@ body {
   transform-origin: 0 14px;
   rotate: var(--sk-tilt, 0deg);
   /*full*/
-  transition: background-color 180ms ease-out, rotate 320ms cubic-bezier(0.34, 1.4, 0.64, 1);
+  transition: background-color 180ms ease-out, rotate 320ms cubic-bezier(0.34, 1.4, 0.64, 1), translate 320ms cubic-bezier(0.34, 1.4, 0.64, 1);
   /*/full*/
 }
 /* Hand-hung: no two tickets hang at quite the same angle. */
@@ -159,7 +159,27 @@ body {
   --sk-paper: var(--sk-paper-hover);
   rotate: 0deg;
 }
-/* The order you are on: straight, framed in akane. */
+/* The order you are on: off its peg, pulled right past the wall's edge, straight, framed in akane.
+   The scroller grows 12 px past the sidebar (padding keeps the ticket column as it was) so the slip
+   is not clipped. Only when expanded: a collapsed sidebar would show the slip's right edge.
+   The app's resize rail (z 20) spans 247..263 px and would take clicks on the slip's right end, so the
+   slip goes to z 21. That needs the scroller's bottom-fade mask gone (a mask makes a stacking context);
+   the fade sat under the fish tank. */
+[data-slot="sidebar-inner"] [role="presentation"]:has(> [data-slot="scroll-area-viewport"]) {
+  overflow: visible;
+}
+[data-slot="sidebar-inner"] [data-slot="scroll-area-viewport"] {
+  margin-right: -12px;
+  padding-right: 12px;
+  -webkit-mask: none;
+  mask: none;
+}
+[data-state="expanded"] [data-thread-item]:has(> [data-testid="sidebar-row-card"][aria-current]:not([aria-current="false"])) {
+  z-index: 21;
+}
+[data-state="expanded"] [data-thread-item] > [data-testid="sidebar-row-card"][aria-current]:not([aria-current="false"]) {
+  translate: 20px 0;
+}
 [data-thread-item] > [data-testid="sidebar-row-card"][aria-current]:not([aria-current="false"]) {
   rotate: 0deg;
   box-shadow: inset 0 0 0 2px var(--sk-pass), inset 0 0 0 4px var(--sk-bg),inset 0 0 0 5px color-mix(in srgb, var(--sk-pass) 45%, transparent);

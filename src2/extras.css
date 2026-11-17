@@ -677,6 +677,8 @@ svg.lucide[class*="loader"] {
 }
 [data-slot="sidebar-footer"] {
   position: relative;
+  /* Above the open ticket (z 21 in core.css), which still scrolls into the water. */
+  z-index: 22;
   padding: 36px 8px 6px !important;
   background: var(--sk-wood) left 0 top 14px / 64px 16px repeat-x, linear-gradient(transparent 30px, #6e4220 30px 32px, #8f5a2b 32px) !important;
 }

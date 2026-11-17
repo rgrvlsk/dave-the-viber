@@ -801,3 +801,33 @@ svg.lucide[class*="loader"] {
     animation: none !important;
   }
 }
+
+/* ---------- Textures and backgrounds ---------- */
+/* The dining room, the side panel and the settings room share one wallpaper: seigaiha waves in 3-5% white over
+   the night colour, anchored to the window so it lines up across panels and stays put while content scrolls. The top bars are one dark
+   wood beam the noren hangs from. */
+:root {
+  --sk-seig: {{seigaiha}} 0 0 / 48px 24px fixed var(--sk-night);
+}
+[data-workspace-area="conversation"],
+[data-workspace-area="panel"],
+[data-slot="dialog-popup"][aria-label="Settings"] {
+  background: radial-gradient(70% 50% at 50% 0, rgb(255 170 96 / 0.07), transparent 70%), var(--sk-seig);
+}
+/* An empty or loading timeline paints its own night fill over the room: let the wallpaper through. */
+[data-timeline-loading] {
+  background: none;
+}
+/* The changed-files card's sticky header hides the rows under it: same wallpaper and the card's tint. */
+[data-changed-files-header] {
+  background: linear-gradient(#45526e33 0 0), var(--sk-seig);
+}
+[data-chat-header],
+[data-right-panel-tabbar] {
+  background: linear-gradient(transparent 50px, #1a110a 0) 0 0 / 100% 52px no-repeat, {{beam}} 0 0 / 64px 52px #4a2f1e;
+}
+/* Settings' side nav is the kitchen wall (core.css) under a 30% shade: its grey section labels stay above 4.5:1
+   on the tile bevels and glints. */
+[data-workspace-area="settings-nav"] {
+  box-shadow: inset 0 0 0 100vmax rgb(8 16 28 / 0.3);
+}

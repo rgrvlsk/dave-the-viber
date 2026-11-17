@@ -6,6 +6,21 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/pixel-sushi-rail/` (call it `$D`). T3 Code project "Pixel Sushi Rail" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path is a symlink to this folder.
 
 ## State
+- Textures and backgrounds (2026-11-17, branch `textures-backgrounds`, NOT published; Roger: "patterns/textures i imatges
+  de fons per a la resta de la interfície … i també el fons de la barra lateral"): sprites `wall` (32x32, four glazed
+  tiles with grout, bevel, glints, a chipped corner; replaces `tile`, shown at 64 px), `seigaiha` (24x12 wave scales in
+  3-5% white, 48x24 px) and `beam` (32x26 dark wood, 64x52 px). Wall in core.css (both editions; Settings' side nav
+  shares it in full, under a 30% inset shade). extras.css "Textures and backgrounds": seigaiha wallpaper (fixed to the
+  window, so it lines up across panes) on the conversation, the right panel, the Settings dialog, the empty/loading
+  timeline (`[data-timeline-loading]` made transparent) and the changed-files sticky header; the chat header and the
+  right panel's tab bar are one wood beam. Full 40,286 → 41,326 (+1,040); lite 15,253 → 15,337 (+84).
+  Pixel contrast (tools/pixcheck.py, median ring / brightest ring pixel): header 4.86 / ≥4.7 (the "/" separator; the
+  beam's light streak was darkened to `#4f321f` for it), conversation 5.97 / 5.34, panel 6.57 / 5.74, wall labels
+  9.57 / 5.87, Settings nav 6.68 / 5.53 (4.33 before the shade), empty state 7.33. Light == dark: 0 px on every textured
+  surface. check.js full + lite: 0 invalid, l3Lost 0, no overlap. Captures `demo/textures/`.
+  Not done: the terminal (the web preview cannot open it; xterm paints its own `#11131a`). Found, not mine: the fish
+  tank footer also renders inside Settings' side nav (`[data-slot=sidebar-footer]`), over the last nav items; the thread
+  details card's muted rows are 3.55-4.08:1 (same before and after).
 - Open ticket off the peg (2026-11-17, Roger: "el ticket obert separat de l'agulla, desplaçat a la dreta, sortint una
   mica de la barra lateral"; published locally, previous live file `final2/published-before-2026-11-17-offpeg.json`):
   the current ticket gets `translate: 20px 0` (320 ms, same curve as rotate), so it leaves the peg (12 px gap) and its

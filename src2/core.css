@@ -102,7 +102,7 @@ body {
 /* A twine runs down the left of the wall; each ticket is pegged to it at its top-left corner. */
 [data-thread-item]:has(> [data-testid="sidebar-row-card"]) {
   position: relative;
-  padding: 4px 4px 5px 20px !important;
+  padding: 4px 4px 5px 20px;
   filter: drop-shadow(2px 3px 0 rgb(6 14 26 / 0.45));
 }
 [data-thread-item]:has(> [data-testid="sidebar-row-card"])::before {
@@ -152,8 +152,8 @@ body {
 [data-thread-item] > [data-testid="sidebar-row-card"] {
   /* --sk-t: the status ink, set in extras.css; tickets with a coloured stamp get paper tinted 10% with it. */
   --sk-bg: color-mix(in srgb, var(--sk-t, var(--sk-paper)) 10%, var(--sk-paper));
-  background-color: var(--sk-bg) !important;
-  border-radius: 0 !important;
+  background-color: var(--sk-bg);
+  border-radius: 0;
   box-shadow: inset 0 0 0 1px var(--sk-edge);
   -webkit-mask: linear-gradient(#000 0 0) top / 100% calc(100% - 4px) no-repeat, var(--sk-tear) bottom left / 8px 4px repeat-x;
   mask: linear-gradient(#000 0 0) top / 100% calc(100% - 4px) no-repeat, var(--sk-tear) bottom left / 8px 4px repeat-x;
@@ -223,7 +223,7 @@ body {
 [data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(2) {
   order: -1;
   height: 1.25rem;
-  margin-top: 4px !important;
+  margin-top: 4px;
   font-family: var(--sk-cond);
   font-size: 0.9rem;
   font-weight: 600;
@@ -283,12 +283,12 @@ body {
 }
 /* The model mark is printed in the same ink as the notes. */
 [data-thread-item] > [data-testid="sidebar-row-card"] span[aria-hidden="true"] svg {
-  color: var(--contrast-secondary-label) !important;
+  color: var(--contrast-secondary-label);
   opacity: 1 !important;
 }
 /* The PR mark on line 3 in a green that holds on paper. */
 [data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(3) > :is(a, button) :is(svg, span) {
-  color: var(--sk-done) !important;
+  color: var(--sk-done);
   opacity: 1 !important;
 }
 /* With no meta line the app puts the model icon on the title line: move it to line 3.
@@ -314,7 +314,7 @@ body {
   gap: 0.25rem;
   height: 1rem;
   padding: 0 0.3125rem 0 0.25rem;
-  color: var(--sk-c) !important;
+  color: var(--sk-c);
   background: color-mix(in srgb, var(--sk-c) 10%, var(--sk-stamp, var(--sk-paper)));
   box-shadow: inset 0 0 0 1px currentColor;
   font-family: var(--font-mono);
@@ -377,7 +377,7 @@ body {
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-success-foreground {
   --sk-c: var(--sk-done);
   --sk-icon: var(--sk-i-working);
-  font-size: 0 !important;
+  font-size: 0;
 }
 /* Done is served: the stamp reads "Dish!" (the app's own "Done" stays for screen readers). */
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-success-foreground::after {
@@ -421,7 +421,7 @@ body {
   inset: 100% -0.3125rem auto auto !important;
   z-index: 31;
   height: 1.25rem;
-  align-items: center !important;
+  align-items: center;
   opacity: 0 !important;
   visibility: hidden;
   pointer-events: auto !important;
@@ -437,14 +437,14 @@ body {
   --sk-k: #3a4652;
   width: 1.375rem;
   height: 1.125rem;
-  margin: 0 0 0 0.125rem !important;
-  padding: 0 !important;
-  gap: 0 !important;
+  margin: 0 0 0 0.125rem;
+  padding: 0;
+  gap: 0;
   justify-content: center;
-  border-radius: 0 !important;
-  font-size: 0 !important;
-  color: var(--sk-ink) !important;
-  background: var(--sk-c) !important;
+  border-radius: 0;
+  font-size: 0;
+  color: var(--sk-ink);
+  background: var(--sk-c);
   box-shadow: inset 0 0 0 1px var(--sk-k), inset 0 -3px #0003, inset 0 2px #fff6;
   translate: var(--sk-kx) 0;
   transition: translate var(--sk-kt);
@@ -530,11 +530,11 @@ body {
 /* ---------- Shelves: the pass and the spike ---------- */
 [data-testid$="-shelf-toggle"] {
   font-family: var(--sk-round);
-  font-size: 0.7rem !important;
+  font-size: 0.7rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--contrast-sidebar-foreground) !important;
-  border-radius: 0 !important;
+  color: var(--contrast-sidebar-foreground);
+  border-radius: 0;
 }
 [data-testid="sidebar-settled-shelf-toggle"] > span:first-child::before {
   content: "";
@@ -564,7 +564,7 @@ body {
 [data-testid$="-shelf-toggle"] > span:nth-child(2) {
   visibility: visible !important;
   height: 2px;
-  background: repeating-linear-gradient(90deg, #a9b4bf 0 2px, transparent 2px 4px) !important;
+  background: repeating-linear-gradient(90deg, #a9b4bf 0 2px, transparent 2px 4px);
 }
 /*/full*/
 [data-testid$="-shelf-toggle"]:focus-visible {
@@ -588,9 +588,9 @@ body {
   --sk-paper: var(--sk-paper-old);
   width: calc(100% - 8px);
   margin-inline: 4px;
-  background-color: var(--sk-paper) !important;
-  color: var(--contrast-foreground) !important;
-  border-radius: 0 !important;
+  background-color: var(--sk-paper);
+  color: var(--contrast-foreground);
+  border-radius: 0;
   /* Paper edge, a thicker bottom lip and a dark seam: each slip reads as its own sheet on the stack. */
   box-shadow: inset 0 0 0 1px var(--sk-edge), inset 0 -3px 0 #b5a277, 0 1px 0 #3a2e22/*full*/, 1px 3px 0 rgb(6 14 26 / 0.45)/*/full*/;
   transform-origin: 18px 50%;
@@ -627,8 +627,8 @@ body {
 [data-thread-item]:has(> [data-sidebar-parent="shelf:settled"]):nth-child(3n) { --sk-tilt: 0.3deg; }
 /*/full*/
 [data-thread-item] > [data-sidebar-parent="shelf:settled"] {
-  padding-inline: 1.75rem 0.375rem !important;
-  gap: 0.375rem !important;
+  padding-inline: 1.75rem 0.375rem;
+  gap: 0.375rem;
 }
 /*full*/
 [data-thread-item] > [data-sidebar-parent="shelf:settled"] > div > span:last-child {
@@ -636,7 +636,7 @@ body {
 }
 /*/full*/
 [data-thread-item] > [data-sidebar-parent="shelf:settled"] > div > span:nth-child(2) {
-  color: var(--contrast-secondary-label) !important;
+  color: var(--contrast-secondary-label);
 }
 /*full*/
 /* The rod stays plumb in front of each slip down to its hole; only the paper tilts. */

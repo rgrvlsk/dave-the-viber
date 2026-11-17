@@ -7,6 +7,26 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- `!important` pruning (2026-11-17, Fable, at Roger's request "fix everything"): 74 of 197 flags removed from
+  `src2/core.css` (26) and `src2/extras.css` (48). Full 49,513 → 48,749 (1,251 free), lite 15,859 → 15,609.
+  Why it is safe: the app puts Tailwind in `@layer`s and the theme is an unlayered adopted stylesheet, so a normal
+  theme declaration already beats every layered utility. A flag is still needed against inline styles, the app's
+  ~230 unlayered rules, app animations, and other theme rules.
+  Method: `fx/prune.js` on a flat build (`NEST` False) removes flags in groups in the live page and keeps every flag
+  whose removal changes any computed standard property of any element or ::before/::after (104 of 110 testable
+  flags passed; 87 flags sit in rules that match nothing on the test page and were kept untested). Then a static
+  guard kept 30 more: every flag on opacity, transform, translate, scale, rotate, width/height, inset, position,
+  display, visibility, pointer-events, transition, animation, overflow (JS and `animate-*` set those). For the
+  rest, each competing theme or unlayered app rule on the same property family that can hit the same element
+  (state pseudo-classes and state attributes stripped) must lose by specificity and order alone: 0 conflicts.
+  Proof, HEAD build vs pruned build: computed style equal on 3,720 elements + pseudo-elements in dark, in light,
+  for lite, and with the model picker open (3,842 elements); frozen screenshot pixel diff 0 outside the caret
+  (66 px blink, same as two shots of one build); check.js 0 invalid, l3Lost 0, no overlap; both validators pass.
+  Not checked: hover/focus states by screenshot, dialogs, Settings, question UI, Mac mini status demo, desktop app.
+  Known limit: a flag removed from a rule that later also matches an element with an inline style or a JS
+  animation on that property will lose to it; if a colour, radius, padding or shadow "comes back" in one state, put
+  `!important` back on that declaration. Not published. Screenshot pitfall found: the first shot after switching
+  edition (lite ↔ full) misses the pad and popup text; inject the same edition twice before comparing.
 - Model picker as the house menu + build size passes (2026-11-17, Roger chose proposals 1, 2, 3, 5; size ideas from a
   Fable Low consult at Roger's request). Build (tools/build2.py): data URIs are `url(data:;base64,…)` unquoted,
   MIME-less and unpadded; `^= $= *= ~= |=` values unquoted; @keyframes renamed to one letter (whole-name match);
@@ -19,8 +39,7 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   header a navy band "◆ REASONING" in Silom gold; level pips 1-6 via `sibling-index()`; the chosen level on the brush.
   Full 49,513 (487 free). check.js 0 invalid, l3Lost 0; no text under 4.5 inside the picker; picker body light ==
   dark (differences only at its bottom edge over the pad, cause not isolated). Unknown: whether gallery importers
-  accept MIME-less data URIs. Reserve ideas from Fable: `!important` pruning with a computed-style oracle
-  (−800…−1,600 est.), a mask atlas (~−550 est.).
+  accept MIME-less data URIs. Reserve idea from Fable: a mask atlas (~−550 est.).
 - Sprite derivations (2026-11-17, Roger chose A+B+C): Dish's 2nd frame and the pot's 4th frame are the mirrored
   sprite (`scale: -1 1` in `sk-dish` / `sk-steam`); `working2.png` and `pot_c.png` removed. The bubble inks are
   the status masks under a `lighten`-blended ink rectangle (18x18 px, inside the white body); the four `*_ink`
@@ -355,6 +374,10 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
 - Ticket move to the Working shelf shows a clipped remainder/jump (app animation; left alone).
 - Breadcrumb emoji is part of the project name (CSS cannot remove it).
 - Unapplied size items (if room is needed; collapsed-hide var applied 2026-11-17, −597):
+  the 87 untested `!important` flags (up to −870: open each state, rerun `fx/prune.js`, apply the guard above);
+  mask atlas, 14 status masks in one WebP (1,350 → 339 chars gross, ~−550 net est., needs a clip layer per mask rule);
+  shorter attribute matches such as `[data-testid$=w-card]` (−400…−550 est., breaks if the app adds a matching id);
+  `opacity: 0.17` in core.css is dead in full (extras sets 0.2 on the same selector; −12 with a lite-only marker);
   inline single-use hex vars (−153 full / −90 lite measured, var scope risk), dead rules list, raw `<>` in data URIs
   (~−500, risky). Rejected with numbers: reordering rules to nest more (−418/−159, cascade risk), one merged
   `border-radius:0!important` rule (+753), `[class*=status-slot]` (matches `group-hover/...` utilities).

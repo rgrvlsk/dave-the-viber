@@ -46,11 +46,11 @@
 /* Wall controls are glazed tiles: square with stepped pixel corners, a light top-left and dark
    bottom-right bevel, a crisp cream glyph with a 1 px pixel shadow; pressed tiles sink by 1 px. */
 [data-slot="sidebar-inner"] :is([data-sidebar="menu-button"], [data-sidebar="trigger"]):has(> svg.lucide) {
-  border-radius: 0 !important;
-  background: #24466a !important;
+  border-radius: 0;
+  background: #24466a;
   box-shadow: inset 2px 2px 0 #3f6c96, inset -2px -2px 0 #14283f;
   clip-path: var(--sk-notch);
-  color: #fff3dc !important;
+  color: #fff3dc;
 }
 [data-slot="sidebar-inner"] :is([data-sidebar="menu-button"], [data-sidebar="trigger"]):is(:hover, [aria-expanded="true"]):has(> svg.lucide) {
   background: #2f5a86 !important;
@@ -59,23 +59,23 @@
   box-shadow: inset 2px 2px 0 #14283f, inset -2px -2px 0 #3f6c96;
 }
 [data-slot="sidebar-inner"] :is([data-sidebar="menu-button"], [data-sidebar="trigger"]) > svg.lucide {
-  color: #fff3dc !important;
+  color: #fff3dc;
   stroke-width: 2.25;
   shape-rendering: crispEdges;
   filter: drop-shadow(1px 1px 0 #0b1726);
 }
 /* The search field is a recessed tile: the same glaze, bevel inverted. */
 [data-slot="sidebar-inner"] div:has(> [data-slot="input-control"]) {
-  background: #14283f !important;
-  border-radius: 0 !important;
+  background: #14283f;
+  border-radius: 0;
   box-shadow: inset 2px 2px 0 #0b1726, inset -2px -2px 0 #3f6c96;
   clip-path: var(--sk-notch);
   color: #fff3dc;
 }
 [data-slot="sidebar-inner"] [data-slot="input-control"] {
-  background: transparent !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
 }
 /* The logo floats in the night sky in ethereal white: a moonlit halo and a slow drift (still under reduced motion);
    Nightly is a paper tag beside it. */
@@ -84,14 +84,14 @@
 }
 [aria-label="T3 Code home"] {
   padding: 0 8px;
-  border-radius: 0 !important;
+  border-radius: 0;
   background: none;
   font-family: var(--sk-round);
   filter: drop-shadow(0 0 2px #dfe8ff) drop-shadow(0 0 7px rgb(160 190 255 / 0.55));
   animation: sk-float 3.2s ease-in-out infinite alternate;
 }
 [aria-label="T3 Code home"] * {
-  color: #fbfaff !important;
+  color: #fbfaff;
 }
 [aria-label="T3 Code home"]:focus-visible {
   outline: 2px solid #fff3dc;
@@ -103,14 +103,14 @@
   }
 }
 [data-slot="sidebar-inner"] [data-slot="badge"] {
-  border-radius: 0 !important;
-  background: #fbf3e2 !important;
-  color: #9c2f27 !important;
+  border-radius: 0;
+  background: #fbf3e2;
+  color: #9c2f27;
   font: 700 0.6rem/1 var(--font-mono);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   clip-path: polygon(5px 0, 100% 0, 100% 100%, 5px 100%, 0 50%);
-  padding-left: 9px !important;
+  padding-left: 9px;
   rotate: -4deg;
 }
 
@@ -409,7 +409,7 @@ svg.lucide {
 }
 /* A favicon is its own element: the board is drawn around it with padding and layered fills. */
 [data-chat-header] nav li:first-child > button > img:first-child {
-  border-radius: 0 !important;
+  border-radius: 0;
   padding: 12px;
   box-sizing: border-box;
   object-fit: contain;
@@ -509,9 +509,9 @@ svg.lucide {
 /* The composer is the order pad: cream paper, pixel shadow, a perforated top.
    The app paints the composer on a glass ::before; the pad replaces that glass. */
 [data-slot="composer-host"] {
-  border-radius: 0 !important;
+  border-radius: 0;
   color: var(--contrast-foreground);
-  box-shadow: 0 0 0 2px #0e1620, 5px 5px 0 2px var(--sk-shadow) !important;
+  box-shadow: 0 0 0 2px #0e1620, 5px 5px 0 2px var(--sk-shadow);
   --background: var(--sk-paper);
   --border: var(--sk-edge);
   --input: var(--sk-rule);
@@ -522,22 +522,22 @@ svg.lucide {
   --contrast-accent-foreground: var(--contrast-foreground);
 }
 [data-slot="composer-host"]::before {
-  content: "" !important;
+  content: "";
   position: absolute !important;
   inset: 0 !important;
-  z-index: -1 !important;
-  border-radius: 0 !important;
+  z-index: -1;
+  border-radius: 0;
   -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
-  background: radial-gradient(circle at 4px 3px, #0e1620 0 1.5px, transparent 2px) 0 0 / 12px 8px repeat-x, var(--sk-paper) !important;
+  backdrop-filter: none;
+  background: radial-gradient(circle at 4px 3px, #0e1620 0 1.5px, transparent 2px) 0 0 / 12px 8px repeat-x, var(--sk-paper);
   display: block !important;
 }
 [data-slot="composer-host"]::after {
-  border-color: transparent !important;
-  box-shadow: none !important;
+  border-color: transparent;
+  box-shadow: none;
 }
 [data-slot="composer-host"] > * {
-  border-radius: 0 !important;
+  border-radius: 0;
 }
 [data-slot="composer-host"]:focus-within {
   box-shadow: 0 0 0 2px #f2c25c, 5px 5px 0 2px var(--sk-shadow) !important;
@@ -546,7 +546,7 @@ svg.lucide {
   opacity: 1 !important;
 }
 [data-slot="composer-host"] svg.lucide-paperclip {
-  color: var(--contrast-secondary-label) !important;
+  color: var(--contrast-secondary-label);
   opacity: 1 !important;
 }
 [data-slot="composer-host"] .composer-tiptap {
@@ -568,13 +568,13 @@ svg.lucide {
 [data-slot="composer-host"] div:not([data-composer-banner-surface] *),
 [data-slot="composer-host"] div:not([data-composer-banner-surface] *)::before,
 [data-slot="composer-host"] div:not([data-composer-banner-surface] *)::after {
-  border-radius: 0 !important;
+  border-radius: 0;
   -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
+  backdrop-filter: none;
 }
 [data-slot="composer-host"] div:not([data-composer-banner-surface] *)::after {
-  border-color: transparent !important;
-  box-shadow: none !important;
+  border-color: transparent;
+  box-shadow: none;
 }
 [data-composer-banner-surface],
 [data-composer-banner-surface]::before {
@@ -588,11 +588,11 @@ svg.lucide {
 }
 [data-slot="composer-host"] button[type="submit"],
 [data-slot="composer-host"] button[type="submit"] * {
-  border-radius: 0 !important;
+  border-radius: 0;
 }
 [data-slot="composer-host"] button[type="submit"] {
-  background: #241b15 !important;
-  color: #fbf3e2 !important;
+  background: #241b15;
+  color: #fbf3e2;
   clip-path: var(--sk-notch);
 }
 /* Stop is a red-ink tile on the pad. */
@@ -655,13 +655,13 @@ svg.lucide[class*="loader"] {
 [data-slot="dialog-popup"],
 [data-slot="alert-dialog-popup"],
 [data-thread-details-card] {
-  border: 0 !important;
-  border-radius: 0 !important;
-  backdrop-filter: none !important;
-  box-shadow: inset 0 0 0 3px #a86030, inset 0 0 0 4px #f0cc90, 0 0 0 2px #2a1810, 8px 8px 0 2px rgb(0 0 0 / 0.5) !important;
+  border: 0;
+  border-radius: 0;
+  backdrop-filter: none;
+  box-shadow: inset 0 0 0 3px #a86030, inset 0 0 0 4px #f0cc90, 0 0 0 2px #2a1810, 8px 8px 0 2px rgb(0 0 0 / 0.5);
 }
 :is([data-slot="dialog-popup"], [data-slot="alert-dialog-popup"], [data-slot$="popup"], [data-slot$="popup"] *, [data-slot="button"], [data-slot="toggle"], [data-slot="input"], [data-slot="select-trigger"]) {
-  border-radius: 0 !important;
+  border-radius: 0;
 }
 :is([data-slot="popover-popup"], [data-slot="menu-popup"], [data-slot="combobox-popup"], [data-slot="select-popup"], [data-slot="command-dialog-popup"]) :is(svg[class*="dark:fill-white"], [class*="dark:text-white"]) {
   fill: #2a1d16 !important;
@@ -718,7 +718,7 @@ svg.lucide[class*="loader"] {
 /* Settings: group titles in the pixel type and gold; switches are square keys, pink when on, in a gold ring. */
 /* Settings keeps the room's wallpaper (Textures section); the other boards are plain navy. */
 :is([data-slot="dialog-popup"]:not([aria-label="Settings"], [aria-label="Usage"]), [data-slot="alert-dialog-popup"], [data-thread-details-card]) {
-  background: #283246 !important;
+  background: #283246;
 }
 [data-slot="settings-group"] {
   background: #303c54 !important;
@@ -896,19 +896,19 @@ svg.lucide[class*="loader"] {
   position: relative;
   /* Above the open ticket (z 21 in core.css), which still scrolls into the water. */
   z-index: 22;
-  padding: 36px 8px 6px !important;
-  background: var(--sk-wood) left 0 top 14px / 64px 16px repeat-x, linear-gradient(transparent 30px, #6e4220 30px 32px, #8f5a2b 32px) !important;
+  padding: 36px 8px 6px;
+  background: var(--sk-wood) left 0 top 14px / 64px 16px repeat-x, linear-gradient(transparent 30px, #6e4220 30px 32px, #8f5a2b 32px);
 }
 [data-slot="sidebar-footer"] > * {
   position: relative;
   z-index: 1;
 }
 [data-slot="sidebar-footer"] > ul {
-  gap: 6px !important;
+  gap: 6px;
 }
 [data-slot="sidebar-footer"] :is(button, a, [data-slot="button"]),
 [data-slot="sidebar-footer"] svg {
-  color: #fff3dc !important;
+  color: #fff3dc;
   opacity: 1 !important;
 }
 /* Footer keys are menu tags hung on the counter front: the ticket keys' recipe (1 px ink outline,
@@ -919,7 +919,7 @@ svg.lucide[class*="loader"] {
   --sk-h: #ffdf9e;
   width: 32px !important;
   height: 32px !important;
-  border-radius: 0 !important;
+  border-radius: 0;
   color: #241b15 !important;
   background: var(--sk-c) !important;
   box-shadow: inset 0 0 0 1px #241b15, inset 0 -3px #0003, inset 0 2px #fff9;
@@ -991,7 +991,7 @@ svg.lucide[class*="loader"] {
    lane's: ::before is everything behind the bar, ::after the bar itself, painted over it. Stools tile from the right
    edge, one hidden behind Dave, so a narrower window slides the right ones behind the pad. */
 [data-chat-composer-overlay] {
-  align-items: flex-end !important;
+  align-items: flex-end;
 }
 .chat-composer-lane {
   position: relative;
@@ -1014,7 +1014,7 @@ svg.lucide[class*="loader"] {
   height: 32px;
   margin: 0 auto;
   padding-block: 0;
-  background: none !important;
+  background: none;
   --contrast-foreground: #0a0f18;
   --contrast-muted-foreground: #0a0f18;
   --contrast-secondary-label: #0a0f18;
@@ -1024,7 +1024,7 @@ svg.lucide[class*="loader"] {
 }
 [data-slot="composer-context-strip"],
 [data-slot="composer-context-strip"] :is(button, svg, [data-composer-context-control]) {
-  color: #0a0f18 !important;
+  color: #0a0f18;
 }
 [data-slot="composer-context-strip"] svg {
   opacity: 1 !important;

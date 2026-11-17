@@ -31,6 +31,7 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
 | `tools/t3skins-validate.js` | Gallery validator. |
 | `tools/serve.py` | CORS static server on :8765 for the injector. |
 | `fx/inject2.js`, `fx/check.js`, `fx/scan.js` | Live injection and in-page checks. |
+| `fx/prune.js` | Finds `!important` flags the live page does not need (flat build URL in, progress in `window.__prog`). |
 | `tools/pixcheck.py` | Pixel-sampled contrast from a screenshot + boxes JSON. |
 | `final2/` | Last published JSON/CSS + reference captures. |
 | `demo/` | `video.mp4` of all dev demo states, PNGs, `verify/`. |
@@ -77,6 +78,12 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
   `prefers-reduced-motion` respected; visible keyboard focus.
 
 ## Pitfalls (each cost a broken build or a wasted round)
+- `!important` is needed only against inline styles, unlayered app rules, app animations and other theme rules:
+  app utilities are in `@layer`s and lose to any unlayered theme declaration. Before adding or removing a flag read
+  `HANDOFF.md` → "`!important` pruning". Keep it on properties that JS or `animate-*` sets (opacity, transform, size,
+  position, display, transition, animation).
+- The first screenshot after switching edition (lite ↔ full) misses late-painted content. Inject the same edition
+  twice, wait ~3 s, then compare.
 - `{{token}}` contains `}}`. Never slice a rule with `index("}")`; edit by exact string replacement.
 - Bubbles use anchor positioning. Anchors must come before their hosts in tree order (`html::before` fails;
   hosts are `html::after`, `body::after`, `[data-workspace-area=conversation]::before/::after`).

@@ -531,15 +531,17 @@ body {
   color: var(--contrast-sidebar-foreground);
   border-radius: 0;
 }
+/* Only the spike's point heads the shelf: a 2 px tip on the rod, in the rod's own colours, level with the label.
+   The box keeps 32 px so the header does not move when it opens; the rod sits on the slips' rod (x 15 px). */
 [data-testid="sidebar-settled-shelf-toggle"] > span:first-child::before {
   content: "";
   display: inline-block;
   vertical-align: -10px;
-  width: 28px;
+  width: 6px;
   height: 32px;
-  margin-left: -3px;
-  margin-right: 0.3rem;
-  background: {{spike}} 0 0 / 28px 32px no-repeat;
+  margin-left: 5px;
+  margin-right: 9px;
+  background: linear-gradient(#0e1620 0 0) 2px 9px / 2px 2px no-repeat, linear-gradient(90deg, #0e1620 0 2px, #c9d1d8 2px 4px, #0e1620 4px) 0 11px / 6px 12px no-repeat;
 }
 [data-testid="sidebar-settled-shelf-toggle"] > span:first-child {
   overflow: visible;
@@ -677,9 +679,9 @@ body {
   height: 12px;
   background: {{base}} 0 0 / 36px 12px no-repeat;
 }
-/* Open shelf: the header's spike loses its base and runs on down through the slips. */
+/* Open shelf: the rod runs on down through the slips. */
 [data-testid="sidebar-settled-shelf-toggle"][aria-expanded="true"] > span:first-child::before {
-  background-image: {{spike_open}};
+  background-size: 2px 2px, 6px 100%;
 }
 /*/full*/
 @media (prefers-reduced-motion: reduce) {

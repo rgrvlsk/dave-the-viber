@@ -7,6 +7,11 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Spike tip (2026-11-17, Roger: the settled header should be only the spike's point, smaller): the header ::before
+  is a 2 px tip on the rod drawn with two gradients in the rod colours (no sprite), level with the label; open, the
+  rod runs down to the slips (x 23 = slips' rod x 23, measured). The box keeps 32 px, so the header does not move.
+  SETTLED text now starts where WORKING does. `spike`/`spike_open` sprites and SPIKE_P removed. Full 49,381 -> 49,176,
+  lite 14,904 -> 14,843. check.js 0 invalid. Previous live file: `final2/published-before-2026-11-17-spiketip.json`.
 - Saucepan + static stamps (2026-11-17, Roger: remove the dish and pot animations; Working = a saucepan, "cassó").
   `sk-steam` and `sk-dish` are gone (keyframes, animation rules, their reduced-motion entries). Working and the working
   shelf show `src2/sprites/saucepan.png` (12x12, H1: two steam wisps, flat rim, 1 px handle rising in three steps),

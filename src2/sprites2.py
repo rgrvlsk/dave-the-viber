@@ -2,7 +2,6 @@
 # The art lives in src2/sprites/<name>.png (1 px per pixel); each palette maps the PNG's colours to the token's colours.
 WOOD = "#d8a15f"; WOOD_D = "#a8703a"; OUT = "#3a2414"
 PEG_P = {"o": OUT, "w": WOOD, "d": WOOD_D, "m": "#d3dae0", "s": "#6f7b86"}
-SPIKE_P = {"k": "#0e1620", "s": "#c9d1d8", "p": "#f4ead3", "q": "#c7b58e", "b": "#8a5a2b"}
 BUBBLE_P = {"o": "#10202f", "w": "#fffdf6", "g": "#d9d2c3"}
 COUNTER_P = {"h": "#e2a866", "w": "#b9783d", "g": "#a0662f", "s": "#5e3818"}
 BASE_P = {"k": "#0e1620", "s": "#c9d1d8", "b": "#8a5a2b", "h": "#b07a40"}
@@ -50,12 +49,10 @@ TOKENS = {
     "atlas": multi(ATLAS, {"#": None}),
     "peg_h": multi(rot90(PEG), PEG_P),
     "bubble": multi(png("bubble", BUBBLE_P), BUBBLE_P),
-    "spike_open": multi(png("spike_open", SPIKE_P), SPIKE_P),
     "counter": multi(png("counter", COUNTER_P), COUNTER_P),
     "peg": multi(PEG, PEG_P),
     "peg_red": multi(PEG, {"o": "#3a1410", "w": "#d4533a", "d": "#93301f", "m": "#d3dae0", "s": "#6f7b86"}),
     "peg_gold": multi(PEG, {"o": "#3a2a0a", "w": "#f2c25c", "d": "#b9862a", "m": "#eef2f5", "s": "#6f7b86"}),
-    "spike": multi(png("spike", SPIKE_P), SPIKE_P),
     "base": multi(png("base", BASE_P), BASE_P),
     "tip": multi(png("tip", TIP_P), TIP_P),
     "wall": multi(png("wall", WALL_P), WALL_P),

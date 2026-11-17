@@ -1,4 +1,4 @@
-# Pixel Sushi Rail — agent guide
+# Dave the Viber (pixel-sushi-rail) — agent guide
 
 T3 Code theme: a night sushi bar in pixel art (Dave-the-Diver sushi mood, original art only).
 Sidebar threads are kitchen order slips hung on a left rail with pegs; settled threads are spiked on a

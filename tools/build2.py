@@ -190,7 +190,7 @@ def flatten(css, par=None, out=None):
         if k < len(body): flatten(body[len(decl):], sels, out)
     return out
 
-for name, css, title in [("lite", lite, "Pixel Sushi Rail Lite"), ("full", fill(minify(core_src + "\n" + extras_src, full=True)), "Pixel Sushi Rail")]:
+for name, css, title in [("lite", lite, "Dave the Viber Lite"), ("full", fill(minify(core_src + "\n" + extras_src, full=True)), "Dave the Viber")]:
     flat_len = len(css)
     if NEST[name]:
         nested = nest(css)

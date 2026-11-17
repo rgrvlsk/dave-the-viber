@@ -1,9 +1,9 @@
-# Pixel Sushi Rail — handoff (2026-11-16)
+# Dave the Viber (pixel-sushi-rail) — handoff (2026-11-16)
 
 T3 Code theme by Roger's request: a night sushi bar in pixel art, Dave-the-Diver mood (original art only).
-Published and active as **themeId `pixel-sushi-rail`** (file `~/.t3/userdata/themes/pixel-sushi-rail.json`).
+Published and active as "Dave the Viber", **themeId `pixel-sushi-rail`** (file `~/.t3/userdata/themes/pixel-sushi-rail.json`).
 Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimalist color edges").
-Folder: `/Users/roger/.t3/projects/pixel-sushi-rail/` (call it `$D`). T3 Code project "Pixel Sushi Rail" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path is a symlink to this folder.
+Folder: `/Users/roger/.t3/projects/pixel-sushi-rail/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path is a symlink to this folder.
 
 ## State
 - House menu card (2026-11-17, Roger: "personalitza la interfície i els menús amb els colors, formes i tipografia

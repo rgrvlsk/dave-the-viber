@@ -294,3 +294,10 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
 - The Mac mini dev server is still running; stop it (`kill $(cat /tmp/t3code-theme-dev.pid)`) and remove the
   worktree (`git -C /Users/roger/t3code worktree remove /tmp/t3code-theme-demo`) when no longer needed — ask Roger.
 - History: `LEDGER.md` (hillclimb ledger), `council2/BRIEF-R*.md` (council briefs), `v1/` (first theme sources).
+
+
+## Context controls on the counter (2026-11-17)
+- Context strips are absolute below the pad, so they no longer lift the paper off the plank. Controls use dark ink
+  on the chat counter's lighter wood front (#b9783d), with opaque icons, a light hover and an ink focus outline.
+- Build + both gallery validators pass; lite unchanged; ink/front contrast 5.31:1. No visual check or local install
+  in this task yet. Shared Dave-art and aquarium-selector edits belong to another thread and are preserved.

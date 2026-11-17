@@ -961,12 +961,38 @@ svg.lucide[class*="loader"] {
   z-index: -1;
   pointer-events: none;
 }
-/* A new thread's context strip sits in front of the stool backs: the wall's night colour keeps it legible. */
+/* Context controls sit on the counter front, outside the pad's flow, so the paper rests on the plank.
+   The strip's relative wrapper starts at the pad's bottom; 24 px clears the plank and its shadow. */
 [data-slot="composer-context-strip"] {
-  background: var(--sk-night) !important;
+  position: absolute;
+  inset: 24px 0 auto;
+  height: 32px;
+  margin: 0 auto;
+  padding-block: 0;
+  background: none !important;
+  --contrast-foreground: #0a0f18;
+  --contrast-muted-foreground: #0a0f18;
+  --contrast-secondary-label: #0a0f18;
+  --contrast-icon-muted: #0a0f18;
+  --contrast-border: #6e4220;
+  --accent: #e2a866;
+}
+[data-slot="composer-context-strip"],
+[data-slot="composer-context-strip"] :is(button, svg, [data-composer-context-control]) {
+  color: #0a0f18 !important;
+}
+[data-slot="composer-context-strip"] svg {
+  opacity: 1 !important;
+}
+[data-slot="composer-context-strip"] button:focus-visible {
+  outline: 2px solid #0a0f18;
+  outline-offset: -2px;
+}
+[data-slot="composer-context-strip"]::before {
+  display: none;
 }
 .chat-composer-lane::after {
-  background: var(--sk-wood) 0 0 / 64px 16px repeat-x, linear-gradient(#0000 16px, #6e4220 0 18px, #8f5a2b 0);
+  background: var(--sk-wood) 0 0 / 64px 16px repeat-x, linear-gradient(#0000 16px, #6e4220 0 18px, #b9783d 0);
 }
 .chat-composer-lane::before {
   bottom: 60px;

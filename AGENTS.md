@@ -1,4 +1,4 @@
-# Dave the Viber (pixel-sushi-rail) — agent guide
+# Dave the Viber — agent guide
 
 T3 Code theme: a night sushi bar in pixel art (Dave-the-Diver sushi mood, original art only).
 Sidebar threads are kitchen order slips hung on a left rail with pegs; settled threads are spiked on a
@@ -11,7 +11,8 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
 - Never publish to any gallery (t3skins.dev, t3themes.com) without asking Roger.
 - Never modify `~/.t3/userdata/themes/status-edge.json` or `pixel-sushi.json` (fallbacks).
 - Never touch `/Users/roger/t3code` (main checkout) or the Mac mini's `~/.t3/userdata`, except its
-  `themes/pixel-sushi-rail.json` (installed and active there at Roger's request, 2026-11-17).
+  `themes/dave-the-viber.json` (installed and active there at Roger's request, 2026-11-17).
+  The skin was called Pixel Sushi Rail (themeId, folder and repo `pixel-sushi-rail`) until 2026-11-17.
   Never point a dev server at live userdata.
 - Size limits: full ≤ 50,000 chars, lite ≤ 20,000 chars (checked by the build + validator).
 - CSS limits: no `@import`, `image-set()`, `src()`; `url()` only `data:` or `#id`; no `:has()` inside `:has()`.
@@ -39,8 +40,8 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
    The minifier nests consecutive rules that share a selector prefix (`NEST` in `build2.py`, per edition; False = flat).
    It refuses nested output that does not expand to the flat CSS, and any edition over its size limit.
 2. Test (next section) before publishing.
-3. Publish locally: copy `out2/full.json` to `~/.t3/userdata/themes/pixel-sushi-rail.json`, then call
-   `t3_theme_set` with `themeId: "pixel-sushi-rail"` and no payload. Verify the server file equals the build.
+3. Publish locally: copy `out2/full.json` to `~/.t3/userdata/themes/dave-the-viber.json`, then call
+   `t3_theme_set` with `themeId: "dave-the-viber"` and no payload. Verify the server file equals the build.
 
 ## Testing
 1. Start `python3 -I tools/serve.py "$PWD"` in the background (project script "Static server :8765").

@@ -1,9 +1,10 @@
-# Dave the Viber (pixel-sushi-rail) — handoff (2026-11-16)
+# Dave the Viber — handoff (2026-11-16)
 
 T3 Code theme by Roger's request: a night sushi bar in pixel art, Dave-the-Diver mood (original art only).
-Published and active as "Dave the Viber", **themeId `pixel-sushi-rail`** (file `~/.t3/userdata/themes/pixel-sushi-rail.json`).
+Published and active as "Dave the Viber", **themeId `dave-the-viber`** (file `~/.t3/userdata/themes/dave-the-viber.json`).
+Renamed from Pixel Sushi Rail (themeId, folder and repo `pixel-sushi-rail`) on 2026-11-17.
 Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimalist color edges").
-Folder: `/Users/roger/.t3/projects/pixel-sushi-rail/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path is a symlink to this folder.
+Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
 - House menu card (2026-11-17, Roger: "personalitza la interfície i els menús amb els colors, formes i tipografia
@@ -59,9 +60,9 @@ Folder: `/Users/roger/.t3/projects/pixel-sushi-rail/` (call it `$D`). T3 Code pr
   Roger: only the first recent overhung, the others were clipped. Cause: rows have `content-visibility: auto`
   (paint containment clips to the row); only bubble rows had `visible`. The open row now gets `visible !important`.
   Checked on a non-bubble 5th row: clipped at 247 px before, paper to 263 px after; check.js 0 invalid, l3Lost 0.
-- Sync + Mac mini (2026-11-17): this folder is a public GitHub repo, https://github.com/rgrvlsk/pixel-sushi-rail
-  (`demo/video.mp4` is git-ignored, 64 MB). Clone on the Mac mini: `~/.t3/projects/pixel-sushi-rail`. The full edition is
-  installed in the Mac mini's main T3 Code (`~/.t3/userdata/themes/pixel-sushi-rail.json`, same sha256 as `out2/full.json`).
+- Sync + Mac mini (2026-11-17): this folder is a public GitHub repo, https://github.com/rgrvlsk/dave-the-viber
+  (`demo/video.mp4` is git-ignored, 64 MB). Clone on the Mac mini: `~/.t3/projects/dave-the-viber`. The full edition is
+  installed in the Mac mini's main T3 Code (`~/.t3/userdata/themes/dave-the-viber.json`, same sha256 as `out2/full.json`).
   A Claude Opus High thread on the Mac mini (project t3code) profiles the CSS cost; its work and `REPORT.md` go to
   `/Users/roger/t3code/.css-perf/` on the Mac mini (untracked via `.git/info/exclude`).
 - Model mark sync (2026-11-16, Roger: on 2-line tickets the model icon moved out of sync with the keys; published locally
@@ -178,8 +179,8 @@ Folder: `/Users/roger/.t3/projects/pixel-sushi-rail/` (call it `$D`). T3 Code pr
   `:has()` nested in `:has()`. Sprite paths are merged rectangles; the build asserts pixel coverage.
 - Careful when editing with scripts: `{{token}}` contains `}}`, so never slice a rule with `index("}")`
   (it broke the CSS twice); replace exact strings instead.
-- Publish: write `out2/full.json` to `~/.t3/userdata/themes/pixel-sushi-rail.json`, then
-  `t3_theme_set themeId: "pixel-sushi-rail"` (no theme payload). Verify the server file equals the build.
+- Publish: write `out2/full.json` to `~/.t3/userdata/themes/dave-the-viber.json`, then
+  `t3_theme_set themeId: "dave-the-viber"` (no theme payload). Verify the server file equals the build.
 
 ## How to test (do all before publishing)
 1. Static server for the folder: `python3 -I tools/serve.py $D` in the background (CORS, port 8765).
@@ -205,9 +206,9 @@ Folder: `/Users/roger/.t3/projects/pixel-sushi-rail/` (call it `$D`). T3 Code pr
    id fa3bab2b-…, project `t3code` id `mcp:d285ab1c-407a-4efb-85a3-5ddb6366a403`).
    - Worktree `/tmp/t3code-theme-demo` (detached origin/main), dev home `/tmp/t3code-dev`, server
      `http://localhost:7508` (started with `vp run dev --home-dir /tmp/t3code-dev`, pid in /tmp/t3code-theme-dev.pid).
-   - Update the theme there: `scp out2/full.json rogerflix:/tmp/t3code-dev/userdata/themes/pixel-sushi-rail.json`
+   - Update the theme there: `scp out2/full.json rogerflix:/tmp/t3code-dev/userdata/themes/dave-the-viber.json`
      then `ssh rogerflix 'cd /tmp/t3code-theme-demo/apps/server && export PATH="$HOME/.local/share/vite-plus/bin:$PATH"
-     && node --experimental-strip-types src/bin.ts theme set pixel-sushi-rail --base-dir /tmp/t3code-dev'`.
+     && node --experimental-strip-types src/bin.ts theme set dave-the-viber --base-dir /tmp/t3code-dev'`.
    - Its built-in browser is already paired; drive it with a Luna relay on the Mac mini (delegate_task with
      target.environmentId + projectId) running preview_* tools; copy captures to /tmp/t3code-theme-demo-out and
      `scp` them back. Pairing from this Mac through an SSH tunnel did not complete (token consumed, cookie on

@@ -7,6 +7,19 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Restaurant bar (2026-11-17, Roger: the bottom bar is the restaurant counter, same height as the sidebar's, the pad
+  stays down in a new thread too, stools, Dave at the right behind a laptop with a lit fish). extras.css "The
+  restaurant bar": `.chat-composer-lane` gets `position: relative; padding-bottom: 40px`; its `::after` is the counter
+  (plank + front, 60 px, the sidebar footer's recipe, so plank y 740..756 = the sidebar's); its `::before` is
+  everything behind the bar (Roger: stools never in front, always behind): stool backs (`stool`, 16x14 spindle backs,
+  2x, every 80 px, 4 px hidden under the plank) and Dave (`dave`, 28x30, 2x, right 38 px; an ORIGINAL character, not
+  the game's: white headband with a pink stripe, indigo happi, laptop lid with a lit fish) with a screen-glow
+  flicker (`sk-screen`, off under reduced motion). The composer area's own `::before/::after` are bubble hosts, so the
+  bar must not use them. New thread: `[data-chat-composer-overlay]` `align-items: flex-end` (was centred); the
+  context strip (checkout / branch / access) rests on the plank with a night background over the stool backs.
+  Pad bottom on the plank: thread 741, new thread strip bottom 740. Last message stays above the pad. Light == dark
+  0 px on the bar band; check.js 0 invalid, l3Lost 0. Full 48,629 (flat 55,482); lite unchanged. Capture
+  `demo/menus/bar.png`. Not checked: narrow windows (Dave goes behind the pad), right panel open, desktop app.
 - House menu card (2026-11-17, Roger: "personalitza la interfície i els menús amb els colors, formes i tipografia
   d'aquestes captures", 4 screenshots of a pixel sushi-bar game UI; mood, palette and shapes only, no copied art).
   NOT published yet. extras.css "Controls: the house menu card":

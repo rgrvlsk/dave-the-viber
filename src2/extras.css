@@ -941,27 +941,48 @@ svg.lucide[class*="loader"] {
   background-position-x: -26px, -26px, var(--sk-bx);
   animation: sk-swim 40s linear infinite, sk-rise 8s linear infinite;
 }
-/* The pad rests on the counter. */
-[data-chat-composer-form] {
-  position: relative;
+/* The restaurant bar runs under the chat: the sidebar counter's plank and front at the same height (60 px). Behind
+   it stand the stools (only their backs show) and Dave, lit by his laptop, whose lid shows a fish. The pad rests on
+   the plank, in a new thread too. The composer area's own ::before/::after host attention bubbles; the bar uses the
+   lane's: ::before is everything behind the bar, ::after the bar itself, painted over it. */
+[data-chat-composer-overlay] {
+  align-items: flex-end !important;
 }
-[data-chat-composer-form]::after {
+.chat-composer-lane {
+  position: relative;
+  padding-bottom: 40px;
+}
+.chat-composer-lane::before,
+.chat-composer-lane::after {
   content: "";
   position: absolute;
-  left: -10px;
-  right: -10px;
-  bottom: -64px;
-  height: 66px;
-  background: var(--sk-wood) left top / 64px 16px repeat-x, linear-gradient(transparent 16px, #8f5a2b 16px);
-  pointer-events: none;
+  inset: auto -10px 0 0;
+  height: 60px;
   z-index: -1;
+  pointer-events: none;
+}
+/* A new thread's context strip sits in front of the stool backs: the wall's night colour keeps it legible. */
+[data-slot="composer-context-strip"] {
+  background: var(--sk-night) !important;
+}
+.chat-composer-lane::after {
+  background: var(--sk-wood) 0 0 / 64px 16px repeat-x, linear-gradient(#0000 16px, #6e4220 0 18px, #8f5a2b 0);
+}
+.chat-composer-lane::before {
+  bottom: 60px;
+  background: radial-gradient(closest-side, #bff3ff40, #0000) right 46px top 18px / 40px 24px no-repeat, {{dave}} right 38px top 0 / 56px 60px no-repeat, {{stool}} 24px calc(100% + 4px) / 80px 28px repeat-x;
+  animation: sk-screen 0.8s steps(1) infinite;
+}
+@keyframes sk-screen {
+  50% { background-size: 44px 28px, 56px 60px, 80px 28px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   [data-thread-item] .group\/sidebar-status-slot > span:first-child > :is(span, button)::before,
   [data-testid="sidebar-working-shelf-toggle"] > span:first-child::before,
   [data-slot="sidebar-footer"]::before,
-  [data-slot="sidebar-footer"]::after {
+  [data-slot="sidebar-footer"]::after,
+  .chat-composer-lane::before {
     animation: none !important;
   }
   html::after,

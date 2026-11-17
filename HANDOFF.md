@@ -62,7 +62,8 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   Checked on a non-bubble 5th row: clipped at 247 px before, paper to 263 px after; check.js 0 invalid, l3Lost 0.
 - Sync + Mac mini (2026-11-17): this folder is a public GitHub repo, https://github.com/rgrvlsk/dave-the-viber
   (`demo/video.mp4` is git-ignored, 64 MB). Clone on the Mac mini: `~/.t3/projects/dave-the-viber`. The full edition is
-  installed in the Mac mini's main T3 Code (`~/.t3/userdata/themes/dave-the-viber.json`, same sha256 as `out2/full.json`).
+  installed in the Mac mini's main T3 Code, still as `~/.t3/userdata/themes/pixel-sushi-rail.json` (older build). Pending: install it as
+  `dave-the-viber.json`, activate it there and remove the old file once the CSS perf job below finishes (it measures this skin).
   A Claude Opus High thread on the Mac mini (project t3code) profiles the CSS cost; its work and `REPORT.md` go to
   `/Users/roger/t3code/.css-perf/` on the Mac mini (untracked via `.git/info/exclude`).
 - Model mark sync (2026-11-16, Roger: on 2-line tickets the model icon moved out of sync with the keys; published locally

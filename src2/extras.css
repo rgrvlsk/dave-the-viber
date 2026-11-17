@@ -938,7 +938,8 @@ svg.lucide[class*="loader"] {
 /* The restaurant bar runs under the chat: the sidebar counter's plank and front at the same height (60 px). Behind
    it stand the stools (only their backs show) and Dave, lit by his laptop, whose lid shows a fish. The pad rests on
    the plank, in a new thread too. The composer area's own ::before/::after host attention bubbles; the bar uses the
-   lane's: ::before is everything behind the bar, ::after the bar itself, painted over it. */
+   lane's: ::before is everything behind the bar, ::after the bar itself, painted over it. Stools tile from the right
+   edge, one hidden behind Dave, so a narrower window slides the right ones behind the pad. */
 [data-chat-composer-overlay] {
   align-items: flex-end !important;
 }
@@ -992,7 +993,7 @@ svg.lucide[class*="loader"] {
 .chat-composer-lane::before {
   bottom: 60px;
   height: 120px;
-  background: radial-gradient(closest-side, #bff3ff40, #0000) right 30px top 48px / 80px 48px no-repeat, {{dave}} right 14px top 12px / 112px 120px no-repeat, {{stool}} 24px calc(100% + 4px) / 80px 28px repeat-x;
+  background: radial-gradient(closest-side, #bff3ff40, #0000) right 30px top 48px / 80px 48px no-repeat, {{dave}} right 14px top 12px / 112px 120px no-repeat, {{stool}} right 30px bottom -4px / 80px 28px repeat-x;
   animation: sk-screen 0.8s steps(1) infinite;
 }
 @keyframes sk-screen {

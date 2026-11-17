@@ -326,5 +326,10 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
 ## Context controls on the counter (2026-11-17)
 - Context strips are absolute below the pad, so they no longer lift the paper off the plank. Controls use dark ink
   on the chat counter's lighter wood front (#b9783d), with opaque icons, a light hover and an ink focus outline.
-- Build + both gallery validators pass; lite unchanged; ink/front contrast 5.31:1. No visual check or local install
-  in this task yet. Shared Dave-art and aquarium-selector edits belong to another thread and are preserved.
+- Build + both gallery validators pass; lite unchanged; ink/front contrast 5.31:1. Activated on Roger's MacBook
+  after approval. Desktop capture confirms the paper touches the plank and the visible context controls are dark.
+  Built-in browser: existing thread and blank draft both have pad bottom = plank top, y 840 at 1440x900.
+  Draft shows Current checkout, main and Full access in dark ink; all fit at 900x700 too. Bar and context-control
+  bands have 0 differing pixels between light and dark captures. Test tabs closed; no prompt sent.
+  The rewritten change commit is 194e680 (formerly c598606). Concurrent titlebar/bubble publishes preserved;
+  latest installed CSS validated at 49,192 chars. Private QA captures stay outside the public repository.

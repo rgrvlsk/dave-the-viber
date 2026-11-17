@@ -7,6 +7,12 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Allergen ribbon (2026-11-17, Roger: "Millora-ho" on the provider rail). The ALLERGENS label floated at the rail's
+  foot, far from the badges, with the shared brush padding (right 16px) pushing it off-centre. It is now the
+  `::after` of the rail's flex column (`.min-h-full`), so it follows the last badge in flow: `flex: 1` makes it a
+  ribbon down to the foot, `margin: 0 auto` centres it, own padding (`!important` against the shared rule), label at
+  the top (`text-align: end` in `sideways-lr`), swallowtail end. Full 49,995 (5 free). check.js 0 invalid,
+  l3Lost 0; white on pink 5.0:1. PUBLISHED locally.
 - Picker council fixes (2026-11-17, Roger: "/impeccable council" on a screenshot, then "7 punts + koi gran"). Council
   Fable Low + Sol High (plan-pace routes), blind to each other. Fixed: (1) the "Default" label is a visible
   `span + span` when another level is chosen and `.sr-only` only when it is chosen, so the stamp now targets

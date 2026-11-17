@@ -686,7 +686,7 @@ svg.lucide[class*="loader"] {
 /* Section labels are pink brush strokes; titles hang on a gold ribbon. Both in the shop's pixel type. */
 [data-slot$="popup"] :is([data-slot$="-label"], [data-slot$="group-label"]),
 [data-slot$="popup"] [role="listbox"]::before,
-[data-model-picker-sidebar]::before {
+[data-model-picker-sidebar] .min-h-full::after {
   width: fit-content;
   margin: 4px 0 2px 2px;
   padding: 2px 16px 2px 6px !important;
@@ -841,19 +841,16 @@ svg.lucide[class*="loader"] {
 [role="listbox"]::before {
   content: "MAIN COURSE";
 }
-/* The provider column is the allergen key: a vertical label over round badges. */
-[data-model-picker-sidebar] {
-  position: relative;
-  &::before {
-    content: "ALLERGENS";
-    position: absolute;
-    bottom: 8px;
-    left: 12px;
-    margin: 0;
-    padding: 12px 2px 6px;
-    writing-mode: sideways-lr;
-    clip-path: polygon(0 8px, 50% 0, 100% 8px, 100% 100%, 0 100%);
-  }
+/* The provider column is the allergen key: under the round badges hangs a ribbon down to the foot of the card,
+   its label at the top and a swallowtail at the end. */
+[data-model-picker-sidebar] .min-h-full::after {
+  content: "ALLERGENS";
+  flex: 1;
+  margin: 0 auto;
+  padding: 6px 4px 16px !important;
+  text-align: end;
+  writing-mode: sideways-lr;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 9px), 0 100%);
 }
 :is([data-model-picker-provider] button, [data-slot="combobox-item-content"] > span:first-child:has(svg)) {
   border-radius: 50% !important;

@@ -460,15 +460,19 @@ svg.lucide {
 }
 [data-user-message-bubble]::before {
   content: "ORDER · 注文" / "";
-  position: absolute;
-  top: 0.4rem;
-  left: 0.75rem;
-  right: 0.75rem;
+  /* In flow, so a one-word slip grows to fit the header instead of breaking it per letter. */
+  display: block;
+  margin: -1.1rem 0 0.3rem;
+  white-space: nowrap;
   padding-bottom: 0.2rem;
   font: 700 0.6rem/1 var(--font-mono);
   letter-spacing: 0.14em;
   color: var(--sk-pass);
   background: repeating-linear-gradient(90deg, var(--sk-rule) 0 3px, transparent 3px 6px) left bottom / 100% 1px no-repeat;
+}
+/* The resumed-thread slip is a bare button with no side padding. */
+[data-user-message-bubble]:has(> button)::before {
+  margin-inline: 0.75rem;
 }
 [data-user-message-bubble] :is(a, code) {
   color: inherit;

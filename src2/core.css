@@ -89,6 +89,12 @@ body {
   /*/full*/
 }
 
+/* Above the wall, the top bar (logo, Nightly tag) is a window onto the night: sky, moon, sea, a cherry branch, and a
+   wood sill level with the chat header's beam. It tiles every 256 px and keeps the sill at the bottom. */
+[data-slot="sidebar-inner"] > div > div:first-child {
+  background: {{night}} left bottom / 256px 52px repeat-x #18243c;
+}
+
 /* A twine runs down the left of the wall; each ticket is pegged to it at its top-left corner. */
 [data-thread-item]:has(> [data-testid="sidebar-row-card"]) {
   position: relative;

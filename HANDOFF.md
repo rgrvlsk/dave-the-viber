@@ -57,6 +57,12 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   beam's light streak was darkened to `#4f321f` for it), conversation 5.97 / 5.34, panel 6.57 / 5.74, wall labels
   9.57 / 5.87, Settings nav 6.68 / 5.53 (4.33 before the shade), empty state 7.33. Light == dark: 0 px on every textured
   surface. check.js full + lite: 0 invalid, l3Lost 0, no overlap. Captures `demo/textures/`.
+  Night window (2026-11-17, Roger: night landscape at the top of the sidebar, behind the logo): sprite `night`
+  (128x26, 14 colours, shown 256x52, repeat-x): navy sky with dithered bands, stars, moon and its broken reflection,
+  moonlit ridges, sea, shore lights, a cherry branch top right, and a wood sill level with the chat header's beam.
+  core.css (both editions) on `[data-slot=sidebar-inner] > div > div:first-child` (the 52 px top bar). +659 chars in
+  each edition: full 41,985, lite 15,996 (flat 19,190). Toggle icon on the sky 9.28:1 (brightest ring pixel); light ==
+  dark 0 px; check.js 0 invalid, l3Lost 0 in full and lite. Capture `demo/textures/sidebar-night-window.png`.
   Not done: the terminal (the web preview cannot open it; xterm paints its own `#11131a`). Found, not mine: the fish
   tank footer also renders inside Settings' side nav (`[data-slot=sidebar-footer]`), over the last nav items; the thread
   details card's muted rows are 3.55-4.08:1 (same before and after).

@@ -14,6 +14,9 @@ BEAM_P = {"h": "#6e4630", "w": "#4a2f1e", "d": "#3e2718", "l": "#4f321f", "k": "
 # Dining-room wallpaper: seigaiha waves. The PNG marks outer rings white, inner rings grey;
 # the token paints both in faint white, so the pattern stays low-contrast behind text on any night surface.
 SEIG_P = {"a": "#ffffff", "b": "#c0c0c0"}
+# Night window over the wall (128x26, shown 2x): navy sky, stars, moon, moonlit ridges, sea, a cherry branch, a wood sill.
+NIGHT_P = {"a": "#18243c", "b": "#242448", "c": "#303c60", "s": "#e4d8cc", "g": "#f0cc90", "m": "#e4b460", "f": "#1f2a48",
+           "n": "#141a2c", "w": "#3a4870", "p": "#e4106c", "q": "#c8346e", "r": "#483024", "h": "#6e4630", "k": "#2e1d12"}
 NOREN_P = {"n": "#2a3f73", "w": "#efe2c8", "d": "#1a2b55", "r": "#8a5a2b"}
 FISH_P = {"o": "#10202f", "y": "#f08a5d", "w": "#ffd2b8"}
 # Footer fish tank: kelp (two sway frames), branch and brain coral, sand, rising bubbles.
@@ -47,6 +50,7 @@ TOKENS = {
     "tip": multi(png("tip", TIP_P), TIP_P),
     "wall": multi(png("wall", WALL_P), WALL_P),
     "beam": multi(png("beam", BEAM_P), BEAM_P),
+    "night": multi(png("night", NIGHT_P), NIGHT_P),
     "seigaiha": multi(png("seigaiha", SEIG_P), {"a": "#ffffff0c", "b": "#ffffff07"}),
     "noren": multi(png("noren", NOREN_P), NOREN_P),
     "fish": multi(FISH, FISH_P),

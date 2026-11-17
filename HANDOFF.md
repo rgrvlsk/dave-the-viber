@@ -107,6 +107,16 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   changes; previous live file `final2/published-before-2026-11-17-nightwindow2.json`. Public captures: only
   `night-sprite-4x.png` and a crop of the sidebar top above the tickets (no thread titles); the 7 captures of the
   first textures commit were already public and show real thread titles.
+  History purge (2026-11-17 03:25, Roger): OCR (macOS Vision, full image + 3x tiles) found client names / real
+  thread titles in 114 screenshots (council2, demo, demo/frames, demo/v2, demo/verify, demo/menus, demo/textures,
+  final2, v1/final). Each got its private text pixelated (same path and size), re-OCR finds none of the terms;
+  `git filter-repo --blob-callback` rewrote main, force-pushed with lease (3188acb -> 194e680; only PNG blobs
+  differ). Local main moved with `reset --keep` (other threads' WIP intact), Mac mini clone reset + gc. GitHub may
+  keep old commits reachable by SHA until its GC; no forks. Tool scripts: scratchpad only.
+  Desktop titlebar (Roger: logo closer to the collapser, centred between it and the moon; history keys after the
+  moon): rules keyed on `[aria-label="Go back"]` (desktop only), +622 chars. Real desktop app (relay capture):
+  icon 98.5-111, "T3 Code" 118-173.5, moon ~183-203, keys 214.5+. Web unchanged (logo x 52). Full 49,789 of
+  50,000. PUBLISHED locally; previous live file `final2/published-before-2026-11-17-desktopbar.json`.
   Not done: the terminal (the web preview cannot open it; xterm paints its own `#11131a`). The fish tank in Settings'
   side nav was fixed on main (scoped to `sidebar-inner`). Found, not mine: the thread details card's muted rows are 3.55-4.08:1 (same before and after).
 - Open ticket off the peg (2026-11-17, Roger: "el ticket obert separat de l'agulla, desplaçat a la dreta, sortint una

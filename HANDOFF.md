@@ -11,7 +11,8 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   got the 24 px dark plate and wrapped. The plate now needs a mark (`span:first-child:has(svg)`). The chosen
   reasoning level's label has `margin-right: auto`, so its check and pips stay at the right edge like the other
   rows. Full 48,762 (1,238 free), lite unchanged. Live inject: plate gone, label 72 px on one line, 5.9:1+ ink on
-  the row; pips of all 6 levels end at the same x. Both validators pass. Not published.
+  the row; pips of all 6 levels end at the same x. Both validators pass. PUBLISHED locally 2026-11-17 with the
+  `!important` pruning below (Roger approved); previous live file: `final2/published-before-2026-11-17-prune.json`.
 - `!important` pruning (2026-11-17, Fable, at Roger's request "fix everything"): 74 of 197 flags removed from
   `src2/core.css` (26) and `src2/extras.css` (48). Full 49,513 → 48,749 (1,251 free), lite 15,859 → 15,609.
   Why it is safe: the app puts Tailwind in `@layer`s and the theme is an unlayered adopted stylesheet, so a normal
@@ -30,7 +31,7 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   Not checked: hover/focus states by screenshot, dialogs, Settings, question UI, Mac mini status demo, desktop app.
   Known limit: a flag removed from a rule that later also matches an element with an inline style or a JS
   animation on that property will lose to it; if a colour, radius, padding or shadow "comes back" in one state, put
-  `!important` back on that declaration. Not published. Screenshot pitfall found: the first shot after switching
+  `!important` back on that declaration. Screenshot pitfall found: the first shot after switching
   edition (lite ↔ full) misses the pad and popup text; inject the same edition twice before comparing.
 - Model picker as the house menu + build size passes (2026-11-17, Roger chose proposals 1, 2, 3, 5; size ideas from a
   Fable Low consult at Roger's request). Build (tools/build2.py): data URIs are `url(data:;base64,…)` unquoted,

@@ -710,7 +710,7 @@ svg.lucide[class*="loader"] {
 }
 /* Settings: group titles in the pixel type and gold; switches are square keys, pink when on, in a gold ring. */
 /* Settings keeps the room's wallpaper (Textures section); the other boards are plain navy. */
-:is([data-slot="dialog-popup"]:not([aria-label="Settings"]), [data-slot="alert-dialog-popup"], [data-thread-details-card]) {
+:is([data-slot="dialog-popup"]:not([aria-label="Settings"], [aria-label="Usage"]), [data-slot="alert-dialog-popup"], [data-thread-details-card]) {
   background: #283246 !important;
 }
 [data-slot="settings-group"] {
@@ -737,6 +737,39 @@ svg.lucide[class*="loader"] {
   border-color: transparent !important;
   background: #1d2536 !important;
   box-shadow: inset 2px 2px 0 #0e1620, inset -1px -1px 0 #3f4c69 !important;
+}
+/* Usage is the day's stamina board: limit cards like settings groups, big pixel numbers, and each meter a
+   recessed gauge of lit segments in the provider's colour, the pace mark a pink pin; reset chips are navy tags. */
+[aria-label="Usage"] :is(section > div, header nav) {
+  font-family: var(--sk-pixel);
+}
+[aria-label="Usage"] section > div {
+  border: 0 !important;
+  background: #303c54;
+}
+[aria-label="Usage"] .text-3xl {
+  font-weight: 400;
+}
+[aria-label="Usage"] button[aria-label*="left"] {
+  background-color: #1d2536 !important;
+  box-shadow: inset 2px 2px 0 #0e1620, inset -2px -2px 0 #3f4c69;
+}
+[aria-label="Usage"] button[aria-label*="left"] .opacity-35 {
+  opacity: 0.9;
+  mask: repeating-linear-gradient(90deg, #000 0 6px, #0000 0 8px);
+}
+[aria-label="Usage"] button[aria-label*="left"] > span.w-0\.5 {
+  width: 4px;
+  background: #e4106c;
+  box-shadow: 0 0 0 1px #11131a;
+}
+[aria-label="Usage"] button[aria-label*="left"] span.ms-auto {
+  background: #18243c;
+  box-shadow: 0 0 0 1px #e4b460;
+}
+[aria-label="Usage"] header [data-slot="toggle"][data-pressed] {
+  background: #e4106c !important;
+  color: #fff !important;
 }
 [data-slot$="popup"] [data-slot="kbd"] {
   background: #2a1d16;
@@ -934,7 +967,7 @@ svg.lucide[class*="loader"] {
 }
 [data-workspace-area="conversation"],
 [data-workspace-area="panel"],
-[data-slot="dialog-popup"][aria-label="Settings"] {
+[data-slot="dialog-popup"]:is([aria-label="Settings"], [aria-label="Usage"]) {
   background: radial-gradient(70% 50% at 50% 0, rgb(255 170 96 / 0.07), transparent 70%), var(--sk-seig);
 }
 /* An empty or loading timeline paints its own night fill over the room: let the wallpaper through. */

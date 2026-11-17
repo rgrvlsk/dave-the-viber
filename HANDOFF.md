@@ -31,6 +31,12 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   `sidebar-footer`) keeps only the wood counter; its last items are no longer covered. Full 44,763.
   Breadcrumb (Roger: "posa el breadcrumb també en silom"): `[data-chat-header] [data-slot=workspace-breadcrumb-text]`
   uses `--sk-pixel`; the header's buttons keep `--sk-round`. Full 44,823 (flat 50,973). check.js 0 invalid, l3Lost 0.
+  Usage (Roger: "també caldria estilitzar el usage"; `/usage` is `dialog-popup[aria-label=Usage]`): seigaiha wallpaper
+  like Settings, limit cards #303c54, Silom numbers and header crumbs, each meter (`button[aria-label*=left]`) a
+  recessed track whose fill (the part left, provider colour inline) shows as 6 px lit segments with 2 px gaps (`mask`; Roger preferred these to 10 px), the pace
+  mark a 4 px pink pin, reset chips navy tags with a gold edge, the pressed view toggle pink. Light == dark 0 px in
+  the dialog; check.js 0 invalid. Cost/Tokens views not seen: this connection has no diagnostics access. Full 45,469
+  (flat 51,803). Capture `demo/menus/usage.png`.
 - Textures and backgrounds (2026-11-17, branch `textures-backgrounds`, NOT published; Roger: "patterns/textures i imatges
   de fons per a la resta de la interfície … i també el fons de la barra lateral"): sprites `wall` (32x32, four glazed
   tiles with grout, bevel, glints, a chipped corner; replaces `tile`, shown at 64 px), `seigaiha` (24x12 wave scales in
@@ -100,7 +106,7 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   Checked: Dish! #e6e4d1, Input #e7e2d9, pinned Input #c8aa86; project text ≥ 5.55, stamp 5.64; light == dark.
 - Timer (2026-11-16 22:00): the status timer (`span[aria-hidden]` after the label) has `text-transform: none`,
   so the stamp reads "WORKING 26s". Previous live file: `final2/published-before-2026-11-16-timer.json`.
-- Full edition `out2/full.json` / `full.css`: **44,763 chars** nested, 50,894 flat (OVER the limit if a flat build is ever needed) (limit 50,000, for t3skins.dev).
+- Full edition `out2/full.json` / `full.css`: **45,469 chars** nested, 51,803 flat (OVER the limit if a flat build is ever needed) (limit 50,000, for t3skins.dev).
 - Lite edition `out2/lite.json` / `lite.css`: **15,374 chars** nested, 18,568 flat (limit 20,000, for t3themes.com). Sidebar only.
 - CSS nesting (2026-11-16 21:45): the minifier nests consecutive rules with a shared selector prefix, never reorders
   them, and refuses output that does not expand to the flat CSS. With `--sk-notch`/`--sk-plank`/`--sk-board` and

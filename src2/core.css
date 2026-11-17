@@ -31,6 +31,9 @@
   --sk-i-working: {{working}};
   --sk-i-pot: {{pot_a}};
   --sk-i-woke: {{woke}};
+  --sk-i-approval: {{approval}};
+  --sk-i-input: {{input}};
+  --sk-i-request: {{request}};
   --sk-peg: {{peg_h}};
   --sk-tear: {{tear}};
   /* Sprites are lossless WebP bitmaps: nearest-neighbour scaling keeps every pixel square. */
@@ -349,15 +352,15 @@ body {
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-warning-foreground:has(> .lucide-shield-question-mark) {
   --sk-c: var(--sk-approval);
-  --sk-icon: {{approval}};
+  --sk-icon: var(--sk-i-approval);
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-indigo-600 {
   --sk-c: var(--sk-input);
-  --sk-icon: {{input}};
+  --sk-icon: var(--sk-i-input);
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-guest-foreground {
   --sk-c: var(--sk-request);
-  --sk-icon: {{request}};
+  --sk-icon: var(--sk-i-request);
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-info-foreground {
   --sk-c: var(--sk-working);

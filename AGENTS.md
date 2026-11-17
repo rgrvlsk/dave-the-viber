@@ -54,7 +54,8 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
 5. `preview_set_appearance light` and `dark`: the look must be identical.
 6. Refactors: freeze motion
    (`*,*::before,*::after,html::after,body::after{animation:none!important;transition:none!important}`),
-   screenshot before/after, PIL pixel diff must be 0.
+   screenshot before/after, PIL pixel diff must be 0. Exception (Roger, 2026-11-17): Chromium dithers every
+   `linear-gradient`, even one colour, so the bubble inks may differ by ±1/255 per channel.
 7. Question UI: spawn a Haiku child that calls AskUserQuestion (single + multi select), open its thread,
    inject, inspect `[data-composer-banner-surface]`, then `task_cancel` it. Ask Roger not to answer it.
 8. All status states: Mac mini dev demo (see `HANDOFF.md` → "Mac mini dev demo"): `ssh rogerflix`, worktree

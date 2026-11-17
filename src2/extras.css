@@ -1,13 +1,12 @@
 /* ---------- Full edition: the rest of the restaurant ---------- */
 /* One copy of the bubble art and the two common inks, shared by the eight bubble hosts, and a pixelation shader for the
-   ticket stains (SVG filter: average, sample, dilate, posterize; 2 px cells). */
+   ticket stains (SVG filter: average, sample, dilate, posterize; 2 px cells). An ink is the status mask (black) under
+   an ink rectangle blended with lighten: black turns ink, the bubble's white and grey stay (both lighter per channel). */
 :root {
   --sk-bubble: {{bubble}};
-  --sk-ink-a: {{approval_ink}};
-  --sk-ink-i: {{input_ink}};
-  --sk-steam2: {{working2}};
+  --sk-ink-a: linear-gradient(#7a4d00 0 0), var(--sk-i-approval);
+  --sk-ink-i: linear-gradient(#34468c 0 0), var(--sk-i-input);
   --sk-pot-b: {{pot_b}};
-  --sk-pot-c: {{pot_c}};
   --sk-fish: {{fish}};
   --sk-weed-a: {{weed_a}};
   --sk-weed-b: {{weed_b}};
@@ -218,8 +217,9 @@ main[data-slot="sidebar-inset"]::after,
   top: max(112px, calc(anchor(top, -300px) + 6px));
   width: 40px;
   height: 30px;
-  background-size: 18px auto, 40px 30px;
-  background-position: 50% calc(50% - 2px), center;
+  background-size: 18px 18px, 18px auto, 40px 30px;
+  background-position: 50% calc(50% - 2px), 50% calc(50% - 2px), center;
+  background-blend-mode: lighten, normal;
   background-repeat: no-repeat;
   filter: drop-shadow(2px 2px 0 rgb(6 14 26 / 0.5));
   position-visibility: anchors-visible;
@@ -250,12 +250,12 @@ main[data-slot="sidebar-inset"]::after {
 }
 [data-workspace-area="conversation"]::before {
   position-anchor: --sk-ask-request;
-  background-image: {{request_ink}}, var(--sk-bubble);
+  background-image: linear-gradient(#84295f 0 0), var(--sk-i-request), var(--sk-bubble);
   animation-delay: -1.4s;
 }
 [data-workspace-area="conversation"]::after {
   position-anchor: --sk-ask-woke;
-  background-image: {{woke_ink}}, var(--sk-bubble);
+  background-image: linear-gradient(#7a4d00 0 0), var(--sk-i-woke), var(--sk-bubble);
   animation-delay: -2.1s;
 }
 [data-workspace-area="composer"]::before {
@@ -278,12 +278,11 @@ main[data-slot="sidebar-inset"]::after {
   50% { translate: 0 -3px; }
 }
 
-/* Working: the pot's lid dances on the boil, three frames. */
+/* Working: the pot's lid dances on the boil, three frames; the fourth is the second mirrored (the pot is symmetric). */
 @keyframes sk-steam {
-  0%, 100% { -webkit-mask-image: var(--sk-i-pot); mask-image: var(--sk-i-pot); }
-  25% { -webkit-mask-image: var(--sk-pot-b); mask-image: var(--sk-pot-b); }
+  25%, 75% { -webkit-mask-image: var(--sk-pot-b); mask-image: var(--sk-pot-b); }
   50% { -webkit-mask-image: var(--sk-i-pot); mask-image: var(--sk-i-pot); }
-  75% { -webkit-mask-image: var(--sk-pot-c); mask-image: var(--sk-pot-c); }
+  75% { scale: -1 1; }
 }
 /* Provider marks ship as fill-black / dark:fill-white: on paper they stay ink in both modes. */
 :is([data-thread-item], [data-slot="composer-host"]) svg[class*="dark:fill-white"] {
@@ -319,10 +318,9 @@ main[data-slot="sidebar-inset"]::after {
 [data-testid*="snooze"][data-testid$="-shelf-toggle"] > span:first-child::before {
   mask-image: var(--sk-i-woke);
 }
-/* Dish!: the served bowl still steams, two frames. */
+/* Dish!: the served bowl still steams, two frames: the bowl and its mirror. */
 @keyframes sk-dish {
-  0%, 49.9% { -webkit-mask-image: var(--sk-i-working); mask-image: var(--sk-i-working); }
-  50%, 100% { -webkit-mask-image: var(--sk-steam2); mask-image: var(--sk-steam2); }
+  50% { scale: -1 1; }
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-success-foreground::before {
   animation: sk-dish 2.4s steps(1) infinite;

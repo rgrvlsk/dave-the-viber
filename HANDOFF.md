@@ -7,6 +7,17 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Sprite derivations (2026-11-17, Roger chose A+B+C): Dish's 2nd frame and the pot's 4th frame are the mirrored
+  sprite (`scale: -1 1` in `sk-dish` / `sk-steam`); `working2.png` and `pot_c.png` removed. The bubble inks are
+  the status masks under a `lighten`-blended ink rectangle (18x18 px, inside the white body); the four `*_ink`
+  tokens are removed. Full 49,881 → 49,414 (−467); lite 16,183 → 16,234 (+51, three masks became vars). Isolated
+  test with real sprites at DPR 2: mirror frames 0 px at 4 phases; inks ±1/255 (Chromium dithers gradients;
+  exception recorded in AGENTS.md). Live inject: 125/125 rules, 0 invalid, l3Lost 0, Input bubble ink correct.
+  Not checked: light vs dark, DPR 1, Working/Dish rows live (none open). Not published.
+  Rejected after measuring: fish mirror (CSS cannot flip one background layer; `fish_l` is already derived in the
+  build), kelp trunk/top split (`weed_b` = `weed_a` with the top 7 rows 2 px left, but 3 more layers cost more
+  than the ~48 chars saved), spike = open spike + foot (−55 full, +108 lite). Each WebP data URI has ~100 chars of
+  fixed cost, so splitting sprites into parts loses; removing whole tokens wins.
 - Dave seated (2026-11-17): Roger edited the original PNG in Affinity. His exported 56x60 PNG is used unchanged;
   the palette includes the colours and partial-alpha pixel in his export. The laptop is drawn 12px lower at 2x so
   its base touches the counter; this keeps its screen position while placing Dave lower behind it. Full 49,708;

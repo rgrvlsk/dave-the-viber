@@ -40,12 +40,10 @@ def rot90(art):
     return "\n".join("".join(rows[len(rows) - 1 - y][x] for y in range(len(rows))) for x in range(len(rows[0])))
 mask = lambda name: multi(png(name), {"#": None})
 TOKENS = {
-    "working2": mask("working2"),
     "settle": mask("settle"),
     "discard": mask("discard"),
     "pot_a": mask("pot_a"),
     "pot_b": mask("pot_b"),
-    "pot_c": mask("pot_c"),
     "peg_h": multi(rot90(PEG), PEG_P),
     "bubble": multi(png("bubble", BUBBLE_P), BUBBLE_P),
     "spike_open": multi(png("spike_open", SPIKE_P), SPIKE_P),

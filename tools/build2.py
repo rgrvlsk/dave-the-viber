@@ -17,8 +17,6 @@ tok = {k: multi(a, {"#": None}) for k, a in SPR.items()}
 tok["wood"] = multi(WOOD, WOOD_P)
 tok["waves"] = multi(WAVES, WAVES_P)
 tok["tear"] = multi(TEAR, {"#": None})
-for _k, _c in {"approval": "#7a4d00", "input": "#34468c", "request": "#84295f", "woke": "#7a4d00"}.items():
-    tok[_k + "_ink"] = multi(SPR[_k], {"#": _c})
 def pixel_filter(cells):
     """SVG pixel shader: sample one pixel per cell (flood + tile + composite) and grow it to fill the cell (dilate)."""
     h = cells // 2

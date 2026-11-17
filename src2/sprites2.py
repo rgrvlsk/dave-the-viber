@@ -10,7 +10,7 @@ TIP_P = {"k": "#0e1620", "s": "#dfe5ea", "c": "#7d8994"}
 # Kitchen wall: glazed tiles (2x2 per sprite), dark grout, lit top-left bevel, glints, one chipped corner.
 WALL_P = {"g": "#13253b", "h": "#2b4d74", "t": "#1d3a5a", "u": "#1a3452", "s": "#3a5a7e"}
 # Header beam: dark wood, dark enough that muted text on its lightest streak stays above 4.5:1.
-BEAM_P = {"h": "#6e4630", "w": "#4a2f1e", "d": "#3e2718", "l": "#4f321f", "k": "#2e1d12"}
+BEAM_P = {"h": "#6e4630", "w": "#4a2f1e", "d": "#3e2718", "k": "#2e1d12"}
 # Dining-room wallpaper: seigaiha waves. The PNG marks outer rings white, inner rings grey;
 # the token paints both in faint white, so the pattern stays low-contrast behind text on any night surface.
 SEIG_P = {"a": "#ffffff", "b": "#c0c0c0"}

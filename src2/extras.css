@@ -77,16 +77,30 @@
   border-color: transparent !important;
   box-shadow: none !important;
 }
-/* The logo is a small wooden plaque; Nightly is a paper tag tied to it. */
+/* The logo floats in the night sky in ethereal white: a moonlit halo and a slow drift (still under reduced motion);
+   Nightly is a paper tag beside it. */
+@keyframes sk-float {
+  to { translate: 0 -2px; }
+}
 [aria-label="T3 Code home"] {
   padding: 0 8px;
   border-radius: 0 !important;
-  background: repeating-linear-gradient(#c58848 0 3px, #b9783d 3px 7px);
-  box-shadow: inset 0 0 0 1px #e2a866, 0 0 0 2px #3a2414, 2px 3px 0 2px #0b172680;
+  background: none;
   font-family: var(--sk-round);
+  filter: drop-shadow(0 0 2px #dfe8ff) drop-shadow(0 0 7px rgb(160 190 255 / 0.55));
+  animation: sk-float 3.2s ease-in-out infinite alternate;
 }
 [aria-label="T3 Code home"] * {
-  color: #2a1608 !important;
+  color: #fbfaff !important;
+}
+[aria-label="T3 Code home"]:focus-visible {
+  outline: 2px solid #fff3dc;
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  [aria-label="T3 Code home"] {
+    animation: none;
+  }
 }
 [data-slot="sidebar-inner"] [data-slot="badge"] {
   border-radius: 0 !important;

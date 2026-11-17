@@ -70,6 +70,10 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   Search (full only): rests as a glazed magnifier tile (28 px, 2 px margins keep the 32 px row, list top stays 100);
   the invisible input covers the tile, so click/Tab/shortcut focus it; focus or a query opens the recessed field, an
   empty blur folds it back. Magnifier 8.90:1. Full 42,761 (flat 49,143: the flat fallback is nearly full), lite 16,146.
+  Logo (Roger: "treu el rètol de fusta … blanc eteri, flotant en el cel"): no plaque; white `#fbfaff` with a moonlit
+  halo (two drop-shadows) and a 2 px drift (`sk-float`, 3.2 s alternate; off under reduced motion), focus outline
+  cream. "Code" 12.33:1 on the sky (6.70 against the halo's brightest pixel); light == dark 0 px. Full 42,941
+  (flat 49,348).
   Not done: the terminal (the web preview cannot open it; xterm paints its own `#11131a`). Found, not mine: the fish
   tank footer also renders inside Settings' side nav (`[data-slot=sidebar-footer]`), over the last nav items; the thread
   details card's muted rows are 3.55-4.08:1 (same before and after).

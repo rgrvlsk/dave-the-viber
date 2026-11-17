@@ -6,6 +6,24 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/pixel-sushi-rail/` (call it `$D`). T3 Code project "Pixel Sushi Rail" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path is a symlink to this folder.
 
 ## State
+- House menu card (2026-11-17, Roger: "personalitza la interfície i els menús amb els colors, formes i tipografia
+  d'aquestes captures", 4 screenshots of a pixel sushi-bar game UI; mood, palette and shapes only, no copied art).
+  NOT published yet. extras.css "Controls: the house menu card":
+  menus, popovers, comboboxes, selects and the command palette are cream cards (#ece2d4) with a 2 px copper border
+  (#a86030), dark outline and pixel shadow; the card re-inks the app tokens (`--contrast-*`, success/warning/error/diff)
+  so all children follow. Highlighted row = 2 px gold inset (#e4b460); checks pink. Section labels (`*-label`) are
+  pink brush strokes (#c8346e, white); dialog titles a gold ribbon. Dialogs and the thread details card: navy #283246
+  board, copper frame + gold hairline. Primary buttons hot pink #e4106c (white 5.7:1); switches square, pink when on,
+  gold ring; select triggers recessed; settings group cards #303c54; tooltips navy tag with a gold edge.
+  Type: `--sk-pixel` = Silom (macOS), Krungthep, then `--sk-round` (no font embedding: `src()` is banned).
+  All popups and toggles have square corners. Full 40,323 → 43,607 (flat 49,687: a flat build plus the textures
+  thread will exceed 50,000); lite unchanged. Checked: check.js 0 invalid / l3Lost 0 / no overlap; scan.js no new text
+  under 4.5 (details card disabled buttons were 3.96 before and are unchanged); light == dark inside popups and
+  settings except pre-existing gaps (left settings nav/fish tank, identical in the HEAD build). Captures `demo/menus/`.
+  Not checked: alert dialogs with a real title + primary button (none reachable without a destructive action),
+  desktop app, Windows/Linux fonts.
+- Textures thread (2026-11-17): a separate T3 thread on branch `textures-backgrounds` (worktree) draws patterns and
+  backgrounds for the plain surfaces and the sidebar wall; budget +4,500 full / +2,500 lite; it does not publish or merge.
 - Open ticket off the peg (2026-11-17, Roger: "el ticket obert separat de l'agulla, desplaçat a la dreta, sortint una
   mica de la barra lateral"; published locally, previous live file `final2/published-before-2026-11-17-offpeg.json`):
   the current ticket gets `translate: 20px 0` (320 ms, same curve as rotate), so it leaves the peg (12 px gap) and its

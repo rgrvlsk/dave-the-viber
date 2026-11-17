@@ -25,6 +25,7 @@
   --sk-lacquer-edge: #b9862a;
   --sk-chop: #b07a40;
   --sk-chop-tip: #e9cf9f;
+  --sk-pixel: "Silom", "Krungthep", var(--sk-round);
 }
 
 
@@ -602,23 +603,137 @@ svg.lucide[class*="loader"] {
   shape-rendering: crispEdges;
 }
 
-/* ---------- Controls: chunky 8-bit windows ---------- */
-[data-slot="dialog-popup"],
+/* ---------- Controls: the house menu card ---------- */
+/* Menus, pickers and lists are printed menu cards: cream card stock in a copper frame with a dark
+   outline and a hard pixel shadow. The card re-inks the app's tokens, so every child follows. */
 [data-slot="popover-popup"],
-[data-slot="menu-popup"] {
-  border-radius: 0 !important;
+[data-slot="menu-popup"],
+[data-slot="combobox-popup"],
+[data-slot="select-popup"],
+[data-slot="command-dialog-popup"] {
+  --popover: #ece2d4;
+  --muted: #d8ccc0;
+  --accent: #f8f1e6;
+  --accent-foreground: #2a1d16;
+  --foreground: #2a1d16;
+  --contrast-foreground: #2a1d16;
+  --contrast-popover-foreground: #2a1d16;
+  --contrast-accent-foreground: #2a1d16;
+  --contrast-secondary-foreground: #2a1d16;
+  --contrast-muted-foreground: #5e4a3c;
+  --contrast-secondary-label: #5e4a3c;
+  --contrast-placeholder: #6e5a4a;
+  --contrast-icon-muted: #6e5a4a;
+  --contrast-border: #b3a08c;
+  --contrast-input: #c0b4a8;
+  --success-foreground: #1d6a33;
+  --diff-addition-foreground: #1d6a33;
+  --warning: #a86400;
+  --warning-foreground: #8a5300;
+  --error-foreground: #a3203a;
+  --destructive-foreground: #a3203a;
+  --diff-deletion-foreground: #a3203a;
+  --info-foreground: #1f4f8a;
+  background: #ece2d4 !important;
+  color: #2a1d16;
+  backdrop-filter: none !important;
+  border: 2px solid #a86030 !important;
+  box-shadow: 0 0 0 2px #2a1810, 6px 6px 0 2px rgb(0 0 0 / 0.5) !important;
+}
+/* Dialogs and the details card are the counter's order board: navy, the same frame, a gold hairline inside. */
+[data-slot="dialog-popup"],
+[data-slot="alert-dialog-popup"],
+[data-thread-details-card] {
   border: 0 !important;
-  box-shadow: 0 0 0 2px #0e1620, inset 0 0 0 1px #3f4c69, inset 0 2px 0 1px rgb(255 255 255 / 0.06), 5px 5px 0 2px rgb(0 0 0 / 0.45) !important;
+  border-radius: 0 !important;
+  background: #283246 !important;
+  backdrop-filter: none !important;
+  box-shadow: inset 0 0 0 3px #a86030, inset 0 0 0 4px #f0cc90, 0 0 0 2px #2a1810, 8px 8px 0 2px rgb(0 0 0 / 0.5) !important;
+}
+:is([data-slot="dialog-popup"], [data-slot="alert-dialog-popup"], [data-slot$="popup"], [data-slot$="popup"] *, [data-slot="button"], [data-slot="toggle"], [data-slot="input"], [data-slot="select-trigger"]) {
+  border-radius: 0 !important;
+}
+:is([data-slot="popover-popup"], [data-slot="menu-popup"], [data-slot="combobox-popup"], [data-slot="select-popup"], [data-slot="command-dialog-popup"]) :is(svg[class*="dark:fill-white"], [class*="dark:text-white"]) {
+  fill: #2a1d16 !important;
+  color: #2a1d16 !important;
+}
+/* The row under the cursor is the menu's chosen dish: lit card with a gold frame. */
+[data-slot$="popup"] :is([data-slot$="-item"], [role="option"], [role^="menuitem"], [role="radio"]):is([data-highlighted], :hover) {
+  box-shadow: inset 0 0 0 2px #e4b460;
+}
+[data-slot$="popup"] :is([data-slot$="-item"], [role^="menuitem"])[aria-checked="true"] svg,
+[data-slot$="popup"] [data-slot$="-item-indicator"] {
+  color: #c8346e !important;
+}
+/* Section labels are pink brush strokes; titles hang on a gold ribbon. Both in the shop's pixel type. */
+[data-slot$="popup"] :is([data-slot$="-label"], [data-slot$="group-label"]) {
+  width: fit-content;
+  margin: 4px 0 2px 2px;
+  padding: 2px 16px 2px 6px !important;
+  background: #c8346e;
+  color: #fff !important;
+  font: 400 0.75rem var(--sk-pixel);
+  clip-path: polygon(0 1px, 2px 0, 100% 0, calc(100% - 6px) 35%, calc(100% - 2px) 60%, calc(100% - 7px) 100%, 2px 100%, 0 calc(100% - 1px));
+}
+:is([data-slot="dialog-title"], [data-slot="alert-dialog-title"]) {
+  width: fit-content;
+  padding: 3px 14px;
+  background: #f0cc90;
+  color: #3a2414 !important;
+  font-family: var(--sk-pixel);
+  font-weight: 400;
+  box-shadow: inset 0 -2px 0 #c8963c, inset 0 2px 0 #fbe6bd;
+  clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 6px 100%, 0 50%);
+}
+/* The main action is the pink OK key; keys sink 1 px when pressed. */
+[data-slot="button"][class*="bg-primary"] {
+  background: #e4106c !important;
+  color: #fff !important;
+  font-family: var(--sk-pixel);
+  font-weight: 400;
+  box-shadow: inset 0 -2px 0 #a00a4a, inset 0 2px 0 #f2589a, 0 0 0 2px #2a1810 !important;
+}
+[data-slot="button"][class*="bg-primary"]:hover {
+  background: #f0207a !important;
+}
+[data-slot="button"]:active {
+  translate: 0 1px;
 }
 [data-slot="tooltip-popup"] {
-  border-radius: 0 !important;
-  font-family: var(--font-mono);
-  box-shadow: 0 0 0 1px #0e1620, 2px 2px 0 1px rgb(0 0 0 / 0.45) !important;
+  background: #18243c !important;
+  color: #f3e7d3 !important;
+  font-family: var(--sk-pixel);
+  box-shadow: 0 0 0 1px #e4b460, 3px 3px 0 1px rgb(0 0 0 / 0.5) !important;
 }
-[data-slot="button"],
-[data-slot="input"],
-[data-slot="select-trigger"] {
+/* Settings: group titles in the pixel type and gold; switches are square keys, pink when on, in a gold ring. */
+[data-slot="settings-group"] {
+  background: #303c54 !important;
+}
+[data-slot="dialog-popup"] h2 {
+  font-family: var(--sk-pixel);
+  font-weight: 400;
+  color: #f0cc90;
+}
+:is([data-slot="switch"], [data-slot="switch-thumb"]) {
   border-radius: 0 !important;
+}
+[data-slot="switch"] {
+  box-shadow: 0 0 0 1px #e4b460;
+}
+[data-slot="switch"][data-checked] {
+  background: #e4106c !important;
+}
+[data-slot="switch"][data-checked] > * {
+  background: #f8f1e6;
+}
+[data-slot="select-trigger"] {
+  border-color: transparent !important;
+  background: #1d2536 !important;
+  box-shadow: inset 2px 2px 0 #0e1620, inset -1px -1px 0 #3f4c69 !important;
+}
+[data-slot$="popup"] [data-slot="kbd"] {
+  background: #2a1d16;
+  color: #f3e7d3;
 }
 
 /* ---------- Scrollbars: chopsticks ---------- */

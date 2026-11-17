@@ -7,7 +7,13 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
-- Dave fan-art (2026-11-17): newly drawn from the official Digital
+- Dave seated (2026-11-17): Roger edited the original PNG in Affinity. His exported 56x60 PNG is used unchanged;
+  the palette includes the colours and partial-alpha pixel in his export. The laptop is drawn 12px lower at 2x so
+  its base touches the counter; this keeps its screen position while placing Dave lower behind it. Full 49,708;
+  lite 16,183. Activated locally on the MacBook; installed JSON equals the build, SHA-256 f9340f118761bd2bc6f1bfad624b98b56607fb6cf53abb9b3b13f23d5a4fc987.
+  Both validators pass; source PNG and WebP match at every visible pixel. The edited sprite has not been checked
+  visually in the app. Aquarium bubbles fix and desktop titlebar are included.
+- Earlier Dave fan-art (2026-11-17; superseded by the seated edit above): newly drawn from the official Digital
   Extra character sheet's SUSHI BAR poses, found by Luna Low. Straw hat, pale blue shirt, broad build and goatee;
   programming behind a silver laptop with a cyan fish. Roger kept the original broad goatee, with its uneven side
   corrected, and asked for black hair. `src2/sprites/dave.png` is now 56x60, 17 opaque colours,

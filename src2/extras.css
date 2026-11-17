@@ -928,7 +928,7 @@ svg.lucide[class*="loader"] {
     linear-gradient(#0000 6px, #006a8c1f 6px, #00587a2e 30px, #00334f8c);
   animation: sk-sway 2.4s infinite;
 }
-[data-slot="sidebar-footer"]::after {
+[data-slot="sidebar-inner"] [data-slot="sidebar-footer"]::after {
   --sk-bx: 32px, calc(100% - 22px), 66%;
   inset: -49px 1px calc(100% - 8px);
   background: var(--sk-fish) -26px 14px / 24px 14px no-repeat, {{fish_l}} -26px 32px / 24px 14px no-repeat, {{bubbles}} 0 0 / 10px 48px repeat-y, {{bubbles}} 0 0 / 10px 48px repeat-y, {{bubbles}} 0 0 / 10px 48px repeat-y;
@@ -988,13 +988,15 @@ svg.lucide[class*="loader"] {
 .chat-composer-lane::after {
   background: var(--sk-wood) 0 0 / 64px 16px repeat-x, linear-gradient(#0000 16px, #6e4220 0 18px, #b9783d 0);
 }
+/* Dave's PNG ends in six transparent pixel rows: 12px down at 2x puts the laptop base on the plank. */
 .chat-composer-lane::before {
   bottom: 60px;
-  background: radial-gradient(closest-side, #bff3ff40, #0000) right 46px top 18px / 40px 24px no-repeat, {{dave}} right 38px top 0 / 56px 60px no-repeat, {{stool}} 24px calc(100% + 4px) / 80px 28px repeat-x;
+  height: 120px;
+  background: radial-gradient(closest-side, #bff3ff40, #0000) right 30px top 48px / 80px 48px no-repeat, {{dave}} right 14px top 12px / 112px 120px no-repeat, {{stool}} 24px calc(100% + 4px) / 80px 28px repeat-x;
   animation: sk-screen 0.8s steps(1) infinite;
 }
 @keyframes sk-screen {
-  50% { background-size: 44px 28px, 56px 60px, 80px 28px; }
+  50% { background-size: 88px 56px, 112px 120px, 80px 28px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

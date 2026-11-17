@@ -78,6 +78,11 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   a flat build no longer fits 50,000), lite 16,183. check.js 0 invalid / l3Lost 0; scan.js only the decorative ticket
   stains; light == dark 0 px in sidebar and header. PUBLISHED locally 2026-11-17 as `dave-the-viber` (server file =
   build, sha256 fb876c81…); previous live file `final2/published-before-2026-11-17-nightwindow.json` (= main's build).
+  At 02:38 another thread published main f377750 (ORDER header fix) over it; main was then fast-forwarded to this
+  branch (91b8af1, pushed to GitHub) and republished: live = main build, sha256 f89ff65e…, full 47,637, with both
+  changes; previous live file `final2/published-before-2026-11-17-nightwindow2.json`. Public captures: only
+  `night-sprite-4x.png` and a crop of the sidebar top above the tickets (no thread titles); the 7 captures of the
+  first textures commit were already public and show real thread titles.
   Not done: the terminal (the web preview cannot open it; xterm paints its own `#11131a`). The fish tank in Settings'
   side nav was fixed on main (scoped to `sidebar-inner`). Found, not mine: the thread details card's muted rows are 3.55-4.08:1 (same before and after).
 - Open ticket off the peg (2026-11-17, Roger: "el ticket obert separat de l'agulla, desplaçat a la dreta, sortint una

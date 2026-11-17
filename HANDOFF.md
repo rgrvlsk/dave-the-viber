@@ -7,6 +7,16 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Saucepan + static stamps (2026-11-17, Roger: remove the dish and pot animations; Working = a saucepan, "cassó").
+  `sk-steam` and `sk-dish` are gone (keyframes, animation rules, their reduced-motion entries). Working and the working
+  shelf show `src2/sprites/saucepan.png` (12x12, H1: two steam wisps, flat rim, 1 px handle rising in three steps),
+  hand-drawn from Luna Low imagegen references after Roger rejected a traditional pot, blue flames, knife/maki/toque.
+  `pot_b` left the mask atlas: icons after it moved 16 rows up (12 px scale) / 24 px (bubbles, 1.5x); proof: new
+  atlas == old atlas minus rows 44-59 with the saucepan in rows 28-39. Full 49,998 -> 49,381; lite 14,926 -> 14,904.
+  Live inject: check.js 0 invalid, l3Lost 0, no overlap; Input bubble icon and the saucepan stamp checked on screen.
+  Not checked live: keys on hover, Failed/Limited/Draft/Request/Woke stamps (covered by the atlas proof), desktop app.
+- Idea 3 (2026-11-17, published): content-visibility visible only on anchored attention rows; perf reports on the
+  Mac mini in `/Users/roger/t3code/.css-perf/` (REPORT.md, REPORT-032c3f5.md, REPORT-ideas.md).
 - "MAIN COURSE" leaked (2026-11-17, Roger): since 6db2d13 the label rule was a top-level `[role="listbox"]::before`,
   so every listbox (command palette, selects) showed it. It is now nested in the picker popup rule. Live: command
   palette listbox `::before` content none, picker "MAIN COURSE". Full 49,997 (3 free). PUBLISHED locally.

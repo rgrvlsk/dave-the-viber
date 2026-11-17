@@ -71,7 +71,8 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
   Hover buttons never cover the status. Exception: tickets that call for attention show a bubble beside the ticket.
 - Hover only straightens a ticket; no lift. Rail and peg never move.
 - Settled slips: inverted z-order (`sibling-index()`), small bottom edge, spiked and aligned on the spindle.
-- Done label reads "Dish!" with the hot-dish icon; Working shows a pot whose lid dances and steam rises.
+- Done label reads "Dish!" with the hot-dish icon; Working shows a steaming saucepan. Both stamps are static
+  (Roger, 2026-11-17: no dish or pot animation).
 - Round radios and square checkboxes in questions keep their shape.
 - The thread detail popover may cover the bubbles. The sign may cover the first line.
 - Text ≥ 4.5:1, icons ≥ 3:1 at Appearance contrast 165; status distinguishable without colour;

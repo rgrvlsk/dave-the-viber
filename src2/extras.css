@@ -245,7 +245,7 @@ html::after {
 body::after {
   position-anchor: --sk-ask-input;
   --sk-c: #34468c;
-  --sk-y: -190.5px;
+  --sk-y: -166.5px;
   animation-delay: -0.7s;
 }
 main[data-slot="sidebar-inset"]::before {
@@ -258,19 +258,19 @@ main[data-slot="sidebar-inset"]::before {
 main[data-slot="sidebar-inset"]::after {
   position-anchor: --sk-ask-input2;
   --sk-c: #34468c;
-  --sk-y: -190.5px;
+  --sk-y: -166.5px;
   animation-delay: -2s;
 }
 [data-workspace-area="conversation"]::before {
   position-anchor: --sk-ask-request;
   --sk-c: #84295f;
-  --sk-y: -213px;
+  --sk-y: -189px;
   animation-delay: -1.4s;
 }
 [data-workspace-area="conversation"]::after {
   position-anchor: --sk-ask-woke;
   --sk-c: #7a4d00;
-  --sk-y: -234px;
+  --sk-y: -210px;
   animation-delay: -2.1s;
 }
 [data-workspace-area="composer"]::before {
@@ -283,7 +283,7 @@ main[data-slot="sidebar-inset"]::after {
 [data-workspace-area="composer"]::after {
   position-anchor: --sk-ask-input3;
   --sk-c: #34468c;
-  --sk-y: -190.5px;
+  --sk-y: -166.5px;
   animation-delay: -1.7s;
 }
 
@@ -296,12 +296,6 @@ main[data-slot="sidebar-inset"]::after {
   50% { translate: 0 -3px; }
 }
 
-/* Working: the pot's lid dances on the boil, three frames; the fourth is the second mirrored (the pot is symmetric). */
-@keyframes sk-steam {
-  25%, 75% { mask-position: 0 -44px; }
-  50% { mask-position: 0 -28px; }
-  75% { scale: -1 1; }
-}
 /* Provider marks ship as fill-black / dark:fill-white: on paper they stay ink in both modes. */
 :is([data-thread-item], [data-slot="composer-host"]) svg[class*="dark:fill-white"] {
   fill: var(--contrast-secondary-label) !important;
@@ -334,18 +328,7 @@ main[data-slot="sidebar-inset"]::after {
 }
 /* Snoozed shelf: the kitchen timer. */
 [data-testid*="snooze"][data-testid$="-shelf-toggle"] > span:first-child::before {
-  mask: var(--sk-atlas) 0 -156px / 12px auto no-repeat;
-}
-/* Dish!: the served bowl still steams, two frames: the bowl and its mirror. */
-@keyframes sk-dish {
-  50% { scale: -1 1; }
-}
-[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-success-foreground::before {
-  animation: sk-dish 2.4s steps(1) infinite;
-}
-[data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-info-foreground::before,
-[data-testid="sidebar-working-shelf-toggle"] > span:first-child::before {
-  animation: sk-steam 1.2s steps(1) infinite;
+  mask: var(--sk-atlas) 0 -140px / 12px auto no-repeat;
 }
 
 /* Project tiles keep hard pixel corners. */
@@ -1204,8 +1187,6 @@ svg.lucide[class*="loader"] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-thread-item] .group\/sidebar-status-slot > span:first-child > :is(span, button)::before,
-  [data-testid="sidebar-working-shelf-toggle"] > span:first-child::before,
   [data-slot="sidebar-footer"]::before,
   [data-slot="sidebar-footer"]::after,
   .chat-composer-lane::before {

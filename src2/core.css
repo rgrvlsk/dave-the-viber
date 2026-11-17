@@ -352,11 +352,11 @@ body {
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-indigo-600 {
   --sk-c: var(--sk-input);
-  --sk-y: 133px;
+  --sk-y: 117px;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-guest-foreground {
   --sk-c: var(--sk-request);
-  --sk-y: 148px;
+  --sk-y: 132px;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-info-foreground {
   --sk-c: var(--sk-working);
@@ -367,7 +367,7 @@ body {
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-warning-foreground:has(> .lucide-circle-alert) {
   --sk-c: var(--sk-approval);
-  --sk-y: 102px;
+  --sk-y: 86px;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-success-foreground {
   --sk-c: var(--sk-done);
@@ -382,7 +382,7 @@ body {
 /* An unsent draft is stamped in pencil, just before the status stamp. */
 [data-thread-item] [data-testid^="sidebar-draft-indicator"] {
   --sk-c: var(--sk-ink);
-  --sk-y: 117px;
+  --sk-y: 101px;
   order: 1;
 }
 [data-thread-item] [data-testid^="sidebar-draft-indicator"]::after {
@@ -393,11 +393,11 @@ body {
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-error-foreground {
   --sk-c: var(--sk-failed);
-  --sk-y: 90.5px;
+  --sk-y: 74.5px;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > .text-warning-foreground:has(> .lucide-alarm-clock) {
   --sk-c: var(--sk-approval);
-  --sk-y: 162px;
+  --sk-y: 146px;
 }
 /*full*/
 /* The age of a quiet ticket reads like a printed time. */
@@ -473,17 +473,17 @@ body {
 [data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button[aria-label^="Settle"] {
   --sk-c: #6cbf5a;
   --sk-k: #10301a;
-  --sk-y: 65px;
+  --sk-y: 49px;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button[aria-label^="Snooze"] {
   --sk-c: #f2c25c;
   --sk-k: #3a2a0a;
-  --sk-y: 162px;
+  --sk-y: 146px;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button[aria-label^="Discard"] {
   --sk-c: #e86f55;
   --sk-k: #3a1410;
-  --sk-y: 79px;
+  --sk-y: 63px;
 }
 [data-thread-item] > [data-testid="sidebar-row-card"] > div:has(.group\/sidebar-status-slot > span:not(:first-child) > :nth-child(1)) {
   --sk-actions: 1.5rem;

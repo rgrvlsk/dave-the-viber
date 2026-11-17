@@ -7,6 +7,17 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Card council (2026-11-17, Roger: "simplify the cards in chars and performance"; Council Fable Low + Astra Medium,
+  1 round, blind). Applied what Roger chose: (1) the 8 attention bubbles stand still (`sk-bob`, its 8 delays and its
+  reduced-motion entry removed; REPORT-ideas B1: the bob on an anchored box cost 740 ms layout per 8 s); (2) no
+  brass peg on the current ticket (the akane frame already marks it; red pinned peg kept); (3) Snooze/Settle/Discard
+  appear at once after the 300 ms hover delay and go at once on leave (no slide, no `--sk-kx/--sk-kt`, no span
+  clip-path). Kept by Roger: the 10% status tint, the stain blur, all 8 bubbles. Full 49,322 -> 48,181 (-1,141),
+  lite 14,986 -> 14,572 (-414). Dev demo :7508: check.js 0 invalid, l3Lost 0, no overlap; frozen pixel diff vs
+  6f0ac45 = only the current ticket's peg (+ the composer caret); hover: keys visible, translate none, below the status.
+  Not checked: OS light (no colour change), desktop app. Council patches: /private/tmp/council-cards-12964 (Fable),
+  /private/tmp/council-cards-M3AY0n (Astra). Seen, pre-existing in 6f0ac45: the Woke ticket shows its WOKE stamp
+  and the bubble at once. Open: the row `drop-shadow` (Roger asks for a lighter equivalent; measure it alone first).
 - Settled stack under the water + spike foot (2026-11-17, Roger): the settled slips (z 1000 - sibling-index(), up to
   999) painted over the fish tank, because the footer had z 22 in the same stacking context (sidebar-container); this
   predates today's changes (seen in e04711c). Footer z 22 -> 1000. Closed settled header: the rod stands on its foot

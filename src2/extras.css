@@ -155,7 +155,8 @@
 }
 
 /* Orders that need you call out like a customer at the counter: a speech bubble with the
-   status sprite floats past the sidebar's edge beside the ticket, and the stamp leaves the ticket.
+   status sprite stands still past the sidebar's edge beside the ticket (no bob: Roger, 2026-11-17),
+   and the stamp leaves the ticket.
    The sidebar's scroller is masked (its fade) and each ticket has a filter, which clip anything drawn
    inside them, so each bubble is a page-level pseudo-element placed with anchor positioning. Hosts
    must come after the sidebar in tree order. One host per call: Approval and Input get three each
@@ -232,7 +233,6 @@ main[data-slot="sidebar-inset"]::after,
   position-visibility: anchors-visible;
   pointer-events: none;
   z-index: 30;
-  animation: sk-bob 2.6s ease-in-out infinite;
   display: var(--sk-bub, block);
 }
 html::after {
@@ -240,60 +240,48 @@ html::after {
   --sk-c: #7a4d00;
   --sk-m: var(--sk-i-approval);
   --sk-y: 50%;
-  animation-delay: 0;
 }
 body::after {
   position-anchor: --sk-ask-input;
   --sk-c: #34468c;
   --sk-y: -166.5px;
-  animation-delay: -0.7s;
 }
 main[data-slot="sidebar-inset"]::before {
   position-anchor: --sk-ask-approval2;
   --sk-c: #7a4d00;
   --sk-m: var(--sk-i-approval);
   --sk-y: 50%;
-  animation-delay: -1.3s;
 }
 main[data-slot="sidebar-inset"]::after {
   position-anchor: --sk-ask-input2;
   --sk-c: #34468c;
   --sk-y: -166.5px;
-  animation-delay: -2s;
 }
 [data-workspace-area="conversation"]::before {
   position-anchor: --sk-ask-request;
   --sk-c: #84295f;
   --sk-y: -189px;
-  animation-delay: -1.4s;
 }
 [data-workspace-area="conversation"]::after {
   position-anchor: --sk-ask-woke;
   --sk-c: #7a4d00;
   --sk-y: -210px;
-  animation-delay: -2.1s;
 }
 [data-workspace-area="composer"]::before {
   position-anchor: --sk-ask-approval3;
   --sk-c: #7a4d00;
   --sk-m: var(--sk-i-approval);
   --sk-y: 50%;
-  animation-delay: -0.4s;
 }
 [data-workspace-area="composer"]::after {
   position-anchor: --sk-ask-input3;
   --sk-c: #34468c;
   --sk-y: -166.5px;
-  animation-delay: -1.7s;
 }
 
 /* A collapsed sidebar slides its tickets off-screen without clipping them: the hosts hide their bubbles. */
 :root:has([data-slot="sidebar"][data-state="collapsed"]) {
   --sk-bub: none;
-}
-@keyframes sk-bob {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -3px; }
 }
 
 /* Provider marks ship as fill-black / dark:fill-white: on paper they stay ink in both modes. */
@@ -1191,16 +1179,6 @@ svg.lucide[class*="loader"] {
   [data-slot="sidebar-footer"]::before,
   [data-slot="sidebar-footer"]::after,
   .chat-composer-lane::before {
-    animation: none !important;
-  }
-  html::after,
-  body::after,
-  main[data-slot="sidebar-inset"]::before,
-  main[data-slot="sidebar-inset"]::after,
-  [data-workspace-area="conversation"]::before,
-  [data-workspace-area="conversation"]::after,
-  [data-workspace-area="composer"]::before,
-  [data-workspace-area="composer"]::after {
     animation: none !important;
   }
 }

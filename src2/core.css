@@ -122,12 +122,9 @@ body {
   z-index: 3;
 }
 /*full*/
-/* Pinned orders get the red peg; the order you are on gets the brass one. */
+/* Pinned orders get the red peg. */
 [data-thread-item]:has(~ [data-testid="sidebar-pinned-divider"])::after {
   filter: hue-rotate(-30deg) saturate(2.6) brightness(0.85);
-}
-[data-thread-item]:has(> [data-testid="sidebar-row-card"][aria-current]:not([aria-current="false"]))::after {
-  filter: hue-rotate(8deg) saturate(1.8) brightness(1.3);
 }
 
 /*/full*/
@@ -265,7 +262,6 @@ body {
 [data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(3) {
   padding-inline-start: 1.375rem;
   height: 1rem;
-  transition: padding-inline-end 160ms cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 /* Line 3: the notes, from the ticket printer. */
 [data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(3) > :first-child {
@@ -293,7 +289,6 @@ body {
   right: var(--sidebar-row-content-inset);
   bottom: var(--sidebar-content-inset);
   height: 1rem;
-  transition: padding-inline-end 160ms cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 
 /* The status label always stays on line 2; the app would hide it under the buttons. */
@@ -409,8 +404,8 @@ body {
 /*/full*/
 /* Snooze, Settle, Discard: keys at the end of line 3, never over the status; line 3 makes room
    for them, so the branch truncates and the PR and model marks move left. After 300 ms under the pointer
-   the keys slide in from the paper edge and push those marks on the same curve (constant 7 px gap);
-   they slide out on leave. Keyboard focus and an open menu show them at once. */
+   the keys appear at once and push those marks left; they go at once on leave (no slide: Roger, 2026-11-17).
+   Keyboard focus and an open menu show them without the delay. */
 [data-thread-item] > [data-testid="sidebar-row-card"] .group\/sidebar-status-slot > span:not(:first-child) {
   position: absolute !important;
   inset: 100% -0.3125rem auto auto !important;
@@ -420,10 +415,6 @@ body {
   opacity: 0 !important;
   visibility: hidden;
   pointer-events: auto !important;
-  clip-path: inset(0 -0.3125rem 0 0);
-  --sk-kx: var(--sk-actions);
-  --sk-kt: 160ms cubic-bezier(0.2, 0.9, 0.3, 1);
-  transition: opacity 0s linear 160ms, visibility 0s linear 160ms;
 }
 /* Each is a pixel key in the peg colours: a 1-px outline with clipped corners, a lit top, a shaded
    bottom and an ink sprite. Pressed, the light moves to the bottom. 22 px + 2 px gap = 1.5rem a key. */
@@ -441,8 +432,6 @@ body {
   color: var(--sk-ink);
   background: var(--sk-c);
   box-shadow: inset 0 0 0 1px var(--sk-k), inset 0 -3px #0003, inset 0 2px #fff6;
-  translate: var(--sk-kx) 0;
-  transition: translate var(--sk-kt);
   clip-path: polygon(0 1px, 1px 1px, 1px 0, calc(100% - 1px) 0, calc(100% - 1px) 1px, 100% 1px, 100% calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) 100%, 1px 100%, 1px calc(100% - 1px), 0 calc(100% - 1px));
 }
 [data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button:hover {
@@ -498,22 +487,18 @@ body {
   [data-thread-item]:hover > [data-testid="sidebar-row-card"] .group\/sidebar-status-slot:not(:has(> [data-jump-hint])) > span:not(:first-child) {
     opacity: 1 !important;
     visibility: visible;
-    --sk-kx: 0px;
-    --sk-kt: 180ms cubic-bezier(0.2, 0.9, 0.3, 1) 300ms;
     transition: opacity 0s linear 300ms, visibility 0s linear 300ms;
   }
   [data-thread-item]:hover > [data-testid="sidebar-row-card"] > div > div:nth-child(3),
   [data-thread-item]:hover > [data-testid="sidebar-row-card"] > div > div:nth-child(2) > span:not(:first-child) {
     padding-inline-end: var(--sk-actions, 0);
-    transition: padding-inline-end 180ms cubic-bezier(0.2, 0.9, 0.3, 1) 300ms;
+    transition: padding-inline-end 0s 300ms;
   }
 }
 [data-thread-item] > [data-testid="sidebar-row-card"]:is(:focus-visible, :has(:focus-visible)) .group\/sidebar-status-slot:not(:has(> [data-jump-hint])) > span:not(:first-child),
 [data-thread-item] .group\/sidebar-status-slot > span:not(:first-child):has([data-popup-open], [aria-expanded="true"]) {
   opacity: 1 !important;
   visibility: visible;
-  --sk-kx: 0px;
-  --sk-kt: 0s;
   transition: none;
 }
 [data-thread-item] > [data-testid="sidebar-row-card"]:is(:focus-visible, :has(:focus-visible)) > div > div:nth-child(3),

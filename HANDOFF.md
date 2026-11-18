@@ -7,6 +7,14 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Rebase on origin (2026-11-18, Roger chose rebase). Local main (9 commits: / $ @ menu, drinks menu, stamp, specials,
+  headline, Dave typing, icons) had diverged from origin/main (10 commits from the Mac mini: perf harness, finite
+  animations, painted torn edge, no brass peg, keys without slide, no colour fade). Resolved for origin's behaviour
+  with the local size cuts: `--sk-peg` is now `{{peg_h}} 0 0 / 26px 16px no-repeat` (the core peg adds `border-box`
+  and the `peg_shade` layer); the brass-peg rule and the key slide stay removed; Dave's typing is finite like the
+  screen (`sk-type 9s steps(1) 2`, 18 s; hover replays it). Full 49,663, lite in limit; validator ok; check.js
+  0 invalid, l3Lost 0, no overlap; sidebar light == dark (0 px > 8/255). Old local main kept as branch
+  `backup/main-before-rebase-2026-11-18` (008654e); delete it once origin has the rebased commits.
 - Skin vs no skin, resource cost (2026-11-18, Roger: "same stress test 5 times with and without skin, all consumption
   history"). Own harness in `perf/` (see `perf/REPORT.md`; drives `/Users/roger/t3code/.css-perf`'s Electron 44.10.1
   read-only; profile `perf/profile` is paired with :7508 and git-ignored). 10 fresh runs ABBA, d292df3 full vs empty sheet:

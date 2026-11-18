@@ -32,6 +32,8 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   Mac mini; `t3_theme_set` was denied (thread without full access), so it shows after a reload or a theme switch.
   `perf/REPORT.md`.
 - Rows: no colour fade on hover (Roger's choice after the split test: -5% CPU, the 320 ms spring stays).
+- Final build fe3acaa (local 7a0b011) measured (15 runs ABC/CBA): CPU 48.0 -> 33.9 s per stress test (-29%; no skin 26.0), energy
+  48 -> 31, idle 45% -> 19% of a core (no skin 17%), memory at end 1429 -> 878 MB (= no skin, all runs release it).
 - One look in both modes: the header monogram ("SR") was the app's amber-600 / dark:amber-400; now #fbbf24. The sidebar
   edge was the app's sidebar ink at 10% light / 8% dark; now 8%. Open: the 1 px under that edge still paints
   (24,35,54) in light and (20,32,51) in dark, max 6/255; every layer there is transparent and body is the same colour.

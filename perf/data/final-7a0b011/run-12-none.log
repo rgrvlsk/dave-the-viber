@@ -1,0 +1,13 @@
+15:53:56 none 12 inject ok thread {"i":0,"md":5}
+15:54:43 none 12 idle cpu 3686 {"browser":132,"gpu":1086,"utility":36,"renderer":2432} drawn 311 dropped 29 hover {"ov":0,"tr":0,"props":{}}
+15:54:55 none 12 idleHidden cpu 148 {"browser":84,"gpu":12,"utility":16,"renderer":36} drawn 0 dropped 0 hover {"ov":0,"tr":0,"props":{}}
+15:55:02 none 12 scroll@200 cpu 2239 {"browser":46,"gpu":513,"utility":8,"renderer":1672} drawn 307 dropped 1 hover {"ov":0,"tr":0,"props":{}}
+15:55:06 none 12 wheel@200 cpu 1473 {"browser":63,"gpu":315,"utility":6,"renderer":1089} drawn 188 dropped 5 hover {"ov":0,"tr":0,"props":{}}
+15:55:16 none 12 wheel@500 cpu 3610 {"browser":128,"gpu":648,"utility":9,"renderer":2825} drawn 484 dropped 14 hover {"ov":0,"tr":0,"props":{}}
+15:55:24 none 12 hover cpu 1243 {"browser":132,"gpu":312,"utility":11,"renderer":788} drawn 121 dropped 8 hover {"ov":104,"tr":0,"props":{}}
+15:55:28 none 12 status cpu 3225 {"browser":20,"gpu":243,"utility":5,"renderer":2957} drawn 105 dropped 45 hover {"ov":0,"tr":0,"props":{}}
+15:55:38 none 12 stream cpu 2707 {"browser":136,"gpu":807,"utility":11,"renderer":1753} drawn 322 dropped 23 hover {"ov":0,"tr":0,"props":{}}
+15:55:44 none 12 sidebar cpu 1379 {"browser":93,"gpu":242,"utility":6,"renderer":1038} drawn 84 dropped 20 hover {"ov":0,"tr":0,"props":{}}
+15:55:47 none 12 resize cpu 1780 {"browser":224,"gpu":346,"utility":5,"renderer":1205} drawn 51 dropped 25 hover {"ov":0,"tr":0,"props":{}}
+15:55:52 none 12 appearance cpu 1428 {"browser":65,"gpu":155,"utility":7,"renderer":1201} drawn 53 dropped 60 hover {"ov":0,"tr":0,"props":{}}
+15:56:09 none 12 idleAfter cpu 2811 {"browser":102,"gpu":826,"utility":23,"renderer":1860} drawn 236 dropped 24 hover {"ov":0,"tr":0,"props":{}}

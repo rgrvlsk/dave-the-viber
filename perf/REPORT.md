@@ -115,3 +115,23 @@
 ## Applied after the split test (Roger's choice)
 - Rows lose the colour fade and keep the spring: the source now matches `variants/full-nobgtx-d292df3.css`
   (whole scroll test −1.6 s [−2.3, −0.6], −5%). Not re-measured on top of the finite animations.
+
+# Final build 7a0b011: finite animations + no colour fade (2026-11-18)
+- 7a0b011 was the local commit; after the rebase on origin it is fe3acaa, with the same `out2/full.css`.
+- 15 runs ABC/CBA, full stress test, `SETTLE_MS=25000` (`C=full-7a0b011 ./run-finite.sh data/final-7a0b011`).
+
+| | No skin | Skin d292df3 | 7a0b011 | 7a0b011 vs d292df3 |
+|---|---:|---:|---:|---:|
+| CPU whole test | 26.0 s | 48.0 s | **33.9 s** | −14.0 s [−16.1, −13.3], **−29%** |
+| Energy impact | 23.4 | 48.0 | **31.2** | −16.8 [−19.8, −14.2] |
+| Frames drawn | 2278 | 4736 | **2551** | −2180 |
+| Footprint at end | 878 MB | 1429 MB | **878 MB** | −569 [−661, −380]; all 5 runs released |
+| Idle visible, % of a core | 17.4 | 45.0 | **19.2** | −26.6 |
+| Idle hidden | 1.8 | 7.6 | **3.6** | −3.7 |
+| Scroll / wheel | 45–47 | 61–74 | **50–64** | −10 to −11 points |
+| Hover | 30.4 | 53.2 | **36.3** | −16.9 |
+
+- Against no skin the skin now costs +7.7 s [7.0, 8.3] (+30%) per test, down from +22 s: interaction only
+  (scroll +4 to +20 points of a core, appearance +19, sidebar +9). Frame p95 is the same as d292df3 in every phase.
+- Absolute numbers differ between run sets (d292df3 48.0 s here, 58.1 s in `data/finite`); qBittorrent and Time
+  Machine ran in both (local `system.log`) at different loads. Compare within one run set only.

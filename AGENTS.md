@@ -31,7 +31,8 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
 | `tools/t3skins-validate.js` | Gallery validator. |
 | `tools/serve.py` | CORS static server on :8765 for the injector. |
 | `fx/inject2.js`, `fx/check.js`, `fx/scan.js` | Live injection and in-page checks. |
-| `fx/prune.js` | Finds `!important` flags the live page does not need (flat build URL in, progress in `window.__prog`). |
+| `fx/prune2.js` | Per-flag `!important` test: `f(flatCssUrl, [k…])` → ok / needed per flag (paired, synchronous, drift-proof). `fx/prune.js` (older, group bisection) drifts while other threads re-render the sidebar. |
+| `fx/cmp.js` | Computed-style A/B/A of two builds on the current page state: `f(urlA, urlB)` → diff, drift. |
 | `tools/pixcheck.py` | Pixel-sampled contrast from a screenshot + boxes JSON. |
 | `final2/` | Last published JSON/CSS + reference captures. |
 | `demo/` | `video.mp4` of all dev demo states, PNGs, `verify/`. |

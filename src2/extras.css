@@ -50,7 +50,7 @@
   color: #fff3dc;
 }
 [data-slot="sidebar-inner"] :is([data-sidebar="menu-button"], [data-sidebar="trigger"]):is(:hover, [aria-expanded="true"]):has(> svg.lucide) {
-  background: #2f5a86 !important;
+  background: #2f5a86;
 }
 [data-slot="sidebar-inner"] :is([data-sidebar="menu-button"], [data-sidebar="trigger"]):active:has(> svg.lucide) {
   box-shadow: inset 2px 2px 0 #14283f, inset -2px -2px 0 #3f6c96;
@@ -116,13 +116,13 @@
 /* Search results are the collapsed version of live tickets: fresh paper slips pegged to the twine. */
 [aria-label="Thread search results"] {
   padding: 2px 4px 4px 20px;
-  gap: 4px !important;
+  gap: 4px;
   background: linear-gradient(90deg, #6b4a26 0 1px, #e2c48e 1px 3px, #6b4a26 3px 4px) 7px 0 / 4px 100% no-repeat;
 }
 [aria-label="Thread search results"] [role="option"] {
   position: relative;
-  border-radius: 0 !important;
-  background: var(--sk-paper) !important;
+  border-radius: 0;
+  background: var(--sk-paper);
   box-shadow: inset 0 0 0 1px var(--sk-edge), inset 0 -3px 0 #e2d2ae, 2px 2px 0 #060e1a73;
   font-family: var(--sk-cond);
   rotate: 0.6deg;
@@ -136,7 +136,7 @@
   box-shadow: inset 0 0 0 2px var(--sk-pass), 2px 2px 0 #060e1a73;
 }
 [aria-label="Thread search results"] [role="option"] :is(.text-success-foreground, [class*="emerald"]) {
-  color: #2b6236 !important;
+  color: #2b6236;
 }
 [aria-label="Thread search results"] [role="option"] .text-info-foreground {
   color: #1d5a85 !important;
@@ -151,7 +151,7 @@
   top: calc(50% - 8px);
   width: 26px;
   height: 16px;
-  background: var(--sk-peg) center / 26px 16px no-repeat;
+  background: var(--sk-peg);
 }
 
 /* Orders that need you call out like a customer at the counter: a speech bubble with the
@@ -166,35 +166,35 @@
    would need anchor-scope. Add a host if the owner reports a missed call. */
 [data-thread-item]:nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-shield-question-mark)) {
   anchor-name: --sk-ask-approval;
-  content-visibility: visible !important;
+  content-visibility: visible;
 }
 [data-thread-item]:nth-child(2 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-shield-question-mark)) {
   anchor-name: --sk-ask-approval2;
-  content-visibility: visible !important;
+  content-visibility: visible;
 }
 [data-thread-item]:nth-child(3 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-shield-question-mark)) {
   anchor-name: --sk-ask-approval3;
-  content-visibility: visible !important;
+  content-visibility: visible;
 }
 [data-thread-item]:nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .text-indigo-600)) {
   anchor-name: --sk-ask-input;
-  content-visibility: visible !important;
+  content-visibility: visible;
 }
 [data-thread-item]:nth-child(2 of [data-thread-item]:has(.group\/sidebar-status-slot .text-indigo-600)) {
   anchor-name: --sk-ask-input2;
-  content-visibility: visible !important;
+  content-visibility: visible;
 }
 [data-thread-item]:nth-child(3 of [data-thread-item]:has(.group\/sidebar-status-slot .text-indigo-600)) {
   anchor-name: --sk-ask-input3;
-  content-visibility: visible !important;
+  content-visibility: visible;
 }
 [data-thread-item]:nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .text-guest-foreground)) {
   anchor-name: --sk-ask-request;
-  content-visibility: visible !important;
+  content-visibility: visible;
 }
 [data-thread-item]:nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-alarm-clock)) {
   anchor-name: --sk-ask-woke;
-  content-visibility: visible !important;
+  content-visibility: visible;
 }
 /* Attention tickets paint their twine end and shadow past the row; rows that are not anchored keep the app's
    content-visibility: auto, which clips that paint to the row, so widen the clip on every attention ticket. */
@@ -307,7 +307,7 @@ main[data-slot="sidebar-inset"]::after {
   top: calc(50% - 8px);
   width: 26px;
   height: 16px;
-  background: var(--sk-peg) center / 26px 16px no-repeat;
+  background: var(--sk-peg);
   z-index: 3;
 }
 [data-sidebar-parent="shelf:snoozed"] :is(svg, span:has(> svg)) {
@@ -443,16 +443,16 @@ svg.lucide {
 
 /* Your message is the order slip you hand to the kitchen. */
 [data-user-message-bubble] {
-  background-color: var(--sk-paper) !important;
-  color: var(--contrast-foreground) !important;
-  border-radius: 0 !important;
-  border: 0 !important;
+  background-color: var(--sk-paper);
+  color: var(--contrast-foreground);
+  border-radius: 0;
+  border: 0;
   box-shadow: inset 0 0 0 1px var(--sk-edge);
   filter: drop-shadow(3px 3px 0 var(--sk-shadow));
-  -webkit-mask: linear-gradient(#000 0 0) top / 100% calc(100% - 4px) no-repeat, var(--sk-tear) bottom left / 8px 4px repeat-x;
-  mask: linear-gradient(#000 0 0) top / 100% calc(100% - 4px) no-repeat, var(--sk-tear) bottom left / 8px 4px repeat-x;
-  padding-top: 1.5rem !important;
-  padding-bottom: calc(0.625rem + 4px) !important;
+  -webkit-mask: var(--sk-tear);
+  mask: var(--sk-tear);
+  padding-top: 1.5rem;
+  padding-bottom: calc(0.625rem + 4px);
   position: relative;
 }
 [data-user-message-bubble]::before {
@@ -477,7 +477,7 @@ svg.lucide {
 
 /* Code blocks: a black lacquer tray with an akane rim. */
 .chat-markdown .chat-markdown-codeblock {
-  border-radius: 0 !important;
+  border-radius: 0;
   border: 0 !important;
   box-shadow: inset 0 0 0 2px var(--sk-lacquer-edge), inset 0 0 0 3px #000, 4px 4px 0 var(--sk-shadow);
   background-color: var(--sk-lacquer) !important;
@@ -491,7 +491,7 @@ svg.lucide {
   filter: invert(1) hue-rotate(180deg);
 }
 .chat-markdown :not(pre) > code {
-  border-radius: 0 !important;
+  border-radius: 0;
   background-color: rgb(240 138 93 / 0.14) !important;
   box-shadow: inset 0 -1px 0 rgb(240 138 93 / 0.5);
 }
@@ -530,7 +530,7 @@ svg.lucide {
   border-radius: 0;
 }
 [data-slot="composer-host"]:focus-within {
-  box-shadow: 0 0 0 2px #f2c25c, 5px 5px 0 2px var(--sk-shadow) !important;
+  box-shadow: 0 0 0 2px #f2c25c, 5px 5px 0 2px var(--sk-shadow);
 }
 [data-slot="composer-host"] button svg {
   opacity: 1 !important;
@@ -668,11 +668,11 @@ svg.lucide[class*="loader"] {
   --destructive-foreground: #a3203a;
   --diff-deletion-foreground: #a3203a;
   --info-foreground: #1f4f8a;
-  background: #ece2d4 !important;
+  background: #ece2d4;
   color: #2a1d16;
-  backdrop-filter: none !important;
-  border: 2px solid #a86030 !important;
-  box-shadow: 0 0 0 2px #2a1810, 6px 6px 0 2px rgb(0 0 0 / 0.5) !important;
+  backdrop-filter: none;
+  border: 2px solid #a86030;
+  box-shadow: 0 0 0 2px #2a1810, 6px 6px 0 2px rgb(0 0 0 / 0.5);
 }
 /* Dialogs and the details card are the counter's order board: navy, the same frame, a gold hairline inside. */
 [data-slot="dialog-popup"],
@@ -704,9 +704,9 @@ svg.lucide[class*="loader"] {
 [data-model-picker-sidebar] .min-h-full::after {
   width: fit-content;
   margin: 4px 0 2px 2px;
-  padding: 2px 16px 2px 6px !important;
+  padding: 2px 16px 2px 6px;
   background: #c8346e;
-  color: #fff !important;
+  color: #fff;
   font: 400 0.75rem var(--sk-pixel);
   clip-path: var(--sk-brush);
 }
@@ -735,10 +735,10 @@ svg.lucide[class*="loader"] {
   translate: 0 1px;
 }
 [data-slot="tooltip-popup"] {
-  background: #18243c !important;
-  color: #f3e7d3 !important;
+  background: #18243c;
+  color: #f3e7d3;
   font-family: var(--sk-pixel);
-  box-shadow: 0 0 0 1px #e4b460, 3px 3px 0 1px rgb(0 0 0 / 0.5) !important;
+  box-shadow: 0 0 0 1px #e4b460, 3px 3px 0 1px rgb(0 0 0 / 0.5);
 }
 /* Settings: group titles in the pixel type and gold; switches are square keys, pink when on, in a gold ring. */
 /* Settings keeps the room's wallpaper (Textures section); the other boards are plain navy. */
@@ -754,21 +754,21 @@ svg.lucide[class*="loader"] {
   color: #f0cc90;
 }
 :is([data-slot="switch"], [data-slot="switch-thumb"]) {
-  border-radius: 0 !important;
+  border-radius: 0;
 }
 [data-slot="switch"] {
   box-shadow: 0 0 0 1px #e4b460;
 }
 [data-slot="switch"][data-checked] {
-  background: #e4106c !important;
+  background: #e4106c;
 }
 [data-slot="switch"][data-checked] > * {
   background: #f8f1e6;
 }
 [data-slot="select-trigger"] {
-  border-color: transparent !important;
-  background: #1d2536 !important;
-  box-shadow: inset 2px 2px 0 #0e1620, inset -1px -1px 0 #3f4c69 !important;
+  border-color: transparent;
+  background: #1d2536;
+  box-shadow: inset 2px 2px 0 #0e1620, inset -1px -1px 0 #3f4c69;
 }
 /* Usage is the day's stamina board: limit cards like settings groups, big pixel numbers, and each meter a
    recessed gauge of lit segments in the provider's colour, the pace mark a pink pin; reset chips are navy tags. */
@@ -776,7 +776,7 @@ svg.lucide[class*="loader"] {
   font-family: var(--sk-pixel);
 }
 [aria-label="Usage"] section > div {
-  border: 0 !important;
+  border: 0;
   background: #303c54;
 }
 [aria-label="Usage"] .text-3xl {
@@ -800,8 +800,8 @@ svg.lucide[class*="loader"] {
   box-shadow: 0 0 0 1px #e4b460;
 }
 [aria-label="Usage"] header [data-slot="toggle"][data-pressed] {
-  background: #e4106c !important;
-  color: #fff !important;
+  background: #e4106c;
+  color: #fff;
 }
 /* Shortcuts are pixel key caps: light cap, ink glyph, a dark rim and a shaded bottom. */
 [data-slot$="popup"] [data-slot="kbd"] {
@@ -869,7 +869,7 @@ svg.lucide[class*="loader"] {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 9px), 0 100%);
 }
 :is([data-model-picker-provider] button, [data-slot="combobox-item-content"] > span:first-child:has(svg)) {
-  border-radius: 50% !important;
+  border-radius: 50%;
   box-shadow: inset 0 0 0 1.5px #2a1d16;
 }
 [data-model-picker-provider] button[aria-pressed="true"] {
@@ -994,8 +994,8 @@ svg.lucide[class*="loader"] {
 
 /* ---------- Scrollbars: chopsticks ---------- */
 [data-slot="scroll-area-thumb"] {
-  border-radius: 0 !important;
-  background: var(--sk-chop) !important;
+  border-radius: 0;
+  background: var(--sk-chop);
 }
 ::-webkit-scrollbar {
   width: 10px;
@@ -1075,10 +1075,10 @@ svg.lucide[class*="loader"] {
   width: 32px !important;
   height: 32px !important;
   border-radius: 0;
-  color: #241b15 !important;
-  background: var(--sk-c) !important;
+  color: #241b15;
+  background: var(--sk-c);
   box-shadow: inset 0 0 0 1px #241b15, inset 0 -3px #0003, inset 0 2px #fff9;
-  clip-path: polygon(0 1px, 1px 1px, 1px 0, calc(100% - 1px) 0, calc(100% - 1px) 1px, 100% 1px, 100% calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) 100%, 1px 100%, 1px calc(100% - 1px), 0 calc(100% - 1px));
+  clip-path: var(--sk-cut);
 }
 [data-slot="sidebar-inner"] [data-slot="sidebar-footer"] li.ml-auto > button:is([data-size="icon"], .size-8) {
   --sk-c: #f2c25c;
@@ -1095,7 +1095,7 @@ svg.lucide[class*="loader"] {
   outline-offset: 2px;
 }
 [data-slot="sidebar-inner"] [data-slot="sidebar-footer"] li > button:is([data-size="icon"], .size-8) svg {
-  color: #241b15 !important;
+  color: #241b15;
   stroke-width: 2.25;
   filter: none;
 }
@@ -1135,8 +1135,9 @@ svg.lucide[class*="loader"] {
 }
 [data-slot="sidebar-inner"] [data-slot="sidebar-footer"]::after {
   --sk-bx: 32px, calc(100% - 22px), 66%;
+  --sk-bb: {{bubbles}} 0 0 / 10px 48px repeat-y;
   inset: -49px 1px calc(100% - 8px);
-  background: var(--sk-fish) -26px 14px / 24px 14px no-repeat, {{fish_l}} -26px 32px / 24px 14px no-repeat, {{bubbles}} 0 0 / 10px 48px repeat-y, {{bubbles}} 0 0 / 10px 48px repeat-y, {{bubbles}} 0 0 / 10px 48px repeat-y;
+  background: var(--sk-fish) -26px 14px / 24px 14px no-repeat, {{fish_l}} -26px 32px / 24px 14px no-repeat, var(--sk-bb), var(--sk-bb), var(--sk-bb);
   background-position-x: -26px, -26px, var(--sk-bx);
   background-position-y: 14px, 32px, 0, 20px, 8px;
   animation: sk-swim 40s linear 0.5, sk-rise 8s linear 2;
@@ -1248,14 +1249,14 @@ svg.lucide[class*="loader"] {
 /* The changed-files card is a navy order board in the copper frame; its sticky header is the board's title bar,
    opaque so the rows scroll under it. Rows light up with the menus' gold edge. */
 [data-changed-files-state] {
-  background: #283246 !important;
+  background: #283246;
   border: 3px solid #a86030;
-  border-radius: 0 !important;
+  border-radius: 0;
   box-shadow: 0 0 0 2px #2a1810, 0 6px 0 2px rgb(0 0 0 / 0.5);
 }
 [data-changed-files-header] {
-  background: #1c2436 !important;
-  border-radius: 0 !important;
+  background: #1c2436;
+  border-radius: 0;
   box-shadow: inset 0 1px #f0cc90, inset 0 -2px #a86030;
 }
 [data-changed-files-header] > :first-child > :first-child {
@@ -1263,7 +1264,7 @@ svg.lucide[class*="loader"] {
   color: #f0cc90;
 }
 [data-changed-files-state] > :last-child button {
-  border-radius: 0 !important;
+  border-radius: 0;
 }
 /* File-type icons get an inline colour per OS mode (light-mode ones fall under 2:1 on navy): one gold for all. */
 [data-changed-files-state] svg[style*="color"] {
@@ -1293,7 +1294,7 @@ svg.lucide[class*="loader"] {
   margin: 2px auto 2px 0;
   padding: 0;
   justify-content: center;
-  background: #24466a !important;
+  background: #24466a;
   box-shadow: inset 2px 2px 0 #3f6c96, inset -2px -2px 0 #14283f;
   cursor: pointer;
 }

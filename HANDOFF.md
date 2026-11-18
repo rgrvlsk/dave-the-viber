@@ -59,6 +59,31 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   2 px of shadow under the teeth is straight (was toothed). check.js 0 invalid, l3Lost 0. Harness (`paint-3f0d021`):
   hover GPU -249 ms [158, 393], wheel@500 main -314 [37, 1042], status CPU +132 [6, 276] (the extra ::after per
   ticket, ~0.2 ms per change). Full 48,181 -> 48,477, lite 14,572 -> 14,868.
+- Size cut for the drinks menu (2026-11-18, Roger: HANDOFF options 1 and 2 + Council). Full 49,881 -> 48,741
+  (-1,140 = flags -526 + shared values -614), lite 14,986 -> 15,009; with the drinks menu block full is 49,779.
+  Option 2 was already done (atlas, 6db2d13), so the second cut is shared values as custom properties: `--sk-peg`
+  holds the whole peg layer, `--sk-tear` the two-layer slip mask, new `--sk-cut` (1 px notched polygon), `--sk-foot`
+  ({{base}}), `--sk-bb` (footer bubbles layer). `--sk-notch`/`--sk-base` were taken: check a new name with
+  `rg -- --sk-<name> src2` first (a collision broke every `--contrast-*` token in a first draft; cmp.js caught it).
+  `!important` prune: 52 flags removed (popups, tooltip, switch/select, Usage, search results, user bubble, code
+  radius, changed-files card, footer buttons, all 9 content-visibility flags: the app sets it only through
+  `@layer utilities .[content-visibility:auto]`, no inline style). `fx/prune.js` drifted in this run: the sidebar
+  re-renders while other threads run (baseDrift 47), so every group read "needed". Use `fx/prune2.js` (paired
+  per-flag test, synchronous, only elements the rule matches) and `fx/cmp.js` (HEAD vs new, whole page).
+  Proof, cmp.js, computed style of every element + ::before/::after (custom properties excluded), drift 0: equal in
+  the observed states: thread view (dark and OS light), changed-files card, composer focus, model picker, project
+  combobox, context menu, select popup, settings dialog (General, Providers), command palette, /usage, thread search,
+  tooltip, footer hover, row hover + key-button hover, keyboard focus, settled shelf open; lite 0 differences. The
+  only difference: one anchor name renamed by the minifier (--ke2 -> --kg2 on both anchor-name and position-anchor).
+  No real `menu-popup` could be opened; its only competitors (`.dropdown-glass`, the `:focus` ring) are in
+  `@layer utilities`/`base`, so they lose to a normal theme declaration. Frozen screenshots 0 px (thread view with
+  DISH stamps, model picker card). check.js 0 invalid, l3Lost 0, no overlap; the validator passes on both editions.
+  Council (Fable Low, Sol High), round 1: both "go with changes", asked for menu/select/command-palette states before
+  removing the popup flags; round 2: both "commit with changes". Sol still preferred restoring 82-85, 89-90 and the 7
+  unseen content-visibility flags (full 48,871); kept removed on the layer evidence above.
+  Not checked: question UI banner (no removed flag or new variable touches it), attention bubbles other than Input
+  (computed style of the hosts equal), Mac mini demo, desktop app. If a colour, radius, shadow or a bubble "goes
+  away" in one state, put `!important` back on that declaration.
 - Settled stack under the water + spike foot (2026-11-17, Roger): the settled slips (z 1000 - sibling-index(), up to
   999) painted over the fish tank, because the footer had z 22 in the same stacking context (sidebar-container); this
   predates today's changes (seen in e04711c). Footer z 22 -> 1000. Closed settled header: the rod stands on its foot
@@ -492,9 +517,11 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
 ## Open items
 - Ticket move to the Working shelf shows a clipped remainder/jump (app animation; left alone).
 - Breadcrumb emoji is part of the project name (CSS cannot remove it).
-- Unapplied size items (if room is needed; collapsed-hide var applied 2026-11-17, −597):
-  the 87 untested `!important` flags (up to −870: open each state, rerun `fx/prune.js`, apply the guard above);
-  mask atlas, 14 status masks in one WebP (1,350 → 339 chars gross, ~−550 net est., needs a clip layer per mask rule);
+- Unapplied size items (if room is needed; collapsed-hide var applied 2026-11-17, −597; flag prune −526 and shared
+  values −614 applied 2026-11-18; the mask atlas was already done in 6db2d13):
+  the 32 still-untested non-guarded (2 inside @media) `!important` flags (≤ −340; question banner, Stop, terminal drawer, dialog title,
+  primary buttons, header monogram/favicon variants, focus outline);
+  no space after `)` inside declaration values (~−90 est., minifier change, needs the computed-style proof);
   shorter attribute matches such as `[data-testid$=w-card]` (−400…−550 est., breaks if the app adds a matching id);
   `opacity: 0.17` in core.css is dead in full (extras sets 0.2 on the same selector; −12 with a lite-only marker);
   inline single-use hex vars (−153 full / −90 lite measured, var scope risk), dead rules list, raw `<>` in data URIs

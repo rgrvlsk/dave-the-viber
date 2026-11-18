@@ -1,0 +1,7 @@
+13:50:28 full-nobgtx 8 inject ok thread {"i":0,"md":5}
+13:50:38 full-nobgtx 8 idle cpu 2205 {"browser":21,"gpu":608,"utility":5,"renderer":1571} drawn 301 dropped 5 hover {"ov":0,"tr":0,"props":{}}
+13:50:47 full-nobgtx 8 scroll@200 cpu 7817 {"browser":216,"gpu":2292,"utility":14,"renderer":5295} drawn 382 dropped 31 hover {"ov":334,"tr":58,"props":{"rotate":19,"opacity":13,"visibility":13,"padding-right":13}}
+13:50:57 full-nobgtx 8 wheelSlow@200 cpu 5005 {"browser":217,"gpu":1140,"utility":9,"renderer":3639} drawn 464 dropped 22 hover {"ov":189,"tr":278,"props":{"rotate":92,"opacity":62,"visibility":62,"padding-right":62}}
+13:51:02 full-nobgtx 8 wheel@200 cpu 3645 {"browser":151,"gpu":934,"utility":5,"renderer":2555} drawn 189 dropped 17 hover {"ov":133,"tr":82,"props":{"rotate":31,"opacity":17,"visibility":17,"padding-right":17}}
+13:51:13 full-nobgtx 8 wheel@500 cpu 9807 {"browser":274,"gpu":2551,"utility":13,"renderer":6969} drawn 490 dropped 42 hover {"ov":396,"tr":150,"props":{"rotate":48,"opacity":34,"visibility":34,"padding-right":34}}
+13:51:22 full-nobgtx 8 hover cpu 3187 {"browser":145,"gpu":1040,"utility":16,"renderer":1986} drawn 399 dropped 6 hover {"ov":105,"tr":69,"props":{"opacity":17,"visibility":17,"padding-right":17,"rotate":18}}

@@ -1,0 +1,7 @@
+13:51:57 full-norottx 9 inject ok thread {"i":0,"md":5}
+13:52:07 full-norottx 9 idle cpu 2129 {"browser":28,"gpu":626,"utility":7,"renderer":1468} drawn 301 dropped 5 hover {"ov":0,"tr":0,"props":{}}
+13:52:16 full-norottx 9 scroll@200 cpu 7199 {"browser":214,"gpu":1701,"utility":16,"renderer":5268} drawn 379 dropped 28 hover {"ov":334,"tr":367,"props":{"background-color":319,"opacity":16,"visibility":16,"padding-right":16}}
+13:52:26 full-norottx 9 wheelSlow@200 cpu 6652 {"browser":267,"gpu":2123,"utility":12,"renderer":4250} drawn 465 dropped 28 hover {"ov":123,"tr":306,"props":{"background-color":123,"opacity":61,"visibility":61,"padding-right":61}}
+13:52:31 full-norottx 9 wheel@200 cpu 3849 {"browser":135,"gpu":878,"utility":8,"renderer":2828} drawn 189 dropped 26 hover {"ov":127,"tr":202,"props":{"background-color":130,"opacity":24,"visibility":24,"padding-right":24}}
+13:52:42 full-norottx 9 wheel@500 cpu 10658 {"browser":268,"gpu":2247,"utility":16,"renderer":8127} drawn 488 dropped 61 hover {"ov":401,"tr":471,"props":{"background-color":396,"opacity":25,"visibility":25,"padding-right":25}}
+13:52:51 full-norottx 9 hover cpu 3734 {"browser":165,"gpu":1385,"utility":15,"renderer":2169} drawn 399 dropped 8 hover {"ov":110,"tr":86,"props":{"background-color":35,"opacity":17,"visibility":17,"padding-right":17}}

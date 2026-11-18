@@ -27,7 +27,11 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   80 ms hover-in delay = no gain (-3%); no row transitions = -10% CPU over the scroll test, GPU -20..-37%, slow wheel -22%.
   Frame p95 unchanged (18.6 ms). Split: no colour fade alone -5%, no rotation alone 0. Skin not changed.
 - Finite animations (2026-11-18, Roger chose it): sign, tank and Dave's screen play 13-20 s on appearance, then rest;
-  they play again on hover of the sign, the counter or the composer lane. 15 runs ABC/CBA: CPU 58.1 -> 42.9 s (-26%),
+  they play again on hover of the sign, the counter or the composer lane.
+  Tank (2026-11-18, Roger): after the pointer leaves it replays its intro (14-20 s) and rests. Each tank animation is
+  listed twice; hover keeps only the last copy (infinite); on leave Blink matches names from the end, so the first
+  copy is new and restarts. A delayed `@property` transition on the counts failed: Blink resolves `animation-*` from
+  the base style, so the transition never reached them. 15 runs ABC/CBA: CPU 58.1 -> 42.9 s (-26%),
   idle visible 54% -> 18% of a core (no skin 17%). Installed in `~/.t3/userdata/themes/dave-the-viber.json` on the
   Mac mini; `t3_theme_set` was denied (thread without full access), so it shows after a reload or a theme switch.
   `perf/REPORT.md`.

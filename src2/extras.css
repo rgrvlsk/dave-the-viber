@@ -571,6 +571,39 @@ svg.lucide {
   box-shadow: none !important;
   border-color: transparent !important;
 }
+/* The / $ @ menu is the pad's next sheet: it stops at the perforation, ink on paper, and the chosen
+   line gets the pass-red tick. The app's glass and its dark accent stay off the paper. */
+[data-composer-command-drawer] {
+  overflow: visible;
+  --accent: #efe2c4;
+  --contrast-accent-foreground: var(--contrast-foreground);
+  color: var(--contrast-foreground);
+}
+[data-composer-command-drawer]::before {
+  bottom: calc(1rem + 3px);
+  background: var(--sk-paper);
+  box-shadow: 0 0 0 2px #0e1620, 5px 0 0 2px var(--sk-shadow) !important;
+  mask: none;
+}
+[data-composer-command-drawer] [role="option"] {
+  border-radius: 0;
+}
+[data-composer-command-drawer] [data-active] {
+  box-shadow: inset 3px 0 var(--sk-pass);
+}
+[data-composer-command-drawer] [role="option"] span span:first-child {
+  font-family: var(--sk-pixel);
+}
+/* The new-thread headline is chalked on the night wall in the shop's pixel type; the project glows gold. */
+.group\/draft-hero h1,
+.group\/draft-hero ~ p {
+  font-family: var(--sk-pixel);
+  color: #fbf3e2;
+  text-shadow: 2px 2px var(--sk-shadow);
+}
+.group\/draft-hero button {
+  color: #f2c25c;
+}
 /* Pad glyphs: thick, crisp strokes; the send key is an ink tile. */
 :is([data-slot="composer-host"], [data-composer-banner-surface]) svg.lucide {
   stroke-width: 2.25;

@@ -202,7 +202,7 @@
   overflow-clip-margin: 8px;
 }
 /* One status per row, so a row of one kind never holds another kind's stamp class. */
-[data-thread-item]:is(:nth-child(-n+3 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-shield-question-mark)), :nth-child(-n+3 of [data-thread-item]:has(.group\/sidebar-status-slot .text-indigo-600)), :nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .text-guest-foreground))) .group\/sidebar-status-slot > span:first-child > :is(.text-warning-foreground, .text-indigo-600, .text-guest-foreground) {
+[data-thread-item]:is(:nth-child(-n+3 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-shield-question-mark)), :nth-child(-n+3 of [data-thread-item]:has(.group\/sidebar-status-slot .text-indigo-600)), :nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .text-guest-foreground)), :nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-alarm-clock))) .group\/sidebar-status-slot > span:first-child > :is(.text-warning-foreground, .text-indigo-600, .text-guest-foreground) {
   position: absolute !important;
   width: 1px;
   height: 1px;

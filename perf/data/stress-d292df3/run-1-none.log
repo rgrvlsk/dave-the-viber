@@ -1,0 +1,13 @@
+02:45:05 none 1 inject ok thread {"i":0,"md":5}
+02:45:30 none 1 idle cpu 3393 {"browser":145,"gpu":1073,"utility":33,"renderer":2142} drawn 318 dropped 26
+02:45:42 none 1 idleHidden cpu 366 {"browser":102,"gpu":13,"utility":15,"renderer":236} drawn 1 dropped 0
+02:45:49 none 1 scroll@200 cpu 2797 {"browser":59,"gpu":506,"utility":7,"renderer":2225} drawn 307 dropped 3
+02:45:53 none 1 wheel@200 cpu 1399 {"browser":76,"gpu":303,"utility":4,"renderer":1016} drawn 188 dropped 11
+02:46:04 none 1 wheel@500 cpu 4514 {"browser":196,"gpu":799,"utility":12,"renderer":3507} drawn 486 dropped 18
+02:46:11 none 1 hover cpu 1347 {"browser":138,"gpu":285,"utility":14,"renderer":910} drawn 122 dropped 8
+02:46:15 none 1 status cpu 3156 {"browser":30,"gpu":245,"utility":5,"renderer":2876} drawn 101 dropped 42
+02:46:25 none 1 stream cpu 2896 {"browser":135,"gpu":902,"utility":13,"renderer":1846} drawn 319 dropped 20
+02:46:31 none 1 sidebar cpu 1525 {"browser":90,"gpu":304,"utility":8,"renderer":1123} drawn 84 dropped 20
+02:46:35 none 1 resize cpu 1790 {"browser":262,"gpu":404,"utility":7,"renderer":1117} drawn 53 dropped 22
+02:46:39 none 1 appearance cpu 1511 {"browser":69,"gpu":171,"utility":6,"renderer":1265} drawn 49 dropped 62
+02:46:56 none 1 idleAfter cpu 2213 {"browser":98,"gpu":549,"utility":21,"renderer":1545} drawn 241 dropped 19

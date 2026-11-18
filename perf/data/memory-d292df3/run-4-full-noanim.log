@@ -1,0 +1,9 @@
+03:16:04 full-noanim 4 inject ok thread {"i":0,"md":5}
+03:16:24 full-noanim 4 idle cpu 3602 {"browser":146,"gpu":1035,"utility":29,"renderer":2392} drawn 240 dropped 43
+03:16:29 full-noanim 4 status1 cpu 4825 {"browser":26,"gpu":388,"utility":4,"renderer":4407} drawn 119 dropped 116
+03:16:35 full-noanim 4 status2 cpu 4899 {"browser":25,"gpu":388,"utility":4,"renderer":4482} drawn 120 dropped 119
+03:16:40 full-noanim 4 status3 cpu 4617 {"browser":23,"gpu":376,"utility":4,"renderer":4214} drawn 120 dropped 118
+03:16:46 full-noanim 4 status4 cpu 4427 {"browser":29,"gpu":333,"utility":5,"renderer":4060} drawn 119 dropped 107
+03:16:51 full-noanim 4 status5 cpu 4549 {"browser":24,"gpu":365,"utility":5,"renderer":4155} drawn 120 dropped 113
+03:16:57 full-noanim 4 status6 cpu 4636 {"browser":27,"gpu":384,"utility":7,"renderer":4218} drawn 119 dropped 116
+03:17:19 full-noanim 4 idleAfter cpu 4915 {"browser":197,"gpu":1366,"utility":48,"renderer":3304} drawn 320 dropped 51

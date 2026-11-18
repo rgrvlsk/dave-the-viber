@@ -1,0 +1,9 @@
+03:10:47 none 1 inject ok thread {"i":0,"md":5}
+03:11:07 none 1 idle cpu 3672 {"browser":142,"gpu":970,"utility":39,"renderer":2521} drawn 238 dropped 24
+03:11:11 none 1 status1 cpu 3687 {"browser":19,"gpu":199,"utility":4,"renderer":3465} drawn 105 dropped 39
+03:11:15 none 1 status2 cpu 3662 {"browser":19,"gpu":199,"utility":3,"renderer":3441} drawn 104 dropped 40
+03:11:18 none 1 status3 cpu 3579 {"browser":17,"gpu":192,"utility":2,"renderer":3368} drawn 100 dropped 39
+03:11:22 none 1 status4 cpu 3481 {"browser":14,"gpu":170,"utility":3,"renderer":3294} drawn 106 dropped 34
+03:11:26 none 1 status5 cpu 3857 {"browser":17,"gpu":204,"utility":3,"renderer":3633} drawn 104 dropped 43
+03:11:30 none 1 status6 cpu 3628 {"browser":17,"gpu":193,"utility":3,"renderer":3415} drawn 100 dropped 41
+03:11:52 none 1 idleAfter cpu 4549 {"browser":199,"gpu":1334,"utility":53,"renderer":2963} drawn 321 dropped 38

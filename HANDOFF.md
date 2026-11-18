@@ -7,6 +7,13 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Skin vs no skin, resource cost (2026-11-18, Roger: "same stress test 5 times with and without skin, all consumption
+  history"). Own harness in `perf/` (see `perf/REPORT.md`; drives `/Users/roger/t3code/.css-perf`'s Electron 44.10.1
+  read-only; profile `perf/profile` is paired with :7508 and git-ignored). 10 fresh runs ABBA, d292df3 full vs empty sheet:
+  CPU 50.8 vs 30.3 s per test (+68%), energy impact 1.83x, idle visible 50% vs 21% of a core (60 vs 16 fps).
+  The idle cost is all from the 5 infinite animations (float, sway, swim, rise, screen): without their @keyframes idle =
+  no skin. Memory: status changes add +300-450 MB that levels off (no leak) but stays while the animations run;
+  without them it is released in ~12 s. Raw samples: `perf/data/*/samples.jsonl`.
 - Card council (2026-11-17, Roger: "simplify the cards in chars and performance"; Council Fable Low + Astra Medium,
   1 round, blind). Applied what Roger chose: (1) the 8 attention bubbles stand still (`sk-bob`, its 8 delays and its
   reduced-motion entry removed; REPORT-ideas B1: the bob on an anchored box cost 740 ms layout per 8 s); (2) no

@@ -22,7 +22,11 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   they play again on hover of the sign, the counter or the composer lane. 15 runs ABC/CBA: CPU 58.1 -> 42.9 s (-26%),
   idle visible 54% -> 18% of a core (no skin 17%). Installed in `~/.t3/userdata/themes/dave-the-viber.json` on the
   Mac mini; `t3_theme_set` was denied (thread without full access), so it shows after a reload or a theme switch.
-  Open: the "SR" project sign has a different colour in light and dark (also in d292df3). `perf/REPORT.md`.
+  `perf/REPORT.md`.
+- Rows: no colour fade on hover (Roger's choice after the split test: -5% CPU, the 320 ms spring stays).
+- One look in both modes: the header monogram ("SR") was the app's amber-600 / dark:amber-400; now #fbbf24. The sidebar
+  edge was the app's sidebar ink at 10% light / 8% dark; now 8%. Open: the 1 px under that edge still paints
+  (24,35,54) in light and (20,32,51) in dark, max 6/255; every layer there is transparent and body is the same colour.
 - Card council (2026-11-17, Roger: "simplify the cards in chars and performance"; Council Fable Low + Astra Medium,
   1 round, blind). Applied what Roger chose: (1) the 8 attention bubbles stand still (`sk-bob`, its 8 delays and its
   reduced-motion entry removed; REPORT-ideas B1: the bob on an anchored box cost 740 ms layout per 8 s); (2) no

@@ -417,8 +417,10 @@ svg.lucide {
   box-shadow: 0 0 0 2px #3a2414;
   image-rendering: auto;
 }
-/* Projects without an icon show their letter monogram: painted on a dark lacquer plate. */
+/* Projects without an icon show their letter monogram: painted on a dark lacquer plate, in gold leaf (the app's
+   amber-600 / dark:amber-400 would change it with the OS mode). */
 [data-chat-header] nav li:first-child > button > [data-slot="project-monogram"] > svg {
+  color: #fbbf24;
   background-color: #1d2b52 !important;
   border-radius: 0 !important;
   box-shadow: 0 0 0 2px #e2a866;

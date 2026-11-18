@@ -111,3 +111,7 @@
   (not caused by this change).
 - Limits: a download client and Time Machine ran during the test (`system.log`); hover restarts an animation at the point
   of its cycle that the time since it appeared gives (a koi may pop in mid-tank), and leaving snaps it to rest.
+
+## Applied after the split test (Roger's choice)
+- Rows lose the colour fade and keep the spring: the source now matches `variants/full-nobgtx-d292df3.css`
+  (whole scroll test −1.6 s [−2.3, −0.6], −5%). Not re-measured on top of the finite animations.

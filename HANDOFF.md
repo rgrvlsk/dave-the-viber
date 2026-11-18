@@ -59,6 +59,21 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   2 px of shadow under the teeth is straight (was toothed). check.js 0 invalid, l3Lost 0. Harness (`paint-3f0d021`):
   hover GPU -249 ms [158, 393], wheel@500 main -314 [37, 1042], status CPU +132 [6, 276] (the extra ::after per
   ticket, ~0.2 ms per change). Full 48,181 -> 48,477, lite 14,572 -> 14,868.
+- Project icons back on the left (2026-11-18, Roger: "the project icon sits on the right if it is not an image").
+  The dish-line badge (`order: 1` + ring) matched every `span:first-child:has(svg)` in a combobox row, so lucide
+  project icons (folder, wrench, "No project") moved after the name in the sidebar filter and the composer project
+  picker; favicons (`img`) and emoji icons stayed left. The badge now matches only `> .isolate`, the app's wrapper of
+  a model's provider mark. Without the ring the app's "No project" mark (`dark:text-gray-400`) was 2.0:1 on the
+  paper and differed by OS mode; it now inherits the row ink (#2a1d16) in both. Full 49,931 -> 49,928. Proof (A/B/A
+  computed style, HEAD vs new, drift 0): model picker 0 diffs (Favorites, Codex, Claude); project popups differ only
+  on svg-icon spans (order, ring, svg width) and the no-project colour. check.js 0 invalid. Committed together with
+  the Dave typing rhythm below (Roger: one commit); the combined build equals the live rhythm build plus these two
+  rules only. Full 49,996: **4 chars left**; the next full-edition change needs a size pass first.
+- Dave typing rhythm (2026-11-18, Roger: both fingers alternated with no rest). A 0.8 s cycle: left finger 0.24 s,
+  rest 0.16 s, right finger 0.24 s, rest 0.16 s; to rest, `--sk-x: -9em` moves the patch out of its box. The patch is
+  now a 9x2 conic-gradient in the shirt colour with one quarter in the outline colour (`--sk-a` 270deg left, 180deg
+  right), x 76 px / 52 px. Built and verified by the "Scheduled Writing Budget Decision" thread outside the repo
+  (rest phase pixel-identical to Dave idle) and published there at 15:53 (49,999).
 - Dave types (2026-11-18, Roger: "fer escriure al Dave de tant en tant"; then "arms stay where they are, each hand
   disappears completely behind the screen, no 1 px profile left"). For 3.6 s of every 9 s one finger at a time sinks
   behind the lid, switching hands every 0.4 s with the screen flicker. A shirt-coloured 7x2 gradient patch (sprite x

@@ -937,7 +937,7 @@ svg.lucide[class*="loader"] {
   writing-mode: sideways-lr;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 9px), 0 100%);
 }
-:is([data-model-picker-provider] button, [data-slot$=m-content] > span:first-child:has(svg)) {
+:is([data-model-picker-provider] button, [data-slot$=m-content] > .isolate) {
   border-radius: 50%;
   box-shadow: inset 0 0 0 1.5px var(--sk-ring, #2a1d16), 0 0 6px var(--sk-ring, #0000);
 }
@@ -947,13 +947,19 @@ svg.lucide[class*="loader"] {
 [data-model-picker-selected-indicator] {
   display: none;
 }
-/* A dish line: name, allergen badge, dotted leader, price. */
+/* A dish line: name, allergen badge, dotted leader, price. Only a model's provider mark (the app's `.isolate`
+   wrapper) becomes the badge; project icons stay before the name. ponytail: if the app drops `isolate` from that
+   wrapper, the provider mark goes back before the name without its ring; re-check after app updates. */
 [data-slot$=m-content] {
   & > div:nth-child(2) {
     flex: none;
     font-family: var(--sk-pixel);
   }
-  & > span:first-child:has(svg) {
+  /* The app's grey "No project" mark (gray-400 in OS dark, 2:1 on the paper) takes the row's ink. */
+  & .text-gray-600 {
+    color: inherit;
+  }
+  & > .isolate {
     order: 1;
     width: 16px;
     height: 16px;
@@ -1260,22 +1266,24 @@ svg.lucide[class*="loader"] {
    Dave needs 120 px right of the pad, or a partial Dave pokes out behind it. --sk-d is (gap - 120 px) x 1000: the
    gap is the lane's 3rem end padding, the app's end inset and half the room the pad cannot fill (100% = lane + 10 px).
    As a clamp() bound it gives Dave and his glow full width or none.
-   Typing: for 3.6 s of every 9 s (--sk-tap), one finger at a time sinks behind the lid. A 7x2 patch in the shirt
-   colour covers the finger and its side outline (sprite x 17-23 left, 31-37 right, rows 38-39); --sk-x switches
-   hands with the screen flicker (--sk-g). Under reduced motion the patch stays at width 0. */
+   Typing: for 3.6 s of every 9 s (--sk-tap), Dave types in a 0.8 s cycle: left finger down 0.24 s, rest 0.16 s,
+   right finger down 0.24 s, rest 0.16 s. A 9x2 patch in the shirt colour, with one quarter in the outline colour
+   (turned per hand by --sk-a), hides the finger behind the lid; --sk-x switches hands with the screen flicker
+   (--sk-g) and moves the patch out of its box to rest. Under reduced motion the patch stays at width 0. */
 .chat-composer-lane::before {
   --sk-i: var(--chat-lane-inset-end, 0px);
   --sk-d: calc((var(--sk-i) + max(0px, (100% - 842px - var(--sk-i)) / 2) - 72px) * 1e3);
   bottom: 60px;
   height: 120px;
-  background: radial-gradient(closest-side, #bff3ff40, #0000) right 30px top 48px / clamp(0px, var(--sk-d), 80px + var(--sk-g, 0px)) calc(48px + var(--sk-g, 0px)) no-repeat, linear-gradient(#acc9d1 0 0) right var(--sk-x, 78px) top 88px / clamp(0px, var(--sk-d), var(--sk-tap, 0px)) 4px no-repeat, {{dave}} right 14px top 12px / clamp(0px, var(--sk-d), 112px) 120px no-repeat, {{stool}} right 30px bottom -4px / 80px 28px repeat-x;
+  background: radial-gradient(closest-side, #bff3ff40, #0000) right 30px top 48px / clamp(0px, var(--sk-d), 80px + var(--sk-g, 0px)) calc(48px + var(--sk-g, 0px)) no-repeat, conic-gradient(from var(--sk-a, 270deg) at 12px, #acc9d1 75%, #29282f 0) right var(--sk-x, 76px) top 88px / clamp(0px, var(--sk-d), var(--sk-tap, 0px)) 4px no-repeat, {{dave}} right 14px top 12px / clamp(0px, var(--sk-d), 112px) 120px no-repeat, {{stool}} right 30px bottom -4px / 80px 28px repeat-x;
   animation: sk-screen 0.8s steps(1) 20, sk-type 9s steps(1) 2;
 }
 @keyframes sk-screen {
-  50% { --sk-g: 8px; --sk-x: 50px; }
+  30%, 80% { --sk-x: -9em; }
+  50% { --sk-g: 8px; --sk-x: 52px; --sk-a: 180deg; }
 }
 @keyframes sk-type {
-  60% { --sk-tap: 14px; }
+  60% { --sk-tap: 18px; }
 }
 /* Life on show, then still: the sign, the tank and Dave's screen play 13-20 s when they appear and then rest in
    their first frame (infinite, they kept the window drawing 60 frames/s: 50% of a core against 21% with no skin,

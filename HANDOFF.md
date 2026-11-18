@@ -59,6 +59,10 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   2 px of shadow under the teeth is straight (was toothed). check.js 0 invalid, l3Lost 0. Harness (`paint-3f0d021`):
   hover GPU -249 ms [158, 393], wheel@500 main -314 [37, 1042], status CPU +132 [6, 276] (the extra ::after per
   ticket, ~0.2 ms per change). Full 48,181 -> 48,477, lite 14,572 -> 14,868.
+- Chef stamp (2026-11-18): the published theme never showed "CHEF RECOMMENDS" (only a pink sliver under Low).
+  The served CSS loses `content:"CHEF\A RECOMMENDS"` although the theme file holds it and the injected build works.
+  Now `content:"CHEF RECOMMENDS"` + `display:block; width:min-content` (two lines, no escape); verified in the
+  published theme after a reload. Full 49,779 -> 49,793. Previous live file: `final2/published-before-2026-11-18-stamp.json`.
 - Drinks menu (2026-11-18, Roger: the project picker "should be a drinks menu", icons much bigger, shortcuts as
   prices, WebP lettering "Drinks (pick your poison)", then "hero header" and "stack vertically"). Scope: the command
   palette submenu with a Back button and two-line rows (`:has([aria-label=Back]):has([role=option] .flex-col)`), i.e.

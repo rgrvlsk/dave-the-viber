@@ -87,6 +87,8 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
 - The first screenshot after switching edition (lite ↔ full) misses late-painted content. Inject the same edition
   twice, wait ~3 s, then compare.
 - `{{token}}` contains `}}`. Never slice a rule with `index("}")`; edit by exact string replacement.
+- The published theme drops a `content` value with a backslash escape (`"A\A B"`), though injection shows it. Verify
+  `content` changes in the published theme; break lines with `width: min-content` instead.
 - The minifier drops the space before a `{{token}}` (`#18243c {{x}}` becomes `#18243curl(`, invalid). Put the token first.
 - Bubbles use anchor positioning. Anchors must come before their hosts in tree order (`html::before` fails;
   hosts are `html::after`, `body::after`, `[data-workspace-area=conversation]::before/::after`).

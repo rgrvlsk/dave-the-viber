@@ -1020,9 +1020,11 @@ svg.lucide[class*="loader"] {
     font-size: 0;
     rotate: -12deg;
     &::before {
-      content: "CHEF\A RECOMMENDS";
+      /* No "\A" line break: the published theme loses a content value that holds a backslash escape. */
+      content: "CHEF RECOMMENDS";
+      display: block;
+      width: min-content;
       font: 400 10px/1.1 var(--sk-pixel);
-      white-space: pre;
     }
   }
 }

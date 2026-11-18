@@ -17,3 +17,5 @@ demo/video.mp4
 # Perf harness: paired Electron profile (session cookie) and generated preview page.
 perf/profile/
 perf/data/inline.html
+# Perf harness: per-run process lists of the test machine stay local (Roger, 2026-11-18).
+perf/data/*/system.log

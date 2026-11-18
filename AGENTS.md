@@ -94,6 +94,9 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
   hosts are `html::after`, `body::after`, `[data-workspace-area=conversation]::before/::after`).
   Fixed elements inside the sidebar are clipped by the scroller mask, so bubbles live outside it.
   Anchored slips need `content-visibility: visible` or they stop painting.
+- `fx/prune2.js` "ok" covers only the elements on the page. Before dropping a flag, also list the app's unlayered
+  rules on that property (`document.styleSheets`, outside `@layer`): one with higher specificity (e.g.
+  `.chat-markdown a:not(.chat-markdown-file-link, …)`) wins in states the page does not show.
 - Rows use `content-visibility: auto`: a screenshot may show an empty sidebar. Retake it.
 - Background preview tabs: an `evaluate` that passes 15 s closes the tab, and `setTimeout` is throttled. Keep each
   evaluate under ~5 s; for long in-page loops yield with a `MessageChannel` kept on `window` and poll.

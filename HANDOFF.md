@@ -59,6 +59,34 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   2 px of shadow under the teeth is straight (was toothed). check.js 0 invalid, l3Lost 0. Harness (`paint-3f0d021`):
   hover GPU -249 ms [158, 393], wheel@500 main -314 [37, 1042], status CPU +132 [6, 276] (the extra ::after per
   ticket, ~0.2 ms per change). Full 48,181 -> 48,477, lite 14,572 -> 14,868.
+- Size pass for the Specials model picker (2026-11-18, Council: Fable Low + Sol High). Full 49,793 -> 48,735
+  (-1,058), lite 15,009 -> 14,529; with the uncommitted Specials picker on top full is 49,815 (50,186 UTF-8
+  bytes; a gallery that counts bytes would refuse it). Measured in order (full/lite):
+  - `)` space dropped in declaration values; kept before `+`/`-`, in strings (with escaped quotes), after `\`
+    (-85/-31).
+  - 8 shorter attribute matches `$=row-card`, `$=w-slim`, `^=sidebar-draft-i`, `$=ned-divider`, `$=t-strip`,
+    `$=b-text`, `$=a-viewport`, `$=m-content` (-397/-225). The live DOM and the app's JS bundle hold no other
+    value with these ends; `ned-` because a future `settled-divider` would match `d-divider`.
+  - 3 single-use hex vars inlined, unused `--sk-line` dropped (-64/-17); `:not(:first-child)` ->
+    `:nth-child(n+2)` (-33/-33); `transparent` -> `#0000` before `!` (-12).
+  - `--sk-*` short names: 62-letter alphabet (-121/-17), then Latin-1 letters without the `k` (`--À`…`--ÿ`;
+    62 one-letter names, the rest two letters) (-346/-157). The validator and the app count UTF-16 units, not
+    bytes (full is 49,101 UTF-8 bytes). The app's own sanitizer (`ko`, copied from the bundle) drops no
+    declaration of the new build.
+  - Rejected by the Council (future-app collision): `[class*=p\/sidebar-s]` for `.group\/sidebar-status-slot`
+    (-216; a new `group/sidebar-s…` class would move bubbles), `$=r-host`, `$=r-footer` (`editor-footer` would
+    get z-index 1000), `$=r-inner`/`$=r-inset` (`drawer-*`), `^=conv`, `$=w-card`. Also rejected: dropping the
+    flags on `.chat-markdown a`, `.chat-markdown :not(pre)>code` and settings-group. `fx/prune2.js` said ok, but
+    unlayered app rules with higher specificity win without them (`.chat-markdown a:not(.chat-markdown-file-link,
+    …)`, `.user-message-markdown :not(pre)>code`, `[data-provider-detail] [data-slot=settings-group]`); the
+    tested page held only file links. Sprites are already minimal (cwebp -z 9 saves 0 bytes).
+  - Proof vs HEAD: CSSOM `cssText` of every rule equal (326 full, 90 lite) except 7 full / 2 lite rules whose
+    values are equal after substitution (inlined hex, `#0000`);
+    computed style 0 diffs (custom properties and renamed anchor names excluded) in conversation (dark, light),
+    model picker, command palette, Settings, question banner; frozen pixel diff 0 in conversation and Settings,
+    banner 397 px all in the app's "Working for 2m 18s" timer. check.js 0 invalid, l3Lost 0, no overlap.
+  - Not checked live: Mac mini status demo, slim rows, draft indicator, context strip, Stop, terminal drawer
+    (CSSOM only), and the published theme (not published in this pass).
 - Chef stamp (2026-11-18): the published theme never showed "CHEF RECOMMENDS" (only a pink sliver under Low).
   The served CSS loses `content:"CHEF\A RECOMMENDS"` although the theme file holds it and the injected build works.
   Now `content:"CHEF RECOMMENDS"` + `display:block; width:min-content` (two lines, no escape); verified in the
@@ -533,16 +561,14 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
 ## Open items
 - Ticket move to the Working shelf shows a clipped remainder/jump (app animation; left alone).
 - Breadcrumb emoji is part of the project name (CSS cannot remove it).
-- Unapplied size items (if room is needed; collapsed-hide var applied 2026-11-17, −597; flag prune −526 and shared
-  values −614 applied 2026-11-18; the mask atlas was already done in 6db2d13):
-  the 32 still-untested non-guarded (2 inside @media) `!important` flags (≤ −340; question banner, Stop, terminal drawer, dialog title,
-  primary buttons, header monogram/favicon variants, focus outline);
-  no space after `)` inside declaration values (~−90 est., minifier change, needs the computed-style proof);
-  shorter attribute matches such as `[data-testid$=w-card]` (−400…−550 est., breaks if the app adds a matching id);
-  `opacity: 0.17` in core.css is dead in full (extras sets 0.2 on the same selector; −12 with a lite-only marker);
-  inline single-use hex vars (−153 full / −90 lite measured, var scope risk), dead rules list, raw `<>` in data URIs
-  (~−500, risky). Rejected with numbers: reordering rules to nest more (−418/−159, cascade risk), one merged
-  `border-radius:0!important` rule (+753), `[class*=status-slot]` (matches `group-hover/...` utilities).
+- Unapplied size items (if room is needed; applied 2026-11-18 size pass for Specials, see State): the ~40
+  non-guarded `!important` flags whose rules match nothing in the tested states (Stop, terminal drawer, dialog
+  title, primary buttons, header monogram/favicon variants, focus outline, question banner); `opacity: 0.17` in
+  core.css is dead in full (-12 with a lite-only marker); raw `<>` in data URIs (~-500, risky). Sprites are already
+  minimal lossless WebP. Rejected with numbers: reordering rules to nest more
+  (-418/-159, cascade risk), one merged `border-radius:0!important` rule (+753), `[class*=status-slot]` and
+  `[class*=p\/sidebar-s]` (match other `group/...` classes), suffix matches on generic names (`r-host`,
+  `r-footer`, `r-inner`, `r-inset`, `w-card`, `^=conv`).
 - The Mac mini dev server is still running; stop it (`kill $(cat /tmp/t3code-theme-dev.pid)`) and remove the
   worktree (`git -C /Users/roger/t3code worktree remove /tmp/t3code-theme-demo`) when no longer needed — ask Roger.
 - History: `LEDGER.md` (hillclimb ledger), `council2/BRIEF-R*.md` (council briefs), `v1/` (first theme sources).

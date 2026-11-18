@@ -11,16 +11,13 @@
   --diff-deletion-foreground: #ff9a8a;
   --diff-addition-foreground: #8fdc9a;
   --sk-night: #1a2130;
-  --sk-line: #34405a;
   --sk-shadow: #0a0f18;
   /* Shared shapes: the clipped pixel corner, the wood plank, the plate on its board. */
   --sk-notch: polygon(2px 0, calc(100% - 2px) 0, 100% 2px, 100% calc(100% - 2px), calc(100% - 2px) 100%, 2px 100%, 0 calc(100% - 2px), 0 2px);
   --sk-plank: repeating-linear-gradient(#c58848 0 3px, #b9783d 3px 7px, #a0662f 7px 8px);
   --sk-board: linear-gradient(#fbf3e2 0 0) center / 40px 40px no-repeat, linear-gradient(#3a2414 0 0) center / 44px 44px no-repeat, var(--sk-plank);
-  --sk-lacquer: #11131a;
   --sk-lacquer-edge: #b9862a;
   --sk-chop: #b07a40;
-  --sk-chop-tip: #e9cf9f;
   --sk-pixel: "Silom", "Krungthep", var(--sk-round);
   --sk-brush: polygon(0 1px, 2px 0, 100% 0, calc(100% - 6px) 35%, calc(100% - 2px) 60%, calc(100% - 7px) 100%, 2px 100%, 0 calc(100% - 1px));
 }
@@ -28,17 +25,17 @@
 
 
 /* The ticket's stain is softened with a light blur. */
-[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(1) > :is(:first-child:not([role="img"]), [role="img"]:first-child + *) {
+[data-thread-item] > [data-testid$=row-card] > div > div:nth-child(1) > :is(:first-child:not([role="img"]), [role="img"]:first-child + *) {
   filter: blur(0.75px) saturate(1.6);
   opacity: 0.2;
 }
 /* A ticket with a coloured stamp takes a 10% tint of its ink (core.css --sk-bg). Grey Waiting stays plain. */
-[data-testid="sidebar-row-card"]:has(.group\/sidebar-status-slot .text-warning-foreground) { --sk-t: var(--sk-approval); }
-[data-testid="sidebar-row-card"]:has(.group\/sidebar-status-slot .text-indigo-600) { --sk-t: var(--sk-input); }
-[data-testid="sidebar-row-card"]:has(.group\/sidebar-status-slot .text-guest-foreground) { --sk-t: var(--sk-request); }
-[data-testid="sidebar-row-card"]:has(.group\/sidebar-status-slot .text-info-foreground) { --sk-t: var(--sk-working); }
-[data-testid="sidebar-row-card"]:has(.group\/sidebar-status-slot .text-success-foreground) { --sk-t: var(--sk-done); }
-[data-testid="sidebar-row-card"]:has(.group\/sidebar-status-slot .text-error-foreground) { --sk-t: var(--sk-failed); }
+[data-testid$=row-card]:has(.group\/sidebar-status-slot .text-warning-foreground) { --sk-t: var(--sk-approval); }
+[data-testid$=row-card]:has(.group\/sidebar-status-slot .text-indigo-600) { --sk-t: var(--sk-input); }
+[data-testid$=row-card]:has(.group\/sidebar-status-slot .text-guest-foreground) { --sk-t: var(--sk-request); }
+[data-testid$=row-card]:has(.group\/sidebar-status-slot .text-info-foreground) { --sk-t: var(--sk-working); }
+[data-testid$=row-card]:has(.group\/sidebar-status-slot .text-success-foreground) { --sk-t: var(--sk-done); }
+[data-testid$=row-card]:has(.group\/sidebar-status-slot .text-error-foreground) { --sk-t: var(--sk-failed); }
 
 /* Wall controls are glazed tiles: square with stepped pixel corners, a light top-left and dark
    bottom-right bevel, a crisp cream glyph with a 1 px pixel shadow; pressed tiles sink by 1 px. */
@@ -364,7 +361,7 @@ svg.lucide {
    two cords, a framed wooden board bigger than the curtain; it may cover the start of the chat's
    first line, which the owner accepted. Favicons, emoji and monograms all work;
    "No project" keeps the fish. */
-[data-chat-header] nav li:first-child > button > :first-child:not([data-slot="workspace-breadcrumb-text"]) {
+[data-chat-header] nav li:first-child > button > :first-child:not([data-slot$=b-text]) {
   position: absolute !important;
   top: calc(100% + 12px);
   left: 48px;
@@ -403,7 +400,7 @@ svg.lucide {
   object-fit: contain;
   background: var(--sk-board) !important;
 }
-[data-chat-header] nav li:first-child > button > :first-child:not([data-slot="workspace-breadcrumb-text"], :has(> svg.lucide)) > * {
+[data-chat-header] nav li:first-child > button > :first-child:not([data-slot$=b-text], :has(> svg.lucide)) > * {
   width: 36px !important;
   height: 36px !important;
   font-size: 30px !important;
@@ -427,7 +424,7 @@ svg.lucide {
 }
 
 /* The breadcrumb is painted on the beam in the shop's pixel type. */
-[data-chat-header] [data-slot="workspace-breadcrumb-text"] {
+[data-chat-header] [data-slot$=b-text] {
   font-family: var(--sk-pixel);
 }
 /* Headings in the menu board's rounded type. */
@@ -480,7 +477,7 @@ svg.lucide {
   border-radius: 0;
   border: 0 !important;
   box-shadow: inset 0 0 0 2px var(--sk-lacquer-edge), inset 0 0 0 3px #000, 4px 4px 0 var(--sk-shadow);
-  background-color: var(--sk-lacquer) !important;
+  background-color: #11131a !important;
 }
 .chat-markdown .chat-markdown-codeblock pre,
 .chat-markdown .chat-markdown-codeblock code {
@@ -903,7 +900,7 @@ svg.lucide[class*="loader"] {
   writing-mode: sideways-lr;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 9px), 0 100%);
 }
-:is([data-model-picker-provider] button, [data-slot="combobox-item-content"] > span:first-child:has(svg)) {
+:is([data-model-picker-provider] button, [data-slot$=m-content] > span:first-child:has(svg)) {
   border-radius: 50%;
   box-shadow: inset 0 0 0 1.5px #2a1d16;
 }
@@ -914,7 +911,7 @@ svg.lucide[class*="loader"] {
   display: none;
 }
 /* A dish line: name, allergen badge, dotted leader, price. */
-[data-slot="combobox-item-content"] {
+[data-slot$=m-content] {
   & > div:nth-child(2) {
     flex: none;
     font-family: var(--sk-pixel);
@@ -1047,7 +1044,7 @@ svg.lucide[class*="loader"] {
   background: var(--sk-chop) padding-box;
 }
 ::-webkit-scrollbar-thumb:vertical {
-  background: linear-gradient(var(--sk-chop) 0 calc(100% - 6px), var(--sk-chop-tip) 0) padding-box;
+  background: linear-gradient(var(--sk-chop) 0 calc(100% - 6px), #e9cf9f 0) padding-box;
 }
 
 ::selection {
@@ -1202,7 +1199,7 @@ svg.lucide[class*="loader"] {
 }
 /* Context controls sit on the counter front, outside the pad's flow, so the paper rests on the plank.
    The strip's relative wrapper starts at the pad's bottom; 24 px clears the plank and its shadow. */
-[data-slot="composer-context-strip"] {
+[data-slot$=t-strip] {
   position: absolute;
   inset: 24px 0 auto;
   height: 32px;
@@ -1216,18 +1213,18 @@ svg.lucide[class*="loader"] {
   --contrast-border: #6e4220;
   --accent: #e2a866;
 }
-[data-slot="composer-context-strip"],
-[data-slot="composer-context-strip"] :is(button, svg, [data-composer-context-control]) {
+[data-slot$=t-strip],
+[data-slot$=t-strip] :is(button, svg, [data-composer-context-control]) {
   color: #0a0f18;
 }
-[data-slot="composer-context-strip"] svg {
+[data-slot$=t-strip] svg {
   opacity: 1 !important;
 }
-[data-slot="composer-context-strip"] button:focus-visible {
+[data-slot$=t-strip] button:focus-visible {
   outline: 2px solid #0a0f18;
   outline-offset: -2px;
 }
-[data-slot="composer-context-strip"]::before {
+[data-slot$=t-strip]::before {
   display: none;
 }
 .chat-composer-lane::after {

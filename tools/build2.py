@@ -39,6 +39,10 @@ def fill(css):
     return re.sub(r"\{\{(\w+)\}\}", rep, css)
 core_src = open(os.path.join(root, "src2/core.css")).read()
 core = fill(core_src.replace("/*full*/\n", "").replace("/*/full*/\n", ""))
+# Short names for --sk-* custom properties and anchors: Latin-1 letters (U+00C0-U+00FF without the signs × and ÷), one
+# letter for the first 62 names, two after. Valid ident code points that cost 1 of the 50,000 chars (the limit counts
+# UTF-16 units, not bytes) and that no app custom property uses. Names compare by code point.
+ALPHA = "".join(chr(c) for c in range(0xC0, 0x100) if c not in (0xD7, 0xF7))
 def minify(css, full=False):
     # Lite drops the full-only blocks; full keeps them and only loses the markers.
     css = re.sub(r"/\*/?full\*/", "", css) if full else re.sub(r"/\*full\*/.*?/\*/full\*/", "", css, flags=re.S)
@@ -54,16 +58,20 @@ def minify(css, full=False):
     css = re.sub(r"([{;])(-?-?[\w-]+): ", r"\1\2:", css)
     css = re.sub(r"rgb\((\d+) (\d+) (\d+) / (0?\.\d+)\)", lambda m: "#%02x%02x%02x%02x" % (int(m[1]), int(m[2]), int(m[3]), round(float(m[4]) * 255)), css)
     css = re.sub(r"-webkit-(?:mask[\w-]*|backdrop-filter):(?:[^;{}]|\{\{\w+\}\})*;", "", css)
-    css = re.sub(r"(?<=[ :,(])transparent(?=[ ,;)}])", "#0000", css)
+    css = re.sub(r"(?<=[ :,(])transparent(?=[ ,;)}!])", "#0000", css)
     css = re.sub(r"(?<=[ :,])(\d+)0ms\b", lambda m: ("." + m[1] + "s") if len(m[1]) == 2 else m[0], css)
     css = re.sub(r"(?<=[ :,(])0\.(\d)", r".\1", css)
     css = re.sub(r'"((?:[A-Z][a-z]+ ?)+(?: [A-Z]{2,})?(?: [A-Za-z]+)*)"(?=[,;)])', lambda m: m[1] if re.fullmatch(r"[A-Za-z]+( [A-Za-z]+)*", m[1]) else m[0], css)
     css = re.sub(r"#([0-9a-f])\1([0-9a-f])\2([0-9a-f])\3\b", r"#\1\2\3", css)
     css = re.sub(r"\"[^\"]*\"|'[^']*'| / ", lambda m: "/" if m[0] == " / " else m[0], css)  # "a / b" -> "a/b" outside strings
+    # ") x" -> ")x" in declaration values (not selectors or @media preludes); kept before + and -, which calc() needs
+    # spaced, and inside strings and after escapes.
+    keep = r"\"(?:[^\"\\]|\\.)*\"|'(?:[^'\\]|\\.)*'|\\.|\{\{\w+\}\}"
+    css = re.sub(r"(?<=[{;])([\w-]+:)((?:" + keep + r"|[^;{}\"'\\])*)(?=[;}])", lambda m: m[1] + re.sub(keep + r"|\) (?![-+])", lambda q: ")" if q[0] == ") " else q[0], m[2]), css)
     uses =__import__("collections").Counter(re.findall(r"--sk-[a-z0-9-]+", css))
     names = sorted(uses, key=lambda n: (-uses[n] * len(n), n))  # most chars saved first; name breaks ties, so builds repeat
     for i, n in enumerate(names):
-        css = re.sub(re.escape(n) + r"(?![a-z0-9-])", "--k" + "abcdefghijklmnopqrstuvwxyz"[i % 26] + ("" if i < 26 else str(i // 26)), css)
+        css = re.sub(re.escape(n) + r"(?![a-z0-9-])", "--" + ALPHA[i % 62] + ("" if i < 62 else ALPHA[i // 62]), css)
     return css.strip()
 lite = fill(minify(core_src))
 extras_p = os.path.join(root, "src2/extras.css")

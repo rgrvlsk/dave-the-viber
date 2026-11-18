@@ -54,15 +54,14 @@ html[data-theme-id] [data-app-sidebar] {
 }
 
 /* Paper and ink, shared by tickets, slips, the order slip and the order pad. */
-[data-thread-item] > [data-testid="sidebar-row-card"],
-[data-thread-item] > [data-testid="sidebar-row-slim"]/*full*/,
+[data-thread-item] > [data-testid$=row-card],
+[data-thread-item] > [data-testid$=w-slim]/*full*/,
 [data-user-message-bubble],
 [data-slot="composer-host"],
 [data-composer-banner-surface],
 [aria-label="Thread search results"] [role="option"]/*/full*/ {
   --sk-paper: #fbf3e2;
   --sk-paper-hover: #fff9ec;
-  --sk-paper-old: #d9c9a3;
   --sk-edge: #d6c39b;
   --sk-rule: #b9a47a;
   --sk-pass: #c2412b;
@@ -104,11 +103,11 @@ html[data-theme-id] [data-app-sidebar] {
 }
 
 /* A twine runs down the left of the wall; each ticket is pegged to it at its top-left corner. */
-[data-thread-item]:has(> [data-testid="sidebar-row-card"]) {
+[data-thread-item]:has(> [data-testid$=row-card]) {
   position: relative;
   padding: 4px 4px 5px 20px;
 }
-[data-thread-item]:has(> [data-testid="sidebar-row-card"])::before {
+[data-thread-item]:has(> [data-testid$=row-card])::before {
   content: "";
   position: absolute;
   left: 7px;
@@ -118,7 +117,7 @@ html[data-theme-id] [data-app-sidebar] {
   background: repeating-linear-gradient(#e2c48e 0 2px, #a37a45 2px 3px, #6b4a26 3px 4px);
   box-shadow: 1px 0 0 #1b120a, -1px 0 0 #1b120a, 3px 3px 0 var(--sk-shade);
 }
-[data-thread-item]:has(> [data-testid="sidebar-row-card"])::after {
+[data-thread-item]:has(> [data-testid$=row-card])::after {
   content: "";
   position: absolute;
   top: 9px;
@@ -134,13 +133,13 @@ html[data-theme-id] [data-app-sidebar] {
 }
 /*full*/
 /* Pinned orders get the red peg. */
-[data-thread-item]:has(~ [data-testid="sidebar-pinned-divider"])::after {
+[data-thread-item]:has(~ [data-testid$=ned-divider])::after {
   filter: hue-rotate(-30deg) saturate(2.6) brightness(0.85);
 }
 
 /*/full*/
 /* Pinned orders: kraft paper instead of the app's pin icon. Stamps keep a cream label so their ink stays above 4.5:1. */
-[data-thread-item]:has(~ [data-testid="sidebar-pinned-divider"]) > [data-testid="sidebar-row-card"] {
+[data-thread-item]:has(~ [data-testid$=ned-divider]) > [data-testid$=row-card] {
   --sk-paper: #d9b585;
   --sk-paper-hover: #e2c398;
   --sk-edge: #b08a58;
@@ -152,7 +151,7 @@ html[data-theme-id] [data-app-sidebar] {
   display: none;
 }
 /* ---------- The ticket ---------- */
-[data-thread-item] > [data-testid="sidebar-row-card"] {
+[data-thread-item] > [data-testid$=row-card] {
   /* --sk-t: the status ink, set in extras.css; tickets with a coloured stamp get paper tinted 10% with it. */
   --sk-bg: color-mix(in srgb, var(--sk-t, var(--sk-paper)) 10%, var(--sk-paper));
   background-color: var(--sk-bg);
@@ -182,7 +181,7 @@ html[data-theme-id] [data-app-sidebar] {
 [data-thread-item]:nth-child(3n) { --sk-tilt: -1.5deg; }
 [data-thread-item]:nth-child(3n + 1) { --sk-tilt: 1.1deg; }
 [data-thread-item]:nth-child(5n + 2) { --sk-tilt: -0.6deg; }
-[data-thread-item]:hover > [data-testid="sidebar-row-card"] {
+[data-thread-item]:hover > [data-testid$=row-card] {
   --sk-paper: var(--sk-paper-hover);
   rotate: 0deg;
 }
@@ -193,27 +192,27 @@ html[data-theme-id] [data-app-sidebar] {
    slip goes to z 21. That needs the scroller's bottom-fade mask gone (a mask makes a stacking context);
    the fade sat under the fish tank. Rows have content-visibility: auto, which clips paint to the row:
    the open row needs visible. */
-[data-slot="sidebar-inner"] [role="presentation"]:has(> [data-slot="scroll-area-viewport"]) {
+[data-slot="sidebar-inner"] [role="presentation"]:has(> [data-slot$=a-viewport]) {
   overflow: visible;
 }
-[data-slot="sidebar-inner"] [data-slot="scroll-area-viewport"] {
+[data-slot="sidebar-inner"] [data-slot$=a-viewport] {
   margin-right: -12px;
   padding-right: 12px;
   -webkit-mask: none;
   mask: none;
 }
-[data-state="expanded"] [data-thread-item]:has(> [data-testid="sidebar-row-card"][aria-current]:not([aria-current="false"])) {
+[data-state="expanded"] [data-thread-item]:has(> [data-testid$=row-card][aria-current]:not([aria-current="false"])) {
   z-index: 21;
   content-visibility: visible;
 }
-[data-state="expanded"] [data-thread-item] > [data-testid="sidebar-row-card"][aria-current]:not([aria-current="false"]) {
+[data-state="expanded"] [data-thread-item] > [data-testid$=row-card][aria-current]:not([aria-current="false"]) {
   translate: 20px 0;
 }
-[data-thread-item] > [data-testid="sidebar-row-card"][aria-current]:not([aria-current="false"]) {
+[data-thread-item] > [data-testid$=row-card][aria-current]:not([aria-current="false"]) {
   rotate: 0deg;
   box-shadow: inset 0 0 0 2px var(--sk-pass), inset 0 0 0 4px var(--sk-bg),inset 0 0 0 5px color-mix(in srgb, var(--sk-pass) 45%, transparent), 2px 3px var(--sk-shade);
 }
-[data-thread-item] > [data-testid="sidebar-row-card"]:focus-visible {
+[data-thread-item] > [data-testid$=row-card]:focus-visible {
   outline: 2px dashed var(--contrast-foreground) !important;
   outline-offset: -4px;
   rotate: 0deg;
@@ -223,19 +222,19 @@ html[data-theme-id] [data-app-sidebar] {
    optional meta line, in that order (verified on 0.1.10 nightly). ponytail: if the app adds a wrapper
    or reorders these lines, the three-line layout breaks; re-check after app updates.
    Layout: title alone on line 1, project and status on line 2, branch and model on line 3. */
-[data-thread-item] > [data-testid="sidebar-row-card"] > div {
+[data-thread-item] > [data-testid$=row-card] > div {
   display: flex;
   flex-direction: column;
   height: calc(4.875rem + 4px) !important;
   /* The printer's dashed rule under the dish name. */
   background: repeating-linear-gradient(90deg, var(--sk-rule) 0 3px, transparent 3px 6px) 0 calc(6px + 1.75rem) / 100% 1px no-repeat;
 }
-[data-thread-item] > [data-testid="sidebar-row-card"] > div > div {
+[data-thread-item] > [data-testid$=row-card] > div > div {
   flex: none;
   white-space: nowrap;
 }
 /* Line 1: the dish, in condensed print. */
-[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(2) {
+[data-thread-item] > [data-testid$=row-card] > div > div:nth-child(2) {
   order: -1;
   height: 1.25rem;
   margin-top: 4px;
@@ -245,16 +244,16 @@ html[data-theme-id] [data-app-sidebar] {
 }
 /* The dish name is printed bold; unread orders keep the full ink, read ones fade to --sk-read
    (65%; 75% on kraft, the floor for 4.5:1). Hover and focus give the full ink back. */
-[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(2) > span:first-child {
+[data-thread-item] > [data-testid$=row-card] > div > div:nth-child(2) > span:first-child {
   font-weight: 700;
 }
-[data-thread-item]:not(:hover) > [data-testid="sidebar-row-card"]:not(:focus-visible) > div > div:nth-child(2) > .font-normal:first-child {
+[data-thread-item]:not(:hover) > [data-testid$=row-card]:not(:focus-visible) > div > div:nth-child(2) > .font-normal:first-child {
   color: color-mix(in srgb, var(--contrast-foreground) var(--sk-read, 65%), #0000);
 }
 /* The project's mark soaks into the paper as a big, faint, pixelated stain: each order gets its
    own tint without a second icon on the line. The mark is the line's first child, except when the
    app puts the unsent-draft marker (the only leading role="img") in front of it. */
-[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(1) > :is(:first-child:not([role="img"]), [role="img"]:first-child + *) {
+[data-thread-item] > [data-testid$=row-card] > div > div:nth-child(1) > :is(:first-child:not([role="img"]), [role="img"]:first-child + *) {
   position: absolute !important;
   right: 18px;
   top: 30px;
@@ -267,47 +266,47 @@ html[data-theme-id] [data-app-sidebar] {
   pointer-events: none;
 }
 /*full*/
-[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(1) > :is(:first-child:not([role="img"]), [role="img"]:first-child + *) * {
+[data-thread-item] > [data-testid$=row-card] > div > div:nth-child(1) > :is(:first-child:not([role="img"]), [role="img"]:first-child + *) * {
   image-rendering: pixelated;
 }
 /*/full*/
 /* Line 2: the table, printed in capitals. */
-[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(1) {
+[data-thread-item] > [data-testid$=row-card] > div > div:nth-child(1) {
   margin-top: 0.3rem;
 }
-[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(1) > .flex-1 {
+[data-thread-item] > [data-testid$=row-card] > div > div:nth-child(1) > .flex-1 {
   font-family: var(--font-mono);
   font-size: 0.65rem;
   font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
-[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(3) {
+[data-thread-item] > [data-testid$=row-card] > div > div:nth-child(3) {
   padding-inline-start: 1.375rem;
   height: 1rem;
 }
 /* Line 3: the notes, from the ticket printer. */
-[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(3) > :first-child {
+[data-thread-item] > [data-testid$=row-card] > div > div:nth-child(3) > :first-child {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
 }
 /* Read tickets: the app fades the title with alpha; keep it at the notes ink so it stays above 4.5:1. */
-[data-thread-item] > [data-testid="sidebar-row-card"] [class*="text-secondary-label/"] {
+[data-thread-item] > [data-testid$=row-card] [class*="text-secondary-label/"] {
   color: var(--contrast-secondary-label) !important;
 }
 /* The model mark is printed in the same ink as the notes. */
-[data-thread-item] > [data-testid="sidebar-row-card"] span[aria-hidden="true"] svg {
+[data-thread-item] > [data-testid$=row-card] span[aria-hidden="true"] svg {
   color: var(--contrast-secondary-label);
   opacity: 1 !important;
 }
 /* The PR mark on line 3 in a green that holds on paper. */
-[data-thread-item] > [data-testid="sidebar-row-card"] > div > div:nth-child(3) > :is(a, button) :is(svg, span) {
+[data-thread-item] > [data-testid$=row-card] > div > div:nth-child(3) > :is(a, button) :is(svg, span) {
   color: var(--sk-done);
   opacity: 1 !important;
 }
 /* With no meta line the app puts the model icon on the title line: move it to line 3.
    :where() keeps this rule weaker than the hover/focus rules, so the mark moves with the keys. */
-[data-thread-item] > [data-testid="sidebar-row-card"] > div:where(:not(:has(> div:nth-child(3)))) > div:nth-child(2) > span:not(:first-child) {
+[data-thread-item] > [data-testid$=row-card] > div:where(:not(:has(> div:nth-child(3)))) > div:nth-child(2) > span:nth-child(n+2) {
   position: absolute;
   right: var(--sidebar-row-content-inset);
   bottom: var(--sidebar-content-inset);
@@ -322,7 +321,7 @@ html[data-theme-id] [data-app-sidebar] {
 
 /* Status: a rubber stamp, sprite + word, slightly crooked. */
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > :is(span, button),
-[data-thread-item] [data-testid^="sidebar-draft-indicator"] {
+[data-thread-item] [data-testid^=sidebar-draft-i] {
   --sk-c: var(--sk-waiting);
   gap: 0.25rem;
   height: 1rem;
@@ -343,11 +342,11 @@ html[data-theme-id] [data-app-sidebar] {
   text-transform: none;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > :is(span, button) > svg.lucide,
-[data-thread-item] [data-testid^="sidebar-draft-indicator"] > svg {
+[data-thread-item] [data-testid^=sidebar-draft-i] > svg {
   display: none;
 }
 [data-thread-item] .group\/sidebar-status-slot > span:first-child > :is(span, button)::before,
-[data-thread-item] [data-testid^="sidebar-draft-indicator"]::before {
+[data-thread-item] [data-testid^=sidebar-draft-i]::before {
   content: "";
   flex: none;
   width: 12px;
@@ -398,12 +397,12 @@ html[data-theme-id] [data-app-sidebar] {
   font-size: 0.625rem;
 }
 /* An unsent draft is stamped in pencil, just before the status stamp. */
-[data-thread-item] [data-testid^="sidebar-draft-indicator"] {
+[data-thread-item] [data-testid^=sidebar-draft-i] {
   --sk-c: var(--sk-ink);
   --sk-y: 101px;
   order: 1;
 }
-[data-thread-item] [data-testid^="sidebar-draft-indicator"]::after {
+[data-thread-item] [data-testid^=sidebar-draft-i]::after {
   content: "Draft" / "";
 }
 [data-thread-item] :is(.group\/sidebar-status-slot, .group\/sidebar-status-slot ~ *) {
@@ -429,7 +428,7 @@ html[data-theme-id] [data-app-sidebar] {
    for them, so the branch truncates and the PR and model marks move left. After 300 ms under the pointer
    the keys appear at once and push those marks left; they go at once on leave (no slide: Roger, 2026-11-17).
    Keyboard focus and an open menu show them without the delay. */
-[data-thread-item] > [data-testid="sidebar-row-card"] .group\/sidebar-status-slot > span:not(:first-child) {
+[data-thread-item] > [data-testid$=row-card] .group\/sidebar-status-slot > span:nth-child(n+2) {
   position: absolute !important;
   inset: 100% -0.3125rem auto auto !important;
   z-index: 31;
@@ -441,7 +440,7 @@ html[data-theme-id] [data-app-sidebar] {
 }
 /* Each is a pixel key in the peg colours: a 1-px outline with clipped corners, a lit top, a shaded
    bottom and an ink sprite. Pressed, the light moves to the bottom. 22 px + 2 px gap = 1.5rem a key. */
-[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button {
+[data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2) > button {
   --sk-c: #c9d1d8;
   --sk-k: #3a4652;
   width: 1.375rem;
@@ -457,24 +456,24 @@ html[data-theme-id] [data-app-sidebar] {
   box-shadow: inset 0 0 0 1px var(--sk-k), inset 0 -3px #0003, inset 0 2px #fff6;
   clip-path: var(--sk-cut);
 }
-[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button:hover {
+[data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2) > button:hover {
   background: color-mix(in srgb, var(--sk-c) 80%, #fff) !important;
 }
-[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button:active {
+[data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2) > button:active {
   box-shadow: inset 0 0 0 1px var(--sk-k), inset 0 2px #0003;
 }
-[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button:focus-visible {
+[data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2) > button:focus-visible {
   outline: 2px solid var(--sk-ink);
   outline-offset: -3px;
 }
-[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button svg {
+[data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2) > button svg {
   width: 0.875rem !important;
   height: 0.875rem !important;
 }
-[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button:is([aria-label^="Settle"], [aria-label^="Snooze"], [aria-label^="Discard"]) svg {
+[data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2) > button:is([aria-label^="Settle"], [aria-label^="Snooze"], [aria-label^="Discard"]) svg {
   display: none;
 }
-[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button:is([aria-label^="Settle"], [aria-label^="Snooze"], [aria-label^="Discard"])::before {
+[data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2) > button:is([aria-label^="Settle"], [aria-label^="Snooze"], [aria-label^="Discard"])::before {
   content: "";
   width: 12px;
   height: 10px;
@@ -482,50 +481,50 @@ html[data-theme-id] [data-app-sidebar] {
   -webkit-mask: var(--sk-atlas) 0 calc(5px - var(--sk-y)) / 12px auto no-repeat;
   mask: var(--sk-atlas) 0 calc(5px - var(--sk-y)) / 12px auto no-repeat;
 }
-[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button[aria-label^="Settle"] {
+[data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2) > button[aria-label^="Settle"] {
   --sk-c: #6cbf5a;
   --sk-k: #10301a;
   --sk-y: 49px;
 }
-[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button[aria-label^="Snooze"] {
+[data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2) > button[aria-label^="Snooze"] {
   --sk-c: #f2c25c;
   --sk-k: #3a2a0a;
   --sk-y: 146px;
 }
-[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child) > button[aria-label^="Discard"] {
+[data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2) > button[aria-label^="Discard"] {
   --sk-c: #e86f55;
   --sk-k: #3a1410;
   --sk-y: 63px;
 }
-[data-thread-item] > [data-testid="sidebar-row-card"] > div:has(.group\/sidebar-status-slot > span:not(:first-child) > :nth-child(1)) {
+[data-thread-item] > [data-testid$=row-card] > div:has(.group\/sidebar-status-slot > span:nth-child(n+2) > :nth-child(1)) {
   --sk-actions: 1.5rem;
 }
-[data-thread-item] > [data-testid="sidebar-row-card"] > div:has(.group\/sidebar-status-slot > span:not(:first-child) > :nth-child(2)) {
+[data-thread-item] > [data-testid$=row-card] > div:has(.group\/sidebar-status-slot > span:nth-child(n+2) > :nth-child(2)) {
   --sk-actions: 3rem;
 }
-[data-thread-item] > [data-testid="sidebar-row-card"] > div:has(.group\/sidebar-status-slot > span:not(:first-child) > :nth-child(3)) {
+[data-thread-item] > [data-testid$=row-card] > div:has(.group\/sidebar-status-slot > span:nth-child(n+2) > :nth-child(3)) {
   --sk-actions: 4.5rem;
 }
 @media (any-hover: hover) {
-  [data-thread-item]:hover > [data-testid="sidebar-row-card"] .group\/sidebar-status-slot:not(:has(> [data-jump-hint])) > span:not(:first-child) {
+  [data-thread-item]:hover > [data-testid$=row-card] .group\/sidebar-status-slot:not(:has(> [data-jump-hint])) > span:nth-child(n+2) {
     opacity: 1 !important;
     visibility: visible;
     transition: opacity 0s linear 300ms, visibility 0s linear 300ms;
   }
-  [data-thread-item]:hover > [data-testid="sidebar-row-card"] > div > div:nth-child(3),
-  [data-thread-item]:hover > [data-testid="sidebar-row-card"] > div > div:nth-child(2) > span:not(:first-child) {
+  [data-thread-item]:hover > [data-testid$=row-card] > div > div:nth-child(3),
+  [data-thread-item]:hover > [data-testid$=row-card] > div > div:nth-child(2) > span:nth-child(n+2) {
     padding-inline-end: var(--sk-actions, 0);
     transition: padding-inline-end 0s 300ms;
   }
 }
-[data-thread-item] > [data-testid="sidebar-row-card"]:is(:focus-visible, :has(:focus-visible)) .group\/sidebar-status-slot:not(:has(> [data-jump-hint])) > span:not(:first-child),
-[data-thread-item] .group\/sidebar-status-slot > span:not(:first-child):has([data-popup-open], [aria-expanded="true"]) {
+[data-thread-item] > [data-testid$=row-card]:is(:focus-visible, :has(:focus-visible)) .group\/sidebar-status-slot:not(:has(> [data-jump-hint])) > span:nth-child(n+2),
+[data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2):has([data-popup-open], [aria-expanded="true"]) {
   opacity: 1 !important;
   visibility: visible;
   transition: none;
 }
-[data-thread-item] > [data-testid="sidebar-row-card"]:is(:focus-visible, :has(:focus-visible)) > div > div:nth-child(3),
-[data-thread-item] > [data-testid="sidebar-row-card"]:is(:focus-visible, :has(:focus-visible)) > div > div:nth-child(2) > span:not(:first-child) {
+[data-thread-item] > [data-testid$=row-card]:is(:focus-visible, :has(:focus-visible)) > div > div:nth-child(3),
+[data-thread-item] > [data-testid$=row-card]:is(:focus-visible, :has(:focus-visible)) > div > div:nth-child(2) > span:nth-child(n+2) {
   padding-inline-end: var(--sk-actions, 0);
   transition: none;
 }
@@ -578,19 +577,19 @@ html[data-theme-id] [data-app-sidebar] {
 }
 
 /* Slips in the shelves: old paper. Settled slips are stacked on the spike, quieter than live tickets. */
-[data-thread-item]:has(> [data-testid="sidebar-row-slim"]) {
+[data-thread-item]:has(> [data-testid$=w-slim]) {
   position: relative;
   padding: 3px 0;
 }
-[data-thread-item] > [data-testid="sidebar-row-slim"] > div > span:nth-child(2) {
+[data-thread-item] > [data-testid$=w-slim] > div > span:nth-child(2) {
   font-family: var(--sk-cond);
   font-size: 0.875rem;
   /*full*/
   font-weight: 500;
   /*/full*/
 }
-[data-thread-item] > [data-testid="sidebar-row-slim"] {
-  --sk-paper: var(--sk-paper-old);
+[data-thread-item] > [data-testid$=w-slim] {
+  --sk-paper: #d9c9a3;
   width: calc(100% - 8px);
   margin-inline: 4px;
   background-color: var(--sk-paper);
@@ -604,13 +603,13 @@ html[data-theme-id] [data-app-sidebar] {
   transition: rotate 320ms cubic-bezier(0.34, 1.4, 0.64, 1);
   /*/full*/
 }
-[data-thread-item]:hover > [data-testid="sidebar-row-slim"],
-[data-thread-item] > [data-testid="sidebar-row-slim"]:focus-visible {
+[data-thread-item]:hover > [data-testid$=w-slim],
+[data-thread-item] > [data-testid$=w-slim]:focus-visible {
   --sk-paper: #efe4c8;
   rotate: 0deg;
 }
 /*full*/
-[data-thread-item] > [data-testid="sidebar-row-slim"]:focus-visible {
+[data-thread-item] > [data-testid$=w-slim]:focus-visible {
   outline: 2px dashed var(--contrast-foreground);
   outline-offset: -4px;
 }

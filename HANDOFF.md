@@ -59,6 +59,13 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   2 px of shadow under the teeth is straight (was toothed). check.js 0 invalid, l3Lost 0. Harness (`paint-3f0d021`):
   hover GPU -249 ms [158, 393], wheel@500 main -314 [37, 1042], status CPU +132 [6, 276] (the extra ::after per
   ticket, ~0.2 ms per change). Full 48,181 -> 48,477, lite 14,572 -> 14,868.
+- No-project headline (2026-11-18, Roger: "No està estilitzat"). Without a project ("What should we work on?" /
+  "No project", also "Add a project to start") the app renders a bare `h1` with no `.group/draft-hero`, so the
+  chalk rule missed it. The rule now matches `[data-chat-composer-stack] h1` and the `p` after the h1 or the hero;
+  gold goes to `h1 button` and `[data-draft-project-trigger]` (the project picker in both states). With a project
+  the matched elements are the same set as before (checked live). Full 49,739 -> 49,807. check.js 0 invalid;
+  pixcheck headline 14.56:1, "No project" 9.69:1; light == dark on the headline box. Published and verified after
+  a reload without injection. Previous live file: `final2/published-before-2026-11-18-headline.json`.
 - Specials model picker (2026-11-18, Roger chose mockup C "Specials neon" of three, then "the chef's stamp should be
   a round chef seal with a thumbs-up", "CHEF in letters, not the hat", "a bit smaller", "more like a pixel badge: a
   thumbs-up with CHEF under it", "a closed fist is fine, smaller, not rotated", "badge at 50%", "the check on the left, floating, for levels and models", "remove the pink neon" frame that marked the

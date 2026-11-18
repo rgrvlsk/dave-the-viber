@@ -591,14 +591,17 @@ svg.lucide {
 [data-composer-command-drawer] [role="option"] span span:first-child {
   font-family: var(--sk-pixel);
 }
-/* The new-thread headline is chalked on the night wall in the shop's pixel type; the project glows gold. */
-.group\/draft-hero h1,
-.group\/draft-hero ~ p {
+/* The new-thread headline is chalked on the night wall in the shop's pixel type; the project glows gold.
+   With a project the h1 sits in .group/draft-hero; without one ("What should we work on?" / "No project",
+   "Add a project to start") it is a bare h1, so match the h1 and the line after its block. */
+[data-chat-composer-stack] h1,
+[data-chat-composer-stack] :is(h1, .group\/draft-hero) ~ p {
   font-family: var(--sk-pixel);
   color: #fbf3e2;
   text-shadow: 2px 2px var(--sk-shadow);
 }
-.group\/draft-hero button {
+[data-chat-composer-stack] h1 button,
+[data-chat-composer-stack] [data-draft-project-trigger] {
   color: #f2c25c;
 }
 /* Pad glyphs: thick, crisp strokes; the send key is an ink tile. */

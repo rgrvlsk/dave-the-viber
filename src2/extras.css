@@ -857,6 +857,41 @@ svg.lucide[class*="loader"] {
     background: var(--sk-fish) 90% 90% / 72px 42px no-repeat;
   }
 }
+/* The project list (the only submenu with two-line rows) is the bar's drinks menu: a neon hero sign at the top of
+   the card, big glasses and dotted leaders to the shortcut "price". */
+[data-slot="command-dialog-popup"]:has([aria-label="Back"]):has([role="option"] .flex-col) {
+  max-height: 34rem;
+  &::before {
+    content: "";
+    flex: none;
+    height: 120px;
+    background: {{drinks}} 50% / 183px no-repeat #18243c;
+    box-shadow: inset 0 -2px #a86030;
+  }
+  & [data-slot="command-group-label"] {
+    display: none;
+  }
+  & [data-slot="command-item"] > span:first-child {
+    height: auto;
+    align-self: center;
+    & > * {
+      width: 32px;
+      height: 32px;
+    }
+  }
+  & [data-slot="command-item"]:has(kbd) .text-sm::after {
+    content: "";
+    flex: 1;
+    align-self: end;
+    margin-bottom: 5px;
+    border-bottom: 2px dotted #b3a08c;
+  }
+  & [data-slot="command-shortcut"] {
+    align-self: start;
+    color: #a01e55;
+    font: 13px/20px var(--sk-pixel);
+  }
+}
 /* The provider column is the allergen key: under the round badges hangs a ribbon down to the foot of the card,
    its label at the top and a swallowtail at the end. */
 [data-model-picker-sidebar] .min-h-full::after {

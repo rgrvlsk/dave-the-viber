@@ -59,6 +59,18 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   2 px of shadow under the teeth is straight (was toothed). check.js 0 invalid, l3Lost 0. Harness (`paint-3f0d021`):
   hover GPU -249 ms [158, 393], wheel@500 main -314 [37, 1042], status CPU +132 [6, 276] (the extra ::after per
   ticket, ~0.2 ms per change). Full 48,181 -> 48,477, lite 14,572 -> 14,868.
+- Drinks menu (2026-11-18, Roger: the project picker "should be a drinks menu", icons much bigger, shortcuts as
+  prices, WebP lettering "Drinks (pick your poison)", then "hero header" and "stack vertically"). Scope: the command
+  palette submenu with a Back button and two-line rows (`:has([aria-label=Back]):has([role=option] .flex-col)`), i.e.
+  "New thread in…"; Change theme / appearance and the root palette are unchanged (checked live). The popup `::before`
+  is a 120 px navy hero with `src2/sprites/drinks.png` (61x29, `DRINKS_P`: neon core, pink ring, gold subtitle; the
+  script is macOS Brush Script 26 px rendered without antialiasing plus a 1 px ring, the subtitle a hand-drawn 3x9
+  font) at 3x; max-height 34rem so the list keeps its rows; the "Projects" label is hidden. Icons 32 px, a dotted
+  leader from the title to the shortcut, the shortcut a granat pixel-type price aligned with line 1. The legend-list
+  re-measures the rows (no overlap). Full 48,741 -> 49,779 (WebP 436 chars). check.js 0 invalid, l3Lost 0;
+  dark == light on the card (only the caret differs, max 7/255). PUBLISHED locally; previous live file:
+  `final2/published-before-2026-11-18-drinks.json`. Pitfall: the minifier drops the space in `#color {{token}}`;
+  put the token first.
 - Size cut for the drinks menu (2026-11-18, Roger: HANDOFF options 1 and 2 + Council). Full 49,881 -> 48,741
   (-1,140 = flags -526 + shared values -614), lite 14,986 -> 15,009; with the drinks menu block full is 49,779.
   Option 2 was already done (atlas, 6db2d13), so the second cut is shared values as custom properties: `--sk-peg`

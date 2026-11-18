@@ -59,6 +59,25 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   2 px of shadow under the teeth is straight (was toothed). check.js 0 invalid, l3Lost 0. Harness (`paint-3f0d021`):
   hover GPU -249 ms [158, 393], wheel@500 main -314 [37, 1042], status CPU +132 [6, 276] (the extra ::after per
   ticket, ~0.2 ms per change). Full 48,181 -> 48,477, lite 14,572 -> 14,868.
+- Specials model picker (2026-11-18, Roger chose mockup C "Specials neon" of three, then "the chef's stamp should be
+  a round chef seal with a thumbs-up", "CHEF in letters, not the hat", "a bit smaller", "more like a pixel badge: a
+  thumbs-up with CHEF under it", "a closed fist is fine, smaller, not rotated", "badge at 50%", "the check on the left, floating, for levels and models", "remove the pink neon" frame that marked the
+  cursor in the model list but the choice in the HEAT column). The model picker popover is the kitchen's night-navy specials board, the drinks
+  menu's sister: a 90 px header with `src2/sprites/specials.png` (75x32, `SPECIALS_P`: Brush Script "Specials", cyan
+  ring, "(chef's choice)" in the 3x9 hand font), a TONIGHT neon label, pink neon kbd prices, a darker
+  provider rail with cyan rings, a pink ALLERGENS ribbon, a "HEAT" effort column with glowing amber pips, and a footer
+  line "Prices in tokens. May contain traces of slop. Ask Theo about the full allergen list." The shared dish-line
+  rules read `--sk-lead`, `--sk-price`, `--sk-ring` (defaults keep the cream combobox look elsewhere: branch, font
+  pickers). The koi short-list rule is gone. The default effort level carries `src2/sprites/chef.png` (19x15 mask drawn at
+  final size: a closed-fist thumbs-up over "CHEF" in the 3x5 font, cut out of a chamfered cyan plate) at 1x (19x15
+  px, 2x2 device px per pixel), unrotated, centred on the 32 px row and anchored 40 px from its right
+  edge (a checked "Extra High" default with its check ends at 109 of 175 px; the badge spans 116-135), with a cyan glow; it replaces the "CHEF RECOMMENDS" text (the
+  backslash pitfall no longer applies here). Two Luna Low imagegen passes could not reduce a thumbs-up to the grid; the
+  grid is hand-drawn. The selected model and level carry their check in a 24 px left gutter
+  (`.lucide-check` absolute at 6 px), so names and levels share one column. The cursor is the gold frame of every menu (the global pink brush is
+  cancelled inside the picker, no 6 px text jump); the choice is the check only. Full 49,815 -> 49,739 (lite 14,529 unchanged). check.js 0 invalid; scan.js no contrast failure in
+  the popup; light vs dark picker crop identical except the search caret blink. Verified in the published theme after
+  a reload without injection. Previous live file: `final2/published-before-2026-11-18-specials.json`.
 - Size pass for the Specials model picker (2026-11-18, Council: Fable Low + Sol High). Full 49,793 -> 48,735
   (-1,058), lite 15,009 -> 14,529; with the uncommitted Specials picker on top full is 49,815 (50,186 UTF-8
   bytes; a gallery that counts bytes would refuse it). Measured in order (full/lite):

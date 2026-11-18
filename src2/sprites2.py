@@ -19,6 +19,7 @@ NIGHT_P = {"a": "#18243c", "b": "#242448", "c": "#303c60", "s": "#e4d8cc", "g": 
            "n": "#141a2c", "w": "#3a4870", "p": "#e4106c", "q": "#c8346e", "r": "#483024", "h": "#6e4630", "k": "#2e1d12"}
 NOREN_P = {"n": "#2a3f73", "w": "#efe2c8", "d": "#1a2b55", "r": "#8a5a2b"}
 DRINKS_P = {"c": "#ffd0e6", "r": "#c83482", "g": "#f0cc90"}
+SPECIALS_P = {"c": "#d2faff", "r": "#28aac8", "g": "#f0cc90"}
 FISH_P = {"o": "#10202f", "y": "#f08a5d", "w": "#ffd2b8"}
 # Footer fish tank: kelp (two sway frames), branch and brain coral, sand, rising bubbles.
 WEED_P = {"d": "#245e33", "g": "#3f9a4a", "l": "#7cc96f"}
@@ -63,6 +64,8 @@ TOKENS = {
     "seigaiha": multi(png("seigaiha", SEIG_P), {"a": "#ffffff0c", "b": "#ffffff07"}),
     "noren": multi(png("noren", NOREN_P), NOREN_P),
     "drinks": multi(png("drinks", DRINKS_P), DRINKS_P),
+    "specials": multi(png("specials", SPECIALS_P), SPECIALS_P),
+    "chef": mask("chef"),
     "fish": multi(FISH, FISH_P),
     "fish_l": multi("\n".join(r[::-1] for r in FISH.split("\n")), FISH_P),
     "weed_a": multi(png("weed_a", WEED_P), WEED_P),

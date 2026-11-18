@@ -807,51 +807,79 @@ svg.lucide[class*="loader"] {
   box-shadow: 0 0 0 1px #2a1d16, inset 0 -2px #c0b4a8;
   font-family: var(--sk-pixel);
 }
-/* The model picker is the house's printed menu: paper with a perforated top under the restaurant's own sign (the
-   house koi), the models as the main course with dotted leaders to their shortcut "price" and tiny allergen
-   badges for their provider marks, the provider column as the allergen key, the reasoning levels as sides with
-   pips, the app's default level stamped "Chef recommends", and a note at the foot. */
+/* The model picker is the kitchen's specials board, the drinks menu's sister: night navy, a cyan neon "Specials"
+   sign, the models with dotted leaders to a pink neon shortcut "price" and neon allergen badges for their
+   provider marks, the provider column as the allergen key, the reasoning levels as heat pips, the app's default
+   level stamped "Chef recommends", and a note at the foot. The card re-inks the shared dish-line rules through
+   the --sk-lead, --sk-price and --sk-ring variables. */
 [data-slot="popover-popup"]:has([data-model-picker-effort]) {
   --muted: #0000;
-  background: radial-gradient(circle at 6px 0, var(--sk-night) 3px, #0000 3.5px) 0 0 / 12px 6px repeat-x, #fbf3e2 !important;
+  --accent: #22305a;
+  --foreground: #fbf3e2;
+  --accent-foreground: #fbf3e2;
+  --contrast-foreground: #fbf3e2;
+  --contrast-popover-foreground: #fbf3e2;
+  --contrast-accent-foreground: #fbf3e2;
+  --contrast-muted-foreground: #b8c4dc;
+  --contrast-placeholder: #93a2c0;
+  --contrast-icon-muted: #93a2c0;
+  --contrast-border: #3c4c70;
+  --sk-lead: #3c4c70;
+  --sk-price: #ff6fb5;
+  --sk-ring: #5fd4ef;
+  color: #fbf3e2;
+  background: #18243c !important;
+  /* Checks float in a left gutter, so names and levels keep one column. */
+  & :is([role="option"], [role="radio"]) {
+    padding-left: 24px;
+  }
+  & .lucide-check {
+    position: absolute;
+    left: 6px;
+  }
   & [data-current] > div::before {
-    content: "◆ VIBER AGENTS ◆";
+    content: "";
+    display: block;
+    height: 90px;
     margin: 0 14px;
-    padding: 26px 0 8px;
-    border-bottom: 3px double #2a1d16;
-    background: var(--sk-fish) 50% 8px / 24px 14px no-repeat;
-    color: #c8346e;
-    font: 400 22px/1 Phosphate, var(--sk-pixel);
-    letter-spacing: 0.1em;
-    text-align: center;
-    text-shadow: 2px 2px #f0cc90;
-    white-space: pre;
+    border-bottom: 2px dashed #3c4c70;
+    background: {{specials}} 50% 12px / 150px 64px no-repeat;
+    filter: drop-shadow(0 0 5px #28aac8aa);
   }
   & [data-current] > div::after {
     content: "Prices in tokens. May contain traces of slop. Ask Theo about the full allergen list.";
     margin: 0 14px;
     padding: 6px 0 8px;
-    border-top: 1px dashed #b3a08c;
-    color: #5e4a3c;
+    border-top: 1px dashed #3c4c70;
+    color: #93a2c0;
     font: italic 11px var(--font-sans);
     text-align: center;
   }
-  /* Footer toggles are printed boxes; the one in force is inked in. */
+  /* Footer toggles are outlined; the one in force is lit. */
   & [data-current] > div > :last-child > div {
     background: none;
-    box-shadow: inset 0 0 0 1px #2a1d16;
+    box-shadow: inset 0 0 0 1px #93a2c0;
     & :is([aria-checked="true"], [aria-pressed="true"]) {
-      background: #2a1d16;
-      color: #fbf3e2;
+      background: #fbf3e2;
+      color: #18243c;
     }
   }
-  /* Only this listbox is the main course; other lists keep no label. */
+  /* Only this listbox is tonight's list, a cyan neon tube; other lists keep no label. */
   & [role="listbox"]::before {
-    content: "MAIN COURSE";
+    content: "TONIGHT";
+    background: none;
+    box-shadow: inset 0 0 0 2px #5fd4ef;
+    color: #bff3ff !important;
+    clip-path: none;
   }
-  /* With a short list, the house koi swims in the empty part of the card. */
-  & [role="listbox"]:not(:has(:nth-child(5) > [role="option"])) {
-    background: var(--sk-fish) 90% 90% / 72px 42px no-repeat;
+  & [data-slot="kbd"] {
+    text-shadow: 0 0 6px #ff4fa0;
+  }
+  /* No brush under the cursor: the gold frame marks the cursor, the check marks the choice. */
+  & :is([data-highlighted], :hover) .truncate {
+    padding: 0;
+    background: none;
+    clip-path: none;
   }
 }
 /* The project list (the only submenu with two-line rows) is the bar's drinks menu: a neon hero sign at the top of
@@ -891,9 +919,15 @@ svg.lucide[class*="loader"] {
 }
 /* The provider column is the allergen key: under the round badges hangs a ribbon down to the foot of the card,
    its label at the top and a swallowtail at the end. */
+[data-model-picker-sidebar] {
+  background: #121b2e;
+}
 [data-model-picker-sidebar] .min-h-full::after {
   content: "ALLERGENS";
   flex: 1;
+  background: none;
+  box-shadow: inset 0 0 0 2px #ff4fa0;
+  color: #ff8cc4 !important;
   margin: 0 auto;
   padding: 6px 4px 16px !important;
   text-align: end;
@@ -902,10 +936,10 @@ svg.lucide[class*="loader"] {
 }
 :is([data-model-picker-provider] button, [data-slot$=m-content] > span:first-child:has(svg)) {
   border-radius: 50%;
-  box-shadow: inset 0 0 0 1.5px #2a1d16;
+  box-shadow: inset 0 0 0 1.5px var(--sk-ring, #2a1d16), 0 0 6px var(--sk-ring, #0000);
 }
 [data-model-picker-provider] button[aria-pressed="true"] {
-  background: #f0cc90;
+  background: #28aac844;
 }
 [data-model-picker-selected-indicator] {
   display: none;
@@ -932,7 +966,7 @@ svg.lucide[class*="loader"] {
       flex: 1;
       align-self: end;
       margin-bottom: 5px;
-      border-bottom: 2px dotted #b3a08c;
+      border-bottom: 2px dotted var(--sk-lead, #b3a08c);
     }
     & > button {
       order: 1;
@@ -941,7 +975,7 @@ svg.lucide[class*="loader"] {
   & [data-slot="kbd"] {
     background: none;
     box-shadow: none;
-    color: #a01e55;
+    color: var(--sk-price, #a01e55);
     font-size: 13px;
   }
 }
@@ -957,7 +991,7 @@ svg.lucide[class*="loader"] {
     margin-inline: -12px;
     padding-inline: 12px;
     border: 0 !important;
-    background: #18243c;
+    background: #121b2e;
     font-family: var(--sk-pixel);
     & > * {
       color: #f0cc90 !important;
@@ -965,13 +999,13 @@ svg.lucide[class*="loader"] {
     & > :first-child {
       font-size: 0;
       &::before {
-        content: "◆ SIDES";
+        content: "◆ HEAT";
         font-size: 12px;
       }
     }
   }
 }
-/* A side: label, dotted leader, pips, check. The chosen one is on the brush. */
+/* A heat level: label, dotted leader, glowing pips. */
 [aria-label="Reasoning"] > [role="radio"] {
   position: relative;
   & > span:first-child {
@@ -983,45 +1017,34 @@ svg.lucide[class*="loader"] {
     order: 2;
     align-self: end;
     margin-bottom: 9px;
-    border-bottom: 2px dotted #b3a08c;
+    border-bottom: 2px dotted #3c4c70;
   }
   &::after {
     content: "";
     order: 3;
     width: calc(sibling-index() * 6px);
     height: 6px;
-    background: repeating-linear-gradient(90deg, #c8346e 0 4px, #0000 0 6px);
+    background: repeating-linear-gradient(90deg, #ff9a3c 0 4px, #0000 0 6px);
+    filter: drop-shadow(0 0 3px #ff7a1c);
   }
-  & > svg {
-    order: 1;
-  }
-  &[aria-checked="true"] > span:first-child {
-    padding: 1px 14px 1px 6px;
-    background: #c8346e;
-    color: #fff;
-    clip-path: var(--sk-brush);
-  }
-  /* The app's "Default" label (visible, or sr-only on the chosen level) becomes a rubber stamp across the line. */
+  /* The app's "Default" label (visible, or sr-only on the chosen level) becomes the chef's pixel badge, a thumbs-up
+     over "CHEF" on the line, at 1x. */
   & > span + span {
     position: absolute;
-    top: -5px;
-    left: 76px;
-    width: auto;
-    height: auto;
+    top: 8px;
+    right: 40px;
+    width: 19px;
+    height: 15px;
     margin: 0;
-    padding: 0 3px;
     clip-path: none;
-    border: 2px solid;
-    background: #fbf3e2;
-    color: #c8346e;
     font-size: 0;
-    rotate: -12deg;
+    filter: drop-shadow(0 0 4px #28aac8);
     &::before {
-      /* No "\A" line break: the published theme loses a content value that holds a backslash escape. */
-      content: "CHEF RECOMMENDS";
-      display: block;
-      width: min-content;
-      font: 400 10px/1.1 var(--sk-pixel);
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: #5fd4ef;
+      mask: {{chef}} 0 / 100%;
     }
   }
 }

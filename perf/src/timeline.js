@@ -8,7 +8,8 @@ const ROOT = path.join(__dirname, "..");
 app.setPath("userData", path.join(ROOT, "profile"));
 app.commandLine.appendSwitch("disable-renderer-backgrounding");
 const [variant, runNo, outFile, url = "http://localhost:7508/"] = process.argv.slice(2);
-const FILES = { none: null, full: "variants/full-d292df3.css", "full-noanim": "variants/full-noanim-d292df3.css" };
+const FILES = { none: null, full: "variants/full-d292df3.css", "full-noanim": "variants/full-noanim-d292df3.css",
+  "full-hoverdelay": "variants/full-hoverdelay-d292df3.css", "full-notx": "variants/full-notx-d292df3.css" };
 if (!(variant in FILES)) { console.error("variant must be " + Object.keys(FILES).join("|")); process.exit(2); }
 const CSS = FILES[variant] ? fs.readFileSync(path.join(ROOT, FILES[variant]), "utf8") : "";
 const PLAN_NAME = process.env.PLAN || "stress";
@@ -121,12 +122,23 @@ app.whenReady().then(async () => {
   ];
   // Memory diagnostic: is the growth under status churn a leak (keeps rising) or a cache (levels off)?
   const MEMORY = [{ name: "idle", id: "idle", ms: 15000, rows: 50 }, ...Array.from({ length: 6 }, (_, i) => ({ name: "status", id: "status" + (i + 1), rows: 50 })), { name: "idle", id: "idleAfter", ms: 20000, rows: 50 }];
-  const STEPS = PLAN_NAME === "memory" ? MEMORY : PLAN;
+  // Scroll with the pointer over the list (as a user scrolls): does the list's hover animate while it scrolls?
+  const SCROLL = [
+    { name: "idle", id: "idle", ms: 5000, rows: 50 },
+    { name: "scroll", id: "scroll@200", rows: 200, pointer: true },
+    { name: "wheel", id: "wheelSlow@200", rows: 200, distance: 3000, speed: 800, pointer: true },
+    { name: "wheel", id: "wheel@200", rows: 200, distance: 6000, speed: 4000, pointer: true },
+    { name: "wheel", id: "wheel@500", rows: 500, distance: 20000, speed: 5000, pointer: true },
+    { name: "hover", id: "hover", rows: 50 },
+  ];
+  const STEPS = { memory: MEMORY, scroll: SCROLL }[PLAN_NAME] || PLAN;
   await sleep(3000); // baseline settle after the theme switch (recorded as phase "load")
   const snap = () => { const o = {}; for (const m of app.getAppMetrics()) { const k = kindOf(m); o[k] = (o[k] || 0) + m.cpu.cumulativeCPUUsage; } return o; };
   for (const s of STEPS) {
     phase = { name: "gap" };
-    const rows = await js(`__perf.setRows(${s.rows})`); await sleep(1200);
+    const rows = await js(`__perf.setRows(${s.rows})`);
+    if (s.pointer) await cdp("Input.dispatchMouseEvent", { type: "mouseMoved", x: 150, y: 420 });
+    await sleep(1200); await js("__perf.hcTake()");
     await contentTracing.startRecording({ included_categories: LIGHT_CATS, excluded_categories: ["*"] });
     const useRaf = !/^idle/.test(s.name); if (useRaf) await js("__perf.frames.start()");
     const c0 = snap(), m0 = Object.fromEntries((await cdp("Performance.getMetrics")).metrics.map((x) => [x.name, x.value])), ts = Date.now();
@@ -139,10 +151,10 @@ app.whenReady().then(async () => {
       cpuMs: Object.fromEntries(Object.keys(c1).map((k) => [k, Math.round((c1[k] - (c0[k] || 0)) * 1000)])),
       style: { n: d("RecalcStyleCount"), ms: +(d("RecalcStyleDuration") * 1000).toFixed(2) }, layout: { n: d("LayoutCount"), ms: +(d("LayoutDuration") * 1000).toFixed(2) },
       taskMs: +(d("TaskDuration") * 1000).toFixed(2), scriptMs: +(d("ScriptDuration") * 1000).toFixed(2), heapMB: +(m1.JSHeapUsedSize / 1048576).toFixed(2), nodes: m1.Nodes, layoutObjects: m1.LayoutObjects,
-      rafFrames: fr, trace: tr, dom: await js("__perf.domStats()") };
+      rafFrames: fr, trace: tr, hc: await js("__perf.hcTake()"), dom: await js("__perf.domStats()") };
     emit(rec);
     const tot = Object.values(rec.cpuMs).reduce((a, b) => a + b, 0);
-    log(s.id, "cpu", tot, JSON.stringify(rec.cpuMs), "drawn", tr.frames.DrawFrame || 0, "dropped", tr.frames.DroppedFrame || 0);
+    log(s.id, "cpu", tot, JSON.stringify(rec.cpuMs), "drawn", tr.frames.DrawFrame || 0, "dropped", tr.frames.DroppedFrame || 0, "hover", JSON.stringify(rec.hc));
   }
   phase = { name: "end" };
   clearInterval(sampler); clearInterval(pageMetrics); top.kill(); await sleep(300);

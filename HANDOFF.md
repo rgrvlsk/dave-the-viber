@@ -14,6 +14,10 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   The idle cost is all from the 5 infinite animations (float, sway, swim, rise, screen): without their @keyframes idle =
   no skin. Memory: status changes add +300-450 MB that levels off (no leak) but stays while the animations run;
   without them it is released in ~12 s. Raw samples: `perf/data/*/samples.jsonl`.
+- Hover while scrolling (2026-11-18, Roger: "remove the list's hover animations during scroll?"). Chromium updates :hover
+  every frame under a still pointer: 150-500 row transitions per scroll phase. CSS has no scrolling state. 15 runs ABC/CBA:
+  80 ms hover-in delay = no gain (-3%); no row transitions = -10% CPU over the scroll test, GPU -20..-37%, slow wheel -22%.
+  Frame p95 unchanged (18.6 ms). Skin not changed; Roger to choose. `perf/REPORT.md` second section.
 - Card council (2026-11-17, Roger: "simplify the cards in chars and performance"; Council Fable Low + Astra Medium,
   1 round, blind). Applied what Roger chose: (1) the 8 attention bubbles stand still (`sk-bob`, its 8 delays and its
   reduced-motion entry removed; REPORT-ideas B1: the bob on an anchored box cost 740 ms layout per 8 s); (2) no

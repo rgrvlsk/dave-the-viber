@@ -142,6 +142,11 @@
   const HOSTS = [[document.documentElement, "::after"], [document.body, "::after"], ...["main[data-slot=sidebar-inset]", "[data-workspace-area=conversation]", "[data-workspace-area=composer]"].flatMap((q) => [[document.querySelector(q), "::before"], [document.querySelector(q), "::after"]])];
   P.bubbles = () => HOSTS.filter(([e, p]) => { if (!e) return false; const c = getComputedStyle(e, p); return c.content !== "none" && c.display !== "none" && parseFloat(c.left) > 0 && parseFloat(c.left) < innerWidth && c.positionVisibility !== "hidden"; }).length;
   P.domStats = () => ({ bubbles: P.bubbles(),  nodes: document.querySelectorAll("*").length, items: P.items().length, md: document.querySelectorAll(".chat-markdown").length, dark: document.documentElement.classList.contains("dark"), rewrites: P.appRewrites || 0 });
+  // Hover activity in the thread list: hover changes (mouseover) and CSS transitions started (transitionrun).
+  P.hc = { ov: 0, tr: 0, props: {} };
+  P.hcTake = () => { const o = P.hc; P.hc = { ov: 0, tr: 0, props: {} }; return o; };
+  document.addEventListener("mouseover", (e) => { if (e.target.closest?.("[data-thread-item]")) P.hc.ov++; }, true);
+  document.addEventListener("transitionrun", (e) => { if (e.target.closest?.("[data-thread-item]")) { P.hc.tr++; P.hc.props[e.propertyName] = (P.hc.props[e.propertyName] || 0) + 1; } }, true);
   window.__perf = P;
   return "ok";
 })();

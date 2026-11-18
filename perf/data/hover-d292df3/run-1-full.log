@@ -1,0 +1,7 @@
+12:06:29 full 1 inject ok thread {"i":0,"md":5}
+12:06:39 full 1 idle cpu 2800 {"browser":31,"gpu":678,"utility":10,"renderer":2081} drawn 302 dropped 18 hover {"ov":0,"tr":0,"props":{}}
+12:06:48 full 1 scroll@200 cpu 7353 {"browser":224,"gpu":2046,"utility":23,"renderer":5060} drawn 380 dropped 28 hover {"ov":334,"tr":351,"props":{"background-color":309,"rotate":24,"opacity":6,"visibility":6,"padding-right":6}}
+12:06:59 full 1 wheelSlow@200 cpu 6553 {"browser":283,"gpu":1854,"utility":15,"renderer":4401} drawn 466 dropped 23 hover {"ov":226,"tr":408,"props":{"background-color":127,"rotate":92,"opacity":63,"visibility":63,"padding-right":63}}
+12:07:04 full 1 wheel@200 cpu 3952 {"browser":156,"gpu":983,"utility":9,"renderer":2804} drawn 189 dropped 28 hover {"ov":124,"tr":178,"props":{"background-color":116,"rotate":29,"opacity":11,"visibility":11,"padding-right":11}}
+12:07:15 full 1 wheel@500 cpu 9513 {"browser":273,"gpu":2397,"utility":15,"renderer":6828} drawn 492 dropped 46 hover {"ov":385,"tr":455,"props":{"background-color":365,"rotate":42,"opacity":16,"visibility":16,"padding-right":16}}
+12:07:24 full 1 hover cpu 3657 {"browser":151,"gpu":1362,"utility":10,"renderer":2134} drawn 397 dropped 6 hover {"ov":104,"tr":104,"props":{"background-color":35,"opacity":17,"visibility":17,"padding-right":17,"rotate":18}}

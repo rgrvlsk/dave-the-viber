@@ -47,3 +47,30 @@
 - `data/memory-d292df3/samples.jsonl`: the memory diagnostic.
 - Rerun: `src/pair.js` once (pairing token from `node … src/bin.ts pair --base-dir /tmp/t3code-dev`), then
   `./run.sh data/<dir>`, `python3 -I src/analyze.py data/<dir>`, `python3 -I src/report.py data/<dir>`.
+
+# Hover animations while the list scrolls (2026-11-18)
+
+## Result
+- **Chromium updates `:hover` every frame while the list scrolls under a still pointer.** With the skin, 150–500
+  row transitions start per scroll phase (mostly the paper's `background-color`, plus `rotate`). With no skin: 0.
+- **CSS cannot turn them off only during the scroll:** there is no "is scrolling" state in CSS. Two CSS options measured:
+  - **Hover-in delayed 80 ms** (`transition-delay` in the `:hover` rule, so a row that only passes under the pointer
+    never straightens): **no gain**. Whole test −1.0 s [−1.8, −0.1] of 33.9 s (−3%); no scroll phase is significant.
+  - **No transitions on the rows** (hover still straightens and recolours the ticket, instantly): **−3.5 s [−3.8, −2.6]
+    of 33.9 s CPU (−10%)**. GPU −20 to −37% in every scroll phase and in hover. Slow wheel (800 px/s) −22% total CPU
+    (6.6 → 4.9 s). Fast wheel and scrollTop: total CPU −4 to −6%, not significant; GPU drop is significant.
+- Frame p95 is 18.5–18.7 ms in all three variants: the hover transitions cost CPU/GPU, not smoothness.
+- Inference, not measured: the delay does not help because a delayed transition already exists as an animation
+  (the `rotate` one on the compositor), so the row is still promoted to its own layer and repainted on the GPU.
+- Scale: the skin's idle animations cost +29 points of a core all the time; the hover transitions cost only while
+  the pointer is over a scrolling list.
+
+## Method
+- `PLAN=scroll` in `src/timeline.js`: idle 5 s → scrollTop sweep @200 → wheel 800 px/s @200 → wheel 4000 px/s @200 →
+  wheel 5000 px/s @500 → hover sweep. Before each scroll phase the pointer moves to (150, 420), over the list.
+- `page.js` counts `mouseover` and `transitionrun` inside `[data-thread-item]` per phase (`hc` in the phase record).
+- `./run-hover.sh`: 15 fresh runs in blocks ABC CBA ABC CBA ABC: A = installed skin, B = `variants/full-hoverdelay-d292df3.css`,
+  C = `variants/full-notx-d292df3.css`. `python3 -I src/analyze.py data/hover-d292df3 full <variant>` pairs A with B or C per block.
+- Data: `data/hover-d292df3/` (`samples.jsonl`, `summary-full-vs-*.json`, `REPORT-data-full-vs-*.md`).
+- Limits: Time Machine and a download client ran during the test (`system.log`); the blocks spread it over the variants.
+  Not tested: which of the two transitions (`background-color` or `rotate`) carries the cost.

@@ -1,0 +1,7 @@
+12:18:13 full-notx 9 inject ok thread {"i":0,"md":5}
+12:18:23 full-notx 9 idle cpu 2193 {"browser":22,"gpu":615,"utility":6,"renderer":1550} drawn 300 dropped 7 hover {"ov":0,"tr":0,"props":{}}
+12:18:32 full-notx 9 scroll@200 cpu 6816 {"browser":217,"gpu":1750,"utility":11,"renderer":4838} drawn 374 dropped 23 hover {"ov":334,"tr":186,"props":{"opacity":62,"visibility":62,"padding-right":62}}
+12:18:42 full-notx 9 wheelSlow@200 cpu 5411 {"browser":239,"gpu":1145,"utility":11,"renderer":4016} drawn 462 dropped 27 hover {"ov":119,"tr":186,"props":{"opacity":62,"visibility":62,"padding-right":62}}
+12:18:47 full-notx 9 wheel@200 cpu 3048 {"browser":134,"gpu":707,"utility":6,"renderer":2201} drawn 192 dropped 20 hover {"ov":119,"tr":150,"props":{"opacity":50,"visibility":50,"padding-right":50}}
+12:18:58 full-notx 9 wheel@500 cpu 10058 {"browser":265,"gpu":2092,"utility":16,"renderer":7685} drawn 488 dropped 54 hover {"ov":405,"tr":195,"props":{"opacity":65,"visibility":65,"padding-right":65}}
+12:19:07 full-notx 9 hover cpu 3350 {"browser":161,"gpu":927,"utility":14,"renderer":2248} drawn 402 dropped 9 hover {"ov":110,"tr":51,"props":{"opacity":17,"visibility":17,"padding-right":17}}

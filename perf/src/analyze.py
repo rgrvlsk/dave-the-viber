@@ -1,10 +1,12 @@
 """Analyze a stress-test run directory: per-phase and whole-run stats, skin vs no skin, plus time series.
-Usage: python3 -I src/analyze.py <run-dir>   -> <run-dir>/summary.json, REPORT-data.md, series.json
-Runs are in ABBA order, so runs (1,2), (3,4) ... are pairs with one of each variant: paired differences.
+Usage: python3 -I src/analyze.py <run-dir> [base=none] [other=full]   -> summary.json, REPORT-data.md, series.json
+(with a non-default pair the files get the suffix -<base>-vs-<other>).
+Runs are in blocks with one run of each variant (ABBA, ABCCBA ...): blocks of k runs give paired differences.
 """
 import json, random, statistics as st, sys, collections, pathlib
 
-d = pathlib.Path(sys.argv[1])
+d = pathlib.Path(sys.argv[1]); BASE, OTHER = (sys.argv[2:4] + ["none", "full"][len(sys.argv[2:4]):])[:2]
+SUF = "" if (BASE, OTHER) == ("none", "full") else f"-{BASE}-vs-{OTHER}"
 recs = [json.loads(l) for l in open(d / "samples.jsonl")]
 runs = sorted({r["run"] for r in recs})
 var = {r["run"]: r["variant"] for r in recs if r["kind"] == "meta"}
@@ -38,6 +40,7 @@ def phase_metrics(run, ph):
         "wake.gpu/s": mean([x["procs"]["gpu"]["wake"] for x in s if "gpu" in x["procs"]]),
         "wake.renderer/s": mean([x["procs"]["renderer"]["wake"] for x in s if "renderer" in x["procs"]]),
         "sys.cpu%": mean([x["sysCpu"] for x in s]), "wall.ms": p["wall"],
+        "hover.changes": (p.get("hc") or {}).get("ov"), "hover.transitions": (p.get("hc") or {}).get("tr"),
     }
 
 def run_metrics(run):
@@ -57,12 +60,13 @@ def run_metrics(run):
         "phases.wall.s": sum(p["wall"] for p in ps) / 1000, "sys.cpu%": mean([x["sysCpu"] for x in s]),
     }
 
-pairs = [(runs[i], runs[i + 1]) for i in range(0, len(runs) - 1, 2)]
+K = len(set(var.values())); blocks = [runs[i:i + K] for i in range(0, len(runs) - K + 1, K)]
+pairs = [(next(r for r in b if var[r] == BASE), next(r for r in b if var[r] == OTHER)) for b in blocks]
 def split(m):  # m: run -> value ; returns none list, full list, paired diffs (full - none)
-    a = [m[r] for r in runs if var[r] == "none" and m[r] is not None]; b = [m[r] for r in runs if var[r] == "full" and m[r] is not None]
+    a = [m[r] for r in runs if var[r] == BASE and m[r] is not None]; b = [m[r] for r in runs if var[r] == OTHER and m[r] is not None]
     diffs = []
     for x, y in pairs:
-        n, f = (x, y) if var[x] == "none" else (y, x)
+        n, f = x, y
         if m[n] is not None and m[f] is not None: diffs.append(m[f] - m[n])
     return a, b, diffs
 random.seed(7)
@@ -82,11 +86,12 @@ for ph in order:
 rm = {r: run_metrics(r) for r in runs}
 summary["whole"] = {k: stat({r: rm[r][k] for r in runs}) for k in rm[runs[0]]}
 summary["perRun"] = rm
-json.dump(summary, open(d / "summary.json", "w"), indent=1)
+json.dump(summary, open(d / f"summary{SUF}.json", "w"), indent=1)
 
 # Time series, 1 s buckets per run (all samples kept in samples.jsonl).
 series = {"runs": [], "phases": {}}
 for r in runs:
+    if var[r] not in (BASE, OTHER): continue
     b = collections.defaultdict(lambda: collections.defaultdict(list))
     for x in samples[r]:
         k = x["t"] // 1000; P = x["procs"]
@@ -102,21 +107,22 @@ for r in runs:
         **{m: [round(st.fmean(b[k][m]), 1) if b[k][m] else None for k in keys] for m in ["cpuRenderer", "cpuGpu", "cpuTotal", "memRenderer", "memGpu", "sysCpu", "energy", "footprint", "heap"]}})
 for ph in order:
     series["phases"][ph] = [st.median(phases[r][ph]["t0"] for r in runs) / 1000, st.median(phases[r][ph]["t1"] for r in runs) / 1000]
-json.dump(series, open(d / "series.json", "w"))
+json.dump(series, open(d / f"series{SUF}.json", "w"))
 
 def f(v, n=0):
     return "–" if v is None else (f"{v:,.{n}f}")
 def row(name, s, n=0):
     lo, hi = s["ci"]; r = f"{s['ratio']:.2f}×" if s["ratio"] else "–"
     return f"| {name} | {f(s['none'], n)} | {f(s['full'], n)} | {f(s['diff'], n)} [{f(lo, n)}, {f(hi, n)}]{'' if s['sig'] else ' n.s.'} | {r} |"
-L = ["# Stress test data: skin d292df3 vs no skin", "", f"Runs: {', '.join(f'{r}={var[r]}' for r in runs)}. Medians of 5; diff = median of 5 paired (full − none) with 95% bootstrap CI.", "",
-     "## Whole stress test", "", "| Metric | No skin | Skin | Diff [95% CI] | Ratio |", "|---|---:|---:|---:|---:|"]
+H = f"| Metric | {BASE} | {OTHER} | Diff [95% CI] | Ratio |"
+L = [f"# Test data: {OTHER} vs {BASE}", "", f"Runs: {', '.join(f'{r}={var[r]}' for r in runs)}. Medians of {len(pairs)}; diff = median of {len(pairs)} paired ({OTHER} − {BASE}) with 95% bootstrap CI.", "",
+     "## Whole test", "", H, "|---|---:|---:|---:|---:|"]
 W = summary["whole"]
 for k, n in [("cpu.total.s", 1), ("cpu.renderer.s", 1), ("cpu.gpu.s", 1), ("cpu.browser.s", 1), ("energy.impact.mean", 1), ("frames.drawn", 0), ("frames.dropped", 0),
              ("mem.renderer.max.MB", 0), ("mem.gpu.max.MB", 0), ("mem.footprint.max.MB", 0), ("mem.footprint.end.MB", 0), ("heap.max.MB", 1), ("heap.end.MB", 1), ("phases.wall.s", 1), ("sys.cpu%", 1)]:
     L.append(row(k, W[k], n))
-for k, n in [("cpu.total.ms", 0), ("cpu.%core", 1), ("energy.impact", 1), ("frames.drawn", 0), ("frames.dropped", 0), ("raf.p95.ms", 1), ("style.ms", 0), ("layout.ms", 0), ("mem.renderer.MB", 0), ("mem.gpu.MB", 0), ("wake.gpu/s", 0)]:
-    L += ["", f"## {k} per phase", "", "| Phase | No skin | Skin | Diff [95% CI] | Ratio |", "|---|---:|---:|---:|---:|"]
+for k, n in [("cpu.total.ms", 0), ("cpu.%core", 1), ("energy.impact", 1), ("frames.drawn", 0), ("frames.dropped", 0), ("raf.p95.ms", 1), ("style.ms", 0), ("layout.ms", 0), ("mem.renderer.MB", 0), ("mem.gpu.MB", 0), ("wake.gpu/s", 0), ("hover.changes", 0), ("hover.transitions", 0)]:
+    L += ["", f"## {k} per phase", "", H.replace("Metric", "Phase"), "|---|---:|---:|---:|---:|"]
     for ph in order: L.append(row(ph, summary["phases"][ph][k], n))
-open(d / "REPORT-data.md", "w").write("\n".join(L) + "\n")
+open(d / f"REPORT-data{SUF}.md", "w").write("\n".join(L) + "\n")
 print("\n".join(L[:22]))

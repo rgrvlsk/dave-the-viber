@@ -1,0 +1,7 @@
+12:21:08 full-hoverdelay 11 inject ok thread {"i":0,"md":5}
+12:21:17 full-hoverdelay 11 idle cpu 2389 {"browser":23,"gpu":655,"utility":6,"renderer":1705} drawn 301 dropped 6 hover {"ov":0,"tr":0,"props":{}}
+12:21:26 full-hoverdelay 11 scroll@200 cpu 6926 {"browser":200,"gpu":1953,"utility":10,"renderer":4763} drawn 375 dropped 24 hover {"ov":334,"tr":356,"props":{"background-color":316,"rotate":1,"opacity":13,"visibility":13,"padding-right":13}}
+12:21:37 full-hoverdelay 11 wheelSlow@200 cpu 5546 {"browser":227,"gpu":1529,"utility":10,"renderer":3780} drawn 462 dropped 24 hover {"ov":132,"tr":400,"props":{"background-color":127,"rotate":84,"opacity":63,"visibility":63,"padding-right":63}}
+12:21:42 full-hoverdelay 11 wheel@200 cpu 4051 {"browser":151,"gpu":981,"utility":7,"renderer":2912} drawn 189 dropped 22 hover {"ov":116,"tr":210,"props":{"background-color":127,"opacity":24,"visibility":24,"padding-right":24,"rotate":11}}
+12:21:53 full-hoverdelay 11 wheel@500 cpu 10102 {"browser":289,"gpu":2544,"utility":19,"renderer":7250} drawn 489 dropped 44 hover {"ov":405,"tr":498,"props":{"background-color":405,"opacity":29,"visibility":29,"padding-right":29,"rotate":6}}
+12:22:02 full-hoverdelay 11 hover cpu 3686 {"browser":160,"gpu":1316,"utility":15,"renderer":2195} drawn 403 dropped 9 hover {"ov":105,"tr":104,"props":{"background-color":35,"opacity":17,"visibility":17,"padding-right":17,"rotate":18}}

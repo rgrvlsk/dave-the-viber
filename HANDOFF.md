@@ -19,6 +19,8 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   /private/tmp/council-cards-M3AY0n (Astra). Fixed 2026-11-18 (pre-existing since the first
   version): the Woke ticket showed its WOKE stamp and its bubble at once; the stamp-hiding rule now lists the Woke
   anchor row too (full +89). Dev demo: stamp clipped, bubble shown, check.js 0 invalid.
+  Active since 2026-11-18 on the Mac mini and the MacBook (d292df3, full.json SHA-256 a2cc87f5…eb20; MacBook backup
+  `themes/dave-the-viber.json.bak-2026-11-18`).
 - Row `drop-shadow` measured (2026-11-17, Mac mini harness `/Users/roger/t3code/.css-perf`, plans `shadow-3f0d021`
   and `listshadow-3f0d021`, 5 reps, 50/200/500 tickets, results in `data/*-3f0d021.md`). Without the row shadow:
   hover GPU -206 ms [102, 304] and -162 [129, 197] per run (two runs), wheel@500 CPU -447 [326, 790] and -215

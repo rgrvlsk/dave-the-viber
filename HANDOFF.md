@@ -59,6 +59,16 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   2 px of shadow under the teeth is straight (was toothed). check.js 0 invalid, l3Lost 0. Harness (`paint-3f0d021`):
   hover GPU -249 ms [158, 393], wheel@500 main -314 [37, 1042], status CPU +132 [6, 276] (the extra ::after per
   ticket, ~0.2 ms per change). Full 48,181 -> 48,477, lite 14,572 -> 14,868.
+- Dave types (2026-11-18, Roger: "fer escriure al Dave de tant en tant"; then "arms stay where they are, each hand
+  disappears completely behind the screen, no 1 px profile left"). For 3.6 s of every 9 s one finger at a time sinks
+  behind the lid, switching hands every 0.4 s with the screen flicker. A shirt-coloured 7x2 gradient patch (sprite x
+  17-23 left, 31-37 right, rows 38-39) covers the finger and its side outline. The keyframes set only custom
+  properties (`--sk-g` glow, `--sk-x` hand, `--sk-tap` patch width), which saved 76 chars against repeating the
+  `background-size` list. Rejected: arms lowered with hands hidden (Roger: no; also 50,024-50,101 chars, over the
+  limit). Full 49,712 -> 49,931 (69 left); lite unchanged. check.js 0 invalid; light == dark on the Dave crop;
+  hidden with Dave at 1120 px; reduced motion stops both animations (patch width 0). Published locally on the
+  MacBook (installed JSON = build; live page without injection runs both animations). Previous live file:
+  `final2/published-before-2026-11-18-typing.json`.
 - No-project headline (2026-11-18, Roger: "No està estilitzat"). Without a project ("What should we work on?" /
   "No project", also "Add a project to start") the app renders a bare `h1` with no `.group/draft-hero`, so the
   chalk rule missed it. The rule now matches `[data-chat-composer-stack] h1` and the `p` after the h1 or the hero;

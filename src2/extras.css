@@ -1259,17 +1259,23 @@ svg.lucide[class*="loader"] {
 /* Dave's PNG ends in six transparent pixel rows: 12px down at 2x puts the laptop base on the plank.
    Dave needs 120 px right of the pad, or a partial Dave pokes out behind it. --sk-d is (gap - 120 px) x 1000: the
    gap is the lane's 3rem end padding, the app's end inset and half the room the pad cannot fill (100% = lane + 10 px).
-   As a clamp() bound it gives Dave and his glow full width or none. */
+   As a clamp() bound it gives Dave and his glow full width or none.
+   Typing: for 3.6 s of every 9 s (--sk-tap), one finger at a time sinks behind the lid. A 7x2 patch in the shirt
+   colour covers the finger and its side outline (sprite x 17-23 left, 31-37 right, rows 38-39); --sk-x switches
+   hands with the screen flicker (--sk-g). Under reduced motion the patch stays at width 0. */
 .chat-composer-lane::before {
   --sk-i: var(--chat-lane-inset-end, 0px);
   --sk-d: calc((var(--sk-i) + max(0px, (100% - 842px - var(--sk-i)) / 2) - 72px) * 1e3);
   bottom: 60px;
   height: 120px;
-  background: radial-gradient(closest-side, #bff3ff40, #0000) right 30px top 48px / clamp(0px, var(--sk-d), 80px) 48px no-repeat, {{dave}} right 14px top 12px / clamp(0px, var(--sk-d), 112px) 120px no-repeat, {{stool}} right 30px bottom -4px / 80px 28px repeat-x;
-  animation: sk-screen 0.8s steps(1) 20;
+  background: radial-gradient(closest-side, #bff3ff40, #0000) right 30px top 48px / clamp(0px, var(--sk-d), 80px + var(--sk-g, 0px)) calc(48px + var(--sk-g, 0px)) no-repeat, linear-gradient(#acc9d1 0 0) right var(--sk-x, 78px) top 88px / clamp(0px, var(--sk-d), var(--sk-tap, 0px)) 4px no-repeat, {{dave}} right 14px top 12px / clamp(0px, var(--sk-d), 112px) 120px no-repeat, {{stool}} right 30px bottom -4px / 80px 28px repeat-x;
+  animation: sk-screen 0.8s steps(1) 20, sk-type 9s steps(1) 2;
 }
 @keyframes sk-screen {
-  50% { background-size: clamp(0px, var(--sk-d), 88px) 56px, clamp(0px, var(--sk-d), 112px) 120px, 80px 28px; }
+  50% { --sk-g: 8px; --sk-x: 50px; }
+}
+@keyframes sk-type {
+  60% { --sk-tap: 14px; }
 }
 /* Life on show, then still: the sign, the tank and Dave's screen play 13-20 s when they appear and then rest in
    their first frame (infinite, they kept the window drawing 60 frames/s: 50% of a core against 21% with no skin,

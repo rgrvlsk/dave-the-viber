@@ -1,0 +1,13 @@
+14:15:04 full 5 inject ok thread {"i":0,"md":5}
+14:15:52 full 5 idle cpu 9280 {"browser":88,"gpu":2468,"utility":21,"renderer":6703} drawn 1200 dropped 22 hover {"ov":0,"tr":0,"props":{}}
+14:16:04 full 5 idleHidden cpu 460 {"browser":127,"gpu":15,"utility":18,"renderer":300} drawn 1 dropped 0 hover {"ov":1,"tr":0,"props":{}}
+14:16:12 full 5 scroll@200 cpu 5923 {"browser":189,"gpu":1694,"utility":12,"renderer":4028} drawn 366 dropped 15 hover {"ov":337,"tr":346,"props":{"background-color":311,"rotate":14,"opacity":7,"visibility":7,"padding-right":7}}
+14:16:18 full 5 wheel@200 cpu 3674 {"browser":141,"gpu":893,"utility":7,"renderer":2633} drawn 193 dropped 24 hover {"ov":122,"tr":204,"props":{"background-color":123,"rotate":30,"opacity":17,"visibility":17,"padding-right":17}}
+14:16:29 full 5 wheel@500 cpu 9733 {"browser":264,"gpu":2507,"utility":20,"renderer":6942} drawn 490 dropped 44 hover {"ov":386,"tr":442,"props":{"background-color":364,"rotate":36,"opacity":14,"visibility":14,"padding-right":14}}
+14:16:37 full 5 hover cpu 3306 {"browser":139,"gpu":1244,"utility":20,"renderer":1903} drawn 401 dropped 6 hover {"ov":104,"tr":104,"props":{"background-color":35,"opacity":17,"visibility":17,"padding-right":17,"rotate":18}}
+14:16:44 full 5 status cpu 5904 {"browser":34,"gpu":630,"utility":8,"renderer":5232} drawn 292 dropped 170 hover {"ov":0,"tr":17,"props":{"background-color":17}}
+14:16:54 full 5 stream cpu 4028 {"browser":90,"gpu":1273,"utility":13,"renderer":2652} drawn 484 dropped 14 hover {"ov":0,"tr":0,"props":{}}
+14:17:01 full 5 sidebar cpu 2148 {"browser":63,"gpu":483,"utility":9,"renderer":1593} drawn 180 dropped 37 hover {"ov":0,"tr":10,"props":{"translate":10}}
+14:17:04 full 5 resize cpu 2300 {"browser":272,"gpu":419,"utility":7,"renderer":1602} drawn 81 dropped 44 hover {"ov":0,"tr":0,"props":{}}
+14:17:09 full 5 appearance cpu 2754 {"browser":88,"gpu":340,"utility":11,"renderer":2315} drawn 182 dropped 106 hover {"ov":0,"tr":0,"props":{}}
+14:17:26 full 5 idleAfter cpu 6644 {"browser":86,"gpu":1879,"utility":23,"renderer":4656} drawn 900 dropped 16 hover {"ov":0,"tr":0,"props":{}}

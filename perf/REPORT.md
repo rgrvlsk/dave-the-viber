@@ -74,3 +74,40 @@
 - Data: `data/hover-d292df3/` (`samples.jsonl`, `summary-full-vs-*.json`, `REPORT-data-full-vs-*.md`).
 - Limits: Time Machine and a download client ran during the test (`system.log`); the blocks spread it over the variants.
   Not tested: which of the two transitions (`background-color` or `rotate`) carries the cost.
+
+## Split test: colour fade or rotation?
+- 15 more runs, same plan (`B=full-nobgtx C=full-norottx ./run-hover.sh data/hoversplit-d292df3`).
+- **No colour fade, spring kept** (`full-nobgtx`): whole test −1.6 s [−2.3, −0.6] of 34.0 s (**−5%**). GPU −25% in
+  slow wheel and −20% in hover; the other scroll phases do not change significantly.
+- **No rotation, fade kept** (`full-norottx`): whole test +0.2 s [−1.9, +0.3], **no gain**. GPU falls in scroll@200 and
+  wheel@500 but rises in slow wheel.
+- The cost needs both transitions gone: −3.5 s (−10%) for both against −1.6 s for the fade alone.
+
+# Finite animations (2026-11-18)
+
+## Result
+- Change (Roger's choice): the sign, the tank (kelp, koi, bubbles) and Dave's screen play 13-20 s when they appear
+  (`sk-float` ×4, `sk-sway` ×6, `sk-swim` ×0.5, `sk-rise` ×2, `sk-screen` ×20), then rest in their first frame. They play
+  again while the pointer is over the sign, the counter (footer) or the composer lane. Bubbles rest where they start
+  (`background-position-y` = the `from` keyframe), so the end of the intro does not jump.
+- Full stress test, 15 runs ABC/CBA (none / d292df3 / finite), `./run-finite.sh data/finite`, `SETTLE_MS=25000`:
+  | | No skin | Skin d292df3 | Finite |
+  |---|---:|---:|---:|
+  | CPU whole test | 29.9 s | 58.1 s | **42.9 s** (−16.0 s [−22.1, −7.0] vs d292df3, −26%) |
+  | Energy impact | 25.6 | 58.2 | **38.3** |
+  | Idle, visible (% of a core) | 16.8 | 53.7 | **18.3** (vs no skin +1.9 [−2.1, +3.8], n.s.) |
+  | Frames drawn, idle 20 s | 320 | 1201 | **317** |
+  | Idle after the test | 17.0 | 48.7 | **21.4** |
+  | Footprint at end, runs that released memory | 4 of 5 | 0 of 5 | 2 of 5 |
+- Intro cost per appearance: 45% of a core for 10 s, 39% for the next 10 s, then 14% (no skin 12-16%): about 5-6 s
+  of CPU each time the page or the sidebar footer mounts.
+- What remains (finite vs no skin, +12.7 s [9.1, 17.6]) is interaction: scroll and wheel +30 to +46 points of a core,
+  hover +15, appearance +18, sidebar +13. Status churn and resize do not differ.
+- Memory: the 15 s idle window at the end is short; release depends on when Blink's purge runs. Finite runs ended at
+  880-1420 MB, d292df3 runs at 1460-1510 MB.
+- Checks: build + validator pass (full 48,809 chars, lite unchanged); `fx/check.js` on :7508: 128 rules, 0 invalid,
+  rows without overlap; `getAnimations()` is empty 25 s after load and lists only the hovered element's animations on
+  hover. Light vs dark differ in the "SR" project sign colour and a strip at the sidebar edge, the same with d292df3
+  (not caused by this change).
+- Limits: a download client and Time Machine ran during the test (`system.log`); hover restarts an animation at the point
+  of its cycle that the time since it appeared gives (a koi may pop in mid-tank), and leaving snaps it to rest.

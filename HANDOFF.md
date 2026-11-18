@@ -17,7 +17,12 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
 - Hover while scrolling (2026-11-18, Roger: "remove the list's hover animations during scroll?"). Chromium updates :hover
   every frame under a still pointer: 150-500 row transitions per scroll phase. CSS has no scrolling state. 15 runs ABC/CBA:
   80 ms hover-in delay = no gain (-3%); no row transitions = -10% CPU over the scroll test, GPU -20..-37%, slow wheel -22%.
-  Frame p95 unchanged (18.6 ms). Skin not changed; Roger to choose. `perf/REPORT.md` second section.
+  Frame p95 unchanged (18.6 ms). Split: no colour fade alone -5%, no rotation alone 0. Skin not changed.
+- Finite animations (2026-11-18, Roger chose it): sign, tank and Dave's screen play 13-20 s on appearance, then rest;
+  they play again on hover of the sign, the counter or the composer lane. 15 runs ABC/CBA: CPU 58.1 -> 42.9 s (-26%),
+  idle visible 54% -> 18% of a core (no skin 17%). Installed in `~/.t3/userdata/themes/dave-the-viber.json` on the
+  Mac mini; `t3_theme_set` was denied (thread without full access), so it shows after a reload or a theme switch.
+  Open: the "SR" project sign has a different colour in light and dark (also in d292df3). `perf/REPORT.md`.
 - Card council (2026-11-17, Roger: "simplify the cards in chars and performance"; Council Fable Low + Astra Medium,
   1 round, blind). Applied what Roger chose: (1) the 8 attention bubbles stand still (`sk-bob`, its 8 delays and its
   reduced-motion entry removed; REPORT-ideas B1: the bob on an anchored box cost 740 ms layout per 8 s); (2) no

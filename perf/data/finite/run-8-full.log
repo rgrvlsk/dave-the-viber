@@ -1,0 +1,13 @@
+14:23:38 full 8 inject ok thread {"i":0,"md":5}
+14:24:27 full 8 idle cpu 10739 {"browser":87,"gpu":2154,"utility":31,"renderer":8467} drawn 1201 dropped 22 hover {"ov":0,"tr":0,"props":{}}
+14:24:38 full 8 idleHidden cpu 846 {"browser":136,"gpu":27,"utility":20,"renderer":663} drawn 4 dropped 1 hover {"ov":1,"tr":4,"props":{"background-color":1,"opacity":1,"visibility":1,"padding-right":1}}
+14:24:47 full 8 scroll@200 cpu 6643 {"browser":195,"gpu":1984,"utility":12,"renderer":4452} drawn 369 dropped 18 hover {"ov":344,"tr":359,"props":{"background-color":314,"rotate":15,"opacity":10,"visibility":10,"padding-right":10}}
+14:24:52 full 8 wheel@200 cpu 3687 {"browser":142,"gpu":920,"utility":5,"renderer":2620} drawn 195 dropped 12 hover {"ov":129,"tr":223,"props":{"background-color":128,"rotate":38,"opacity":19,"visibility":19,"padding-right":19}}
+14:25:03 full 8 wheel@500 cpu 9095 {"browser":235,"gpu":2167,"utility":12,"renderer":6681} drawn 488 dropped 39 hover {"ov":380,"tr":487,"props":{"background-color":368,"rotate":38,"opacity":27,"visibility":27,"padding-right":27}}
+14:25:12 full 8 hover cpu 3578 {"browser":150,"gpu":1318,"utility":14,"renderer":2096} drawn 395 dropped 5 hover {"ov":104,"tr":104,"props":{"background-color":35,"opacity":17,"visibility":17,"padding-right":17,"rotate":18}}
+14:25:18 full 8 status cpu 5744 {"browser":29,"gpu":612,"utility":6,"renderer":5097} drawn 289 dropped 165 hover {"ov":0,"tr":17,"props":{"background-color":17}}
+14:25:28 full 8 stream cpu 4013 {"browser":87,"gpu":1202,"utility":11,"renderer":2713} drawn 484 dropped 14 hover {"ov":0,"tr":0,"props":{}}
+14:25:35 full 8 sidebar cpu 2274 {"browser":61,"gpu":500,"utility":8,"renderer":1705} drawn 183 dropped 36 hover {"ov":0,"tr":10,"props":{"translate":10}}
+14:25:38 full 8 resize cpu 2130 {"browser":286,"gpu":451,"utility":8,"renderer":1385} drawn 74 dropped 45 hover {"ov":0,"tr":0,"props":{}}
+14:25:43 full 8 appearance cpu 2951 {"browser":76,"gpu":307,"utility":10,"renderer":2558} drawn 186 dropped 105 hover {"ov":0,"tr":0,"props":{}}
+14:26:01 full 8 idleAfter cpu 7304 {"browser":86,"gpu":1854,"utility":24,"renderer":5340} drawn 901 dropped 22 hover {"ov":0,"tr":0,"props":{}}

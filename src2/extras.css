@@ -85,7 +85,7 @@
   background: none;
   font-family: var(--sk-round);
   filter: drop-shadow(0 0 2px #dfe8ff) drop-shadow(0 0 7px rgb(160 190 255 / 0.55));
-  animation: sk-float 3.2s ease-in-out infinite alternate;
+  animation: sk-float 3.2s ease-in-out 4 alternate;
 }
 [aria-label="T3 Code home"] * {
   color: #fbfaff;
@@ -1096,14 +1096,15 @@ svg.lucide[class*="loader"] {
     {{sand}} left bottom / 16px 8px repeat-x,
     linear-gradient(90deg, #bff3ff59 1px, #0000 0 calc(100% - 1px), #bff3ff59 0),
     linear-gradient(#0000 6px, #006a8c1f 6px, #00587a2e 30px, #00334f8c);
-  animation: sk-sway 2.4s infinite;
+  animation: sk-sway 2.4s 6;
 }
 [data-slot="sidebar-inner"] [data-slot="sidebar-footer"]::after {
   --sk-bx: 32px, calc(100% - 22px), 66%;
   inset: -49px 1px calc(100% - 8px);
   background: var(--sk-fish) -26px 14px / 24px 14px no-repeat, {{fish_l}} -26px 32px / 24px 14px no-repeat, {{bubbles}} 0 0 / 10px 48px repeat-y, {{bubbles}} 0 0 / 10px 48px repeat-y, {{bubbles}} 0 0 / 10px 48px repeat-y;
   background-position-x: -26px, -26px, var(--sk-bx);
-  animation: sk-swim 40s linear infinite, sk-rise 8s linear infinite;
+  background-position-y: 14px, 32px, 0, 20px, 8px;
+  animation: sk-swim 40s linear 0.5, sk-rise 8s linear 2;
 }
 /* The restaurant bar runs under the chat: the sidebar counter's plank and front at the same height (60 px). Behind
    it stand the stools (only their backs show) and Dave, lit by his laptop, whose lid shows a fish. The pad rests on
@@ -1169,10 +1170,20 @@ svg.lucide[class*="loader"] {
   bottom: 60px;
   height: 120px;
   background: radial-gradient(closest-side, #bff3ff40, #0000) right 30px top 48px / clamp(0px, var(--sk-d), 80px) 48px no-repeat, {{dave}} right 14px top 12px / clamp(0px, var(--sk-d), 112px) 120px no-repeat, {{stool}} right 30px bottom -4px / 80px 28px repeat-x;
-  animation: sk-screen 0.8s steps(1) infinite;
+  animation: sk-screen 0.8s steps(1) 20;
 }
 @keyframes sk-screen {
   50% { background-size: clamp(0px, var(--sk-d), 88px) 56px, clamp(0px, var(--sk-d), 112px) 120px, 80px 28px; }
+}
+/* Life on show, then still: the sign, the tank and Dave's screen play 13-20 s when they appear and then rest in
+   their first frame (infinite, they kept the window drawing 60 frames/s: 50% of a core against 21% with no skin,
+   and Blink never purged its idle memory). They play again while the pointer is over the sign, the counter or the
+   composer lane, at the point of their cycle that the time since they appeared gives (a koi may pop in mid-tank). */
+[aria-label="T3 Code home"]:hover,
+[data-slot="sidebar-inner"] [data-slot="sidebar-footer"]:hover::before,
+[data-slot="sidebar-inner"] [data-slot="sidebar-footer"]:hover::after,
+.chat-composer-lane:hover::before {
+  animation-iteration-count: infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {

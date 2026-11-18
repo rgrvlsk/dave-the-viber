@@ -9,7 +9,9 @@ app.setPath("userData", path.join(ROOT, "profile"));
 app.commandLine.appendSwitch("disable-renderer-backgrounding");
 const [variant, runNo, outFile, url = "http://localhost:7508/"] = process.argv.slice(2);
 const FILES = { none: null, full: "variants/full-d292df3.css", "full-noanim": "variants/full-noanim-d292df3.css",
-  "full-hoverdelay": "variants/full-hoverdelay-d292df3.css", "full-notx": "variants/full-notx-d292df3.css" };
+  "full-hoverdelay": "variants/full-hoverdelay-d292df3.css", "full-notx": "variants/full-notx-d292df3.css",
+  "full-nobgtx": "variants/full-nobgtx-d292df3.css", "full-norottx": "variants/full-norottx-d292df3.css",
+  "full-finite": "variants/full-finite.css" };
 if (!(variant in FILES)) { console.error("variant must be " + Object.keys(FILES).join("|")); process.exit(2); }
 const CSS = FILES[variant] ? fs.readFileSync(path.join(ROOT, FILES[variant]), "utf8") : "";
 const PLAN_NAME = process.env.PLAN || "stress";
@@ -132,7 +134,8 @@ app.whenReady().then(async () => {
     { name: "hover", id: "hover", rows: 50 },
   ];
   const STEPS = { memory: MEMORY, scroll: SCROLL }[PLAN_NAME] || PLAN;
-  await sleep(3000); // baseline settle after the theme switch (recorded as phase "load")
+  // Settle after the theme switch (recorded as phase "load"). SETTLE_MS=25000 lets the finite intro animations end first.
+  await sleep(+(process.env.SETTLE_MS || 3000));
   const snap = () => { const o = {}; for (const m of app.getAppMetrics()) { const k = kindOf(m); o[k] = (o[k] || 0) + m.cpu.cumulativeCPUUsage; } return o; };
   for (const s of STEPS) {
     phase = { name: "gap" };

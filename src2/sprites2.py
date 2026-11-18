@@ -48,6 +48,7 @@ ATLAS = "\n".join(("." * 12 + "\n") * 4 * (i > 0) + png(n).strip("\n") for i, n 
 TOKENS = {
     "atlas": multi(ATLAS, {"#": None}),
     "peg_h": multi(rot90(PEG), PEG_P),
+    "peg_shade": multi(rot90(PEG), dict.fromkeys(PEG_P, "#060e1a73")),
     "bubble": multi(png("bubble", BUBBLE_P), BUBBLE_P),
     "counter": multi(png("counter", COUNTER_P), COUNTER_P),
     "peg": multi(PEG, PEG_P),

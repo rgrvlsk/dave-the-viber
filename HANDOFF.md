@@ -27,6 +27,15 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   WORSE when scrolling: wheel@500 GPU +244 ms [144, 274], wheel@200 +106 [63, 145] (the big filtered surface
   re-renders every scroll frame). Rejected. Not tried: a tilted `linear-gradient` shadow on the row (loses the torn
   edge in the shadow and snaps on hover).
+- Painted torn edge (2026-11-18, Roger: "find another way to simulate the torn paper"; applied and installed).
+  The card has no mask: its `::after` (3 px, 1 px past the paper with `overflow: clip` + `overflow-clip-margin: 1px`)
+  paints the tear gaps in #112339, the shaded wall measured on screen; the shadows are the card's `box-shadow`
+  (`--sk-shade` #060e1a73, also on the current ticket), the twine's `box-shadow`, and a baked peg shadow sprite
+  `peg_shade` (alpha WebP) clipped to the peg box's content box so it falls only on the wall. No row `filter`.
+  Frozen pixel diff vs 8f8a7c5: peg and untilted tickets equal; tilted tickets differ only in edge antialiasing; the
+  2 px of shadow under the teeth is straight (was toothed). check.js 0 invalid, l3Lost 0. Harness (`paint-3f0d021`):
+  hover GPU -249 ms [158, 393], wheel@500 main -314 [37, 1042], status CPU +132 [6, 276] (the extra ::after per
+  ticket, ~0.2 ms per change). Full 48,181 -> 48,477, lite 14,572 -> 14,868.
 - Settled stack under the water + spike foot (2026-11-17, Roger): the settled slips (z 1000 - sibling-index(), up to
   999) painted over the fish tank, because the footer had z 22 in the same stacking context (sidebar-container); this
   predates today's changes (seen in e04711c). Footer z 22 -> 1000. Closed settled header: the rod stands on its foot

@@ -99,6 +99,8 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
   `--contrast-*` tokens and `body{color:var(--contrast-foreground)}`. App `dark:` utilities (provider marks,
   radios) need explicit overrides.
 - Search results sit inside `li[role=presentation]`: use descendant selectors.
+- The ticket's torn edge is painted, not masked: the card `::after` fills the gaps with #112339 (the shaded wall,
+  sampled on screen). If the wall art or `--sk-shade` changes, sample the gap colour again.
 - Projects with a favicon render a direct `img`; projects without an icon need the fallback sign.
 - Pairing the Mac mini dev server through an SSH tunnel does not work; use a relay on the Mac mini.
 

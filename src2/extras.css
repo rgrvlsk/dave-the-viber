@@ -253,13 +253,15 @@
 
 /* Working shelf: the pass. Its slips hang on brass clips from a steel rail (Roger, 2026-11-19), in the twine's place
    (x 13-20 px in the sidebar). A steel bracket, painted on the last slip's own background, screws its foot to the
-   wall. Rows meet at fractional pixels, so the rail runs 2 px into the next row. */
+   wall. Rows clip their paint (content-visibility: auto), so the rail cannot run past its row: like the twine, it
+   spans the row's 4 px overlap into the next row (core.css), which bridges the 1 px gap between rows. */
 [data-thread-item]:has(> [data-sidebar-parent="shelf:working"])::before,
 [data-testid="sidebar-working-header"]::after {
   content: "";
   position: absolute;
   left: 5px;
-  bottom: -2px;
+  top: 0;
+  bottom: 0;
   width: 7px;
   background: linear-gradient(90deg, #0e1620 1px, #3d4852 0 2px, #eef3f6 0 3px, #a9b4bd 0 5px, #5d6872 0 6px, #0e1620 0);
   box-shadow: 3px 3px var(--sk-shade);
@@ -313,10 +315,20 @@
   vertical-align: -1px;
   margin: -10px -9px -10px -8px;
 }
+/* The rail replaces the twine that core.css paints as every ticket row's background. The last slip has no row to
+   reach, so it drops the 4 px overlap and its bracket ends where the slip does. */
+[data-thread-item]:has(> [data-sidebar-parent="shelf:working"]) {
+  background: none;
+}
 [data-thread-item]:has(> [data-sidebar-parent="shelf:working"]):not(:has(+ [data-thread-item])) {
+  padding-bottom: 5px;
+  margin-bottom: 0;
   background: {{bracket}} 2px 100% / 16px 9px no-repeat;
 }
+/* The row above reaches 3 px into this one with its rail and shade, so this rail starts there: its shade (no drop,
+   it would fall on the bracket) then continues that shade instead of doubling it. */
 [data-thread-item]:has(> [data-sidebar-parent="shelf:working"]):not(:has(+ [data-thread-item]))::before {
+  top: 3px;
   bottom: 9px;
   box-shadow: 3px 0 var(--sk-shade);
 }

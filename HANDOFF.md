@@ -7,6 +7,18 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Working rail back, without its 1 px gap (2026-11-20, Roger: "el riell … ha tornat al cordill", then "arregla gap
+  1px"). d4e141a removed the core twine `::before` that gave the rail its `top: 0`, so the rail was 0 px tall and the
+  row's twine background showed. Since 60ce1f2 a 1 px wall line also crossed the rail between Working rows: rows
+  have `content-visibility: auto`, which clips paint to the row, so the rail's `bottom: -2px` never reached the next
+  row. Now Working rows drop only the twine background and keep core's 4 px overlap, the rail spans it (`top: 0;
+  bottom: 0`), and the last row drops the overlap (its bracket stays put) and starts its rail at 3 px, where the row
+  above's rail and shade end, so its undropped shade (`3px 0`) does not double. Pixel-sampled: rail continuous at
+  each junction, shade single; one-row case covered by the plate's rail. Working cards now show their 3 px paper
+  shadow like other tickets. check.js 130 = 130 rules, 0 invalid. Full 49,996 (4 left).
+  Open: (1) the plate's rail shade (`bottom: -5px`, 3px 3px) doubles the first row's shade for 4 px (since 60ce1f2);
+  (2) a Working-shelf row in Approval (the app puts read approvals there) uses its `::before` for the bubble, so that
+  row shows no rail (before d4e141a it showed twine).
 - Drag carries the paper only (2026-11-19, Roger: dragging a ticket should move only the card, not the twine and
   peg, and keep its look). The dragged row (dnd-kit: `.z-20` + inline transform) drops its twine (row background)
   and peg (`::after`); the list (`ul:has(> .z-20)`) paints the rope through the gap; the app's drag gradient

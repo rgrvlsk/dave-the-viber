@@ -7,6 +7,9 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Tank clock 1/4 s (2026-11-19, Roger: "slower, every 1/4 s, same distance"; "make the kelp snap" read as faster):
+  koi 3 px and bubbles 2/1/3 px per 1/4 s tick (koi cycle 106 s, bubbles 12 s), kelp pose every 0.75 s. Full 49,939
+  (61 left: 60ce1f2's shelf rail took the room). Not re-measured; expected below the 1/6 s clock's +2.2 s.
 - Fish tank alive again (2026-11-19, Roger: "find an ingenious way… you may change rhythms and speeds"). All tank
   motion steps on one 1/6 s clock (steps(), duration/steps = 1/6 s): the koi swim on one 624 px film strip
   (footer ::after, translate, 3 px steps, ~70 s cycle with both koi off stage between crossings), the bubbles keep

@@ -18,7 +18,7 @@ const FILES = { none: null, full: "variants/full-d292df3.css", "full-noanim": "v
   "full-final": "variants/full-final.css", "full-final2": "variants/full-final2.css",
   "tank-inf": "variants/tank-inf.css", "tank-steps": "variants/tank-steps.css", "tank-steps0": "variants/tank-steps0.css", "tank-tr0": "variants/tank-tr0.css", "tank-stepsk": "variants/tank-stepsk.css", "tank-stepsbp": "variants/tank-stepsbp.css",
   "full-merged": "variants/full-merged.css",
-  "tank-trs-m": "variants/tank-trs-m.css", "tank-steps0-m": "variants/tank-steps0-m.css", "tank-tr0-m": "variants/tank-tr0-m.css", "tank-final": "variants/tank-final.css", "tank-final-nob": "variants/tank-final-nob.css", "tank-gpub": "variants/tank-gpub.css" };
+  "tank-trs-m": "variants/tank-trs-m.css", "tank-steps0-m": "variants/tank-steps0-m.css", "tank-tr0-m": "variants/tank-tr0-m.css", "tank-final": "variants/tank-final.css", "tank-final-nob": "variants/tank-final-nob.css", "tank-gpub": "variants/tank-gpub.css", "tank-q": "variants/tank-q.css" };
 if (!(variant in FILES)) { console.error("variant must be " + Object.keys(FILES).join("|")); process.exit(2); }
 const CSS = FILES[variant] ? fs.readFileSync(path.join(ROOT, FILES[variant]), "utf8") : "";
 const PLAN_NAME = process.env.PLAN || "stress";

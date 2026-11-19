@@ -1104,9 +1104,10 @@ svg.lucide[class*="loader"] {
    ticket list, so tickets that scroll down sink into the water (the list gets 56 px of bottom padding, so the
    last ticket can still rest above it). Tank 0..70 px from -56 px: lacquer rim, water, kelp, coral, sand on the
    plank (14..30 px, 2 px shadow); the keys hang on the front below with 6 px above and below.
-   The tank lives all the time, in stop-motion on one clock: every step falls on a 1/6 s tick (steps() with
-   duration / steps = 1/6 s, all started together), so the window draws ~6 frames/s for the tank instead of 60,
-   and only when something moves. Infinite smooth motion cost +33% of a core at idle; this +4% (perf/REPORT.md).
+   The tank lives all the time, in stop-motion on one clock: every step falls on a 1/4 s tick (steps() with
+   duration / steps = 1/4 s, all started together; Roger, 2026-11-19: "every 1/4 s, same distance"), so the window
+   draws ~4 frames/s for the tank instead of 60, and only when something moves. The kelp snaps to its other pose
+   every 3 ticks. Infinite smooth motion cost +6.9 s of CPU per 30 s idle; on a 1/6 s clock this cost +2.2 s.
    The footer's ::before is the tank (still), its ::after the two koi on one film strip (translate, on the GPU:
    the right-facing koi crosses while the left-facing one waits 600 px further right, then the strip runs back);
    the list's ::before holds the bubbles (background-position, so its box clips them at the surface and the sand)
@@ -1225,7 +1226,7 @@ svg.lucide[class*="loader"] {
     width: 624px;
     height: 32px;
     background: var(--sk-fish) 0 0 / 24px 14px no-repeat, {{fish_l}} 600px 18px / 24px 14px no-repeat;
-    animation: sk-swim calc(424s / 6) infinite;
+    animation: sk-swim calc(424s / 4) infinite;
   }
   > ul {
     position: static;
@@ -1235,7 +1236,7 @@ svg.lucide[class*="loader"] {
     inset: -49px 1px calc(100% - 8px);
     background: var(--sk-bb), var(--sk-bb), var(--sk-bb);
     background-position-x: 32px, calc(100% - 22px), 66%;
-    animation: sk-rise 8s steps(48) infinite;
+    animation: sk-rise 12s steps(48) infinite;
   }
   > ul::after {
     top: -34px;
@@ -1243,7 +1244,7 @@ svg.lucide[class*="loader"] {
     right: 0;
     height: 14px;
     background: {{weed_a}} left 12px top 0 / 14px 44px no-repeat, {{weed_a}} 58% 0 / 14px 44px no-repeat, {{weed_a}} right 36px top 0 / 14px 44px no-repeat;
-    animation: sk-sway calc(16s / 6) steps(1) infinite;
+    animation: sk-sway 1.5s steps(1) infinite;
   }
 }
 /* The restaurant bar runs under the chat: the sidebar counter's plank and front at the same height (60 px). Behind

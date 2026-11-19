@@ -15,6 +15,9 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   full 49,727 → 49,234 with the flag (the minifier change saves 1,048), lite 14,626 → 14,392. `fx/cmp.js` old vs
   new on :7508: only the flag's animation/transition and renamed anchors differ (750 elements, drift 0);
   check.js 128 rules, 0 invalid, no overlap; light vs dark only the known 2 px sidebar-edge column (max 6/255).
+  Hover after the stop: `min-width: if(style(--sk-busy:1):1px)` on the groups forces one layout when the flag flips,
+  so the row under a still pointer takes hover again 100–200 ms after the scroll (CPU n.s., `data/final2-busy`).
+  Installed on both Macs (SHA-256 7f01b608…). Full 49,265.
   Rejected: `content-visibility: visible` on all attention tickets (−190 chars, cost hover hits and frames).
   Installed locally 2026-11-19 (`dave-the-viber.json` == `out2/full.json`, SHA-256 a823924c…) and switched with
   `t3_theme_set`, on the Mac mini and the MacBook (same SHA-256; MacBook backup

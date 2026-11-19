@@ -173,6 +173,11 @@ Final build (flag + minifier change), `A=full-389a4bb B=full-final C=none ./run-
 
 - Per scroll phase −25 to −40% CPU; frame p95 unchanged (~18.6 ms). Idle and hover phases do not differ.
 - The skin's cost over no skin on this test falls from +11.9 s to +5.2 s [4.4, 5.8]; GPU equals no skin.
+- Hover after the stop (Roger, 2026-11-19: "needs to move mouse"): Chromium re-checks `:hover` after a scroll or a
+  layout, not after a `pointer-events` change, so the row under a still pointer stayed unhovered until the mouse
+  moved (reproduced: 0 of 12 samples over 1.2 s). The groups now also take `min-width: 1px` while the flag is set, a
+  no-op layout that makes Chromium re-check hover when the flag clears: hover returns 100–200 ms after the stop.
+  `data/final2-busy` (final vs final + fix, 15 runs): CPU +0.8 s [−0.2, 1.3] n.s., GPU n.s., hover phase 104 = 104.
 - Limits: a click during a scroll, or within 150 ms of its end, lands on the list instead of a row; a change of the
   list height (rows added) also moves `--sk-p` and turns hover off for 150 ms. Browsers without `if()` keep the plain
   hover. Measured only in Electron 44.10.1 (Chromium 152) on this Mac mini.

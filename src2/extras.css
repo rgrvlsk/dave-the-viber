@@ -1437,6 +1437,9 @@ svg.lucide[class*="loader"] {
 @property --sk-busy { syntax: "<integer>"; inherits: true; initial-value: 0 }
 @keyframes sk-p { to { --sk-p: 1 } }
 [data-slot="sidebar-content"] { animation: sk-p; animation-timeline: scroll() }
-[data-slot="sidebar-content"] > * { --sk-pd: var(--sk-p); transition: --sk-pd .15s; --sk-busy: sign(abs(var(--sk-p) - var(--sk-pd))) }
+/* Chromium re-checks :hover after a scroll or a layout, not after a pointer-events change, so the min-width (a
+   no-op: groups are full width, and it cannot change the list height and re-trigger the flag) forces one layout
+   when the flag flips and the row under a still pointer takes hover again (Roger, 2026-11-19: "needs to move mouse"). */
+[data-slot="sidebar-content"] > * { --sk-pd: var(--sk-p); transition: --sk-pd .15s; --sk-busy: sign(abs(var(--sk-p) - var(--sk-pd))); min-width: if(style(--sk-busy:1):1px) }
 [data-slot="sidebar-content"] > * > * { --sk-p: 0 }
 [data-thread-item] { pointer-events: if(style(--sk-busy:1):none) }

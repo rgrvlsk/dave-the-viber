@@ -7,6 +7,15 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Drag carries the paper only (2026-11-19, Roger: dragging a ticket should move only the card, not the twine and
+  peg, and keep its look). The dragged row (dnd-kit: `.z-20` + inline transform) drops its twine (row background)
+  and peg (`::after`); the list (`ul:has(> .z-20)`) paints the rope through the gap; the app's drag gradient
+  (`bg-linear-to-b`, which turned the paper navy) is cleared. To pay for it, every ticket row now paints its twine as
+  its background (`--sk-tw`, row 4 px taller with margin -4px) instead of `::before`, so the bubble no longer resets
+  the twine. PIL vs b4ad19f (motion frozen): full differs only at 3 row junctions where the old twine showed a
+  1 px wall gap (now continuous); lite also shows the card's 3 px drop shadow under a cv:auto row that used to clip
+  it. Drag checked by emulating the app's drag classes (synthetic pointer events do not start the app's sensor);
+  check.js 0 invalid. Full 49,934, lite 14,690. Not checked with a real mouse drag or in the desktop app.
 - Minifier fix (2026-11-19, Fable review before push): since c60b438 `_cuts` offered a whole selector that starts
   with a pseudo-element as a nesting parent (`::-webkit-scrollbar-thumb{…&:vertical{…}}`), which matches nothing, so
   the vertical thumb lost its gradient tip; the expand-and-compare check missed it (it expands `&` as text). `_emit`

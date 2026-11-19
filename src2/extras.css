@@ -154,22 +154,16 @@
    and the stamp leaves the ticket. Every such ticket gets its bubble (Roger, 2026-11-19: no cap).
    The scroller clips its content and the paper is rotated, so the bubble is the row's own ::before:
    position: fixed escapes the clip because the row has no transform, filter or containment (content-visibility
-   visible), and position-anchor: auto anchors it to its row. The twine that ::before draws on other rows moves to
-   the row's background; the row grows 4 px into the gap and the next row's top so the twine and its shade reach
-   as far as the pseudo did (bottom -1px, shadow 3px down). Bubbles sit under popovers (z 140). */
+   visible), and position-anchor: auto anchors it to its row (the twine is the row's background, core.css).
+   Bubbles sit under popovers (z 140). */
 /* The app slides a moved row with a transform (Sidebar.motion, 150 ms). A transform makes the row the bubble's
    containing block, and Chromium keeps the bubble's position from that moment after the slide ends (on the peg, or
    off-screen) until some later layout. So attention rows do not slide: they take their new place at once. A drag
-   (dnd-kit sets an inline transform) still moves the row; its bubble hides meanwhile (anchor fallback below). */
+   (dnd-kit sets an inline transform) still moves the row: it then drops this rule (the list paints the rope, core.css)
+   and its bubble hides (anchor fallback below). */
 [data-thread-item]:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-indigo-600, .text-guest-foreground, .lucide-alarm-clock)):not([style*="transform:"]) {
   transform: none !important;
-}
-[data-thread-item]:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-indigo-600, .text-guest-foreground, .lucide-alarm-clock)) {
   content-visibility: visible;
-  padding-bottom: 9px;
-  margin-bottom: -4px;
-  background: linear-gradient(#1b120a 0 0) 6px 0 / 1px calc(100% - 3px), linear-gradient(#1b120a 0 0) 11px 0 / 1px calc(100% - 3px), repeating-linear-gradient(#e2c48e 0 2px, #a37a45 2px 3px, #6b4a26 3px 4px) 7px 0 / 4px calc(100% - 3px), linear-gradient(var(--sk-shade) 0 0) 10px 3px / 4px 100%;
-  background-repeat: no-repeat;
 }
 /* One status per row, so a row of one kind never holds another kind's stamp class. */
 [data-thread-item]:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-indigo-600, .text-guest-foreground, .lucide-alarm-clock)) .group\/sidebar-status-slot > span:first-child > :is(.text-warning-foreground, .text-indigo-600, .text-guest-foreground) {
@@ -185,18 +179,17 @@
    While the app slides a row (transform on the li, 150 ms) the row is the bubble's containing block and anchor() fails:
    the -300px fallback parks the bubble outside the row, where the scroller clips it, instead of on the peg. */
 [data-thread-item]:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-indigo-600, .text-guest-foreground, .lucide-alarm-clock))::before {
+  content: "";
   position: fixed;
   position-anchor: auto;
   left: calc(anchor(right, -300px) + 4px);
   top: calc(anchor(top) + 6px);
-  bottom: auto;
   width: 40px;
   height: 30px;
   padding: 4px 11px 8px;
   background: linear-gradient(var(--sk-c) 0 0) content-box, var(--sk-m, var(--sk-atlas)) 0 var(--sk-y) / 18px auto no-repeat content-box, var(--sk-bubble) center / 40px 30px;
   background-blend-mode: lighten, normal;
-  box-shadow: none;
-  filter: drop-shadow(2px 2px 0 rgb(6 14 26 / 0.5));
+  filter: drop-shadow(2px 2px #060e1a80);
   position-visibility: anchors-visible;
   pointer-events: none;
   z-index: 30;

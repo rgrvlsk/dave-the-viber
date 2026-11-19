@@ -9,6 +9,8 @@
 :root,
 [data-app-sidebar] {
   --sk-shade: #060e1a73;
+  /* The twine, painted by each ticket row and by the list during a drag. */
+  --sk-tw: linear-gradient(#1b120a 0 0) 6px 0 / 1px calc(100% - 3px), linear-gradient(#1b120a 0 0) 11px 0 / 1px calc(100% - 3px), repeating-linear-gradient(#e2c48e 0 2px, #a37a45 2px 3px, #6b4a26 3px 4px) 7px 0 / 4px calc(100% - 3px), linear-gradient(var(--sk-shade) 0 0) 10px 3px / 4px 100%;
   --sk-up: var(--appearance-contrast-boost, 0%);
   --sk-base: var(--appearance-contrast-base, 100%);
   --contrast-foreground: color-mix(in oklab, color-mix(in oklab, var(--foreground) var(--sk-base), var(--background)), #fff var(--sk-up));
@@ -102,20 +104,16 @@ html[data-theme-id] [data-app-sidebar] {
   background: {{night}} left top / 256px 100px repeat-x;
 }
 
-/* A twine runs down the left of the wall; each ticket is pegged to it at its top-left corner. */
+/* A twine runs down the left of the wall; each ticket is pegged to it at its top-left corner. The row paints its
+   twine (--sk-tw) and grows 4 px into the gap and the next row's top (margin -4px keeps the layout), so the twine
+   bridges the 1 px gap and its shade falls 3 px lower, like the box-shadow it replaced. The rows' ::before stays
+   free for the attention bubble (extras.css). */
 [data-thread-item]:has(> [data-testid$=row-card]) {
   position: relative;
-  padding: 4px 4px 5px 20px;
-}
-[data-thread-item]:has(> [data-testid$=row-card])::before {
-  content: "";
-  position: absolute;
-  left: 7px;
-  top: 0;
-  bottom: -1px;
-  width: 4px;
-  background: repeating-linear-gradient(#e2c48e 0 2px, #a37a45 2px 3px, #6b4a26 3px 4px);
-  box-shadow: 1px 0 0 #1b120a, -1px 0 0 #1b120a, 3px 3px 0 var(--sk-shade);
+  padding: 4px 4px 9px 20px;
+  margin-bottom: -4px;
+  background: var(--sk-tw);
+  background-repeat: no-repeat;
 }
 [data-thread-item]:has(> [data-testid$=row-card])::after {
   content: "";
@@ -130,6 +128,22 @@ html[data-theme-id] [data-app-sidebar] {
   background: var(--sk-peg) border-box, {{peg_shade}} 2px 3px / 26px 16px no-repeat content-box;
   pointer-events: none;
   z-index: 3;
+}
+/* A drag carries the paper only (Roger, 2026-11-19): the dragged row (dnd-kit gives it .z-20 and a transform) drops
+   its twine and peg, the list paints the rope through the gap, and the paper keeps its look (the app's drag
+   gradient is cleared). */
+[data-thread-item].z-20 {
+  background: none;
+}
+[data-thread-item].z-20::after {
+  display: none;
+}
+[data-thread-item].z-20 > [data-testid$=row-card] {
+  background-image: none;
+}
+ul:has(> [data-thread-item].z-20) {
+  background: var(--sk-tw);
+  background-repeat: no-repeat;
 }
 /*full*/
 /* Pinned orders get the red peg. */

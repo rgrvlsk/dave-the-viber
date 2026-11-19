@@ -561,7 +561,7 @@ html[data-theme-id] [data-app-sidebar] {
   width: 12px;
   height: 12px;
   vertical-align: -1px;
-  background: #ffb877;
+  background: currentColor;
   -webkit-mask: var(--sk-atlas) 0 -28px / 12px auto no-repeat;
   mask: var(--sk-atlas) 0 -28px / 12px auto no-repeat;
 }

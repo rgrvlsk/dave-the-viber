@@ -2,6 +2,8 @@
 # The art lives in src2/sprites/<name>.png (1 px per pixel); each palette maps the PNG's colours to the token's colours.
 WOOD = "#d8a15f"; WOOD_D = "#a8703a"; OUT = "#3a2414"
 PEG_P = {"o": OUT, "w": WOOD, "d": WOOD_D, "m": "#d3dae0", "s": "#6f7b86"}
+CLIP_P = {"o": "#3a2408", "h": "#fbe7a6", "w": "#d9a84a", "d": "#8f5f1e", "s": "#060e1a73"}
+STEEL_P = {"o": "#0e1620", "h": "#eef3f6", "m": "#a9b4bd", "d": "#5d6872", "s": "#060e1a73"}
 BUBBLE_P = {"o": "#10202f", "w": "#fffdf6", "g": "#d9d2c3"}
 COUNTER_P = {"h": "#e2a866", "w": "#b9783d", "g": "#a0662f", "s": "#5e3818"}
 BASE_P = {"k": "#0e1620", "s": "#c9d1d8", "b": "#8a5a2b", "h": "#b07a40"}
@@ -56,6 +58,9 @@ TOKENS = {
     "peg": multi(PEG, PEG_P),
     "peg_red": multi(PEG, {"o": "#3a1410", "w": "#d4533a", "d": "#93301f", "m": "#d3dae0", "s": "#6f7b86"}),
     "peg_gold": multi(PEG, {"o": "#3a2a0a", "w": "#f2c25c", "d": "#b9862a", "m": "#eef2f5", "s": "#6f7b86"}),
+    # Working shelf: a brass clip and a steel rail bracket, each with its shade (s) baked in.
+    "clip": multi(png("clip", CLIP_P), CLIP_P),
+    "bracket": multi(png("bracket", STEEL_P), STEEL_P),
     "base": multi(png("base", BASE_P), BASE_P),
     "tip": multi(png("tip", TIP_P), TIP_P),
     "wall": multi(png("wall", WALL_P), WALL_P),

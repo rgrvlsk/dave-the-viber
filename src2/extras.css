@@ -252,6 +252,79 @@
   mask: var(--sk-atlas) 0 -140px / 12px auto no-repeat;
 }
 
+/* Working shelf: the pass. Its slips hang on brass clips from a steel rail (Roger, 2026-11-19), in the twine's place
+   (x 13-20 px in the sidebar). A steel bracket, painted on the last slip's own background, screws its foot to the
+   wall. Rows meet at fractional pixels, so the rail runs 2 px into the next row. */
+[data-thread-item]:has(> [data-sidebar-parent="shelf:working"])::before,
+[data-testid="sidebar-working-header"]::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  bottom: -2px;
+  width: 7px;
+  background: linear-gradient(90deg, #0e1620 1px, #3d4852 0 2px, #eef3f6 0 3px, #a9b4bd 0 5px, #5d6872 0 6px, #0e1620 0);
+  box-shadow: 3px 3px var(--sk-shade);
+  pointer-events: none;
+}
+[data-testid="sidebar-working-header"]::after {
+  left: 3px;
+  top: 26px;
+  bottom: -5px;
+}
+/* The rail hangs from the shelf's plate while slips follow it. */
+[data-testid="sidebar-working-header"]:not(:has(+ [data-thread-item]))::after {
+  content: none;
+}
+/* Shelf labels are plates screwed to the wall, each in its object's metal: brass on the pass, enamel in the timer's
+   indigo, steel on the spike. --sk-p1..3 are its light, face and dark bands; --sk-pi inks the outline, screws and text (--sk-pt overrides the text). */
+[data-testid$="-shelf-toggle"] {
+  --sk-pi: #3a2408;
+  --sk-p1: #fbe7a6;
+  --sk-p2: #e8bf62;
+  --sk-p3: #b98432;
+}
+[data-testid*="snooze"][data-testid$="-shelf-toggle"] {
+  --sk-pi: #141c3a;
+  --sk-pt: #eef0ff;
+  --sk-p1: #6f80c8;
+  --sk-p2: #3f52a0;
+  --sk-p3: #2a3874;
+}
+[data-testid="sidebar-settled-shelf-toggle"] {
+  --sk-pi: #0e1620;
+  --sk-p1: #eef3f6;
+  --sk-p2: #c3ccd3;
+  --sk-p3: #8a96a0;
+}
+[data-testid$="-shelf-toggle"] > span:first-child {
+  margin-left: -8px;
+  padding: 3px 9px;
+  overflow: visible;
+  color: var(--sk-pt, var(--sk-pi));
+  font-weight: 700;
+  background: linear-gradient(var(--sk-pi) 0 0) 3px 50% / 2px 2px no-repeat, linear-gradient(var(--sk-pi) 0 0) calc(100% - 3px) 50% / 2px 2px no-repeat, linear-gradient(var(--sk-p1) 2px, var(--sk-p2) 0 calc(100% - 4px), var(--sk-p3) 0);
+  box-shadow: inset 0 0 0 1px var(--sk-pi);
+  clip-path: var(--sk-cut);
+}
+/* The spike pierces its plate: unclipped, its rod stays on the slips' rod and its foot shows under the plate. */
+[data-testid="sidebar-settled-shelf-toggle"] > span:first-child {
+  clip-path: none;
+}
+[data-testid="sidebar-settled-shelf-toggle"] > span:first-child::before {
+  vertical-align: -1px;
+  margin: -10px -9px -10px -8px;
+}
+[data-thread-item]:has(> [data-sidebar-parent="shelf:working"]):not(:has(+ [data-thread-item])) {
+  background: {{bracket}} 2px 100% / 16px 9px no-repeat;
+}
+[data-thread-item]:has(> [data-sidebar-parent="shelf:working"]):not(:has(+ [data-thread-item]))::before {
+  bottom: 9px;
+  box-shadow: 3px 0 var(--sk-shade);
+}
+[data-thread-item]:has(> [data-sidebar-parent="shelf:working"])::after {
+  background: {{clip}} 1px 0 / 28px 14px no-repeat;
+}
+
 /* Project tiles keep hard pixel corners. */
 [data-slot="project-monogram"] svg,
 [data-slot="project-monogram"] svg * {

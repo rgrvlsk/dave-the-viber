@@ -135,3 +135,44 @@
   (scroll +4 to +20 points of a core, appearance +19, sidebar +9). Frame p95 is the same as d292df3 in every phase.
 - Absolute numbers differ between run sets (d292df3 48.0 s here, 58.1 s in `data/finite`); qBittorrent and Time
   Machine ran in both (local `system.log`) at different loads. Compare within one run set only.
+
+# Hover off while the list scrolls (2026-11-19)
+Plan `scroll` (pointer over the list), 15 fresh Electron runs per set, blocks ABC/CBA, paired bootstrap CIs.
+Base: 389a4bb (`variants/full-389a4bb.css`, finite animations, no colour fade, rotation spring kept).
+
+## Rotation off (`data/norot-389a4bb`)
+- `variants/full-norot-389a4bb.css` drops the rows' last transition (rotate/translate spring).
+- Whole test −0.7 s [−2.8, 0.6], not significant; GPU −0.9 s [−1.7, −0.8] (−15%). The skin costs +10.4 s over no skin
+  here, so the spring is a small part of it. Not applied.
+
+## Scroll flag (`data/busy-389a4bb`, `data/busy2-389a4bb`, `data/final-busy`)
+CSS has no "is scrolling" state (`scroll-state(scrolled)` keeps the last direction after the scroll stops). The flag
+builds one: a scroll timeline sets `--sk-p` on `[data-slot=sidebar-content]`; its children hold `--sk-pd: var(--sk-p)`
+with a 150 ms transition, so the two differ only while the list moves; `--sk-busy: sign(abs(p − pd))` is an
+integer (rows restyle only when it flips) and `[data-thread-item] { pointer-events: if(style(--sk-busy:1):none) }`
+takes rows out of hit-testing. Chromium then updates no row `:hover` during the scroll.
+- Probe (`Input.synthesizeScrollGesture`, 200 rows): during the scroll 0 rows hovered and 0 transitions (before: ~330
+  hover changes per phase); hover returns 50–100 ms after the scroll ends; hovering after a scroll gives 102 changes,
+  the same as without the flag.
+- First version (viewport timeline, `linear both`): −5.6 s [−5.7, −4.5] (−22%).
+- A size cut tried with it (`content-visibility: visible` on every attention ticket instead of the 8 anchored ones)
+  cost 10 of 104 hover changes and +25 dropped frames in the 500-row wheel phase: off-screen attention tickets kept
+  painting and their overflow caught the pointer. Rejected; the minifier change below made room instead.
+
+Final build (flag + minifier change), `A=full-389a4bb B=full-final C=none ./run-hover.sh data/final-busy`:
+
+| | No skin | 389a4bb | Final | Final vs 389a4bb |
+|---|---:|---:|---:|---:|
+| CPU whole test | 16.2 s | 28.1 s | **21.4 s** | −6.6 s [−7.1, −5.7], **−24%** |
+| Renderer | 11.5 s | 19.8 s | 16.7 s | −3.0 [−3.4, −2.4] |
+| GPU | 3.7 s | 7.3 s | **3.7 s** | −3.5 [−3.7, −3.1], −48% |
+| Energy impact | 36.3 | 65.9 | 53.3 | −12.5 [−13.3, −8.2] |
+| Frames dropped | 162 | 129 | 100 | −30 [−41, −22] |
+| Row hover changes, wheel@500 | – | 399 | 1 | |
+| Hover phase CPU / changes | – | 2.67 s / 104 | 2.69 s / 104 | n.s. / 0 |
+
+- Per scroll phase −25 to −40% CPU; frame p95 unchanged (~18.6 ms). Idle and hover phases do not differ.
+- The skin's cost over no skin on this test falls from +11.9 s to +5.2 s [4.4, 5.8]; GPU equals no skin.
+- Limits: a click during a scroll, or within 150 ms of its end, lands on the list instead of a row; a change of the
+  list height (rows added) also moves `--sk-p` and turns hover off for 150 ms. Browsers without `if()` keep the plain
+  hover. Measured only in Electron 44.10.1 (Chromium 152) on this Mac mini.

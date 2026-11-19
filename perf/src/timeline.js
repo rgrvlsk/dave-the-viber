@@ -11,7 +11,11 @@ const [variant, runNo, outFile, url = "http://localhost:7508/"] = process.argv.s
 const FILES = { none: null, full: "variants/full-d292df3.css", "full-noanim": "variants/full-noanim-d292df3.css",
   "full-hoverdelay": "variants/full-hoverdelay-d292df3.css", "full-notx": "variants/full-notx-d292df3.css",
   "full-nobgtx": "variants/full-nobgtx-d292df3.css", "full-norottx": "variants/full-norottx-d292df3.css",
-  "full-finite": "variants/full-finite.css", "full-7a0b011": "variants/full-7a0b011.css" };
+  "full-finite": "variants/full-finite.css", "full-7a0b011": "variants/full-7a0b011.css",
+  "full-389a4bb": "variants/full-389a4bb.css", "full-norot-389a4bb": "variants/full-norot-389a4bb.css",
+  "full-busy-389a4bb": "variants/full-busy-389a4bb.css",
+  "full-busy2-389a4bb": "variants/full-busy2-389a4bb.css",
+  "full-final": "variants/full-final.css" };
 if (!(variant in FILES)) { console.error("variant must be " + Object.keys(FILES).join("|")); process.exit(2); }
 const CSS = FILES[variant] ? fs.readFileSync(path.join(ROOT, FILES[variant]), "utf8") : "";
 const PLAN_NAME = process.env.PLAN || "stress";

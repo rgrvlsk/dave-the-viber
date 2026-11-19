@@ -1,0 +1,7 @@
+01:16:47 full-final 5 inject ok thread {"i":0,"md":5}
+01:16:57 full-final 5 idle cpu 2526 {"browser":23,"gpu":712,"utility":6,"renderer":1785} drawn 300 dropped 5 hover {"ov":0,"tr":0,"props":{}}
+01:17:05 full-final 5 scroll@200 cpu 4867 {"browser":151,"gpu":777,"utility":9,"renderer":3930} drawn 360 dropped 18 hover {"ov":1,"tr":4,"props":{"rotate":1,"opacity":1,"visibility":1,"padding-right":1}}
+01:17:15 full-final 5 wheelSlow@200 cpu 3539 {"browser":180,"gpu":565,"utility":8,"renderer":2786} drawn 438 dropped 17 hover {"ov":1,"tr":3,"props":{"opacity":1,"visibility":1,"padding-right":1}}
+01:17:20 full-final 5 wheel@200 cpu 1778 {"browser":103,"gpu":254,"utility":4,"renderer":1417} drawn 180 dropped 9 hover {"ov":1,"tr":3,"props":{"opacity":1,"visibility":1,"padding-right":1}}
+01:17:30 full-final 5 wheel@500 cpu 6403 {"browser":181,"gpu":726,"utility":11,"renderer":5485} drawn 452 dropped 32 hover {"ov":1,"tr":3,"props":{"opacity":1,"visibility":1,"padding-right":1}}
+01:17:39 full-final 5 hover cpu 2879 {"browser":134,"gpu":819,"utility":13,"renderer":1913} drawn 335 dropped 20 hover {"ov":104,"tr":69,"props":{"opacity":17,"visibility":17,"padding-right":17,"rotate":18}}

@@ -7,6 +7,18 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Scroll flag (2026-11-19, Roger: "can we turn it off while scrolling" → "implement it and test"). Rows leave
+  hit-testing while the ticket list scrolls and take hover again 150 ms after it stops (extras.css, last block;
+  `perf/REPORT.md` → "Hover off while the list scrolls"). Scroll test vs 389a4bb: −6.6 s CPU [−7.1, −5.7] (−24%),
+  GPU −48% (equal to no skin), hover phase unchanged. Removing the rotation spring instead: −0.7 s, n.s. (not applied).
+  Size: the minifier now also nests under a whole selector (`A{x}A>b{y}` → `A{x;>b{y}}`, `_cuts` in build2.py):
+  full 49,727 → 49,234 with the flag (the minifier change saves 1,048), lite 14,626 → 14,392. `fx/cmp.js` old vs
+  new on :7508: only the flag's animation/transition and renamed anchors differ (750 elements, drift 0);
+  check.js 128 rules, 0 invalid, no overlap; light vs dark only the known 2 px sidebar-edge column (max 6/255).
+  Rejected: `content-visibility: visible` on all attention tickets (−190 chars, cost hover hits and frames).
+  Installed locally 2026-11-19 (`dave-the-viber.json` == `out2/full.json`, SHA-256 a823924c…) and switched with
+  `t3_theme_set`, on the Mac mini and the MacBook (same SHA-256; MacBook backup
+  `themes/dave-the-viber.json.bak-2026-11-19`, old db9e5876…); not pushed. Not checked in the desktop app or with reduced motion.
 - Rebase on origin (2026-11-18, Roger chose rebase). Local main (9 commits: / $ @ menu, drinks menu, stamp, specials,
   headline, Dave typing, icons) had diverged from origin/main (10 commits from the Mac mini: perf harness, finite
   animations, painted torn edge, no brass peg, keys without slide, no colour fade). Resolved for origin's behaviour

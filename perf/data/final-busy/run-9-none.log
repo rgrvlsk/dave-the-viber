@@ -1,0 +1,7 @@
+01:22:30 none 9 inject ok thread {"i":0,"md":5}
+01:22:40 none 9 idle cpu 800 {"browser":29,"gpu":271,"utility":7,"renderer":493} drawn 81 dropped 8 hover {"ov":0,"tr":0,"props":{}}
+01:22:47 none 9 scroll@200 cpu 3109 {"browser":76,"gpu":751,"utility":8,"renderer":2274} drawn 310 dropped 3 hover {"ov":307,"tr":0,"props":{}}
+01:22:57 none 9 wheelSlow@200 cpu 3206 {"browser":186,"gpu":840,"utility":13,"renderer":2167} drawn 459 dropped 115 hover {"ov":176,"tr":0,"props":{}}
+01:23:02 none 9 wheel@200 cpu 2307 {"browser":86,"gpu":420,"utility":5,"renderer":1796} drawn 188 dropped 14 hover {"ov":159,"tr":0,"props":{}}
+01:23:13 none 9 wheel@500 cpu 5326 {"browser":212,"gpu":1067,"utility":14,"renderer":4033} drawn 484 dropped 18 hover {"ov":441,"tr":0,"props":{}}
+01:23:21 none 9 hover cpu 1624 {"browser":175,"gpu":416,"utility":17,"renderer":1016} drawn 129 dropped 10 hover {"ov":104,"tr":0,"props":{}}

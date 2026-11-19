@@ -1,0 +1,7 @@
+00:49:34 full-busy-389a4bb 9 inject ok thread {"i":0,"md":5}
+00:49:44 full-busy-389a4bb 9 idle cpu 2499 {"browser":22,"gpu":805,"utility":7,"renderer":1665} drawn 301 dropped 5 hover {"ov":0,"tr":0,"props":{}}
+00:49:52 full-busy-389a4bb 9 scroll@200 cpu 4024 {"browser":137,"gpu":654,"utility":8,"renderer":3225} drawn 359 dropped 15 hover {"ov":1,"tr":4,"props":{"rotate":1,"opacity":1,"visibility":1,"padding-right":1}}
+00:50:02 full-busy-389a4bb 9 wheelSlow@200 cpu 3512 {"browser":191,"gpu":627,"utility":9,"renderer":2685} drawn 445 dropped 15 hover {"ov":1,"tr":3,"props":{"opacity":1,"visibility":1,"padding-right":1}}
+00:50:07 full-busy-389a4bb 9 wheel@200 cpu 1777 {"browser":88,"gpu":245,"utility":4,"renderer":1440} drawn 179 dropped 8 hover {"ov":1,"tr":3,"props":{"opacity":1,"visibility":1,"padding-right":1}}
+00:50:17 full-busy-389a4bb 9 wheel@500 cpu 5506 {"browser":136,"gpu":626,"utility":10,"renderer":4734} drawn 459 dropped 27 hover {"ov":1,"tr":3,"props":{"opacity":1,"visibility":1,"padding-right":1}}
+00:50:26 full-busy-389a4bb 9 hover cpu 2508 {"browser":137,"gpu":697,"utility":12,"renderer":1662} drawn 325 dropped 17 hover {"ov":104,"tr":69,"props":{"opacity":17,"visibility":17,"padding-right":17,"rotate":18}}

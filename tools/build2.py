@@ -139,6 +139,7 @@ def _cuts(sel):
             if ch in " >+~:[.#": out.append(i)
         d += (ch in "([") - (ch in ")]")
         i += 1
+    else: out.append(len(sel))  # the whole selector may be the parent (A{x}A>b{y} -> A{x;>b{y}})
     return out
 
 def _rel(rest):

@@ -1,0 +1,7 @@
+01:19:39 full-389a4bb 7 inject ok thread {"i":0,"md":5}
+01:19:48 full-389a4bb 7 idle cpu 2361 {"browser":21,"gpu":698,"utility":5,"renderer":1637} drawn 301 dropped 5 hover {"ov":0,"tr":0,"props":{}}
+01:19:57 full-389a4bb 7 scroll@200 cpu 6522 {"browser":171,"gpu":1911,"utility":10,"renderer":4430} drawn 370 dropped 21 hover {"ov":334,"tr":58,"props":{"rotate":19,"opacity":13,"visibility":13,"padding-right":13}}
+01:20:07 full-389a4bb 7 wheelSlow@200 cpu 4781 {"browser":213,"gpu":1037,"utility":9,"renderer":3522} drawn 459 dropped 25 hover {"ov":205,"tr":282,"props":{"rotate":93,"opacity":63,"visibility":63,"padding-right":63}}
+01:20:12 full-389a4bb 7 wheel@200 cpu 3008 {"browser":124,"gpu":734,"utility":4,"renderer":2146} drawn 189 dropped 17 hover {"ov":131,"tr":141,"props":{"opacity":32,"visibility":32,"padding-right":32,"rotate":45}}
+01:20:23 full-389a4bb 7 wheel@500 cpu 8943 {"browser":216,"gpu":2100,"utility":12,"renderer":6615} drawn 479 dropped 42 hover {"ov":383,"tr":191,"props":{"opacity":45,"visibility":45,"padding-right":45,"rotate":56}}
+01:20:31 full-389a4bb 7 hover cpu 2695 {"browser":138,"gpu":796,"utility":11,"renderer":1750} drawn 335 dropped 19 hover {"ov":104,"tr":69,"props":{"opacity":17,"visibility":17,"padding-right":17,"rotate":18}}

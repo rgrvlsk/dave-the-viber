@@ -1425,3 +1425,18 @@ svg.lucide[class*="loader"] {
 [data-slot="sidebar-inner"] > div:first-child:has([aria-label="Go back"]) [data-environment-identification="pill"] {
   display: none;
 }
+
+/* Scroll flag (2026-11-19, perf/REPORT.md): Chromium re-runs :hover every frame while the list scrolls under a
+   still pointer, and each newly hovered ticket starts its straightening transition. --sk-p follows the scroll
+   position; a copy one level down trails it by 150 ms, so the two differ only while the list moves. Rows then
+   leave hit-testing (no :hover, no transitions) and take hover again 150 ms after the scroll stops. --sk-busy is an
+   integer, so rows restyle only when it flips; the reset below stops --sk-p from restyling every row per frame.
+   Browsers without if() keep the plain hover. */
+@property --sk-p { syntax: "<number>"; inherits: true; initial-value: 0 }
+@property --sk-pd { syntax: "<number>"; inherits: false; initial-value: 0 }
+@property --sk-busy { syntax: "<integer>"; inherits: true; initial-value: 0 }
+@keyframes sk-p { to { --sk-p: 1 } }
+[data-slot="sidebar-content"] { animation: sk-p; animation-timeline: scroll() }
+[data-slot="sidebar-content"] > * { --sk-pd: var(--sk-p); transition: --sk-pd .15s; --sk-busy: sign(abs(var(--sk-p) - var(--sk-pd))) }
+[data-slot="sidebar-content"] > * > * { --sk-p: 0 }
+[data-thread-item] { pointer-events: if(style(--sk-busy:1):none) }

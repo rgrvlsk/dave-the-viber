@@ -1,0 +1,7 @@
+00:06:32 full-norot-389a4bb 11 inject ok thread {"i":0,"md":5}
+00:06:42 full-norot-389a4bb 11 idle cpu 2647 {"browser":28,"gpu":857,"utility":7,"renderer":1755} drawn 301 dropped 6 hover {"ov":0,"tr":0,"props":{}}
+00:06:51 full-norot-389a4bb 11 scroll@200 cpu 5478 {"browser":157,"gpu":1341,"utility":9,"renderer":3971} drawn 364 dropped 22 hover {"ov":334,"tr":186,"props":{"opacity":62,"visibility":62,"padding-right":62}}
+00:07:00 full-norot-389a4bb 11 wheelSlow@200 cpu 3860 {"browser":212,"gpu":832,"utility":10,"renderer":2806} drawn 441 dropped 18 hover {"ov":124,"tr":186,"props":{"opacity":62,"visibility":62,"padding-right":62}}
+00:07:05 full-norot-389a4bb 11 wheel@200 cpu 2290 {"browser":98,"gpu":516,"utility":4,"renderer":1672} drawn 179 dropped 11 hover {"ov":134,"tr":162,"props":{"opacity":54,"visibility":54,"padding-right":54}}
+00:07:16 full-norot-389a4bb 11 wheel@500 cpu 7068 {"browser":170,"gpu":1567,"utility":11,"renderer":5320} drawn 460 dropped 32 hover {"ov":431,"tr":258,"props":{"opacity":86,"visibility":86,"padding-right":86}}
+00:07:24 full-norot-389a4bb 11 hover cpu 2328 {"browser":179,"gpu":548,"utility":13,"renderer":1588} drawn 139 dropped 24 hover {"ov":110,"tr":51,"props":{"opacity":17,"visibility":17,"padding-right":17}}

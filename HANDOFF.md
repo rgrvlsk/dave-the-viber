@@ -7,6 +7,10 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Minifier fix (2026-11-19, Fable review before push): since c60b438 `_cuts` offered a whole selector that starts
+  with a pseudo-element as a nesting parent (`::-webkit-scrollbar-thumb{…&:vertical{…}}`), which matches nothing, so
+  the vertical thumb lost its gradient tip; the expand-and-compare check missed it (it expands `&` as text). `_emit`
+  now skips any parent containing `::`. Only that rule changed in out2/full.css (flat again); full 49,962.
 - Tank clock 1/4 s (2026-11-19, Roger: "slower, every 1/4 s, same distance"; "make the kelp snap" read as faster):
   koi 3 px and bubbles 2/1/3 px per 1/4 s tick (koi cycle 106 s, bubbles 12 s), kelp pose every 0.75 s. Full 49,939
   (61 left: 60ce1f2's shelf rail took the room). Not re-measured; expected below the 1/6 s clock's +2.2 s.

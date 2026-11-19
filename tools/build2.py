@@ -154,7 +154,7 @@ def _emit(rules):
         best = (0, None, i + 1)
         for c in _cuts(rules[i][0][0]):
             P = rules[i][0][0][:c]
-            if P.lstrip(">+~& ") == "": continue
+            if P.lstrip(">+~& ") == "" or "::" in P: continue  # & cannot stand for a pseudo-element
             j = i
             while j < len(rules) and all(s.startswith(P) and (s == P or len(P) in _cuts(s)) for s in rules[j][0]): j += 1
             if j - i < (1 if len(rules[i][0]) > 1 else 2): continue

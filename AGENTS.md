@@ -32,6 +32,7 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
 | `tools/serve.py` | CORS static server on :8765 for the injector. |
 | `fx/inject2.js`, `fx/check.js`, `fx/scan.js` | Live injection and in-page checks. |
 | `fx/prune2.js` | Per-flag `!important` test: `f(flatCssUrl, [k…])` → ok / needed per flag (paired, synchronous, drift-proof). `fx/prune.js` (older, group bisection) drifts while other threads re-render the sidebar. |
+| `fx/bubwatch.js` | Desktop-console watchdog: logs each attention bubble that stops answering a hit test, with the row's state. |
 | `fx/cmp.js` | Computed-style A/B/A of two builds on the current page state: `f(urlA, urlB)` → diff, drift. |
 | `tools/pixcheck.py` | Pixel-sampled contrast from a screenshot + boxes JSON. |
 | `final2/` | Last published JSON/CSS + reference captures. |
@@ -95,6 +96,10 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
   (`content-visibility: visible`): any of those makes the row the containing block and the scroller clips the bubble.
   The paper (row card) is rotated, so nothing inside it can host a bubble. A named anchor on the row itself fails;
   `auto` works. Page-level hosts with `nth-child(-n+3 of …)` capped the count (removed 2026-11-19).
+- Keep an anchored bubble's `top`/`left` linear in `anchor()` (no `max()`/`min()`/`clamp()`): Chromium can keep the
+  layout from when the row was off-screen and add later scrolling at paint time, so a clamped value lands off-screen
+  (a row moved by the app's translateY while off-screen lost its bubble until the next layout). Computed `left`/`top`
+  read in JS are that stale layout, not the painted place: hit-test at the row instead (`fx/bubwatch.js`).
 - `fx/prune2.js` "ok" covers only the elements on the page. Before dropping a flag, also list the app's unlayered
   rules on that property (`document.styleSheets`, outside `@layer`): one with higher specificity (e.g.
   `.chat-markdown a:not(.chat-markdown-file-link, …)`) wins in states the page does not show.

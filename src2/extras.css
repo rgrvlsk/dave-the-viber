@@ -172,12 +172,14 @@
   overflow: hidden;
   clip-path: inset(50%);
 }
-/* The ink is centred on the bubble's white body, which sits 2 px above the box centre (tail below). */
+/* The ink is centred on the bubble's white body, which sits 2 px above the box centre (tail below).
+   top stays linear in anchor(top), no max() clamp: Chromium may keep a bubble's layout from when its row was off-screen
+   and only add later scrolling at paint time, so a clamped top lands off-screen (row moved while off-screen). */
 [data-thread-item]:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-indigo-600, .text-guest-foreground, .lucide-alarm-clock))::before {
   position: fixed;
   position-anchor: auto;
   left: calc(anchor(right) + 4px);
-  top: max(112px, calc(anchor(top) + 6px));
+  top: calc(anchor(top) + 6px);
   bottom: auto;
   width: 40px;
   height: 30px;

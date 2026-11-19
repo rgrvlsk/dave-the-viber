@@ -29,6 +29,17 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   hover back 100–200 ms after the stop); :7508 check.js 0 invalid, no overlap, 4 attention rows each with its own
   fixed bubble; light == dark except the known 2 px edge column. Before installing a build, check that the checkout contains the commits of the other threads (`git log origin/main..`
   on each machine); the MacBook clone is `/Users/roger/.t3/projects/dave-the-viber`.
+- Bubbles lost after a move (2026-11-19). Roger: a bubble vanished and did not return after cards moved while
+  off-screen. Cause: `top: max(112px, calc(anchor(top) + 6px))`. Chromium kept the bubble's layout from when its row
+  was off-screen above (clamped to 112) and added later scrolling at paint time, so the bubble stayed off-screen.
+  Reproduced in the preview (row scrolled away, DOM move + 150 ms translateY like `Sidebar.motion.ts`, scroll back:
+  hit test false; Roger's desktop log: `T=112px` for a row at 468). Fix: linear `top: calc(anchor(top) + 6px)`;
+  same repro twice: bubble back. Side effect: a row half under the sidebar header puts its bubble up to the noren
+  band (y ~50) until the row is fully hidden. The same clamp explains the 2026-11-17 missing-bubble report.
+  First installed by patching only that declaration into the installed files on both Macs (they held the Mac
+  mini's unpushed build); then the MacBook clone was reset to the Mac mini's main (75e86a2, the bubble commit came in
+  as 3afdaf9) with this fix on top, and the result pushed to origin. Live check: no clamp in the published sheet;
+  repro passes.
 - Bubbles for every attention ticket (2026-11-19, Roger: "tot allò que tingui bafarada, que la mostri"). Cause of the
   missing bubble: the 8 page-level hosts served only the first 3 Approval/Input and the first Request/Woke ticket
   (`nth-child(-n+3 of …)`); a further ticket kept its stamp and got no bubble (Roger's screenshot: a 3rd+ Input

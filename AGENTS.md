@@ -100,6 +100,10 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
   layout from when the row was off-screen and add later scrolling at paint time, so a clamped value lands off-screen
   (a row moved by the app's translateY while off-screen lost its bubble until the next layout). Computed `left`/`top`
   read in JS are that stale layout, not the painted place: hit-test at the row instead (`fx/bubwatch.js`).
+- An attention row must never get a transform: the app slides moved rows with a WAAPI transform (150 ms), which
+  makes the row the bubble's containing block; after it Chromium kept the bubble on the peg or off-screen until a
+  later layout. Attention rows carry `transform: none !important` (not while dnd-kit drags: `[style*="transform:"]`;
+  every sortable row has `transition: transform` inline) and `anchor(right, -300px)` hides the bubble meanwhile.
 - `fx/prune2.js` "ok" covers only the elements on the page. Before dropping a flag, also list the app's unlayered
   rules on that property (`document.styleSheets`, outside `@layer`): one with higher specificity (e.g.
   `.chat-markdown a:not(.chat-markdown-file-link, …)`) wins in states the page does not show.

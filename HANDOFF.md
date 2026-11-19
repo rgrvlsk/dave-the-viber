@@ -14,6 +14,14 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
 - Tank clock 1/4 s (2026-11-19, Roger: "slower, every 1/4 s, same distance"; "make the kelp snap" read as faster):
   koi 3 px and bubbles 2/1/3 px per 1/4 s tick (koi cycle 106 s, bubbles 12 s), kelp pose every 0.75 s. Full 49,939
   (61 left: 60ce1f2's shelf rail took the room). Not re-measured; expected below the 1/6 s clock's +2.2 s.
+- Bubble on the peg during a slide (2026-11-19, Roger: when a card above moves to Working, Skin Publishing slides and
+  its bubble sits on the left by the peg). Cause: `Sidebar.motion.ts` animates `transform` on the li; with a transform
+  the li is the bubble's containing block, anchor() fails and the bubble took its static place (peg). After the slide
+  Chromium often kept that layout (off-screen repro: 1/4 bubbles back). Fix: attention rows get
+  `transform: none !important` unless dnd-kit drags them, and `left` has the -300px fallback again. They now take their
+  new place at once instead of sliding. Repro 5/5 back; mid-slide the bubble hides; 4 inks checked (Input default,
+  Approval sets its own image); check.js 0 invalid. Full 49,988 (ink defaults reordered and the bubble's
+  `box-sizing` dropped, Tailwind's preflight gives `::before` border-box, to pay for the rule).
 - Fish tank alive again (2026-11-19, Roger: "find an ingenious way… you may change rhythms and speeds"). All tank
   motion steps on one 1/6 s clock (steps(), duration/steps = 1/6 s): the koi swim on one 624 px film strip
   (footer ::after, translate, 3 px steps, ~70 s cycle with both koi off stage between crossings), the bubbles keep

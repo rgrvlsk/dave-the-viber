@@ -157,6 +157,13 @@
    visible), and position-anchor: auto anchors it to its row. The twine that ::before draws on other rows moves to
    the row's background; the row grows 4 px into the gap and the next row's top so the twine and its shade reach
    as far as the pseudo did (bottom -1px, shadow 3px down). Bubbles sit under popovers (z 140). */
+/* The app slides a moved row with a transform (Sidebar.motion, 150 ms). A transform makes the row the bubble's
+   containing block, and Chromium keeps the bubble's position from that moment after the slide ends (on the peg, or
+   off-screen) until some later layout. So attention rows do not slide: they take their new place at once. A drag
+   (dnd-kit sets an inline transform) still moves the row; its bubble hides meanwhile (anchor fallback below). */
+[data-thread-item]:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-indigo-600, .text-guest-foreground, .lucide-alarm-clock)):not([style*="transform:"]) {
+  transform: none !important;
+}
 [data-thread-item]:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-indigo-600, .text-guest-foreground, .lucide-alarm-clock)) {
   content-visibility: visible;
   padding-bottom: 9px;
@@ -174,17 +181,18 @@
 }
 /* The ink is centred on the bubble's white body, which sits 2 px above the box centre (tail below).
    top stays linear in anchor(top), no max() clamp: Chromium may keep a bubble's layout from when its row was off-screen
-   and only add later scrolling at paint time, so a clamped top lands off-screen (row moved while off-screen). */
+   and only add later scrolling at paint time, so a clamped top lands off-screen (row moved while off-screen).
+   While the app slides a row (transform on the li, 150 ms) the row is the bubble's containing block and anchor() fails:
+   the -300px fallback parks the bubble outside the row, where the scroller clips it, instead of on the peg. */
 [data-thread-item]:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-indigo-600, .text-guest-foreground, .lucide-alarm-clock))::before {
   position: fixed;
   position-anchor: auto;
-  left: calc(anchor(right) + 4px);
+  left: calc(anchor(right, -300px) + 4px);
   top: calc(anchor(top) + 6px);
   bottom: auto;
   width: 40px;
   height: 30px;
   padding: 4px 11px 8px;
-  box-sizing: border-box;
   background: linear-gradient(var(--sk-c) 0 0) content-box, var(--sk-m, var(--sk-atlas)) 0 var(--sk-y) / 18px auto no-repeat content-box, var(--sk-bubble) center / 40px 30px;
   background-blend-mode: lighten, normal;
   box-shadow: none;
@@ -193,22 +201,20 @@
   pointer-events: none;
   z-index: 30;
   display: var(--sk-bub, block);
+  --sk-c: #34468c;
+  --sk-y: -166.5px;
+}
+[data-thread-item]:has(.group\/sidebar-status-slot .lucide-shield-question-mark)::before {
   --sk-c: #7a4d00;
   --sk-m: var(--sk-i-approval);
   --sk-y: 50%;
 }
-[data-thread-item]:has(.group\/sidebar-status-slot .text-indigo-600)::before {
-  --sk-c: #34468c;
-  --sk-m: var(--sk-atlas);
-  --sk-y: -166.5px;
-}
 [data-thread-item]:has(.group\/sidebar-status-slot .text-guest-foreground)::before {
   --sk-c: #84295f;
-  --sk-m: var(--sk-atlas);
   --sk-y: -189px;
 }
 [data-thread-item]:has(.group\/sidebar-status-slot .lucide-alarm-clock)::before {
-  --sk-m: var(--sk-atlas);
+  --sk-c: #7a4d00;
   --sk-y: -210px;
 }
 

@@ -1,0 +1,2 @@
+03:30:51 tank-final 4 inject ok thread {"i":0,"md":4}
+03:31:48 tank-final 4 idle cpu 3150 {"browser":120,"gpu":476,"utility":57,"renderer":2497} drawn 243 dropped 0 hover {"ov":0,"tr":0,"props":{}}

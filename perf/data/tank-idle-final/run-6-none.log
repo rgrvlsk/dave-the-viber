@@ -1,0 +1,2 @@
+03:33:43 none 6 inject ok thread {"i":0,"md":4}
+03:34:40 none 6 idle cpu 797 {"browser":208,"gpu":354,"utility":69,"renderer":166} drawn 60 dropped 0 hover {"ov":0,"tr":0,"props":{}}

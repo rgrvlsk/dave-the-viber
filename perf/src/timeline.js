@@ -15,7 +15,10 @@ const FILES = { none: null, full: "variants/full-d292df3.css", "full-noanim": "v
   "full-389a4bb": "variants/full-389a4bb.css", "full-norot-389a4bb": "variants/full-norot-389a4bb.css",
   "full-busy-389a4bb": "variants/full-busy-389a4bb.css",
   "full-busy2-389a4bb": "variants/full-busy2-389a4bb.css",
-  "full-final": "variants/full-final.css" };
+  "full-final": "variants/full-final.css", "full-final2": "variants/full-final2.css",
+  "tank-inf": "variants/tank-inf.css", "tank-steps": "variants/tank-steps.css", "tank-steps0": "variants/tank-steps0.css", "tank-tr0": "variants/tank-tr0.css", "tank-stepsk": "variants/tank-stepsk.css", "tank-stepsbp": "variants/tank-stepsbp.css",
+  "full-merged": "variants/full-merged.css",
+  "tank-trs-m": "variants/tank-trs-m.css", "tank-steps0-m": "variants/tank-steps0-m.css", "tank-tr0-m": "variants/tank-tr0-m.css", "tank-final": "variants/tank-final.css", "tank-final-nob": "variants/tank-final-nob.css", "tank-gpub": "variants/tank-gpub.css" };
 if (!(variant in FILES)) { console.error("variant must be " + Object.keys(FILES).join("|")); process.exit(2); }
 const CSS = FILES[variant] ? fs.readFileSync(path.join(ROOT, FILES[variant]), "utf8") : "";
 const PLAN_NAME = process.env.PLAN || "stress";
@@ -137,7 +140,9 @@ app.whenReady().then(async () => {
     { name: "wheel", id: "wheel@500", rows: 500, distance: 20000, speed: 5000, pointer: true },
     { name: "hover", id: "hover", rows: 50 },
   ];
-  const STEPS = { memory: MEMORY, scroll: SCROLL }[PLAN_NAME] || PLAN;
+  // Idle only, window visible: the steady cost of the always-on animations (fish tank variants).
+  const IDLE = [{ name: "idle", id: "idle", ms: 30000, rows: 50 }];
+  const STEPS = { memory: MEMORY, scroll: SCROLL, idle: IDLE }[PLAN_NAME] || PLAN;
   // Settle after the theme switch (recorded as phase "load"). SETTLE_MS=25000 lets the finite intro animations end first.
   await sleep(+(process.env.SETTLE_MS || 3000));
   const snap = () => { const o = {}; for (const m of app.getAppMetrics()) { const k = kindOf(m); o[k] = (o[k] || 0) + m.cpu.cumulativeCPUUsage; } return o; };

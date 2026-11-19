@@ -7,6 +7,20 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Fish tank alive again (2026-11-19, Roger: "find an ingenious way… you may change rhythms and speeds"). All tank
+  motion steps on one 1/6 s clock (steps(), duration/steps = 1/6 s): the koi swim on one 624 px film strip
+  (footer ::after, translate, 3 px steps, ~70 s cycle with both koi off stage between crossings), the bubbles keep
+  three speeds on background-position in the list's ::before (its box clips them at the surface and the sand), the
+  kelp tops sway 4 px on the list's ::after over still stems (new sprite `weed_s`). The list is `position: static` so
+  its pseudo-elements sit on the footer; the footer clips horizontally (`overflow-x: clip`). Hover replay of the tank
+  removed. Idle (`data/tank-idle-split`): +2.2 s CPU per 30 s vs the finite tank, against +6.9 s for the old infinite
+  tank; 11 frames/s. Rejected with numbers: GPU bubbles with a counter-moving clip-path (+0.7 s more), kelp
+  `steps(1)` on its custom property (still 60 fps), kelp on background-position (did not animate). Full 48,160.
+  Checks: Electron scroll probe (flag on, hover back after the stop); :7508 check.js 0 invalid, no overlap, footer
+  buttons hit-testable, 2 attention bubbles for the 2 waiting threads; light == dark except the known edge column;
+  reduced motion stops all tank animations (the koi rests at the left). The dev demo worktree had been deleted:
+  `/tmp/t3code-theme-demo` is now a local clone of /Users/roger/t3code at b0f0c44d22 (not a worktree), dev server
+  `T3CODE_PORT_OFFSET=1775 vp run dev --home-dir /tmp/t3code-dev` (pid in /tmp/t3code-theme-dev.pid).
 - Merge of the MacBook's bubble commit (2026-11-19). The MacBook thread built `ab3b631`/`ff9e756` ("every ticket
   that needs you gets its own bubble") from its own checkout (84ff6fa), without 389a4bb, c60b438 and 0fb2089, and
   installed that build on both Macs at 03:48, which removed the scroll flag (Roger: "scroll listens to hover again").

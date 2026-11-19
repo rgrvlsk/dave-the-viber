@@ -1,0 +1,2 @@
+02:22:48 tank-steps 3 inject ok thread {"i":0,"md":5}
+02:23:47 tank-steps 3 idle cpu 14528 {"browser":182,"gpu":3920,"utility":51,"renderer":10375} drawn 1767 dropped 33 hover {"ov":0,"tr":0,"props":{}}

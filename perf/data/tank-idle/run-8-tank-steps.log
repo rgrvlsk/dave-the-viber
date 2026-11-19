@@ -1,0 +1,2 @@
+02:30:00 tank-steps 8 inject ok thread {"i":0,"md":5}
+02:30:59 tank-steps 8 idle cpu 15177 {"browser":199,"gpu":5180,"utility":58,"renderer":9740} drawn 1768 dropped 32 hover {"ov":0,"tr":0,"props":{}}

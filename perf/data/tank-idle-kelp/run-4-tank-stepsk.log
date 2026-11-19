@@ -1,0 +1,2 @@
+02:40:55 tank-stepsk 4 inject ok thread {"i":0,"md":5}
+02:41:54 tank-stepsk 4 idle cpu 11692 {"browser":159,"gpu":3585,"utility":43,"renderer":7905} drawn 1774 dropped 27 hover {"ov":0,"tr":0,"props":{}}

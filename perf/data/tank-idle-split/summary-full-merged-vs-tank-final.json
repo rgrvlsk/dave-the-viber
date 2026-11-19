@@ -1,0 +1,842 @@
+{
+ "runs": {
+  "1": "none",
+  "2": "full-merged",
+  "3": "tank-final",
+  "4": "tank-final-nob",
+  "5": "tank-inf",
+  "6": "tank-inf",
+  "7": "tank-final-nob",
+  "8": "tank-final",
+  "9": "full-merged",
+  "10": "none"
+ },
+ "pairs": [
+  [
+   2,
+   3
+  ],
+  [
+   9,
+   8
+  ]
+ ],
+ "phases": {
+  "idle": {
+   "cpu.total.ms": {
+    "none": 661.5,
+    "full": 2895.5,
+    "none.all": [
+     655,
+     668
+    ],
+    "full.all": [
+     3218,
+     2573
+    ],
+    "diff": 2234.0,
+    "ci": [
+     1905.0,
+     2563.0
+    ],
+    "ratio": 4.377173091458806,
+    "sig": true
+   },
+   "cpu.renderer.ms": {
+    "none": 303.5,
+    "full": 2030.5,
+    "none.all": [
+     297,
+     310
+    ],
+    "full.all": [
+     2331,
+     1730
+    ],
+    "diff": 1727.0,
+    "ci": [
+     1420.0,
+     2034.0
+    ],
+    "ratio": 6.690280065897858,
+    "sig": true
+   },
+   "cpu.gpu.ms": {
+    "none": 187.0,
+    "full": 664.5,
+    "none.all": [
+     190,
+     184
+    ],
+    "full.all": [
+     665,
+     664
+    ],
+    "diff": 477.5,
+    "ci": [
+     475.0,
+     480.0
+    ],
+    "ratio": 3.553475935828877,
+    "sig": true
+   },
+   "cpu.browser.ms": {
+    "none": 125.0,
+    "full": 134.5,
+    "none.all": [
+     122,
+     128
+    ],
+    "full.all": [
+     148,
+     121
+    ],
+    "diff": 9.5,
+    "ci": [
+     -7.0,
+     26.0
+    ],
+    "ratio": 1.076,
+    "sig": false
+   },
+   "cpu.%core": {
+    "none": 2.2048530097993466,
+    "full": 9.650844517130404,
+    "none.all": [
+     2.1831877874808345,
+     2.2265182321178587
+    ],
+    "full.all": [
+     10.72559410725594,
+     8.576094927004867
+    ],
+    "diff": 7.4459915073310565,
+    "ci": [
+     6.349576694887008,
+     8.542406319775106
+    ],
+    "ratio": 4.377092021208562,
+    "sig": true
+   },
+   "energy.impact": {
+    "none": 2.7586206896551726,
+    "full": 10.622906403940886,
+    "none.all": [
+     2.865517241379311,
+     2.651724137931035
+    ],
+    "full.all": [
+     11.828571428571427,
+     9.417241379310346
+    ],
+    "diff": 7.864285714285714,
+    "ci": [
+     6.76551724137931,
+     8.963054187192117
+    ],
+    "ratio": 3.850803571428571,
+    "sig": true
+   },
+   "frames.drawn": {
+    "none": 61.0,
+    "full": 325.0,
+    "none.all": [
+     61,
+     61
+    ],
+    "full.all": [
+     252,
+     398
+    ],
+    "diff": 264.0,
+    "ci": [
+     191.0,
+     337.0
+    ],
+    "ratio": 5.327868852459017,
+    "sig": true
+   },
+   "frames.dropped": {
+    "none": 21.0,
+    "full": 1.5,
+    "none.all": [
+     20,
+     22
+    ],
+    "full.all": [
+     3,
+     0
+    ],
+    "diff": -19.5,
+    "ci": [
+     -22.0,
+     -17.0
+    ],
+    "ratio": 0.07142857142857142,
+    "sig": true
+   },
+   "raf.p95.ms": {
+    "none": null,
+    "full": null,
+    "none.all": [],
+    "full.all": [],
+    "diff": null,
+    "ci": [
+     null,
+     null
+    ],
+    "ratio": null,
+    "sig": false
+   },
+   "style.ms": {
+    "none": 0.0,
+    "full": 616.41,
+    "none.all": [
+     0,
+     0
+    ],
+    "full.all": [
+     813.73,
+     419.09
+    ],
+    "diff": 616.41,
+    "ci": [
+     419.09,
+     813.73
+    ],
+    "ratio": null,
+    "sig": true
+   },
+   "layout.ms": {
+    "none": 4.385,
+    "full": 0.715,
+    "none.all": [
+     1.87,
+     6.9
+    ],
+    "full.all": [
+     1.43,
+     0
+    ],
+    "diff": -3.6700000000000004,
+    "ci": [
+     -6.9,
+     -0.44000000000000017
+    ],
+    "ratio": 0.1630558722919042,
+    "sig": true
+   },
+   "mem.renderer.MB": {
+    "none": 306.5403361344538,
+    "full": 371.9142857142857,
+    "none.all": [
+     345.709243697479,
+     267.37142857142857
+    ],
+    "full.all": [
+     381.22605042016806,
+     362.60252100840336
+    ],
+    "diff": 65.37394957983193,
+    "ci": [
+     35.51680672268907,
+     95.23109243697479
+    ],
+    "ratio": 1.2132637759983331,
+    "sig": true
+   },
+   "mem.gpu.MB": {
+    "none": 82.81386554621848,
+    "full": 82.7655462184874,
+    "none.all": [
+     85.43529411764705,
+     80.19243697478991
+    ],
+    "full.all": [
+     91.43025210084035,
+     74.10084033613445
+    ],
+    "diff": -0.04831932773107894,
+    "ci": [
+     -6.09159663865546,
+     5.994957983193302
+    ],
+    "ratio": 0.9994165309466914,
+    "sig": false
+   },
+   "wake.gpu/s": {
+    "none": 63.445378151260506,
+    "full": 116.69327731092437,
+    "none.all": [
+     63.142857142857146,
+     63.747899159663866
+    ],
+    "full.all": [
+     114.15966386554622,
+     119.22689075630252
+    ],
+    "diff": 53.247899159663866,
+    "ci": [
+     51.016806722689076,
+     55.47899159663866
+    ],
+    "ratio": 1.839271523178808,
+    "sig": true
+   },
+   "wake.renderer/s": {
+    "none": 6.0966386554621845,
+    "full": 11.218487394957982,
+    "none.all": [
+     6.008403361344538,
+     6.184873949579832
+    ],
+    "full.all": [
+     10.478991596638656,
+     11.957983193277311
+    ],
+    "diff": 5.121848739495798,
+    "ci": [
+     4.470588235294118,
+     5.773109243697479
+    ],
+    "ratio": 1.8401102687801516,
+    "sig": true
+   },
+   "sys.cpu%": {
+    "none": 50.05126050420168,
+    "full": 40.444117647058825,
+    "none.all": [
+     60.48487394957983,
+     39.61764705882353
+    ],
+    "full.all": [
+     38.07058823529412,
+     42.81764705882353
+    ],
+    "diff": -9.607142857142854,
+    "ci": [
+     -22.41428571428571,
+     3.200000000000003
+    ],
+    "ratio": 0.8080539279058445,
+    "sig": false
+   },
+   "wall.ms": {
+    "none": 30002.0,
+    "full": 30002.5,
+    "none.all": [
+     30002,
+     30002
+    ],
+    "full.all": [
+     30003,
+     30002
+    ],
+    "diff": 0.5,
+    "ci": [
+     0.0,
+     1.0
+    ],
+    "ratio": 1.0000166655556297,
+    "sig": false
+   },
+   "hover.changes": {
+    "none": 0.0,
+    "full": 0.0,
+    "none.all": [
+     0,
+     0
+    ],
+    "full.all": [
+     0,
+     0
+    ],
+    "diff": 0.0,
+    "ci": [
+     0.0,
+     0.0
+    ],
+    "ratio": null,
+    "sig": false
+   },
+   "hover.transitions": {
+    "none": 0.0,
+    "full": 0.0,
+    "none.all": [
+     0,
+     0
+    ],
+    "full.all": [
+     0,
+     0
+    ],
+    "diff": 0.0,
+    "ci": [
+     0.0,
+     0.0
+    ],
+    "ratio": null,
+    "sig": false
+   }
+  }
+ },
+ "whole": {
+  "cpu.total.s": {
+   "none": 0.6615,
+   "full": 2.8955,
+   "none.all": [
+    0.655,
+    0.668
+   ],
+   "full.all": [
+    3.218,
+    2.573
+   ],
+   "diff": 2.234,
+   "ci": [
+    1.9049999999999998,
+    2.5629999999999997
+   ],
+   "ratio": 4.377173091458806,
+   "sig": true
+  },
+  "cpu.renderer.s": {
+   "none": 0.3035,
+   "full": 2.0305,
+   "none.all": [
+    0.297,
+    0.31
+   ],
+   "full.all": [
+    2.331,
+    1.73
+   ],
+   "diff": 1.7269999999999999,
+   "ci": [
+    1.42,
+    2.034
+   ],
+   "ratio": 6.690280065897858,
+   "sig": true
+  },
+  "cpu.gpu.s": {
+   "none": 0.187,
+   "full": 0.6645000000000001,
+   "none.all": [
+    0.19,
+    0.184
+   ],
+   "full.all": [
+    0.665,
+    0.664
+   ],
+   "diff": 0.47750000000000004,
+   "ci": [
+    0.47500000000000003,
+    0.48000000000000004
+   ],
+   "ratio": 3.5534759358288777,
+   "sig": true
+  },
+  "cpu.browser.s": {
+   "none": 0.125,
+   "full": 0.1345,
+   "none.all": [
+    0.122,
+    0.128
+   ],
+   "full.all": [
+    0.148,
+    0.121
+   ],
+   "diff": 0.009499999999999995,
+   "ci": [
+    -0.007000000000000006,
+    0.025999999999999995
+   ],
+   "ratio": 1.076,
+   "sig": false
+  },
+  "energy.impact.mean": {
+   "none": 2.7586206896551726,
+   "full": 10.622906403940886,
+   "none.all": [
+    2.865517241379311,
+    2.651724137931035
+   ],
+   "full.all": [
+    11.828571428571427,
+    9.417241379310346
+   ],
+   "diff": 7.864285714285714,
+   "ci": [
+    6.76551724137931,
+    8.963054187192117
+   ],
+   "ratio": 3.850803571428571,
+   "sig": true
+  },
+  "frames.drawn": {
+   "none": 61.0,
+   "full": 325.0,
+   "none.all": [
+    61,
+    61
+   ],
+   "full.all": [
+    252,
+    398
+   ],
+   "diff": 264.0,
+   "ci": [
+    191.0,
+    337.0
+   ],
+   "ratio": 5.327868852459017,
+   "sig": true
+  },
+  "frames.dropped": {
+   "none": 21.0,
+   "full": 1.5,
+   "none.all": [
+    20,
+    22
+   ],
+   "full.all": [
+    3,
+    0
+   ],
+   "diff": -19.5,
+   "ci": [
+    -22.0,
+    -17.0
+   ],
+   "ratio": 0.07142857142857142,
+   "sig": true
+  },
+  "mem.renderer.max.MB": {
+   "none": 427.54999999999995,
+   "full": 428.45,
+   "none.all": [
+    444.4,
+    410.7
+   ],
+   "full.all": [
+    415.5,
+    441.4
+   ],
+   "diff": 0.9000000000000057,
+   "ci": [
+    -28.899999999999977,
+    30.69999999999999
+   ],
+   "ratio": 1.002105016957081,
+   "sig": false
+  },
+  "mem.gpu.max.MB": {
+   "none": 91.65,
+   "full": 89.05,
+   "none.all": [
+    92.4,
+    90.9
+   ],
+   "full.all": [
+    98.3,
+    79.8
+   ],
+   "diff": -2.6000000000000085,
+   "ci": [
+    -11.100000000000009,
+    5.8999999999999915
+   ],
+   "ratio": 0.9716312056737588,
+   "sig": false
+  },
+  "mem.footprint.max.MB": {
+   "none": 1170.0,
+   "full": 1164.5,
+   "none.all": [
+    1155,
+    1185
+   ],
+   "full.all": [
+    1135,
+    1194
+   ],
+   "diff": -5.5,
+   "ci": [
+    -20.0,
+    9.0
+   ],
+   "ratio": 0.9952991452991453,
+   "sig": false
+  },
+  "mem.footprint.end.MB": {
+   "none": 680.0,
+   "full": 791.0,
+   "none.all": [
+    698,
+    662
+   ],
+   "full.all": [
+    796,
+    786
+   ],
+   "diff": 111.0,
+   "ci": [
+    98.0,
+    124.0
+   ],
+   "ratio": 1.1632352941176471,
+   "sig": true
+  },
+  "heap.max.MB": {
+   "none": 139.1382942199707,
+   "full": 153.0077075958252,
+   "none.all": [
+    133.83977508544922,
+    144.4368133544922
+   ],
+   "full.all": [
+    159.03560256958008,
+    146.9798126220703
+   ],
+   "diff": 13.869413375854492,
+   "ci": [
+    2.542999267578125,
+    25.19582748413086
+   ],
+   "ratio": 1.099680777701124,
+   "sig": true
+  },
+  "heap.end.MB": {
+   "none": 133.87420463562012,
+   "full": 133.23337936401367,
+   "none.all": [
+    133.83977508544922,
+    133.90863418579102
+   ],
+   "full.all": [
+    133.8139877319336,
+    132.65277099609375
+   ],
+   "diff": -0.6408252716064453,
+   "ci": [
+    -1.2558631896972656,
+    -0.025787353515625
+   ],
+   "ratio": 0.9952132281693052,
+   "sig": true
+  },
+  "phases.wall.s": {
+   "none": 30.002,
+   "full": 30.002499999999998,
+   "none.all": [
+    30.002,
+    30.002
+   ],
+   "full.all": [
+    30.003,
+    30.002
+   ],
+   "diff": 0.0005000000000006111,
+   "ci": [
+    0.0,
+    0.0010000000000012221
+   ],
+   "ratio": 1.0000166655556295,
+   "sig": false
+  },
+  "sys.cpu%": {
+   "none": 50.05126050420168,
+   "full": 40.444117647058825,
+   "none.all": [
+    60.48487394957983,
+    39.61764705882353
+   ],
+   "full.all": [
+    38.07058823529412,
+    42.81764705882353
+   ],
+   "diff": -9.607142857142854,
+   "ci": [
+    -22.41428571428571,
+    3.200000000000003
+   ],
+   "ratio": 0.8080539279058445,
+   "sig": false
+  }
+ },
+ "perRun": {
+  "1": {
+   "cpu.total.s": 0.703,
+   "cpu.renderer.s": 0.192,
+   "cpu.gpu.s": 0.293,
+   "cpu.browser.s": 0.158,
+   "energy.impact.mean": 2.193103448275862,
+   "frames.drawn": 73,
+   "frames.dropped": 0,
+   "mem.renderer.max.MB": 319.2,
+   "mem.gpu.max.MB": 78,
+   "mem.footprint.max.MB": 1172,
+   "mem.footprint.end.MB": 807,
+   "heap.max.MB": 146.24527740478516,
+   "heap.end.MB": 133.7531967163086,
+   "phases.wall.s": 30.003,
+   "sys.cpu%": 53.75378151260504
+  },
+  "2": {
+   "cpu.total.s": 0.655,
+   "cpu.renderer.s": 0.297,
+   "cpu.gpu.s": 0.19,
+   "cpu.browser.s": 0.122,
+   "energy.impact.mean": 2.865517241379311,
+   "frames.drawn": 61,
+   "frames.dropped": 20,
+   "mem.renderer.max.MB": 444.4,
+   "mem.gpu.max.MB": 92.4,
+   "mem.footprint.max.MB": 1155,
+   "mem.footprint.end.MB": 698,
+   "heap.max.MB": 133.83977508544922,
+   "heap.end.MB": 133.83977508544922,
+   "phases.wall.s": 30.002,
+   "sys.cpu%": 60.48487394957983
+  },
+  "3": {
+   "cpu.total.s": 3.218,
+   "cpu.renderer.s": 2.331,
+   "cpu.gpu.s": 0.665,
+   "cpu.browser.s": 0.148,
+   "energy.impact.mean": 11.828571428571427,
+   "frames.drawn": 252,
+   "frames.dropped": 3,
+   "mem.renderer.max.MB": 415.5,
+   "mem.gpu.max.MB": 98.3,
+   "mem.footprint.max.MB": 1135,
+   "mem.footprint.end.MB": 796,
+   "heap.max.MB": 159.03560256958008,
+   "heap.end.MB": 133.8139877319336,
+   "phases.wall.s": 30.003,
+   "sys.cpu%": 38.07058823529412
+  },
+  "4": {
+   "cpu.total.s": 1.748,
+   "cpu.renderer.s": 1.014,
+   "cpu.gpu.s": 0.532,
+   "cpu.browser.s": 0.141,
+   "energy.impact.mean": 5.4,
+   "frames.drawn": 242,
+   "frames.dropped": 12,
+   "mem.renderer.max.MB": 383.8,
+   "mem.gpu.max.MB": 98.8,
+   "mem.footprint.max.MB": 1122,
+   "mem.footprint.end.MB": 729,
+   "heap.max.MB": 138.23468017578125,
+   "heap.end.MB": 132.81877899169922,
+   "phases.wall.s": 30.004,
+   "sys.cpu%": 57.10252100840336
+  },
+  "5": {
+   "cpu.total.s": 7.261,
+   "cpu.renderer.s": 4.916,
+   "cpu.gpu.s": 2.157,
+   "cpu.browser.s": 0.147,
+   "energy.impact.mean": 23.728571428571428,
+   "frames.drawn": 1801,
+   "frames.dropped": 0,
+   "mem.renderer.max.MB": 559.5,
+   "mem.gpu.max.MB": 96.5,
+   "mem.footprint.max.MB": 1185,
+   "mem.footprint.end.MB": 854,
+   "heap.max.MB": 144.2085418701172,
+   "heap.end.MB": 132.677978515625,
+   "phases.wall.s": 30.008,
+   "sys.cpu%": 48.41596638655462
+  },
+  "6": {
+   "cpu.total.s": 7.826,
+   "cpu.renderer.s": 5.293,
+   "cpu.gpu.s": 2.339,
+   "cpu.browser.s": 0.145,
+   "energy.impact.mean": 25.864285714285717,
+   "frames.drawn": 1795,
+   "frames.dropped": 5,
+   "mem.renderer.max.MB": 576.1,
+   "mem.gpu.max.MB": 96.6,
+   "mem.footprint.max.MB": 1135,
+   "mem.footprint.end.MB": 836,
+   "heap.max.MB": 156.20616149902344,
+   "heap.end.MB": 133.73989868164062,
+   "phases.wall.s": 30.002,
+   "sys.cpu%": 49.74285714285714
+  },
+  "7": {
+   "cpu.total.s": 1.939,
+   "cpu.renderer.s": 1.169,
+   "cpu.gpu.s": 0.567,
+   "cpu.browser.s": 0.144,
+   "energy.impact.mean": 7.5249999999999995,
+   "frames.drawn": 292,
+   "frames.dropped": 15,
+   "mem.renderer.max.MB": 310.1,
+   "mem.gpu.max.MB": 83.6,
+   "mem.footprint.max.MB": 1117,
+   "mem.footprint.end.MB": 684,
+   "heap.max.MB": 148.190185546875,
+   "heap.end.MB": 133.46483612060547,
+   "phases.wall.s": 30.002,
+   "sys.cpu%": 39.50084033613446
+  },
+  "8": {
+   "cpu.total.s": 2.573,
+   "cpu.renderer.s": 1.73,
+   "cpu.gpu.s": 0.664,
+   "cpu.browser.s": 0.121,
+   "energy.impact.mean": 9.417241379310346,
+   "frames.drawn": 398,
+   "frames.dropped": 0,
+   "mem.renderer.max.MB": 441.4,
+   "mem.gpu.max.MB": 79.8,
+   "mem.footprint.max.MB": 1194,
+   "mem.footprint.end.MB": 786,
+   "heap.max.MB": 146.9798126220703,
+   "heap.end.MB": 132.65277099609375,
+   "phases.wall.s": 30.002,
+   "sys.cpu%": 42.81764705882353
+  },
+  "9": {
+   "cpu.total.s": 0.668,
+   "cpu.renderer.s": 0.31,
+   "cpu.gpu.s": 0.184,
+   "cpu.browser.s": 0.128,
+   "energy.impact.mean": 2.651724137931035,
+   "frames.drawn": 61,
+   "frames.dropped": 22,
+   "mem.renderer.max.MB": 410.7,
+   "mem.gpu.max.MB": 90.9,
+   "mem.footprint.max.MB": 1185,
+   "mem.footprint.end.MB": 662,
+   "heap.max.MB": 144.4368133544922,
+   "heap.end.MB": 133.90863418579102,
+   "phases.wall.s": 30.002,
+   "sys.cpu%": 39.61764705882353
+  },
+  "10": {
+   "cpu.total.s": 0.861,
+   "cpu.renderer.s": 0.237,
+   "cpu.gpu.s": 0.38,
+   "cpu.browser.s": 0.178,
+   "energy.impact.mean": 3.8034482758620687,
+   "frames.drawn": 124,
+   "frames.dropped": 0,
+   "mem.renderer.max.MB": 282.7,
+   "mem.gpu.max.MB": 70.1,
+   "mem.footprint.max.MB": 1282,
+   "mem.footprint.end.MB": 813,
+   "heap.max.MB": 144.95565032958984,
+   "heap.end.MB": 133.59467697143555,
+   "phases.wall.s": 30.003,
+   "sys.cpu%": 35.2025
+  }
+ }
+}

@@ -181,3 +181,29 @@ Final build (flag + minifier change), `A=full-389a4bb B=full-final C=none ./run-
 - Limits: a click during a scroll, or within 150 ms of its end, lands on the list instead of a row; a change of the
   list height (rows added) also moves `--sk-p` and turns hover off for 150 ms. Browsers without `if()` keep the plain
   hover. Measured only in Electron 44.10.1 (Chromium 152) on this Mac mini.
+
+# Fish tank alive again, in stop-motion (2026-11-19)
+Roger: "the UX is much worse since we let it stop" → "find an ingenious way; you may change rhythms and speeds".
+Short idle tests: `PLAN=idle ./run-idle.sh` (25 s settle so finite intros have ended, then 30 s idle, window
+visible), blocks ABC..CBA, 2 blocks. Absolute numbers differ between batches; compare within one batch only.
+
+| Batch | Variant (vs the build of that day with the finite tank) | Extra CPU / 30 s | Frames/s |
+|---|---|---:|---:|
+| `tank-idle` | infinite smooth, as before | +9.9 s | 59 |
+| | `steps()` on background-position, kelp swaying | +10.4 s | 59 |
+| | `steps()` on background-position, kelp still | +4.6 s | 23 |
+| | translate (GPU), smooth, kelp still | +7.5 s | 60 |
+| `tank-idle-kelp` | kelp sway with `steps(1)` (custom property) | +7.1 s | 59 |
+| `tank-idle-gpu` | translate + `steps()`, kelp still | +1.3 s | 23 |
+| `tank-idle-split` | infinite smooth, as before | +6.9 s [6.6, 7.2] | 60 |
+| | **final: one 1/6 s clock, koi + kelp on translate, bubbles on background-position** | **+2.2 s [1.9, 2.6]** | 11 |
+| | final with the bubbles still | +1.2 s [1.1, 1.3] | 9 |
+| `tank-idle-gpub` | final, bubbles on translate + counter-moving clip-path | +0.7 s more than final | 9 |
+
+- A custom-property animation (the kelp's `--sk-w1` swap) makes Chromium draw every frame whatever its timing
+  function; `background-position` and `translate` with `steps()` draw only when the value jumps.
+- `translate` alone still draws 60 frames/s on the compositor; with `steps()` it draws only on the steps.
+- `clip-path` animations run on the main thread here (Electron 44, Chromium 152): the counter-moving clip that keeps
+  GPU bubbles inside the water costs more than moving the bubbles' background.
+- Final: −68% of the infinite tank's idle cost, 11 frames/s instead of 60. The kelp sway is a 4 px translate of the
+  kelp tops (weed_b was weed_a with its top 7 rows 2 px left); the stems are a new sprite `weed_s`.

@@ -1,0 +1,2 @@
+03:00:38 tank-trs-m 5 inject ok thread {"i":0,"md":5}
+03:01:36 tank-trs-m 5 idle cpu 6109 {"browser":115,"gpu":1144,"utility":33,"renderer":4817} drawn 689 dropped 60 hover {"ov":0,"tr":0,"props":{}}

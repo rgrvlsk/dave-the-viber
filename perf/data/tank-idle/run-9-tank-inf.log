@@ -1,0 +1,2 @@
+02:31:27 tank-inf 9 inject ok thread {"i":0,"md":5}
+02:32:27 tank-inf 9 idle cpu 14387 {"browser":204,"gpu":4286,"utility":51,"renderer":9846} drawn 1762 dropped 39 hover {"ov":0,"tr":0,"props":{}}

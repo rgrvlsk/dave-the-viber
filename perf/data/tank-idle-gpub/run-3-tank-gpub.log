@@ -1,0 +1,2 @@
+03:53:51 tank-gpub 3 inject ok thread {"i":0,"md":4}
+03:54:49 tank-gpub 3 idle cpu 4116 {"browser":148,"gpu":733,"utility":66,"renderer":3169} drawn 290 dropped 16 hover {"ov":0,"tr":0,"props":{}}

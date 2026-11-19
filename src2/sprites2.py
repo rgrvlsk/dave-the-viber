@@ -74,7 +74,8 @@ TOKENS = {
     "fish": multi(FISH, FISH_P),
     "fish_l": multi("\n".join(r[::-1] for r in FISH.split("\n")), FISH_P),
     "weed_a": multi(png("weed_a", WEED_P), WEED_P),
-    "weed_b": multi(png("weed_b", WEED_P), WEED_P),
+    # The kelp's stem: weed_a without its top 7 rows, which sway on their own layer (weed_b = those rows 2 px left).
+    "weed_s": multi("\n".join(png("weed_a", WEED_P).split("\n")[7:]), WEED_P),
     "coral": multi(png("coral", CORAL_P), CORAL_P),
     "brain": multi(png("brain", BRAIN_P), BRAIN_P),
     "sand": multi(png("sand", SAND_P), SAND_P),

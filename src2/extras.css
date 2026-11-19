@@ -5,8 +5,6 @@
 :root {
   --sk-bubble: {{bubble}};
   --sk-fish: {{fish}};
-  --sk-weed-a: {{weed_a}};
-  --sk-weed-b: {{weed_b}};
   --sk-wood: {{counter}};
   --diff-deletion-foreground: #ff9a8a;
   --diff-addition-foreground: #8fdc9a;
@@ -1104,19 +1102,28 @@ svg.lucide[class*="loader"] {
    ticket list, so tickets that scroll down sink into the water (the list gets 56 px of bottom padding, so the
    last ticket can still rest above it). Tank 0..70 px from -56 px: lacquer rim, water, kelp, coral, sand on the
    plank (14..30 px, 2 px shadow); the keys hang on the front below with 6 px above and below.
-   ::before is the tank (kelp sways in two frames), ::after the life: a koi swims there and back, bubbles rise. */
+   The tank lives all the time, in stop-motion on one clock: every step falls on a 1/6 s tick (steps() with
+   duration / steps = 1/6 s, all started together), so the window draws ~6 frames/s for the tank instead of 60,
+   and only when something moves. Infinite smooth motion cost +33% of a core at idle; this +4% (perf/REPORT.md).
+   The footer's ::before is the tank (still), its ::after the two koi on one film strip (translate, on the GPU:
+   the right-facing koi crosses while the left-facing one waits 600 px further right, then the strip runs back);
+   the list's ::before holds the bubbles (background-position, so its box clips them at the surface and the sand)
+   and its ::after the kelp tops, which sway 4 px over still stems (weed_b was weed_a with its top rows 2 px left).
+   The list is static so its pseudo-elements sit on the footer, whatever the footer shows above the keys.
+   ponytail: a sidebar wider than 574 px shows the waiting koi; widen the strip if that ever happens. */
 @keyframes sk-swim {
-  0% { background-position-x: -26px, calc(100% + 26px), var(--sk-bx); }
-  45%, 50% { background-position-x: calc(100% + 26px), calc(100% + 26px), var(--sk-bx); }
-  95%, 100% { background-position-x: calc(100% + 26px), -26px, var(--sk-bx); }
+  0% { translate: -26px; animation-timing-function: steps(200); }
+  47.1698% { translate: 574px; animation-timing-function: steps(1); }
+  50% { translate: -26px; animation-timing-function: steps(200); }
+  97.1698% { translate: -626px; animation-timing-function: steps(1); }
+  100% { translate: -626px; }
 }
 @keyframes sk-rise {
-  from { background-position-y: 14px, 32px, 0, 20px, 8px; }
-  to { background-position-y: 14px, 32px, -96px, -28px, -136px; }
+  from { background-position-y: 0, 20px, 8px; }
+  to { background-position-y: -96px, -28px, -136px; }
 }
 @keyframes sk-sway {
-  0%, 100% { --sk-w1: var(--sk-weed-a); --sk-w2: var(--sk-weed-b); }
-  50% { --sk-w1: var(--sk-weed-b); --sk-w2: var(--sk-weed-a); }
+  50% { translate: -4px; }
 }
 [data-slot="sidebar-inner"] [data-slot="sidebar-content"] {
   padding-bottom: 56px;
@@ -1184,38 +1191,58 @@ svg.lucide[class*="loader"] {
 }
 
 /* Only the main sidebar's counter holds the tank: Settings' side nav has an empty footer of its own. */
-[data-slot="sidebar-inner"] [data-slot="sidebar-footer"]::before,
-[data-slot="sidebar-inner"] [data-slot="sidebar-footer"]::after {
-  content: "";
-  position: absolute;
-  inset: -56px 0 calc(100% - 14px);
-  pointer-events: none;
-}
-[data-slot="sidebar-footer"]::before {
-  --sk-w1: var(--sk-weed-a);
-  --sk-w2: var(--sk-weed-b);
-  background:
-    linear-gradient(#11131a 0 0) top / 100% 3px no-repeat,
-    linear-gradient(var(--sk-lacquer-edge) 0 0) 0 3px / 100% 1px no-repeat,
-    linear-gradient(#bff3ffb3 0 0) 0 6px / 100% 1px no-repeat,
-    var(--sk-w1) left 12px bottom 4px / 14px 44px no-repeat,
-    var(--sk-w2) 58% calc(100% - 4px) / 14px 44px no-repeat,
-    var(--sk-w1) right 36px bottom 4px / 14px 44px no-repeat,
-    {{coral}} right 8px bottom 6px / 22px 20px no-repeat,
-    {{brain}} 34% calc(100% - 6px) / 18px 10px no-repeat,
-    {{sand}} left bottom / 16px 8px repeat-x,
-    linear-gradient(90deg, #bff3ff59 1px, #0000 0 calc(100% - 1px), #bff3ff59 0),
-    linear-gradient(#0000 6px, #006a8c1f 6px, #00587a2e 30px, #00334f8c);
-  animation: sk-sway 2.4s 6, sk-sway 2.4s 6;
-}
-[data-slot="sidebar-inner"] [data-slot="sidebar-footer"]::after {
-  --sk-bx: 32px, calc(100% - 22px), 66%;
-  --sk-bb: {{bubbles}} 0 0 / 10px 48px repeat-y;
-  inset: -49px 1px calc(100% - 8px);
-  background: var(--sk-fish) -26px 14px / 24px 14px no-repeat, {{fish_l}} -26px 32px / 24px 14px no-repeat, var(--sk-bb), var(--sk-bb), var(--sk-bb);
-  background-position-x: -26px, -26px, var(--sk-bx);
-  background-position-y: 14px, 32px, 0, 20px, 8px;
-  animation: sk-swim 40s linear 0.5, sk-rise 8s linear 2, sk-swim 40s linear 0.5, sk-rise 8s linear 2;
+[data-slot="sidebar-inner"] [data-slot="sidebar-footer"] {
+  overflow-x: clip;
+  &::before,
+  &::after,
+  > ul::before,
+  > ul::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+  }
+  &::before {
+    inset: -56px 0 calc(100% - 14px);
+    background:
+      linear-gradient(#11131a 0 0) top / 100% 3px no-repeat,
+      linear-gradient(var(--sk-lacquer-edge) 0 0) 0 3px / 100% 1px no-repeat,
+      linear-gradient(#bff3ffb3 0 0) 0 6px / 100% 1px no-repeat,
+      {{weed_s}} left 12px bottom 4px / 14px 30px no-repeat,
+      {{weed_s}} 58% calc(100% - 4px) / 14px 30px no-repeat,
+      {{weed_s}} right 36px bottom 4px / 14px 30px no-repeat,
+      {{coral}} right 8px bottom 6px / 22px 20px no-repeat,
+      {{brain}} 34% calc(100% - 6px) / 18px 10px no-repeat,
+      {{sand}} left bottom / 16px 8px repeat-x,
+      linear-gradient(90deg, #bff3ff59 1px, #0000 0 calc(100% - 1px), #bff3ff59 0),
+      linear-gradient(#0000 6px, #006a8c1f 6px, #00587a2e 30px, #00334f8c);
+  }
+  &::after {
+    z-index: 1;
+    top: -35px;
+    left: 1px;
+    width: 624px;
+    height: 32px;
+    background: var(--sk-fish) 0 0 / 24px 14px no-repeat, {{fish_l}} 600px 18px / 24px 14px no-repeat;
+    animation: sk-swim calc(424s / 6) infinite;
+  }
+  > ul {
+    position: static;
+  }
+  > ul::before {
+    --sk-bb: {{bubbles}} 0 0 / 10px 48px repeat-y;
+    inset: -49px 1px calc(100% - 8px);
+    background: var(--sk-bb), var(--sk-bb), var(--sk-bb);
+    background-position-x: 32px, calc(100% - 22px), 66%;
+    animation: sk-rise 8s steps(48) infinite;
+  }
+  > ul::after {
+    top: -34px;
+    left: 0;
+    right: 0;
+    height: 14px;
+    background: {{weed_a}} left 12px top 0 / 14px 44px no-repeat, {{weed_a}} 58% 0 / 14px 44px no-repeat, {{weed_a}} right 36px top 0 / 14px 44px no-repeat;
+    animation: sk-sway calc(16s / 6) steps(1) infinite;
+  }
 }
 /* The restaurant bar runs under the chat: the sidebar counter's plank and front at the same height (60 px). Behind
    it stand the stools (only their backs show) and Dave, lit by his laptop, whose lid shows a fish. The pad rests on
@@ -1295,24 +1322,18 @@ svg.lucide[class*="loader"] {
 }
 /* Life on show, then still: the sign, the tank and Dave's screen play 13-20 s when they appear and then rest in
    their first frame (infinite, they kept the window drawing 60 frames/s: 50% of a core against 21% with no skin,
-   and Blink never purged its idle memory). They play again while the pointer is over the sign, the counter or the
-   composer lane, at the point of their cycle that the time since they appeared gives (a koi may pop in mid-tank).
-   The tank lists each of its animations twice and keeps only the last copy under the pointer. When it leaves, the
-   last copy ends at once and a fresh first copy plays the intro again (names match from the end of the list). */
+   and Blink never purged its idle memory). They play again while the pointer is over the sign or the composer
+   lane, at the point of their cycle that the time since they appeared gives. The fish tank lives all the time
+   (stop-motion, above). */
 [aria-label="T3 Code home"]:hover,
 .chat-composer-lane:hover::before {
   animation-iteration-count: infinite;
 }
-[data-slot="sidebar-inner"] [data-slot="sidebar-footer"]:hover::before {
-  animation: sk-sway 2.4s infinite;
-}
-[data-slot="sidebar-inner"] [data-slot="sidebar-footer"]:hover::after {
-  animation: sk-swim 40s linear infinite, sk-rise 8s linear infinite;
-}
 
 @media (prefers-reduced-motion: reduce) {
-  [data-slot="sidebar-footer"]::before,
   [data-slot="sidebar-footer"]::after,
+  [data-slot="sidebar-footer"] > ul::before,
+  [data-slot="sidebar-footer"] > ul::after,
   .chat-composer-lane::before {
     animation: none !important;
   }

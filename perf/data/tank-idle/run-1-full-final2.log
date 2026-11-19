@@ -1,0 +1,2 @@
+02:19:55 full-final2 1 inject ok thread {"i":0,"md":5}
+02:20:53 full-final2 1 idle cpu 6549 {"browser":224,"gpu":1840,"utility":64,"renderer":4421} drawn 480 dropped 80 hover {"ov":0,"tr":0,"props":{}}

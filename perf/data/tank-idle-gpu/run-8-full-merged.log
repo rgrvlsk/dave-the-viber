@@ -1,0 +1,2 @@
+03:04:58 full-merged 8 inject ok thread {"i":0,"md":5}
+03:05:56 full-merged 8 idle cpu 4364 {"browser":147,"gpu":1198,"utility":42,"renderer":2977} drawn 483 dropped 65 hover {"ov":0,"tr":0,"props":{}}

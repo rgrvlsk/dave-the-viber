@@ -7,6 +7,26 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Merge of the MacBook's bubble commit (2026-11-19). The MacBook thread built `ab3b631`/`ff9e756` ("every ticket
+  that needs you gets its own bubble") from its own checkout (84ff6fa), without 389a4bb, c60b438 and 0fb2089, and
+  installed that build on both Macs at 03:48, which removed the scroll flag (Roger: "scroll listens to hover again").
+  Applied here with `git am -3` on top of 0fb2089: extras.css merged cleanly; out2 rebuilt; HANDOFF merged by hand.
+  Merged build: full 47,664, lite 14,392; validator ok; Electron probe: flag on (0 rows hovered while scrolling,
+  hover back 100–200 ms after the stop); :7508 check.js 0 invalid, no overlap, 4 attention rows each with its own
+  fixed bubble; light == dark except the known 2 px edge column. Before installing a build, check that the checkout contains the commits of the other threads (`git log origin/main..`
+  on each machine); the MacBook clone is `/Users/roger/.t3/projects/dave-the-viber`.
+- Bubbles for every attention ticket (2026-11-19, Roger: "tot allò que tingui bafarada, que la mostri"). Cause of the
+  missing bubble: the 8 page-level hosts served only the first 3 Approval/Input and the first Request/Woke ticket
+  (`nth-child(-n+3 of …)`); a further ticket kept its stamp and got no bubble (Roger's screenshot: a 3rd+ Input
+  ticket from the Mac mini environment). Which ticket was 1st..3rd changed as threads were answered or opened.
+  Now each attention row's own `::before` is the bubble (fixed, `position-anchor: auto`), the twine of that row is
+  its background (row grows 4 px with `margin-bottom: -4px`). Full 49,663 -> 48,192. Checked by injection: PIL diff vs
+  HEAD 0 px except the composer caret; 7 simulated attention tickets (4 Input, Approval, Request, Woke) all show their
+  bubble, also the open one; scrolled-out tickets hide theirs; check.js 0 invalid, same contrast numbers as HEAD.
+  Not checked: desktop app, Mac mini, collapsed sidebar, light mode (no colour change).
+  Installed 2026-11-19 on this Mac (`t3_theme_set`) and the Mac mini (file only, sha1 605279f6…; its server
+  watches `themes/` and republishes, and its default theme is already `dave-the-viber`; a Mac mini child thread
+  gets `capability_denied` on `t3_theme_set`).
 - Scroll flag (2026-11-19, Roger: "can we turn it off while scrolling" → "implement it and test"). Rows leave
   hit-testing while the ticket list scrolls and take hover again 150 ms after it stops (extras.css, last block;
   `perf/REPORT.md` → "Hover off while the list scrolls"). Scroll test vs 389a4bb: −6.6 s CPU [−7.1, −5.7] (−24%),
@@ -17,11 +37,10 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   check.js 128 rules, 0 invalid, no overlap; light vs dark only the known 2 px sidebar-edge column (max 6/255).
   Hover after the stop: `min-width: if(style(--sk-busy:1):1px)` on the groups forces one layout when the flag flips,
   so the row under a still pointer takes hover again 100–200 ms after the scroll (CPU n.s., `data/final2-busy`).
-  Installed on both Macs (SHA-256 7f01b608…). Full 49,265.
+  Full 49,265 before the merge below.
   Rejected: `content-visibility: visible` on all attention tickets (−190 chars, cost hover hits and frames).
-  Installed locally 2026-11-19 (`dave-the-viber.json` == `out2/full.json`, SHA-256 a823924c…) and switched with
-  `t3_theme_set`, on the Mac mini and the MacBook (same SHA-256; MacBook backup
-  `themes/dave-the-viber.json.bak-2026-11-19`, old db9e5876…); not pushed. Not checked in the desktop app or with reduced motion.
+  MacBook backup of the pre-flag theme: `themes/dave-the-viber.json.bak-2026-11-19` (db9e5876…). Not checked with
+  reduced motion.
 - Rebase on origin (2026-11-18, Roger chose rebase). Local main (9 commits: / $ @ menu, drinks menu, stamp, specials,
   headline, Dave typing, icons) had diverged from origin/main (10 commits from the Mac mini: perf harness, finite
   animations, painted torn edge, no brass peg, keys without slide, no colour fade). Resolved for origin's behaviour

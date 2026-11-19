@@ -1,5 +1,5 @@
 /* ---------- Full edition: the rest of the restaurant ---------- */
-/* One copy of the bubble art and the two common inks, shared by the eight bubble hosts, and a pixelation shader for the
+/* One copy of the bubble art, shared by every attention bubble, and a pixelation shader for the
    ticket stains (SVG filter: average, sample, dilate, posterize; 2 px cells). An ink is the status mask (black) under
    an ink rectangle blended with lighten: black turns ink, the bubble's white and grey stay (both lighter per channel). */
 :root {
@@ -153,130 +153,66 @@
 
 /* Orders that need you call out like a customer at the counter: a speech bubble with the
    status sprite stands still past the sidebar's edge beside the ticket (no bob: Roger, 2026-11-17),
-   and the stamp leaves the ticket.
-   The sidebar's scroller is masked (its fade) and each ticket has a filter, which clip anything drawn
-   inside them, so each bubble is a page-level pseudo-element placed with anchor positioning. Hosts
-   must come after the sidebar in tree order. One host per call: Approval and Input get three each
-   (the first three tickets of that kind), Request and Woke one. Bubbles sit under popovers (z 140),
-   so the thread detail card covers them. ponytail: a 4th ticket of one kind (2nd for Request) keeps
-   its stamp and gets no bubble; nth-child counts per list, so a sidebar split into several lists
-   would need anchor-scope. Add a host if the owner reports a missed call. */
-[data-thread-item]:nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-shield-question-mark)) {
-  anchor-name: --sk-ask-approval;
-  content-visibility: visible;
-}
-[data-thread-item]:nth-child(2 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-shield-question-mark)) {
-  anchor-name: --sk-ask-approval2;
-  content-visibility: visible;
-}
-[data-thread-item]:nth-child(3 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-shield-question-mark)) {
-  anchor-name: --sk-ask-approval3;
-  content-visibility: visible;
-}
-[data-thread-item]:nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .text-indigo-600)) {
-  anchor-name: --sk-ask-input;
-  content-visibility: visible;
-}
-[data-thread-item]:nth-child(2 of [data-thread-item]:has(.group\/sidebar-status-slot .text-indigo-600)) {
-  anchor-name: --sk-ask-input2;
-  content-visibility: visible;
-}
-[data-thread-item]:nth-child(3 of [data-thread-item]:has(.group\/sidebar-status-slot .text-indigo-600)) {
-  anchor-name: --sk-ask-input3;
-  content-visibility: visible;
-}
-[data-thread-item]:nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .text-guest-foreground)) {
-  anchor-name: --sk-ask-request;
-  content-visibility: visible;
-}
-[data-thread-item]:nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-alarm-clock)) {
-  anchor-name: --sk-ask-woke;
-  content-visibility: visible;
-}
-/* Attention tickets paint their twine end and shadow past the row; rows that are not anchored keep the app's
-   content-visibility: auto, which clips that paint to the row, so widen the clip on every attention ticket. */
+   and the stamp leaves the ticket. Every such ticket gets its bubble (Roger, 2026-11-19: no cap).
+   The scroller clips its content and the paper is rotated, so the bubble is the row's own ::before:
+   position: fixed escapes the clip because the row has no transform, filter or containment (content-visibility
+   visible), and position-anchor: auto anchors it to its row. The twine that ::before draws on other rows moves to
+   the row's background; the row grows 4 px into the gap and the next row's top so the twine and its shade reach
+   as far as the pseudo did (bottom -1px, shadow 3px down). Bubbles sit under popovers (z 140). */
 [data-thread-item]:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-indigo-600, .text-guest-foreground, .lucide-alarm-clock)) {
-  overflow-clip-margin: 8px;
+  content-visibility: visible;
+  padding-bottom: 9px;
+  margin-bottom: -4px;
+  background: linear-gradient(#1b120a 0 0) 6px 0 / 1px calc(100% - 3px), linear-gradient(#1b120a 0 0) 11px 0 / 1px calc(100% - 3px), repeating-linear-gradient(#e2c48e 0 2px, #a37a45 2px 3px, #6b4a26 3px 4px) 7px 0 / 4px calc(100% - 3px), linear-gradient(var(--sk-shade) 0 0) 10px 3px / 4px 100%;
+  background-repeat: no-repeat;
 }
 /* One status per row, so a row of one kind never holds another kind's stamp class. */
-[data-thread-item]:is(:nth-child(-n+3 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-shield-question-mark)), :nth-child(-n+3 of [data-thread-item]:has(.group\/sidebar-status-slot .text-indigo-600)), :nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .text-guest-foreground)), :nth-child(1 of [data-thread-item]:has(.group\/sidebar-status-slot .lucide-alarm-clock))) .group\/sidebar-status-slot > span:first-child > :is(.text-warning-foreground, .text-indigo-600, .text-guest-foreground) {
+[data-thread-item]:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-indigo-600, .text-guest-foreground, .lucide-alarm-clock)) .group\/sidebar-status-slot > span:first-child > :is(.text-warning-foreground, .text-indigo-600, .text-guest-foreground) {
   position: absolute !important;
   width: 1px;
   height: 1px;
   overflow: hidden;
   clip-path: inset(50%);
 }
-/* The ink is centred on the bubble's white body, which sits 2 px above the box centre (tail below).
-   A host without its anchor is not hidden by position-visibility: the -300px fallback parks it off-screen. */
-html::after,
-body::after,
-main[data-slot="sidebar-inset"]::before,
-main[data-slot="sidebar-inset"]::after,
-[data-workspace-area="conversation"]::before,
-[data-workspace-area="conversation"]::after,
-[data-workspace-area="composer"]::before,
-[data-workspace-area="composer"]::after {
-  content: "";
+/* The ink is centred on the bubble's white body, which sits 2 px above the box centre (tail below). */
+[data-thread-item]:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-indigo-600, .text-guest-foreground, .lucide-alarm-clock))::before {
   position: fixed;
-  left: calc(anchor(right, -300px) + 4px);
-  top: max(112px, calc(anchor(top, -300px) + 6px));
+  position-anchor: auto;
+  left: calc(anchor(right) + 4px);
+  top: max(112px, calc(anchor(top) + 6px));
+  bottom: auto;
   width: 40px;
   height: 30px;
   padding: 4px 11px 8px;
   box-sizing: border-box;
   background: linear-gradient(var(--sk-c) 0 0) content-box, var(--sk-m, var(--sk-atlas)) 0 var(--sk-y) / 18px auto no-repeat content-box, var(--sk-bubble) center / 40px 30px;
   background-blend-mode: lighten, normal;
+  box-shadow: none;
   filter: drop-shadow(2px 2px 0 rgb(6 14 26 / 0.5));
   position-visibility: anchors-visible;
   pointer-events: none;
   z-index: 30;
   display: var(--sk-bub, block);
-}
-html::after {
-  position-anchor: --sk-ask-approval;
   --sk-c: #7a4d00;
   --sk-m: var(--sk-i-approval);
   --sk-y: 50%;
 }
-body::after {
-  position-anchor: --sk-ask-input;
+[data-thread-item]:has(.group\/sidebar-status-slot .text-indigo-600)::before {
   --sk-c: #34468c;
+  --sk-m: var(--sk-atlas);
   --sk-y: -166.5px;
 }
-main[data-slot="sidebar-inset"]::before {
-  position-anchor: --sk-ask-approval2;
-  --sk-c: #7a4d00;
-  --sk-m: var(--sk-i-approval);
-  --sk-y: 50%;
-}
-main[data-slot="sidebar-inset"]::after {
-  position-anchor: --sk-ask-input2;
-  --sk-c: #34468c;
-  --sk-y: -166.5px;
-}
-[data-workspace-area="conversation"]::before {
-  position-anchor: --sk-ask-request;
+[data-thread-item]:has(.group\/sidebar-status-slot .text-guest-foreground)::before {
   --sk-c: #84295f;
+  --sk-m: var(--sk-atlas);
   --sk-y: -189px;
 }
-[data-workspace-area="conversation"]::after {
-  position-anchor: --sk-ask-woke;
-  --sk-c: #7a4d00;
+[data-thread-item]:has(.group\/sidebar-status-slot .lucide-alarm-clock)::before {
+  --sk-m: var(--sk-atlas);
   --sk-y: -210px;
 }
-[data-workspace-area="composer"]::before {
-  position-anchor: --sk-ask-approval3;
-  --sk-c: #7a4d00;
-  --sk-m: var(--sk-i-approval);
-  --sk-y: 50%;
-}
-[data-workspace-area="composer"]::after {
-  position-anchor: --sk-ask-input3;
-  --sk-c: #34468c;
-  --sk-y: -166.5px;
-}
 
-/* A collapsed sidebar slides its tickets off-screen without clipping them: the hosts hide their bubbles. */
+/* A collapsed sidebar slides its tickets off-screen without clipping them: the rows hide their bubbles. */
 :root:has([data-slot="sidebar"][data-state="collapsed"]) {
   --sk-bub: none;
 }
@@ -1210,8 +1146,7 @@ svg.lucide[class*="loader"] {
 }
 /* The restaurant bar runs under the chat: the sidebar counter's plank and front at the same height (60 px). Behind
    it stand the stools (only their backs show) and Dave, lit by his laptop, whose lid shows a fish. The pad rests on
-   the plank, in a new thread too. The composer area's own ::before/::after host attention bubbles; the bar uses the
-   lane's: ::before is everything behind the bar, ::after the bar itself, painted over it. Stools tile from the right
+   the plank, in a new thread too. The bar uses the lane's pseudo-elements: ::before is everything behind the bar, ::after the bar itself, painted over it. Stools tile from the right
    edge, one hidden behind Dave, so a narrower window slides the right ones behind the pad. */
 [data-chat-composer-overlay] {
   align-items: flex-end;

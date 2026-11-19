@@ -90,10 +90,11 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
 - The published theme drops a `content` value with a backslash escape (`"A\A B"`), though injection shows it. Verify
   `content` changes in the published theme; break lines with `width: min-content` instead.
 - The minifier drops the space before a `{{token}}` (`#18243c {{x}}` becomes `#18243curl(`, invalid). Put the token first.
-- Bubbles use anchor positioning. Anchors must come before their hosts in tree order (`html::before` fails;
-  hosts are `html::after`, `body::after`, `[data-workspace-area=conversation]::before/::after`).
-  Fixed elements inside the sidebar are clipped by the scroller mask, so bubbles live outside it.
-  Anchored slips need `content-visibility: visible` or they stop painting.
+- Each attention ticket's bubble is its own row's `::before` (`position: fixed` + `position-anchor: auto`); the
+  twine moves to that row's background. It works only while the row (`li`) has no transform, filter or containment
+  (`content-visibility: visible`): any of those makes the row the containing block and the scroller clips the bubble.
+  The paper (row card) is rotated, so nothing inside it can host a bubble. A named anchor on the row itself fails;
+  `auto` works. Page-level hosts with `nth-child(-n+3 of …)` capped the count (removed 2026-11-19).
 - `fx/prune2.js` "ok" covers only the elements on the page. Before dropping a flag, also list the app's unlayered
   rules on that property (`document.styleSheets`, outside `@layer`): one with higher specificity (e.g.
   `.chat-markdown a:not(.chat-markdown-file-link, …)`) wins in states the page does not show.

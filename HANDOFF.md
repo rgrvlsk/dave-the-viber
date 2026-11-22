@@ -11,7 +11,8 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   c916a6f (49,996 chars; 50,356 UTF-8 bytes accepted). Served `skin.json` equals `out2/full.json` key by key.
   Author left empty; description carries "not affiliated with MINTROCKET or NEXON"; README says the same. The
   private manage link (only way to delete it or change its background image) is in
-  `~/.config/dave-the-viber/t3skins-manage-link.txt` (mode 600). Never commit it. The gallery has no way to
+  `private/t3skins-manage-link.txt` (mode 600; `/private/` is ignored via `.git/info/exclude`, local to this
+  clone). Never commit it, never `git add -f` it. The gallery has no way to
   update the CSS of a published skin; a new version means a new upload (and deleting the old one via that link).
   Not published to t3themes.com. Pre-publish checks: check.js 0 invalid on the live app (live sheet == build),
   light == dark except the known 2 px sidebar edge, scan.js only false positives on the wood (pixcheck 5.29:1),

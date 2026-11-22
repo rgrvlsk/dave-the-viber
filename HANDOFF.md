@@ -7,6 +7,17 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- PUBLIC on t3skins.dev (2026-11-22, Roger approved): https://www.t3skins.dev/skins/dave-the-viber, full edition of
+  c916a6f (49,996 chars; 50,356 UTF-8 bytes accepted). Served `skin.json` equals `out2/full.json` key by key.
+  Author left empty; description carries "not affiliated with MINTROCKET or NEXON"; README says the same. The
+  private manage link (only way to delete it or change its background image) is in
+  `~/.config/dave-the-viber/t3skins-manage-link.txt` (mode 600). Never commit it. The gallery has no way to
+  update the CSS of a published skin; a new version means a new upload (and deleting the old one via that link).
+  Not published to t3themes.com. Pre-publish checks: check.js 0 invalid on the live app (live sheet == build),
+  light == dark except the known 2 px sidebar edge, scan.js only false positives on the wood (pixcheck 5.29:1),
+  Fable Medium pass "ship". Not rerun: question UI, Mac mini demo states (unchanged since their own checks).
+- The Working rail fix (50dffed on the Mac mini clone `~/dave-the-viber`, never pushed) was installed on the MacBook
+  on 2026-11-20 but missing from origin; it landed as c916a6f on 2026-11-22.
 - Working rail back, without its 1 px gap (2026-11-20, Roger: "el riell … ha tornat al cordill", then "arregla gap
   1px"). d4e141a removed the core twine `::before` that gave the rail its `top: 0`, so the rail was 0 px tall and the
   row's twine background showed. Since 60ce1f2 a 1 px wall line also crossed the rail between Working rows: rows

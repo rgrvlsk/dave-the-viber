@@ -15,7 +15,9 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   `private/t3skins-manage-link.txt` (mode 600; `/private/` is ignored via `.git/info/exclude`, local to this
   clone). Never commit it, never `git add -f` it. The gallery has no way to
   update the CSS of a published skin; a new version means a new upload (and deleting the old one via that link).
-  Not published to t3themes.com. Pre-publish checks: check.js 0 invalid on the live app (live sheet == build),
+  t3themes.com: PR SunkenInTime/t3-themes#114 (2026-11-22, from fork rgrvlsk/t3-themes) adds the LITE edition as
+  `themes/dave-the-viber.json` (their vendored CSS limit is 20,000; the app allows 100,000). Themes with CSS need
+  manual review. Issue #115 asks them to raise the limit; when it lands, replace with full via a new PR. Pre-publish checks: check.js 0 invalid on the live app (live sheet == build),
   light == dark except the known 2 px sidebar edge, scan.js only false positives on the wood (pixcheck 5.29:1),
   Fable Medium pass "ship". Not rerun: question UI, Mac mini demo states (unchanged since their own checks).
 - The Working rail fix (50dffed on the Mac mini clone `~/dave-the-viber`, never pushed) was installed on the MacBook

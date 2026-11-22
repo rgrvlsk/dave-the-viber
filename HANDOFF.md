@@ -9,7 +9,8 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
 ## State
 - PUBLIC on t3skins.dev (2026-11-22, Roger approved): https://www.t3skins.dev/skins/dave-the-viber, full edition of
   c916a6f (49,996 chars; 50,356 UTF-8 bytes accepted). Served `skin.json` equals `out2/full.json` key by key.
-  Author left empty; description carries "not affiliated with MINTROCKET or NEXON"; README says the same. The
+  Re-uploaded the same day with author `rgrvlsk` (Roger; the gallery cannot edit an author, so delete + upload; the
+  first entry's 2 likes were lost). Description carries "not affiliated with MINTROCKET or NEXON"; README says the same. The
   private manage link (only way to delete it or change its background image) is in
   `private/t3skins-manage-link.txt` (mode 600; `/private/` is ignored via `.git/info/exclude`, local to this
   clone). Never commit it, never `git add -f` it. The gallery has no way to

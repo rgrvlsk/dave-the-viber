@@ -1428,6 +1428,13 @@ html:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-ind
     background: linear-gradient(#e9b44c, #e9b44c) 138px 0 / 6px 4px no-repeat, linear-gradient(#e9b44c, #e9b44c) 516px 0 / 6px 4px no-repeat, linear-gradient(#2e1d12, #2e1d12) 140px 0 / 2px 32px no-repeat, linear-gradient(#2e1d12, #2e1d12) 518px 0 / 2px 32px no-repeat, {{crate}} 596px 242px / 44px 20px no-repeat, linear-gradient(#8a5a3c 0 3px, #6e4630 0 9px, #4a2f1e 0 18px, #2e1d12 0 21px, #06101c80 0) 0 262px / 660px 26px no-repeat, {{harbour_dark}} 466px 92px / clamp(0px, var(--sk-shut) * 1000px, 184px) 92px no-repeat, {{harbour}} 10px 40px / 640px 214px no-repeat, linear-gradient(#6e4630, #6e4630) 4px 34px / 652px 226px no-repeat, linear-gradient(#2e1d12, #2e1d12) 0 30px / 660px 234px no-repeat;
   }
 }
+/* The tank's water bends the tickets that sink into it: a still pixel wave (rows shift by one art pixel) on the
+   tank's backdrop; the tank's own art paints over it unbent. Still on purpose: an animated backdrop-filter runs on
+   the compositor, which drops url() filters, and kept on the main thread it redraws every frame (60 fps idle,
+   +7.6 s CPU per 30 s, 2.2x energy; the still wave measured no cost, perf 2026-11-23). */
+[data-slot="sidebar-inner"] [data-slot="sidebar-footer"]::before {
+  backdrop-filter: {{water}};
+}
 /*/bg*/
 
 /* ---------- Textures and backgrounds ---------- */

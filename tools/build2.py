@@ -18,13 +18,18 @@ tok = {k: multi(a, {"#": None}) for k, a in SPR.items()}
 tok["wood"] = multi(WOOD, WOOD_P)
 tok["waves"] = multi(WAVES, WAVES_P)
 tok["tear"] = multi(TEAR, {"#": None})
-def pixel_filter(cells):
-    """SVG pixel shader: sample one pixel per cell (flood + tile + composite) and grow it to fill the cell (dilate)."""
-    h = cells // 2
-    f = (f"<filter id='f' x='0' y='0' width='1' height='1'><feFlood x='{h}' y='{h}' width='1' height='1'/>"
-         f"<feComposite width='{cells}' height='{cells}'/><feTile result='a'/><feComposite in='SourceGraphic' in2='a' operator='in'/>"
-         f"<feMorphology operator='dilate' radius='{h}'/></filter>")
-    return 'url("' + uri("<svg xmlns='http://www.w3.org/2000/svg'>" + f + "</svg>") + '#f")'
+def water():
+    """Water shader for the tank's backdrop (local edition): from 6 px down (the surface line), rows 4 px tall shift by
+    -2, 0, +2, 0 px, a still 16 px wave of one art pixel at 2x. Floods build one 16 px tile of the displacement map
+    (R: x shift, G 0.5: no y shift), feTile repeats it, the source shows above the surface."""
+    f = ("<filter id='w' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'>"
+         "<feFlood flood-color='#808000' height='16' result='z'/><feFlood flood-color='#ff8000' y='4' height='4' result='p'/>"
+         "<feFlood flood-color='#008000' y='12' height='4' result='m'/>"
+         "<feMerge height='16'><feMergeNode in='z'/><feMergeNode in='p'/><feMergeNode in='m'/></feMerge><feTile y='0' height='999'/>"
+         "<feDisplacementMap in='SourceGraphic' scale='4' xChannelSelector='R' yChannelSelector='G' y='6'/>"
+         "<feMerge><feMergeNode in='SourceGraphic'/><feMergeNode/></feMerge></filter>")
+    return 'url("' + uri("<svg xmlns='http://www.w3.org/2000/svg'>" + f + "</svg>") + '#w")'
+tok["water"] = water()
 tok["tear_paper"] = multi(TEAR, {"#": "#fbf3e2"})
 extra_tok_path = os.path.join(root, "src2", "sprites2.py")
 if os.path.exists(extra_tok_path):

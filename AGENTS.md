@@ -10,7 +10,7 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
 ## Hard rules
 - Never publish to any gallery (t3skins.dev, t3themes.com) without asking Roger.
 - Never commit or push screenshots, captures or videos to GitHub (Roger, 2026-11-17). Keep them local; `.gitignore`
-  blocks images except `src2/sprites/*.png` and `out2/sprites/*.webp`. Never `git add -f` an image.
+  blocks images except `src2/sprites/*.png`, `out2/sprites/*.webp` and `out2/local.webp` (the sprite atlas). Never `git add -f` an image.
 - `private/` holds secrets (the t3skins.dev manage link). It is ignored only by this clone's `.git/info/exclude`:
   never commit, push, copy or quote its contents.
 - Never modify `~/.t3/userdata/themes/status-edge.json` or `pixel-sushi.json` (fallbacks).

@@ -2,7 +2,8 @@
 (() => {
   if (window.__perf) return "already";
   const P = {};
-  const appSheet = document.adoptedStyleSheets.find((s) => s.cssRules.length > 50 && /--k/.test(s.cssRules[0]?.cssText || ""));
+  // The theme sheet: the only adopted sheet that styles the sidebar footer (custom property names change per build).
+  const appSheet = document.adoptedStyleSheets.find((s) => s.cssRules.length > 50 && [...s.cssRules].some((r) => r.cssText.includes("sidebar-footer")));
   if (!appSheet) throw new Error("theme sheet not found");
   // The app may re-apply its theme (appearance switch): keep the harness in control of this sheet.
   const realReplace = CSSStyleSheet.prototype.replaceSync;

@@ -1394,13 +1394,10 @@ html:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-ind
   --sk-k: calc((var(--chat-lane-inset-end, 0px) + max(0px, (100% - 832px - var(--chat-lane-inset-end, 0px)) / 2) - 72px) * 1e3);
   background: var(--sk-lamp) right 38px bottom 186px / clamp(0px, var(--sk-k), 44px) 52px no-repeat, linear-gradient(#2e1d12, #2e1d12) right 59px bottom 230px / clamp(0px, var(--sk-k), 2px) 40px no-repeat, linear-gradient(#e9b44c 0 2px, #8f5f1e 0 4px, #2e1d12 0) right 0 bottom 268px / clamp(0px, var(--sk-k), 64px) 6px no-repeat, var(--sk-cone) right 0 bottom 60px / clamp(0px, var(--sk-k), 120px) 128px no-repeat;
 }
-/* The top of the sidebar (where full shows the night view) is a window onto the restaurant across the street, cut into
-   pieces that follow the sidebar's width: the sky, the roof, the frieze and the plank wall tile; BRANCHO on seven
-   tiles between two gold fish, the lacquer strip "SUSHI · f.k.a. T3 Code" and the corner post hold the right edge, so
-   the desktop app's window keys keep the sky on the left; the chochin hangs in the middle of the search row. The left
-   fish leaves when the sidebar is narrower than 240 px (it would meet the window keys). Easter egg: past 480 px the
-   restaurant stops growing and opens a night street on the right. Cobranch and Brancho appear at the sidebar cap
-   (T3 reserves 640 px for the conversation), where at least 130 px of street fit both busts.
+/* The roof, frieze and planks run across the top. BRANCHO keeps its tiles and stops tracking the edge past 480 px.
+   At 410 px the whole SUSHI panel fits beside it and the old wooden plaque sits above the roof on its mast.
+   Below 410 px the plaque hangs by the eave, clear of the main sign. At the sidebar cap (T3 reserves 640 px),
+   Cobranch and Brancho fill the far end once 130 px are free. The chochin follows the wall beneath the sign.
    While agents work the sign powers on once, like neon: the tiles light left to right, three of them stutter, then the
    halo, the fish and finally the chochin (1.6 s, steps, 14 repaints of this box; then still). Hovering the logo replays
    it (the skin's rule for life on show: infinite while hovered, ends lit when the pointer leaves). Each lit piece is a layer whose width is a registered number (0 off, 1 on); idle is 0, working 1, and the
@@ -1432,10 +1429,38 @@ html:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-ind
   84%, 100% { --sk-b0: 1; --sk-b1: 1; --sk-b2: 1; --sk-b3: 1; --sk-b4: 1; --sk-b5: 1; --sk-b6: 1; --sk-bh: 1; --sk-bc: 1; }
 }
 [data-slot="sidebar-inner"] > div:first-child {
-  --sk-fl: clamp(0px, (100% - 240px) * 1e3, 30px);
   --sk-e: max(0px, var(--sidebar-width, 256px) - 480px);
+  --sk-wide-sign: clamp(0, sign(var(--sidebar-width, 256px) - 409px), 1);
+  --sk-sign-right: calc(var(--sk-e) + 40px + 132px * var(--sk-wide-sign));
+  --sk-fl: clamp(0px, (100% - 240px) * 1e3, 30px);
+  --sk-fr: calc(32px * (1 - var(--sk-wide-sign)));
   --sk-hv: calc(clamp(0, sign(var(--sk-e) - 129px), 1) * (1 - sign(round(abs(100vw - 640px - var(--sidebar-width, 0px)), 1px))));
-  background: {{facade_post}} right var(--sk-e) top 0 / 8px 100px no-repeat, {{facade_chochin_lit}} min(50%, 216px) 56px / clamp(0px, var(--sk-bc) * 1e3px, 48px) 40px no-repeat, {{facade_chochin}} min(50%, 222px) 58px / 36px 36px no-repeat, {{facade_fishl_lit}} right calc(156px + var(--sk-e)) top 0 / min(var(--sk-fl), var(--sk-bh) * 1e3px) 24px no-repeat, {{facade_fishr_lit}} right calc(8px + var(--sk-e)) top 0 / clamp(0px, var(--sk-bh) * 1e3px, 32px) 24px no-repeat, {{facade_fish_l}} right calc(156px + var(--sk-e)) top 0 / var(--sk-fl) 24px no-repeat, {{facade_fish_r}} right calc(8px + var(--sk-e)) top 0 / 32px 24px no-repeat, {{facade_tile0}} right calc(138px + var(--sk-e)) top 2px / clamp(0px, var(--sk-b0) * 1e3px, 16px) 22px no-repeat, {{facade_tile1}} right calc(122px + var(--sk-e)) top 2px / clamp(0px, var(--sk-b1) * 1e3px, 16px) 22px no-repeat, {{facade_tile2}} right calc(106px + var(--sk-e)) top 2px / clamp(0px, var(--sk-b2) * 1e3px, 16px) 22px no-repeat, {{facade_tile3}} right calc(90px + var(--sk-e)) top 2px / clamp(0px, var(--sk-b3) * 1e3px, 16px) 22px no-repeat, {{facade_tile4}} right calc(74px + var(--sk-e)) top 2px / clamp(0px, var(--sk-b4) * 1e3px, 16px) 22px no-repeat, {{facade_tile5}} right calc(58px + var(--sk-e)) top 2px / clamp(0px, var(--sk-b5) * 1e3px, 16px) 22px no-repeat, {{facade_tile6}} right calc(42px + var(--sk-e)) top 2px / clamp(0px, var(--sk-b6) * 1e3px, 16px) 22px no-repeat, {{facade_halo}} right calc(24px + var(--sk-e)) top 0 / clamp(0px, var(--sk-bh) * 1e3px, 144px) 32px no-repeat, {{facade_tiles}} right calc(40px + var(--sk-e)) top 0 / 116px 24px no-repeat, {{facade_strip}} right calc(16px + var(--sk-e)) top 40px / 160px 18px no-repeat, {{cobranch}} right calc(var(--sk-e) / 2 - 14px) top 32px / calc(71px * var(--sk-hv)) 60px no-repeat, {{brancho}} right calc(var(--sk-e) / 2 - 57px) top 40px / calc(40px * var(--sk-hv)) 52px no-repeat, {{facade_hipr}} right calc(8px + var(--sk-e)) top 24px / clamp(0px, var(--sk-e) * 1e3, 68px) 16px no-repeat, linear-gradient(#3a2e3c 0 2px, #231c26 0) right 0 top 92px / var(--sk-e) 8px no-repeat, linear-gradient(#18243c, #26304f) right 0 top 24px / var(--sk-e) 76px no-repeat, {{facade_hip}} 0 24px / 68px 16px no-repeat, {{facade_sky}} 0 0 / 64px 24px repeat-x, {{facade_roof}} 0 24px / 8px 16px repeat-x, {{facade_frieze}} 0 40px / 4px 18px repeat-x, {{facade_planks}} 0 58px / 64px 42px repeat-x;
+  --sk-guest-scale: clamp(1.2, (var(--sk-e) - 10px) / 100px, 2);
+  background:
+    {{cobranch}} right calc(8px + 28px * var(--sk-guest-scale)) top calc(100px - 48px * var(--sk-guest-scale)) / calc(71px * var(--sk-guest-scale) * var(--sk-hv)) calc(48px * var(--sk-guest-scale)) no-repeat,
+    {{brancho}} right 8px top calc(100px - 48px * var(--sk-guest-scale)) / calc(40px * var(--sk-guest-scale) * var(--sk-hv)) calc(48px * var(--sk-guest-scale)) no-repeat,
+    {{facade_chochin_lit}} min(50%, 216px) 56px / clamp(0px, var(--sk-bc) * 1e3px, 48px) 40px no-repeat,
+    {{facade_chochin}} min(50%, 222px) 58px / 36px 36px no-repeat,
+    {{facade_fishl_lit}} right calc(116px + var(--sk-sign-right)) top 0 / min(var(--sk-fl), var(--sk-bh) * 1e3px) 24px no-repeat,
+    {{facade_fishr_lit}} right calc(8px + var(--sk-e)) top 0 / min(var(--sk-fr), var(--sk-bh) * 1e3px) 24px no-repeat,
+    {{facade_fish_l}} right calc(116px + var(--sk-sign-right)) top 0 / var(--sk-fl) 24px no-repeat,
+    {{facade_fish_r}} right calc(8px + var(--sk-e)) top 0 / var(--sk-fr) 24px no-repeat,
+    {{facade_sushi}} right calc(var(--sk-sign-right) - 56px) top 0 / calc(52px * var(--sk-wide-sign)) 24px no-repeat,
+    {{facade_roof_sign}} right calc(6px + var(--sk-e)) top calc(22px * (1 - var(--sk-wide-sign))) / 106px 26px no-repeat,
+    {{facade_tile0}} right calc(98px + var(--sk-sign-right)) top 2px / clamp(0px, var(--sk-b0) * 1e3px, 16px) 22px no-repeat,
+    {{facade_tile1}} right calc(82px + var(--sk-sign-right)) top 2px / clamp(0px, var(--sk-b1) * 1e3px, 16px) 22px no-repeat,
+    {{facade_tile2}} right calc(66px + var(--sk-sign-right)) top 2px / clamp(0px, var(--sk-b2) * 1e3px, 16px) 22px no-repeat,
+    {{facade_tile3}} right calc(50px + var(--sk-sign-right)) top 2px / clamp(0px, var(--sk-b3) * 1e3px, 16px) 22px no-repeat,
+    {{facade_tile4}} right calc(34px + var(--sk-sign-right)) top 2px / clamp(0px, var(--sk-b4) * 1e3px, 16px) 22px no-repeat,
+    {{facade_tile5}} right calc(18px + var(--sk-sign-right)) top 2px / clamp(0px, var(--sk-b5) * 1e3px, 16px) 22px no-repeat,
+    {{facade_tile6}} right calc(2px + var(--sk-sign-right)) top 2px / clamp(0px, var(--sk-b6) * 1e3px, 16px) 22px no-repeat,
+    {{facade_halo}} right calc(var(--sk-sign-right) - 16px) top 0 / clamp(0px, var(--sk-bh) * 1e3px, 144px) 32px no-repeat,
+    {{facade_tiles}} right var(--sk-sign-right) top 0 / 116px 24px no-repeat,
+    {{facade_hip}} 0 24px / 68px 16px no-repeat,
+    {{facade_sky}} 0 0 / 64px 24px repeat-x,
+    {{facade_roof}} 0 24px / 8px 16px repeat-x,
+    {{facade_frieze}} 0 40px / 4px 18px repeat-x,
+    {{facade_planks}} 0 58px / 64px 42px repeat-x;
 }
 html:has([data-testid="sidebar-working-header"]) [data-slot="sidebar-inner"] > div:first-child {
   --sk-b0: 1;

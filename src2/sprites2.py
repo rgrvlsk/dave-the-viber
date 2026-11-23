@@ -56,10 +56,10 @@ NOREN_LIT_P = {"c": "#ffc46e", "e": "#3e5a9a", "f": "#ffb060"}
 # wears our noren and the moon the header moon's ramp (NIGHT_P g, m). harbour_dark is the hut with its lights out
 # (92x46 at art 228,26). A fish crate stands on the picture's sill (22x10).
 # The top of the sidebar: the restaurant across the street (Fable's 128x50 drawing after Luna's concept), cut into pieces
-# so it follows the sidebar's width: sky, roof, frieze and planks tile; the sign, strip and post hold the right edge; the
-# chochin holds the centre. The lit pieces (tile0-6, halo, fish, chochin) light while agents work. Palettes are their own.
-FACADE = ("sky", "hip", "roof", "frieze", "planks", "post", "strip", "tiles", "fish_l", "fish_r", "chochin", "halo",
-          "fishl_lit", "fishr_lit", "chochin_lit", "hipr") + tuple(f"tile{k}" for k in range(7))
+# so it follows the sidebar's width: sky, roof, frieze and planks tile; the neon sign and the roof plaque stop at
+# 480 CSS px. The lit pieces (tile0-6, halo, fish, chochin) light while agents work. Palettes are their own.
+FACADE = ("sky", "hip", "roof", "frieze", "planks", "tiles", "sushi", "roof_sign", "fish_l", "fish_r", "chochin", "halo",
+          "fishl_lit", "fishr_lit", "chochin_lit") + tuple(f"tile{k}" for k in range(7))
 CRATE_P = {"k": "#2e1d12", "d": "#7a5030", "b": "#7f8ea0", "w": "#b07a4a", "s": "#cfd6dc"}
 def own(name):
     """Palette of imported art: its own colours, each a letter or digit, in colour order."""
@@ -141,5 +141,7 @@ TOKENS = {
     "harbour_dark": multi(png("harbour_dark", own("harbour_dark")), own("harbour_dark")),
 }
 TOKENS.update({"facade_" + n: multi(png("facade_" + n, own("facade_" + n)), own("facade_" + n)) for n in FACADE})
-# Easter egg: two of the house, original characters (pixelated from Sol's drawing), stare when the sidebar is far too wide.
-TOKENS.update({name: multi(png(name, own(name)), own(name)) for name in ("cobranch", "brancho")})
+# Close-up busts from Roger's supplied pixel grids. Crop the lower torso to fit 100 CSS px at 2x.
+for name in ("cobranch", "brancho"):
+    palette = own(name)
+    TOKENS[name] = multi("\n".join(png(name, palette).splitlines()[:48]), palette)

@@ -49,9 +49,21 @@ mask = lambda name: multi(png(name), {"#": None})
 # pixel, and the atlas offset cannot reproduce the old rounding for every anchor position.
 ATLAS = "\n".join(("." * 12 + "\n") * 4 * (i > 0) + png(n).strip("\n") for i, n in enumerate(
     ("waiting", "working", "saucepan", "settle", "discard", "failed", "limited", "draft", "input", "request", "woke")))
-# Sprites the local edition cuts from the theme background image (see `pack` in tools/build2.py): mode, then the
-# corner's left padding. Only uses where one sprite fills or tiles one box qualify; layered backgrounds keep data: URIs.
-BG_PLAN = {"noren": ("top",), "chef": ("fill",), "base": ("fill",), "bracket": ("bl", 2)}
+# Sprites the local edition takes from the theme image, in atlas order (see `pack` and `relayer` in tools/build2.py).
+# "single": one sprite; ("single", rows): with that many more empty rows above it. "strip": a tile for `repeat-x`.
+# ("block", rows): a tile for `repeat`, tiled that many rows down. "fill" is cut with a mask-box-image, where a layer
+# cannot do it: a mask as large as its box.
+# Drinks is first: at the image's origin its offsets stay positive, and Chromium snaps a positive offset to a device
+# pixel as it does for a single image (at 1x the sign is centred to a half pixel).
+# Night is last: its box is as tall as the window, and nothing may sit under it.
+# The bracket sits at the bottom of a row (95 px today, shown at 1x), so it needs more empty rows above.
+# Not here, each would change pixels: the status atlas and approval (1.5x in the bubble, half device pixels), wall and
+# seigaiha (`repeat` in boxes as tall as the window), bubbles (`repeat-y`).
+ATLAS_PLAN = {"drinks": "single", "noren": "strip", "counter": "strip", "sand": "strip", "stool": "strip", "tear": "strip",
+              "beam": ("block", 52), "specials": "single", "dave": "single", "peg_h": "single", "peg_shade": "single",
+              "bubble": "single", "fish": "single", "fish_l": "single", "clip": "single", "base": "single",
+              "weed_s": "single", "weed_a": "single", "coral": "single", "brain": "single", "chef": "fill",
+              "bracket": ("single", 120), "night": "strip"}
 TOKENS = {
     "atlas": multi(ATLAS, {"#": None}),
     "peg_h": multi(rot90(PEG), PEG_P),

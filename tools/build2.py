@@ -31,12 +31,16 @@ if os.path.exists(extra_tok_path):
     ns = {"multi": multi, "png": png}
     exec(open(extra_tok_path).read(), ns)
     tok.update(ns["TOKENS"])
-# ---- Local edition: sprites cut from one theme background image (`<themeId>.webp` beside the theme file), which the
-# app exposes as `--theme-background-image: url("blob:…")`. CSS cannot crop a background layer, but border-image can:
-# a "fill" slice is any rectangle (it fills the box), a "top" slice is a strip on the image's top edge (it tiles along
-# the box's top border, centred), a "bl" slice is the image's bottom-left corner (drawn at the box's corner).
-# {{bg_<name>}} = the image plus its slice numbers. Layout: top strips in row 0, fill sprites in the next row, the
-# bottom-left corner last, 1 px apart, so no slice region holds another sprite.
+# ---- Local edition: sprites taken from one theme image (`<themeId>.webp` beside the theme file), which the app
+# exposes as `--theme-background-image: url("blob:…")`. The image is a column atlas: every sprite sits at x = 0 in its
+# own row band, GAP transparent rows from the next, and strips are tiled across the whole width (the least common
+# multiple of their tile widths). So a plain background or mask layer shows one sprite: `relayer` keeps the layer's
+# position, shifts it up by the sprite's row and sizes the image by the sprite's scale; the box clips the rest and
+# `repeat-x` still tiles. {{bg_<name>}} = the image plus mask-box-image slice numbers, for a mask as large as its box.
+# ponytail: a sprite's neighbours show in a box taller than GAP rows at the sprite's scale (160 px at 2x, 80 px at 1x).
+# Ceiling: today's tallest boxes are 120 px at 2x (Dave, drinks at 3x) and the sidebar footer, 74 px, whose counter
+# strip has room until 190 px; trigger: a taller box or a new use in one, then give that sprite more rows (ATLAS_PLAN).
+GAP = 80
 def _img(k):
     from PIL import Image
     import base64, io
@@ -44,27 +48,81 @@ def _img(k):
     return Image.open(io.BytesIO(base64.b64decode(b64 + "=" * (-len(b64) % 4)))).convert("RGBA")
 def pack(plan):
     from PIL import Image
+    from math import lcm
+    plan = {k: (m,) if isinstance(m, str) else m for k, m in plan.items()}
     ims = {k: _img(k) for k in plan}
-    place, x, y = {}, 0, 0
-    for mode in ("top", "fill"):
-        row = [k for k, m in plan.items() if m[0] == mode]
-        for k in row:
-            place[k] = (x, y); x += ims[k].width + 1
-        if row: y = max(place[k][1] + ims[k].height for k in row) + 1; x = 0
-    W = max([place[k][0] + ims[k].width for k in place] + [plan[k][1] + ims[k].width for k in plan if plan[k][0] == "bl"])
-    H = y + max([ims[k].height for k in plan if plan[k][0] == "bl"] or [-1])
+    W = lcm(*[ims[k].width for k, m in plan.items() if m[0] in ("strip", "block")])
+    place, y = {}, 0
     for k, m in plan.items():
-        if m[0] == "bl": place[k] = (m[1], H - ims[k].height)
-    if sum(m[0] == "bl" for m in plan.values()) > 1: raise SystemExit("atlas: one bottom-left corner only")
+        y += m[1] if m[0] == "single" and len(m) > 1 else 0
+        rows = m[1] if m[0] == "block" else ims[k].height
+        place[k] = (y, rows); y += rows + GAP
+    H = y - GAP
     at = Image.new("RGBA", (W, H))
-    for k, (px, py) in place.items(): at.paste(ims[k], (px, py))
-    for k, m in plan.items():
-        (px, py), w, h = place[k], ims[k].width, ims[k].height
-        sl = {"top": (h, W - px - w, H - h, px), "fill": (py, W - px - w, H - py - h, px),
-              "bl": (H - h, W - px - w, h, px + w)}[m[0]]
-        tok["bg_" + k] = "var(--theme-background-image) " + " ".join(map(str, sl)) + " fill" * (m[0] == "fill")
-    return at
-ATLAS_IMG = pack(ns["BG_PLAN"]) if os.path.exists(extra_tok_path) else None
+    for k, (py, rows) in place.items():
+        im, w, h = ims[k], ims[k].width, ims[k].height
+        for yy in range(py, py + rows, h):
+            for xx in range(0, W if plan[k][0] in ("strip", "block") else 1, w):
+                at.paste(im.crop((0, 0, w, min(h, py + rows - yy))), (xx, yy))
+        if plan[k][0] == "fill": tok["bg_" + k] = f"var(--theme-background-image) {py} {W - w} {H - py - h} 0 fill"
+    return at, {k: (plan[k][0], place[k][0], ims[k].size) for k in plan if plan[k][0] != "fill"}
+ATLAS_IMG, LAYERS = pack(ns["ATLAS_PLAN"]) if os.path.exists(extra_tok_path) else (None, {})
+# The CSS holds offsets into this exact image, so the local CSS ends with a stamp of the image's bytes: a .json and a
+# .webp from different builds show wrong cuts everywhere. tools/localcheck.py compares the stamp with the file beside it.
+ATLAS_WEBP = b""
+if ATLAS_IMG:
+    import io, hashlib
+    _b = io.BytesIO(); ATLAS_IMG.save(_b, "WEBP", lossless=True, exact=True); ATLAS_WEBP = _b.getvalue()
+    ATLAS_STAMP = "/*atlas " + hashlib.sha256(ATLAS_WEBP).hexdigest()[:12] + "*/"
+def _num(v):
+    return f"{v:.4f}".rstrip("0").rstrip(".") if round(v, 4) else "0"
+def _lp(v):
+    """A length-percentage as (percent, px)."""
+    m = re.fullmatch(r"(?:calc\()?(?:(-?[\d.]+)%)?(?: ([+-]) )?(?:(-?[\d.]+)(?:px)?)?\)?", v)
+    if not m or not v: raise SystemExit("atlas: cannot read position " + v)
+    return float(m[1] or 0), float(m[3] or 0) * (-1 if m[2] == "-" else 1)
+def _position(ts):
+    KX, KY = {"left": 0, "center": 50, "right": 100}, {"top": 0, "center": 50, "bottom": 100}
+    if len(ts) == 4:  # edge offset edge offset
+        at = {e: (K[e], _lp(o)[1] * (-1 if K[e] else 1)) for e, o in (ts[:2], ts[2:]) for K in (KX, KY) if e in K and e != "center"}
+        return at.get("left") or at["right"], at.get("top") or at["bottom"]
+    a, b = ts if len(ts) == 2 else (ts[0], "center")
+    if a in ("top", "bottom") or b in ("left", "right"): a, b = b, a
+    return ((KX[a], 0) if a in KX else _lp(a)), ((KY[b], 0) if b in KY else _lp(b))
+def _layer(k, text):
+    """One layer `<position> / <size> <rest>` of sprite k, as the same layer of the theme image."""
+    kind, y0, (w, h) = LAYERS[k]
+    ts = [t for t in _split(text.strip(), " ") if t]
+    cut = ts.index("/")
+    size = [t for t in ts[cut + 1:cut + 3] if re.match(r"[\d.]|clamp\(|auto$", t)]
+    rest = ts[cut + 1 + len(size):]
+    m = re.fullmatch(r"(?:clamp\(0px, (.+), )?([\d.]+)px\)?", size[0])  # clamp(0px, x, width): shown or not
+    s = float(m[2]) / w
+    if len(size) > 1 and size[1] != "auto" and float(size[1][:-2]) != h * s: raise SystemExit(f"atlas: {k} is not scaled evenly")
+    rep = ([t for t in rest if "repeat" in t] or [None])[0]
+    to = {("single", None): "no-repeat", ("single", "no-repeat"): "no-repeat", ("strip", "repeat-x"): "repeat-x",
+          ("block", None): "repeat-x", ("block", "repeat"): "repeat-x", ("block", "repeat-x"): "repeat-x"}.get((kind, rep))
+    if not to: raise SystemExit(f"atlas: {k} ({kind}) cannot be a {rep or 'repeat'} layer")
+    (xp, xo), (yp, yo) = _position(ts[:cut])
+    W, H = ATLAS_IMG.width * s, ATLAS_IMG.height * s
+    px = lambda v: _num(v) + "px" * (_num(v) != "0")
+    at = lambda p, o: px(o) if not p else f"calc({_num(p)}% {'-' if o < 0 else '+'} {px(abs(o))})" if px(o) != "0" else _num(p) + "%"
+    out = ["var(--theme-background-image)", at(xp, xo + xp / 100 * (W - w * s)), at(yp, yo - y0 * s + yp / 100 * (H - h * s)), "/",
+           f"clamp(0px, {m[1]}, {_num(W)}px)" if m[1] else _num(W) + "px", _num(H) + "px", to] + [t for t in rest if t != rep]
+    return " ".join(out) + " " * text.endswith(" ")
+def relayer(css):
+    """Local edition: every background or mask layer whose image is an atlas sprite becomes a layer of the theme image.
+    A custom property that holds only a sprite (`--sk-fish: {{fish}};`) is followed to its uses and dropped."""
+    alias = {m[1]: m[2] for m in re.finditer(r"(--sk-[\w-]+): \{\{(\w+)\}\};", css) if m[2] in LAYERS}
+    css = re.sub(r"(--sk-[\w-]+): \{\{\w+\}\};", lambda m: "" if m[1] in alias else m[0], css)
+    out, i = [], 0
+    for m in re.finditer(r"\{\{(\w+)\}\}|var\((--sk-[\w-]+)\)", css):
+        k = m[1] or alias.get(m[2])
+        if k not in LAYERS: continue
+        j, d = m.end(), 0
+        while d or css[j] not in ",;}!": d += (css[j] == "(") - (css[j] == ")"); j += 1
+        out += [css[i:m.start()], _layer(k, css[m.end():j])]; i = j
+    return "".join(out) + css[i:]
 def fill(css):
     def rep(m):
         k = m.group(1)
@@ -77,12 +135,14 @@ core = fill(core_src.replace("/*full*/\n", "").replace("/*/full*/\n", ""))
 # letter for the first 62 names, two after. Valid ident code points that cost 1 of the 50,000 chars (the limit counts
 # UTF-16 units, not bytes) and that no app custom property uses. Names compare by code point.
 ALPHA = "".join(chr(c) for c in range(0xC0, 0x100) if c not in (0xD7, 0xF7))
+def edition(css, full=False, local=False):
+    for tag, keep in (("full", full), ("bg", local), ("data", not local)):
+        css = re.sub(rf"/\*/?{tag}\*/", "", css) if keep else re.sub(rf"/\*{tag}\*/.*?/\*/{tag}\*/", "", css, flags=re.S)
+    return re.sub(r"/\*.*?\*/", "", css, flags=re.S)
 def minify(css, full=False, local=False):
     # Lite drops the full-only blocks; full keeps them and only loses the markers. /*data*/ spans (sprites as data:
     # URIs) and /*bg*/ spans (sprites cut from the theme background image) are alternatives: only local keeps bg.
-    for tag, keep in (("full", full), ("bg", local), ("data", not local)):
-        css = re.sub(rf"/\*/?{tag}\*/", "", css) if keep else re.sub(rf"/\*{tag}\*/.*?/\*/{tag}\*/", "", css, flags=re.S)
-    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    css = edition(css, full, local)
     css = re.sub(r"\s+", " ", css)
     css = re.sub(r"\s*([{};,])\s*", r"\1", css)
     css = css.replace(";}", "}").replace(" !important", "!important")
@@ -239,13 +299,14 @@ def flatten(css, par=None, out=None):
 
 built = {}
 for name, css, title in [("lite", lite, "Dave the Viber Lite"), ("full", fill(minify(core_src + "\n" + extras_src, full=True)), "Dave the Viber"),
-                         ("local", fill(minify(core_src + "\n" + extras_src, full=True, local=True)), "Dave the Viber")]:
+                         ("local", fill(minify(relayer(edition(core_src + "\n" + extras_src, True, True)), full=True, local=True)), "Dave the Viber")]:
     flat_len = len(css)
     if NEST[name]:
         nested = nest(css)
         if flatten(nested) != flatten(css): raise SystemExit(f"{name}: nested CSS does not expand to the flat CSS")
         css = nested
     css = re.sub(r"::(before|after)\b", r":\1", css)
+    if name == "local" and ATLAS_WEBP: css += ATLAS_STAMP
     if len(css) > LIMIT[name]: raise SystemExit(f"{name}: {len(css)} chars > limit {LIMIT[name]}")
     open(os.path.join(root, f"out2/{name}.css"), "w").write(css)
     theme = {"version": 1, "name": title, "appearance": "dark", "canvas": colors["canvas"], "accent": colors["accent"], "colors": colors["colors"], "variants": {"light": colors["colors"]}, "css": css}
@@ -258,7 +319,7 @@ for name, css, title in [("lite", lite, "Dave the Viber Lite"), ("full", fill(mi
     built[name] = css
 # The local edition's theme background image: lossless WebP keeps semi-transparent pixels identical to the data: URIs
 # (a PNG atlas rounds them 1/255 differently).
-if ATLAS_IMG: ATLAS_IMG.save(os.path.join(root, "out2/local/dave-the-viber.webp"), lossless=True, exact=True); print(f"local image: {ATLAS_IMG.size}")
+if ATLAS_WEBP: open(os.path.join(root, "out2/local/dave-the-viber.webp"), "wb").write(ATLAS_WEBP); print(f"local image: {ATLAS_IMG.size}, {ATLAS_STAMP}")
 # A /*data*/ span may define a custom property that rules outside the span still read: local must not use a variable
 # that it no longer defines (an undefined var() voids the whole declaration, e.g. every background layer).
 _undef = lambda c: set(re.findall(r"var\((--[^,)]+)", c)) - set(re.findall(r"(--[^:;{}\s()]+):", c))

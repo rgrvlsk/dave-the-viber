@@ -37,7 +37,9 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
 | `fx/prune2.js` | Per-flag `!important` test: `f(flatCssUrl, [k…])` → ok / needed per flag (paired, synchronous, drift-proof). `fx/prune.js` (older, group bisection) drifts while other threads re-render the sidebar. |
 | `fx/bubwatch.js` | Desktop-console watchdog: logs each attention bubble that stops answering a hit test, with the row's state. |
 | `fx/cmp.js` | Computed-style A/B/A of two builds on the current page state: `f(urlA, urlB)` → diff, drift. |
+| `tools/atlascheck.py`, `tools/localcheck.py` | Local edition: every sprite use as full and as local on one page, to screenshot and diff; json/webp stamp check. |
 | `tools/pixcheck.py` | Pixel-sampled contrast from a screenshot + boxes JSON. |
+| `tools/atlascheck.py` | Local edition judge: `page <dir>` writes `h.html` + `atlas.webp` (each sprite use as full, class `a`, and as local, class `b`); `diff a.png b.png` counts differing pixels. |
 | `final2/` | Last published JSON/CSS + reference captures. |
 | `demo/` | `video.mp4` of all dev demo states, PNGs, `verify/`. |
 | `LEDGER.md`, `council2/`, `v1/` | History: hillclimb ledger, council briefs, v1 sources. |
@@ -50,9 +52,10 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
 2. Test (next section) before publishing.
 3. Publish locally: copy both files of `out2/local/` to `~/.t3/userdata/themes/` (they already carry the themeId
    names), then call `t3_theme_set` with `themeId: "dave-the-viber"` and no
-   payload. Verify both server files equal the build. Galleries get `out2/full.json` (no image file travels).
-   The local edition is full with some sprites cut from that image (`BG_PLAN` in `src2/sprites2.py`,
-   `/*data*/ … /*/data*/` vs `/*bg*/ … /*/bg*/` spans); its pixels must equal full's.
+   payload. Verify both server files equal the build, and `python3 -I tools/localcheck.py ~/.t3/userdata/themes`
+   (the local CSS ends with `/*atlas <sha>*/` of its image: a .json and .webp from different builds cut wrong sprites). Galleries get `out2/full.json` (no image file travels).
+   The local edition is full with most sprites taken from that image (`ATLAS_PLAN` in `src2/sprites2.py`; the build
+   rewrites their layers, see `relayer` in `tools/build2.py`); its pixels must equal full's.
 
 ## Testing
 1. Start `python3 -I tools/serve.py "$PWD"` in the background (project script "Static server :8765").
@@ -126,12 +129,17 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
   sampled on screen). If the wall art or `--sk-shade` changes, sample the gap colour again.
 - Projects with a favicon render a direct `img`; projects without an icon need the fallback sign.
 - Pairing the Mac mini dev server through an SSH tunnel does not work; use a relay on the Mac mini.
-- Theme image sprites (local edition): CSS cannot crop a background layer, only `border-image` (and
-  `-webkit-mask-box-image`) can. A slice fills the whole box (`fill`, widths 0), tiles along one edge (centred: the
-  noren strip is an odd multiple of its tile wide), or sits in the image's corner. One per box, it replaces the
-  box's border, and nothing paints until the app loads the image. Layered backgrounds, %-positions and boxes with a
-  border stay as data: URIs. Save the image as lossless WebP: PNG rounds semi-transparent pixels 1/255 differently.
-  Test with `f('local')` (it sets the variable from `out2/local/dave-the-viber.webp`); the injector and the app set it on `<html>`.
+- Theme image sprites (local edition): the image is a column atlas, one sprite per row band at x = 0 with empty rows
+  between, strips tiled across its whole width. A layer shows one sprite because its box clips the rest, so a sprite
+  needs empty rows for the tallest box that uses it (`GAP`, at the sprite's scale), and a sprite in a box as tall as
+  the window goes last (night). The build writes the layers (`relayer`): a new `{{token}} <position> / <size>` layer
+  moves by adding the token to `ATLAS_PLAN`. Pixels equal the data: URI only when the layer's y offset is a whole
+  number of device pixels: Chromium snaps a positive offset (a single image) but not a negative one (the atlas).
+  x is always safe (sprites sit at x = 0), and so is the sprite at the image's origin (drinks). That keeps the status
+  atlas and approval (1.5x in the bubble) as data: URIs; `repeat` in a window-high box (wall, seigaiha) and
+  `repeat-y` (bubbles) stay too. Nothing paints until the app loads the image. Save it as lossless WebP: PNG rounds
+  semi-transparent pixels 1/255 differently. Test with `f('local')` (it sets the variable from `out2/local/dave-the-viber.webp`) and
+  `python3 -I tools/atlascheck.py page <dir>`: every use as full and as local on one page, to screenshot and diff.
 - The minifier deletes `-webkit-mask*` declarations (the app has unprefixed `mask`), except `-webkit-mask-box-image`,
   which has no unprefixed form in Chromium.
 

@@ -37,7 +37,6 @@
   --sk-tear: linear-gradient(#000 0 0) top / 100% calc(100% - 4px) no-repeat, {{tear}} bottom left / 8px 4px repeat-x;
   /* The stamp and key cap outline: a rectangle with 1 px notched corners. */
   --sk-cut: polygon(0 1px, 1px 1px, 1px 0, calc(100% - 1px) 0, calc(100% - 1px) 1px, 100% 1px, 100% calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) 100%, 1px 100%, 1px calc(100% - 1px), 0 calc(100% - 1px));
-  /* The shelf header (below) still paints this as a layer, so the local edition keeps it too. */
   --sk-foot: {{base}};
   /* Sprites are lossless WebP bitmaps: nearest-neighbour scaling keeps every pixel square. */
   image-rendering: pixelated;
@@ -699,8 +698,7 @@ ul:has(> [data-thread-item].z-20) {
   bottom: 0;
   width: 36px;
   height: 12px;
-  /*data*/background: var(--sk-foot) 0 0 / 36px 12px no-repeat;/*/data*/
-  /*bg*/border-image: {{bg_base}} / 0;/*/bg*/
+  background: var(--sk-foot) 0 0 / 36px 12px no-repeat;
 }
 /* Open shelf: the rod leaves its foot and runs on down through the slips. */
 [data-testid="sidebar-settled-shelf-toggle"][aria-expanded="true"] > span:first-child::before {

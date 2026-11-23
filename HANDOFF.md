@@ -7,6 +7,22 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- LOCAL EDITION, COLUMN ATLAS (2026-11-23, council worktree, not published): 23 of full's 28 sprites (30 uses; 4
+  sprites before) now come from the theme image, as plain background or mask layers. `out2/local/dave-the-viber.webp` is a column
+  atlas (640×2290, 3.3 KB): one sprite per row band at x = 0, 80 empty rows between, strips tiled across the width. The
+  build rewrites each `{{token}} <position> / <size>` layer for local (`relayer` in `tools/build2.py`, plan in
+  `ATLAS_PLAN`); the sources have no `/*bg*/` alternative left except the chef mask. Local 45,908 chars, data: URIs
+  806 (was 5,517); full and lite byte-identical. This also removes the noren's 4080 px ceiling and fixes a bug of
+  3f26324: local did not define `--sk-foot`, so the closed settled-shelf rod (core.css `var(--sk-foot) 0 20px`) lost
+  its whole background. Proof (Chrome 152, DPR 2, motion frozen): live app full vs local 0 differing pixels (control
+  without the image 541,012; full vs full 0); `tools/atlascheck.py` page, 66 cells built by the build's own
+  `relayer` at several box sizes and sub-pixel offsets: 0, except a koi cell of fractional size made to fail.
+  check.js 0 invalid, 130 = 130 rules. Rule found: pixels match when the layer's y offset is a whole number of device
+  pixels (Chromium snaps a positive offset, not the atlas's negative one); x and the sprite at the origin (drinks)
+  always match. Still data: status atlas and approval (1.5x in the bubble: differs at half device pixels), wall and
+  seigaiha (`repeat` in window-high boxes: would need pre-tiled rows and a height ceiling), bubbles (`repeat-y`).
+  Known limit: at 1x (emulated with `zoom: .5`) the koi sign (21 px in a 64 px box) sits on a half pixel and differs
+  from full; everything else in the harness matched except boxes of fractional width.
 - LOCAL EDITION (2026-11-23): T3 Code now allows 100,000 chars of theme CSS and one theme background image
   (`themes/<themeId>.webp|png|jpg`, ≤ 16 MB, exposed as `--theme-background-image: url("blob:…")` on `<html>`). The
   galleries still cap CSS at 50,000 (t3skins.dev) and do not carry the image. The build now writes `out2/local.css` and the copy-ready pair `out2/local/dave-the-viber.{json,webp}`:

@@ -249,13 +249,16 @@ for name, css, title in [("lite", lite, "Dave the Viber Lite"), ("full", fill(mi
     if len(css) > LIMIT[name]: raise SystemExit(f"{name}: {len(css)} chars > limit {LIMIT[name]}")
     open(os.path.join(root, f"out2/{name}.css"), "w").write(css)
     theme = {"version": 1, "name": title, "appearance": "dark", "canvas": colors["canvas"], "accent": colors["accent"], "colors": colors["colors"], "variants": {"light": colors["colors"]}, "css": css}
-    json.dump(theme, open(os.path.join(root, f"out2/{name}.json"), "w"), indent=1, ensure_ascii=False)
+    # The local edition is a ready-to-copy pair: the app reads <themeId>.json and <themeId>.webp from its themes folder.
+    jp = os.path.join(root, "out2/local/dave-the-viber.json" if name == "local" else f"out2/{name}.json")
+    os.makedirs(os.path.dirname(jp), exist_ok=True)
+    json.dump(theme, open(jp, "w"), indent=1, ensure_ascii=False)
     imgs = sum(len(m) for m in re.findall(r"data:[^\"')]+", css))
     print(f"{name}: css {len(css)} chars (flat {flat_len}), data: URIs {imgs} chars")
     built[name] = css
 # The local edition's theme background image: lossless WebP keeps semi-transparent pixels identical to the data: URIs
 # (a PNG atlas rounds them 1/255 differently).
-if ATLAS_IMG: ATLAS_IMG.save(os.path.join(root, "out2/local.webp"), lossless=True, exact=True); print(f"local.webp: {ATLAS_IMG.size}")
+if ATLAS_IMG: ATLAS_IMG.save(os.path.join(root, "out2/local/dave-the-viber.webp"), lossless=True, exact=True); print(f"local image: {ATLAS_IMG.size}")
 css = built["full"]
 # The exact image of every sprite the full CSS uses, one file per token, to browse in Finder.
 sprite_dir = os.path.join(root, "out2/sprites")

@@ -13,7 +13,7 @@ demo/video.mp4
 *.mov
 !src2/sprites/*.png
 !out2/sprites/*.webp
-!out2/local.webp
+!out2/local/*.webp
 
 # Perf harness: paired Electron profile (session cookie) and generated preview page.
 perf/profile/

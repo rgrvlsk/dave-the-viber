@@ -13,7 +13,7 @@
   if (!sheets.includes(window.__skRoles)) document.adoptedStyleSheets = [...sheets, window.__skRoles];
   // The local edition cuts sprites from the theme background image; the app sets this variable from <themeId>.webp.
   if (edition === "local") {
-    const img = await (await fetch(B + "out2/local.webp?" + Date.now())).blob();
+    const img = await (await fetch(B + "out2/local/dave-the-viber.webp?" + Date.now())).blob();
     document.documentElement.style.setProperty("--theme-background-image", `url("${URL.createObjectURL(img)}")`);
   }
   window.__skCss = css;

@@ -10,7 +10,7 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
 ## Hard rules
 - Never publish to any gallery (t3skins.dev, t3themes.com) without asking Roger.
 - Never commit or push screenshots, captures or videos to GitHub (Roger, 2026-11-17). Keep them local; `.gitignore`
-  blocks images except `src2/sprites/*.png`, `out2/sprites/*.webp` and `out2/local.webp` (the sprite atlas). Never `git add -f` an image.
+  blocks images except `src2/sprites/*.png`, `out2/sprites/*.webp` and `out2/local/*.webp` (the sprite atlas). Never `git add -f` an image.
 - `private/` holds secrets (the t3skins.dev manage link). It is ignored only by this clone's `.git/info/exclude`:
   never commit, push, copy or quote its contents.
 - Never modify `~/.t3/userdata/themes/status-edge.json` or `pixel-sushi.json` (fallbacks).
@@ -30,7 +30,7 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
 | `src2/sprites/*.png` | Sprite art, the source: 1 px per pixel, edit in Aseprite. Masks are black on transparent; colour sprites use exactly the colours of their palette. |
 | `src2/sprites2.py`, `tools/sprites.py` | Palettes and tokens; `png()` reads the art (needs Pillow), `webp()` encodes lossless WebP → `{{token}}` data URIs. |
 | `src2/colors.json` | Colour roles (same for `variants.light`). |
-| `tools/build2.py` | Build + minify → `out2/full.{json,css}`, `out2/lite.{json,css}`, `out2/local.{json,css}` + `out2/local.webp`, and `out2/sprites/*.webp` (the exact sprites the full CSS uses). |
+| `tools/build2.py` | Build + minify → `out2/full.{json,css}`, `out2/lite.{json,css}`, `out2/local.css` + `out2/local/dave-the-viber.{json,webp}` (copy-ready pair), and `out2/sprites/*.webp` (the exact sprites the full CSS uses). |
 | `tools/t3skins-validate.js` | Gallery validator. |
 | `tools/serve.py` | CORS static server on :8765 for the injector. |
 | `fx/inject2.js`, `fx/check.js`, `fx/scan.js` | Live injection and in-page checks. |
@@ -48,8 +48,8 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
    The minifier nests consecutive rules that share a selector prefix (`NEST` in `build2.py`, per edition; False = flat).
    It refuses nested output that does not expand to the flat CSS, and any edition over its size limit.
 2. Test (next section) before publishing.
-3. Publish locally: copy `out2/local.json` to `~/.t3/userdata/themes/dave-the-viber.json` and `out2/local.webp` to
-   `~/.t3/userdata/themes/dave-the-viber.webp`, then call `t3_theme_set` with `themeId: "dave-the-viber"` and no
+3. Publish locally: copy both files of `out2/local/` to `~/.t3/userdata/themes/` (they already carry the themeId
+   names), then call `t3_theme_set` with `themeId: "dave-the-viber"` and no
    payload. Verify both server files equal the build. Galleries get `out2/full.json` (no image file travels).
    The local edition is full with some sprites cut from that image (`BG_PLAN` in `src2/sprites2.py`,
    `/*data*/ … /*/data*/` vs `/*bg*/ … /*/bg*/` spans); its pixels must equal full's.
@@ -131,7 +131,7 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
   noren strip is an odd multiple of its tile wide), or sits in the image's corner. One per box, it replaces the
   box's border, and nothing paints until the app loads the image. Layered backgrounds, %-positions and boxes with a
   border stay as data: URIs. Save the image as lossless WebP: PNG rounds semi-transparent pixels 1/255 differently.
-  Test with `f('local')` (it sets the variable from `out2/local.webp`); the injector and the app set it on `<html>`.
+  Test with `f('local')` (it sets the variable from `out2/local/dave-the-viber.webp`); the injector and the app set it on `<html>`.
 - The minifier deletes `-webkit-mask*` declarations (the app has unprefixed `mask`), except `-webkit-mask-box-image`,
   which has no unprefixed form in Chromium.
 

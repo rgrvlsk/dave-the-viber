@@ -9,8 +9,8 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
 ## State
 - LOCAL EDITION (2026-11-23): T3 Code now allows 100,000 chars of theme CSS and one theme background image
   (`themes/<themeId>.webp|png|jpg`, ≤ 16 MB, exposed as `--theme-background-image: url("blob:…")` on `<html>`). The
-  galleries still cap CSS at 50,000 (t3skins.dev) and do not carry the image. The build now writes `out2/local.*`:
-  full, with noren, Working-shelf bracket, chef mask and spindle foot cut from `out2/local.webp` (40×44) by
+  galleries still cap CSS at 50,000 (t3skins.dev) and do not carry the image. The build now writes `out2/local.css` and the copy-ready pair `out2/local/dave-the-viber.{json,webp}`:
+  full, with noren, Working-shelf bracket, chef mask and spindle foot cut from that image (40×44) by
   `border-image` slices. 49,623 chars (full 49,996). Proof: live app full vs local 0 differing pixels (2x, motion
   frozen; control without the image differs); bracket, chef and foot in an isolated page with the app's boxes and
   `image-rendering: pixelated`: 0 differing pixels each; check.js 0 invalid, 130 rules. Not migrated (each would

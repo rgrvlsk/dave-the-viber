@@ -327,8 +327,9 @@ for name, css, title in [("lite", lite, "Dave the Viber Lite"), ("full", fill(mi
 if ATLAS_WEBP: open(os.path.join(root, "out2/local/dave-the-viber.webp"), "wb").write(ATLAS_WEBP); print(f"local image: {ATLAS_IMG.size}, {ATLAS_STAMP}")
 # A /*data*/ span may define a custom property that rules outside the span still read: local must not use a variable
 # that it no longer defines (an undefined var() voids the whole declaration, e.g. every background layer).
-_undef = lambda c: set(re.findall(r"var\((--[^,)]+)", c)) - set(re.findall(r"(--[^:;{}\s()]+):", c))
-if _undef(built["local"]) - _undef(built["full"]) - {"--theme-background-image"}:
+# Only the skin's own properties (minified to Latin-1 names) can go missing this way; the app defines its own.
+_undef = lambda c: {n for n in set(re.findall(r"var\((--[^,)]+)", c)) - set(re.findall(r"(--[^:;{}\s()]+):", c)) if n[2:3] in ALPHA}
+if _undef(built["local"]) - _undef(built["full"]):
     raise SystemExit(f"local: undefined custom properties {_undef(built['local']) - _undef(built['full'])}")
 css = built["full"]
 # The exact image of every sprite the full CSS uses, one file per token, to browse in Finder.

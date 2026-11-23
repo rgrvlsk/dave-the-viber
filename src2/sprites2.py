@@ -55,6 +55,10 @@ NOREN_LIT_P = {"c": "#ffc46e", "e": "#3e5a9a", "f": "#ffb060"}
 # The new-thread picture: our bar seen from the quay (320x107, 2x), pixelated from original generated art; the hut
 # wears our noren and the moon the header moon's ramp (NIGHT_P g, m). harbour_dark is the hut with its lights out
 # (92x46 at art 228,26). A fish crate stands on the picture's sill (22x10).
+# The restaurant's sign on the sidebar's beam, where the app's logo was (47x26, 2x): an indigo board in a wood frame,
+# BRANCHO in noren cream, SUSHI in moon gold between two fish, F.K.A. T3 CODE in a 3x5 micro font.
+SIGN_P = {"k": "#3a2414", "h": "#e2a866", "d": "#8a5a2b", "n": "#2a3f73", "c": "#efe2c8", "g": "#f0cc90", "f": "#f08a5d",
+          "e": "#10202f", "t": "#b9b3c9"}
 CRATE_P = {"k": "#2e1d12", "d": "#7a5030", "b": "#7f8ea0", "w": "#b07a4a", "s": "#cfd6dc"}
 def own(name):
     """Palette of imported art: its own colours, each a letter or digit, in colour order."""
@@ -82,7 +86,7 @@ ATLAS = "\n".join(("." * 12 + "\n") * 4 * (i > 0) + png(n).strip("\n") for i, n 
 # cannot do it: a mask as large as its box.
 # Drinks is first: at the image's origin its offsets stay positive, and Chromium snaps a positive offset to a device
 # pixel as it does for a single image (at 1x the sign is centred to a half pixel).
-# Night is last: its box is as tall as the window, and nothing may sit under it.
+# Night is not here: local's sidebar top is the beam and the restaurant's sign (extras.css), not the night view.
 # The bracket sits at the bottom of a row (95 px today, shown at 1x), so it needs more empty rows above.
 # Not here, each would change pixels: the status atlas and approval (1.5x in the bubble, half device pixels), wall and
 # seigaiha (`repeat` in boxes as tall as the window), bubbles (`repeat-y`).
@@ -90,7 +94,7 @@ ATLAS_PLAN = {"drinks": "single", "noren": "strip", "counter": "strip", "sand": 
               "beam": ("block", 52), "specials": "single", "dave": "single", "peg_h": "single", "peg_shade": "single",
               "bubble": "single", "fish": "single", "fish_l": "single", "clip": "single", "base": "single",
               "weed_s": "single", "weed_a": "single", "coral": "single", "brain": "single", "chef": "fill",
-              "bracket": ("single", 120), "harbour": "single", "harbour_dark": "single", "night": "strip"}
+              "bracket": ("single", 120), "harbour": "single", "harbour_dark": "single"}
 TOKENS = {
     "atlas": multi(ATLAS, {"#": None}),
     "peg_h": multi(rot90(PEG), PEG_P),
@@ -132,6 +136,7 @@ TOKENS = {
     "bell_off": multi(png("bell", BELL_P), BELL_OFF_P),
     "noren_lit": multi(png("noren_lit", NOREN_LIT_P), NOREN_LIT_P),
     "crate": multi(png("crate", CRATE_P), CRATE_P),
+    "sign": multi(png("sign", SIGN_P), SIGN_P),
     "harbour": multi(png("harbour", own("harbour")), own("harbour")),
     "harbour_dark": multi(png("harbour_dark", own("harbour_dark")), own("harbour_dark")),
 }

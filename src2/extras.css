@@ -1394,6 +1394,23 @@ html:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-ind
   --sk-k: calc((var(--chat-lane-inset-end, 0px) + max(0px, (100% - 832px - var(--chat-lane-inset-end, 0px)) / 2) - 72px) * 1e3);
   background: var(--sk-lamp) right 38px bottom 186px / clamp(0px, var(--sk-k), 44px) 52px no-repeat, linear-gradient(#2e1d12, #2e1d12) right 59px bottom 230px / clamp(0px, var(--sk-k), 2px) 40px no-repeat, linear-gradient(#e9b44c 0 2px, #8f5f1e 0 4px, #2e1d12 0) right 0 bottom 268px / clamp(0px, var(--sk-k), 64px) 6px no-repeat, var(--sk-cone) right 0 bottom 60px / clamp(0px, var(--sk-k), 120px) 128px no-repeat;
 }
+/* The sidebar's top bar is the chat header's beam, and the restaurant's sign hangs on it where the app's logo was:
+   Brancho Sushi, f.k.a. T3 Code. The link and its label stay (hidden text, same target, the sign's width); the sign is
+   a layer of the bar, as tall as the beam, because the logo's row (32 px) clips what overflows it. It sits where the
+   link starts: the app's titlebar inset (L + 40 px, L = --workspace-controls-left), or L+20 px in the desktop app, whose room ends at Go back (L+118 px). A
+   data: URI, since the atlas cannot take a position in a variable. */
+[data-slot="sidebar-inner"] > div:first-child > div:first-child {
+  background: {{sign}} calc(var(--workspace-controls-left) + 40px) 0 / 94px 52px no-repeat, linear-gradient(transparent 50px, #1a110a 0) 0 0 / 100% 52px no-repeat, {{beam}} 0 0 / 64px 52px #4a2f1e;
+}
+[aria-label="T3 Code home"] {
+  width: 94px;
+  padding: 0;
+  filter: none;
+  animation: none;
+}
+[aria-label="T3 Code home"] > * {
+  visibility: hidden;
+}
 /* The new thread shows our bar seen from the quay: a framed picture on two cords from brass nails, on a timber
    sill with a fish crate. The hut's lights follow the switch (harbour_dark covers it while idle).
    ponytail: shown only where the 660 px frame fits beside the sidebar and above the pad (1024x760 window). Trigger:
@@ -1505,10 +1522,11 @@ html:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-ind
    after the icon, the night sky slides so the moon (sprite centre 212 px) sits at L+103, and the two 22 px keys
    (24 px pitch, the WCAG 2.2 target spacing) start right after it. The Nightly pill never fit there; it stays out. */
 [data-slot="sidebar-inner"] > div:first-child:has([aria-label="Go back"]) {
-  background-position-x: calc(var(--workspace-controls-left) - 109px);
+  /*data*/background-position-x: calc(var(--workspace-controls-left) - 109px);/*/data*/
 }
 [data-slot="sidebar-inner"] > div:first-child > div:first-child:has([aria-label="Go back"]) {
   padding-right: 0;
+  /*bg*/background-position-x: calc(var(--workspace-controls-left) + 20px), 0, 0;/*/bg*/
 }
 [data-slot="sidebar-inner"] [aria-label="T3 Code home"]:has(+ div [aria-label="Go back"]) {
   margin-left: calc(var(--workspace-controls-left) + 20px);

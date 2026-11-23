@@ -7,10 +7,20 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
-- LOCAL EDITION, THE KITCHEN REACTS (2026-11-23, built and checked, NOT published; local-only, full and lite
+- LOCAL EDITION, BRANCHO SUSHI (2026-11-23, PUBLISHED on this Mac with the kitchen below; Mac mini not updated).
+  Roger named the restaurant (Fable's proposals: Vibancho, Brancho, Tokencho, Basho, Agentcho) and asked for the sign in
+  place of the app's logo, with a small f.k.a. T3 Code, and for the night view to leave the sidebar top (the landscape
+  is in the new-thread picture). Local only: the sidebar's top bar is the chat header's beam with the sign (47x26 art,
+  2x, indigo board, BRANCHO cream, SUSHI gold between two fish, F.K.A. T3 CODE in a 3x5 micro font; 5.0-8.0:1) as a
+  layer of the bar at the link's x (L+40 px web, L+20 px desktop); the link stays, text hidden, 94 px wide. The night
+  rule and its desktop shift are /*data*/ (full, lite unchanged). The night left the atlas; `pack` now widens the atlas
+  to fit the widest single sprite (320 px). Checks: check.js 0 invalid; atlascheck a = HEAD a (0 px), b differs only
+  in fractional cells that already failed (a vs b 1,655 px, was 2,045); localcheck ok. Desktop-app layout of the sign
+  is computed, not seen.
+- LOCAL EDITION, THE KITCHEN REACTS (2026-11-23, built and checked, published with the sign above; local-only, full and lite
   byte-identical, full still 49,996). Chosen by Roger after 4 mockup rounds and a 3-round council (Fable, Astra);
   mocks in the session scratchpad. All rules sit in one `/*bg*/` section of `extras.css` ("Local edition: the kitchen
-  reacts") plus three inline `/*bg*/` layers (noren, lane ::before, lane ::after). Local 49,430 chars.
+  reacts") plus three inline `/*bg*/` layers (noren, lane ::before, lane ::after). Local 49,430 chars (50,012 with the sign).
   - One switch: `html:has([data-testid="sidebar-working-header"])`. Fact (app bundle): the plate is pushed only
     `if (working.length > 0)`, so it holds with the shelf collapsed. Working: chochin over Dave lit, stepped cream
     cone, glint on the counter lip, noren slits and fringe glow (`noren_lit` overlay), the hut in the new-thread
@@ -29,8 +39,7 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
     `--sk-d` move); atlascheck new = HEAD (0 px both editions; HEAD's own a/b diff at zoom .5 is 2,045 px, fractional
     cells); light = dark on the new-thread page except the sidebar's 1 px edge and the caret; 1024x768: hero fits,
     lamp/bell/glint hidden with Dave; image unset: gradient and data: layers stay.
-  - Not done: idle CPU trace; window view B (mocked, pure-CSS gate proven, deferred); restaurant sign (Fable's
-    proposals, Roger to decide); publish (needs Roger).
+  - Not done: idle CPU trace; window view B (mocked, pure-CSS gate proven, deferred); publish on the Mac mini.
 - LOCAL EDITION, COLUMN ATLAS (2026-11-23, PUBLISHED on this Mac, main 8fa32ab; Mac mini still on full): 23 of full's 28 sprites (30 uses; 4
   sprites before) now come from the theme image, as plain background or mask layers. `out2/local/dave-the-viber.webp` is a column
   atlas (640×2290, 3.3 KB): one sprite per row band at x = 0, 80 empty rows between, strips tiled across the width. The

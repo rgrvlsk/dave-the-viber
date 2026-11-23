@@ -52,6 +52,7 @@ def pack(plan):
     plan = {k: (m,) if isinstance(m, str) else m for k, m in plan.items()}
     ims = {k: _img(k) for k in plan}
     W = lcm(*[ims[k].width for k, m in plan.items() if m[0] in ("strip", "block")])
+    W *= -(-max(im.width for im in ims.values()) // W)  # strips still tile; the widest single sprite fits
     place, y = {}, 0
     for k, m in plan.items():
         y += m[1] if m[0] == "single" and len(m) > 1 else 0

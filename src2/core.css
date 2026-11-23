@@ -99,10 +99,11 @@ html[data-theme-id] [data-app-sidebar] {
 
 /* The top of the sidebar (top bar + search row, 100 px: where the app's own "Nightly" artwork would sit; custom
    themes only get its pill) is a window onto the night: sky, moon and its reflection, ridges, sea, a cherry branch,
-   and a wood sill under the search row. It tiles every 256 px. */
-[data-slot="sidebar-inner"] > div:first-child {
+   and a wood sill under the search row. It tiles every 256 px. The local edition has the night in its new-thread
+   picture instead: its top bar is the chat header's beam with the restaurant's sign, over the tiled wall (extras.css). */
+/*data*/[data-slot="sidebar-inner"] > div:first-child {
   background: {{night}} left top / 256px 100px repeat-x;
-}
+}/*/data*/
 
 /* A twine runs down the left of the wall; each ticket is pegged to it at its top-left corner. The row paints its
    twine (--sk-tw) and grows 4 px into the gap and the next row's top (margin -4px keeps the layout), so the twine

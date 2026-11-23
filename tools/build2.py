@@ -259,6 +259,11 @@ for name, css, title in [("lite", lite, "Dave the Viber Lite"), ("full", fill(mi
 # The local edition's theme background image: lossless WebP keeps semi-transparent pixels identical to the data: URIs
 # (a PNG atlas rounds them 1/255 differently).
 if ATLAS_IMG: ATLAS_IMG.save(os.path.join(root, "out2/local/dave-the-viber.webp"), lossless=True, exact=True); print(f"local image: {ATLAS_IMG.size}")
+# A /*data*/ span may define a custom property that rules outside the span still read: local must not use a variable
+# that it no longer defines (an undefined var() voids the whole declaration, e.g. every background layer).
+_undef = lambda c: set(re.findall(r"var\((--[^,)]+)", c)) - set(re.findall(r"(--[^:;{}\s()]+):", c))
+if _undef(built["local"]) - _undef(built["full"]) - {"--theme-background-image"}:
+    raise SystemExit(f"local: undefined custom properties {_undef(built['local']) - _undef(built['full'])}")
 css = built["full"]
 # The exact image of every sprite the full CSS uses, one file per token, to browse in Finder.
 sprite_dir = os.path.join(root, "out2/sprites")

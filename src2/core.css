@@ -37,7 +37,8 @@
   --sk-tear: linear-gradient(#000 0 0) top / 100% calc(100% - 4px) no-repeat, {{tear}} bottom left / 8px 4px repeat-x;
   /* The stamp and key cap outline: a rectangle with 1 px notched corners. */
   --sk-cut: polygon(0 1px, 1px 1px, 1px 0, calc(100% - 1px) 0, calc(100% - 1px) 1px, 100% 1px, 100% calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) 100%, 1px 100%, 1px calc(100% - 1px), 0 calc(100% - 1px));
-  /*data*/--sk-foot: {{base}};/*/data*/
+  /* The shelf header (below) still paints this as a layer, so the local edition keeps it too. */
+  --sk-foot: {{base}};
   /* Sprites are lossless WebP bitmaps: nearest-neighbour scaling keeps every pixel square. */
   image-rendering: pixelated;
 }

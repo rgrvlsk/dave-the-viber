@@ -7,7 +7,7 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
-- LOCAL EDITION, COLUMN ATLAS (2026-11-23, council worktree, not published): 23 of full's 28 sprites (30 uses; 4
+- LOCAL EDITION, COLUMN ATLAS (2026-11-23, PUBLISHED on this Mac, main 8fa32ab; Mac mini still on full): 23 of full's 28 sprites (30 uses; 4
   sprites before) now come from the theme image, as plain background or mask layers. `out2/local/dave-the-viber.webp` is a column
   atlas (640×2290, 3.3 KB): one sprite per row band at x = 0, 80 empty rows between, strips tiled across the width. The
   build rewrites each `{{token}} <position> / <size>` layer for local (`relayer` in `tools/build2.py`, plan in
@@ -23,6 +23,13 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   seigaiha (`repeat` in window-high boxes: would need pre-tiled rows and a height ceiling), bubbles (`repeat-y`).
   Known limit: at 1x (emulated with `zoom: .5`) the koi sign (21 px in a 64 px box) sits on a half pixel and differs
   from full; everything else in the harness matched except boxes of fractional width.
+  Roger accepted (2026-11-23) that atlas sprites may shift by 1 device pixel under page zoom, fractional box
+  sizes or a row mid-slide (Astra measured it, e.g. drinks at 333.25 px wide: 264 px; zoom 75 %: clip 120 px).
+  Integration checks: local 45,930 chars incl. the `/*atlas <sha12>*/` stamp; harness 66 cells 0 px; live full vs
+  local 0 px (caret hidden); published local vs injected full differs only by ±1/255 dithering in the chat area.
+  Publish check: `tools/localcheck.py <themes dir>`. Council: Sol (sparse atlas, 26 of 28), Fable (this column atlas),
+  Astra (refuted equivalence under zoom/fractions; 7 MiB RGBA for Sol's 640×2883, Fable's 640×2290 ≈ 5.6 MiB).
+  The previous entry (4 sprites by border-image) is superseded; only the chef keeps a mask-box-image.
 - LOCAL EDITION (2026-11-23): T3 Code now allows 100,000 chars of theme CSS and one theme background image
   (`themes/<themeId>.webp|png|jpg`, ≤ 16 MB, exposed as `--theme-background-image: url("blob:…")` on `<html>`). The
   galleries still cap CSS at 50,000 (t3skins.dev) and do not carry the image. The build now writes `out2/local.css` and the copy-ready pair `out2/local/dave-the-viber.{json,webp}`:

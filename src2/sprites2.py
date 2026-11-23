@@ -142,4 +142,4 @@ TOKENS = {
 }
 TOKENS.update({"facade_" + n: multi(png("facade_" + n, own("facade_" + n)), own("facade_" + n)) for n in FACADE})
 # Easter egg: two of the house, original characters (pixelated from Sol's drawing), stare when the sidebar is far too wide.
-TOKENS.update({"huevo_" + n: multi(png("huevo_" + n, own("huevo_" + n)), own("huevo_" + n)) for n in ("mestre", "repartidor")})
+TOKENS.update({name: multi(png(name, own(name)), own(name)) for name in ("cobranch", "brancho")})

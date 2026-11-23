@@ -11,6 +11,11 @@
   const theme = sheets.find((s) => s !== window.__skRoles);
   theme.replaceSync(css);
   if (!sheets.includes(window.__skRoles)) document.adoptedStyleSheets = [...sheets, window.__skRoles];
+  // The local edition cuts sprites from the theme background image; the app sets this variable from <themeId>.webp.
+  if (edition === "local") {
+    const img = await (await fetch(B + "out2/local.webp?" + Date.now())).blob();
+    document.documentElement.style.setProperty("--theme-background-image", `url("${URL.createObjectURL(img)}")`);
+  }
   window.__skCss = css;
   await new Promise((r) => setTimeout(r, 800));
   return { rules: theme.cssRules.length, len: css.length };

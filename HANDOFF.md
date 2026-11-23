@@ -7,6 +7,17 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- LOCAL EDITION (2026-11-23): T3 Code now allows 100,000 chars of theme CSS and one theme background image
+  (`themes/<themeId>.webp|png|jpg`, ≤ 16 MB, exposed as `--theme-background-image: url("blob:…")` on `<html>`). The
+  galleries still cap CSS at 50,000 (t3skins.dev) and do not carry the image. The build now writes `out2/local.*`:
+  full, with noren, Working-shelf bracket, chef mask and spindle foot cut from `out2/local.webp` (40×44) by
+  `border-image` slices. 49,623 chars (full 49,996). Proof: live app full vs local 0 differing pixels (2x, motion
+  frozen; control without the image differs); bracket, chef and foot in an isolated page with the app's boxes and
+  `image-rendering: pixelated`: 0 differing pixels each; check.js 0 invalid, 130 rules. Not migrated (each would
+  change pixels): drinks (3x, centred to a half pixel), specials (border-bottom), night (sidebar width changes the
+  centred tiling phase), the aquarium and fish (several layers per box), wall/beam/seigaiha (2-D tiles), peg,
+  status atlas. Research: `image()`/`#xywh` unsupported, `object-view-box` ignores `::before` content,
+  `mask-composite` cannot union two cropped sprites.
 - PUBLIC on t3skins.dev (2026-11-22, Roger approved): https://www.t3skins.dev/skins/dave-the-viber, full edition of
   c916a6f (49,996 chars; 50,356 UTF-8 bytes accepted). Served `skin.json` equals `out2/full.json` key by key.
   Re-uploaded the same day with author `rgrvlsk` (Roger; the gallery cannot edit an author, so delete + upload; the

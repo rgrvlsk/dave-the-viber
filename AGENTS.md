@@ -18,7 +18,8 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
   `themes/dave-the-viber.json` and, until it replaces it, `themes/pixel-sushi-rail.json` (installed and active there at Roger's request, 2026-11-17).
   The skin was called Pixel Sushi Rail (themeId, folder and repo `pixel-sushi-rail`) until 2026-11-17.
   Never point a dev server at live userdata.
-- Size limits: full ≤ 50,000 chars, lite ≤ 20,000 chars (checked by the build + validator).
+- Size limits: full ≤ 50,000 chars (galleries), lite ≤ 20,000 chars, local ≤ 100,000 chars (the app's limit since
+  2026-11-18), all checked by the build; the validator checks full and lite.
 - CSS limits: no `@import`, `image-set()`, `src()`; `url()` only `data:` or `#id`; no `:has()` inside `:has()`.
 
 ## Files
@@ -29,7 +30,7 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
 | `src2/sprites/*.png` | Sprite art, the source: 1 px per pixel, edit in Aseprite. Masks are black on transparent; colour sprites use exactly the colours of their palette. |
 | `src2/sprites2.py`, `tools/sprites.py` | Palettes and tokens; `png()` reads the art (needs Pillow), `webp()` encodes lossless WebP → `{{token}}` data URIs. |
 | `src2/colors.json` | Colour roles (same for `variants.light`). |
-| `tools/build2.py` | Build + minify → `out2/full.{json,css}`, `out2/lite.{json,css}`, and `out2/sprites/*.webp` (the exact sprites the full CSS uses). |
+| `tools/build2.py` | Build + minify → `out2/full.{json,css}`, `out2/lite.{json,css}`, `out2/local.{json,css}` + `out2/local.webp`, and `out2/sprites/*.webp` (the exact sprites the full CSS uses). |
 | `tools/t3skins-validate.js` | Gallery validator. |
 | `tools/serve.py` | CORS static server on :8765 for the injector. |
 | `fx/inject2.js`, `fx/check.js`, `fx/scan.js` | Live injection and in-page checks. |
@@ -47,8 +48,11 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
    The minifier nests consecutive rules that share a selector prefix (`NEST` in `build2.py`, per edition; False = flat).
    It refuses nested output that does not expand to the flat CSS, and any edition over its size limit.
 2. Test (next section) before publishing.
-3. Publish locally: copy `out2/full.json` to `~/.t3/userdata/themes/dave-the-viber.json`, then call
-   `t3_theme_set` with `themeId: "dave-the-viber"` and no payload. Verify the server file equals the build.
+3. Publish locally: copy `out2/local.json` to `~/.t3/userdata/themes/dave-the-viber.json` and `out2/local.webp` to
+   `~/.t3/userdata/themes/dave-the-viber.webp`, then call `t3_theme_set` with `themeId: "dave-the-viber"` and no
+   payload. Verify both server files equal the build. Galleries get `out2/full.json` (no image file travels).
+   The local edition is full with some sprites cut from that image (`BG_PLAN` in `src2/sprites2.py`,
+   `/*data*/ … /*/data*/` vs `/*bg*/ … /*/bg*/` spans); its pixels must equal full's.
 
 ## Testing
 1. Start `python3 -I tools/serve.py "$PWD"` in the background (project script "Static server :8765").
@@ -122,6 +126,14 @@ Owner: Roger (CTO, Tres65). Answer in Catalan, short sentences, result first.
   sampled on screen). If the wall art or `--sk-shade` changes, sample the gap colour again.
 - Projects with a favicon render a direct `img`; projects without an icon need the fallback sign.
 - Pairing the Mac mini dev server through an SSH tunnel does not work; use a relay on the Mac mini.
+- Theme image sprites (local edition): CSS cannot crop a background layer, only `border-image` (and
+  `-webkit-mask-box-image`) can. A slice fills the whole box (`fill`, widths 0), tiles along one edge (centred: the
+  noren strip is an odd multiple of its tile wide), or sits in the image's corner. One per box, it replaces the
+  box's border, and nothing paints until the app loads the image. Layered backgrounds, %-positions and boxes with a
+  border stay as data: URIs. Save the image as lossless WebP: PNG rounds semi-transparent pixels 1/255 differently.
+  Test with `f('local')` (it sets the variable from `out2/local.webp`); the injector and the app set it on `<html>`.
+- The minifier deletes `-webkit-mask*` declarations (the app has unprefixed `mask`), except `-webkit-mask-box-image`,
+  which has no unprefixed form in Chromium.
 
 ## Open items
 See `HANDOFF.md` → "Open items" (unverified Stop/separator selectors, remaining size cuts, Mac mini dev

@@ -31,6 +31,40 @@ if os.path.exists(extra_tok_path):
     ns = {"multi": multi, "png": png}
     exec(open(extra_tok_path).read(), ns)
     tok.update(ns["TOKENS"])
+# ---- Local edition: sprites cut from one theme background image (`<themeId>.webp` beside the theme file), which the
+# app exposes as `--theme-background-image: url("blob:…")`. CSS cannot crop a background layer, but border-image can:
+# a "fill" slice is any rectangle (it fills the box), a "top" slice is a strip on the image's top edge (it tiles along
+# the box's top border, centred), a "bl" slice is the image's bottom-left corner (drawn at the box's corner).
+# {{bg_<name>}} = the image plus its slice numbers. Layout: top strips in row 0, fill sprites in the next row, the
+# bottom-left corner last, 1 px apart, so no slice region holds another sprite.
+def _img(k):
+    from PIL import Image
+    import base64, io
+    b64 = tok[k][len("url(data:;base64,"):-1]
+    return Image.open(io.BytesIO(base64.b64decode(b64 + "=" * (-len(b64) % 4)))).convert("RGBA")
+def pack(plan):
+    from PIL import Image
+    ims = {k: _img(k) for k in plan}
+    place, x, y = {}, 0, 0
+    for mode in ("top", "fill"):
+        row = [k for k, m in plan.items() if m[0] == mode]
+        for k in row:
+            place[k] = (x, y); x += ims[k].width + 1
+        if row: y = max(place[k][1] + ims[k].height for k in row) + 1; x = 0
+    W = max([place[k][0] + ims[k].width for k in place] + [plan[k][1] + ims[k].width for k in plan if plan[k][0] == "bl"])
+    H = y + max([ims[k].height for k in plan if plan[k][0] == "bl"] or [-1])
+    for k, m in plan.items():
+        if m[0] == "bl": place[k] = (m[1], H - ims[k].height)
+    if sum(m[0] == "bl" for m in plan.values()) > 1: raise SystemExit("atlas: one bottom-left corner only")
+    at = Image.new("RGBA", (W, H))
+    for k, (px, py) in place.items(): at.paste(ims[k], (px, py))
+    for k, m in plan.items():
+        (px, py), w, h = place[k], ims[k].width, ims[k].height
+        sl = {"top": (h, W - px - w, H - h, px), "fill": (py, W - px - w, H - py - h, px),
+              "bl": (H - h, W - px - w, h, px + w)}[m[0]]
+        tok["bg_" + k] = "var(--theme-background-image) " + " ".join(map(str, sl)) + " fill" * (m[0] == "fill")
+    return at
+ATLAS_IMG = pack(ns["BG_PLAN"]) if os.path.exists(extra_tok_path) else None
 def fill(css):
     def rep(m):
         k = m.group(1)
@@ -43,9 +77,11 @@ core = fill(core_src.replace("/*full*/\n", "").replace("/*/full*/\n", ""))
 # letter for the first 62 names, two after. Valid ident code points that cost 1 of the 50,000 chars (the limit counts
 # UTF-16 units, not bytes) and that no app custom property uses. Names compare by code point.
 ALPHA = "".join(chr(c) for c in range(0xC0, 0x100) if c not in (0xD7, 0xF7))
-def minify(css, full=False):
-    # Lite drops the full-only blocks; full keeps them and only loses the markers.
-    css = re.sub(r"/\*/?full\*/", "", css) if full else re.sub(r"/\*full\*/.*?/\*/full\*/", "", css, flags=re.S)
+def minify(css, full=False, local=False):
+    # Lite drops the full-only blocks; full keeps them and only loses the markers. /*data*/ spans (sprites as data:
+    # URIs) and /*bg*/ spans (sprites cut from the theme background image) are alternatives: only local keeps bg.
+    for tag, keep in (("full", full), ("bg", local), ("data", not local)):
+        css = re.sub(rf"/\*/?{tag}\*/", "", css) if keep else re.sub(rf"/\*{tag}\*/.*?/\*/{tag}\*/", "", css, flags=re.S)
     css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
     css = re.sub(r"\s+", " ", css)
     css = re.sub(r"\s*([{};,])\s*", r"\1", css)
@@ -57,7 +93,7 @@ def minify(css, full=False):
         css = re.sub(r"(?<![\w-])" + re.escape(n) + r"(?![\w-])", "abcdefghij"[i], css)
     css = re.sub(r"([{;])(-?-?[\w-]+): ", r"\1\2:", css)
     css = re.sub(r"rgb\((\d+) (\d+) (\d+) / (0?\.\d+)\)", lambda m: "#%02x%02x%02x%02x" % (int(m[1]), int(m[2]), int(m[3]), round(float(m[4]) * 255)), css)
-    css = re.sub(r"-webkit-(?:mask[\w-]*|backdrop-filter):(?:[^;{}]|\{\{\w+\}\})*;", "", css)
+    css = re.sub(r"-webkit-(?:mask(?!-box-image)[\w-]*|backdrop-filter):(?:[^;{}]|\{\{\w+\}\})*;", "", css)
     css = re.sub(r"(?<=[ :,(])transparent(?=[ ,;)}!])", "#0000", css)
     css = re.sub(r"(?<=[ :,])(\d+)0ms\b", lambda m: ("." + m[1] + "s") if len(m[1]) == 2 else m[0], css)
     css = re.sub(r"(?<=[ :,(])0\.(\d)", r".\1", css)
@@ -98,8 +134,8 @@ def strip_notes(css):
 # ---- CSS nesting: rules in a row that share a selector prefix P become P{&rest{…}…}.
 # Rules never move, P is one complex selector without a pseudo-element, so `&` = :is(P) keeps
 # specificity and order. The build expands the result and refuses it unless it equals the flat CSS.
-NEST = {"lite": True, "full": True}  # False emits flat CSS (fallback if a gallery importer rejects nesting)
-LIMIT = {"lite": 20000, "full": 50000}
+NEST = {"lite": True, "full": True, "local": True}  # False emits flat CSS (fallback if a gallery importer rejects nesting)
+LIMIT = {"lite": 20000, "full": 50000, "local": 100000}  # galleries: 50,000; the app: 100,000
 
 def _skip(s, i):
     q = s[i]; i += 1
@@ -201,7 +237,9 @@ def flatten(css, par=None, out=None):
         if k < len(body): flatten(body[len(decl):], sels, out)
     return out
 
-for name, css, title in [("lite", lite, "Dave the Viber Lite"), ("full", fill(minify(core_src + "\n" + extras_src, full=True)), "Dave the Viber")]:
+built = {}
+for name, css, title in [("lite", lite, "Dave the Viber Lite"), ("full", fill(minify(core_src + "\n" + extras_src, full=True)), "Dave the Viber"),
+                         ("local", fill(minify(core_src + "\n" + extras_src, full=True, local=True)), "Dave the Viber")]:
     flat_len = len(css)
     if NEST[name]:
         nested = nest(css)
@@ -214,6 +252,11 @@ for name, css, title in [("lite", lite, "Dave the Viber Lite"), ("full", fill(mi
     json.dump(theme, open(os.path.join(root, f"out2/{name}.json"), "w"), indent=1, ensure_ascii=False)
     imgs = sum(len(m) for m in re.findall(r"data:[^\"')]+", css))
     print(f"{name}: css {len(css)} chars (flat {flat_len}), data: URIs {imgs} chars")
+    built[name] = css
+# The local edition's theme background image: lossless WebP keeps semi-transparent pixels identical to the data: URIs
+# (a PNG atlas rounds them 1/255 differently).
+if ATLAS_IMG: ATLAS_IMG.save(os.path.join(root, "out2/local.webp"), lossless=True, exact=True); print(f"local.webp: {ATLAS_IMG.size}")
+css = built["full"]
 # The exact image of every sprite the full CSS uses, one file per token, to browse in Finder.
 sprite_dir = os.path.join(root, "out2/sprites")
 os.makedirs(sprite_dir, exist_ok=True)

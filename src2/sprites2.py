@@ -49,6 +49,9 @@ mask = lambda name: multi(png(name), {"#": None})
 # pixel, and the atlas offset cannot reproduce the old rounding for every anchor position.
 ATLAS = "\n".join(("." * 12 + "\n") * 4 * (i > 0) + png(n).strip("\n") for i, n in enumerate(
     ("waiting", "working", "saucepan", "settle", "discard", "failed", "limited", "draft", "input", "request", "woke")))
+# Sprites the local edition cuts from the theme background image (see `pack` in tools/build2.py): mode, then the
+# corner's left padding. Only uses where one sprite fills or tiles one box qualify; layered backgrounds keep data: URIs.
+BG_PLAN = {"noren": ("top",), "chef": ("fill",), "base": ("fill",), "bracket": ("bl", 2)}
 TOKENS = {
     "atlas": multi(ATLAS, {"#": None}),
     "peg_h": multi(rot90(PEG), PEG_P),

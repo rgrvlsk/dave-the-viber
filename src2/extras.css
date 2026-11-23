@@ -323,7 +323,8 @@
 [data-thread-item]:has(> [data-sidebar-parent="shelf:working"]):not(:has(+ [data-thread-item])) {
   padding-bottom: 5px;
   margin-bottom: 0;
-  background: {{bracket}} 2px 100% / 16px 9px no-repeat;
+  /*data*/background: {{bracket}} 2px 100% / 16px 9px no-repeat;/*/data*/
+  /*bg*/border-image: {{bg_bracket}} / 0 0 9px 18px;/*/bg*/
 }
 /* The row above reaches 3 px into this one with its rail and shade, so this rail starts there: its shade (no drop,
    it would fall on the bracket) then continues that shade instead of doubling it. */
@@ -374,7 +375,13 @@ svg.lucide {
   right: 0;
   bottom: -36px;
   height: 36px;
-  background: {{noren}} 0 0 / 80px 36px repeat-x;
+  /*data*/background: {{noren}} 0 0 / 80px 36px repeat-x;/*/data*/
+  /* ponytail: border-image tiles from the centre, so the strip is an odd multiple of the 80 px tile wide to start a
+     tile at its left edge, as the data: version does. Ceiling: a header wider than 4080 px shows no noren past it;
+     trigger: windows that wide, then widen to the next odd multiple. */
+  /*bg*/right: auto;
+  width: 4080px;
+  border-image: {{bg_noren}} / 36px 0 0 / 0 repeat;/*/bg*/
   pointer-events: none;
 }
 /* The shop sign (kanban): the project's mark leaves the breadcrumb and hangs from the noren rod on
@@ -1073,7 +1080,8 @@ svg.lucide[class*="loader"] {
       position: absolute;
       inset: 0;
       background: #5fd4ef;
-      mask: {{chef}} 0 / 100%;
+      /*data*/mask: {{chef}} 0 / 100%;/*/data*/
+      /*bg*/-webkit-mask-box-image: {{bg_chef}} / 0;/*/bg*/
     }
   }
 }

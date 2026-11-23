@@ -374,7 +374,7 @@ svg.lucide {
   right: 0;
   bottom: -36px;
   height: 36px;
-  background: {{noren}} 0 0 / 80px 36px repeat-x;
+  background: /*bg*/var(--sk-glow) 0 0 / 80px 36px repeat-x, /*/bg*/{{noren}} 0 0 / 80px 36px repeat-x;
   pointer-events: none;
 }
 /* The shop sign (kanban): the project's mark leaves the breadcrumb and hangs from the noren rod on
@@ -1269,6 +1269,8 @@ svg.lucide[class*="loader"] {
 .chat-composer-lane {
   position: relative;
   padding-bottom: 40px;
+  --sk-i: var(--chat-lane-inset-end, 0px);
+  --sk-d: calc((var(--sk-i) + max(0px, (100% - 842px - var(--sk-i)) / 2) - 72px) * 1e3);
 }
 .chat-composer-lane::before,
 .chat-composer-lane::after {
@@ -1310,7 +1312,7 @@ svg.lucide[class*="loader"] {
   display: none;
 }
 .chat-composer-lane::after {
-  background: var(--sk-wood) 0 0 / 64px 16px repeat-x, linear-gradient(#0000 16px, #6e4220 0 18px, #b9783d 0);
+  background: /*bg*/var(--sk-glint) right 46px top 0 / clamp(0px, var(--sk-d), 48px) 6px no-repeat, /*/bg*/var(--sk-wood) 0 0 / 64px 16px repeat-x, linear-gradient(#0000 16px, #6e4220 0 18px, #b9783d 0);
 }
 /* Dave's PNG ends in six transparent pixel rows: 12px down at 2x puts the laptop base on the plank.
    Dave needs 120 px right of the pad, or a partial Dave pokes out behind it. --sk-d is (gap - 120 px) x 1000: the
@@ -1321,11 +1323,9 @@ svg.lucide[class*="loader"] {
    (turned per hand by --sk-a), hides the finger behind the lid; --sk-x switches hands with the screen flicker
    (--sk-g) and moves the patch out of its box to rest. Under reduced motion the patch stays at width 0. */
 .chat-composer-lane::before {
-  --sk-i: var(--chat-lane-inset-end, 0px);
-  --sk-d: calc((var(--sk-i) + max(0px, (100% - 842px - var(--sk-i)) / 2) - 72px) * 1e3);
   bottom: 60px;
   height: 120px;
-  background: radial-gradient(closest-side, #bff3ff40, #0000) right 30px top 48px / clamp(0px, var(--sk-d), 80px + var(--sk-g, 0px)) calc(48px + var(--sk-g, 0px)) no-repeat, conic-gradient(from var(--sk-a, 270deg) at 12px, #acc9d1 75%, #29282f 0) right var(--sk-x, 76px) top 88px / clamp(0px, var(--sk-d), var(--sk-tap, 0px)) 4px no-repeat, {{dave}} right 14px top 12px / clamp(0px, var(--sk-d), 112px) 120px no-repeat, {{stool}} right 30px bottom -4px / 80px 28px repeat-x;
+  background: /*bg*/var(--sk-bell) right 172px bottom 0 / clamp(0px, var(--sk-d), 40px) 32px no-repeat, /*/bg*/radial-gradient(closest-side, #bff3ff40, #0000) right 30px top 48px / clamp(0px, var(--sk-d), 80px + var(--sk-g, 0px)) calc(48px + var(--sk-g, 0px)) no-repeat, conic-gradient(from var(--sk-a, 270deg) at 12px, #acc9d1 75%, #29282f 0) right var(--sk-x, 76px) top 88px / clamp(0px, var(--sk-d), var(--sk-tap, 0px)) 4px no-repeat, {{dave}} right 14px top 12px / clamp(0px, var(--sk-d), 112px) 120px no-repeat, {{stool}} right 30px bottom -4px / 80px 28px repeat-x;
   animation: sk-screen 0.8s steps(1) 20, sk-type 9s steps(1) 2;
 }
 @keyframes sk-screen {
@@ -1353,6 +1353,65 @@ svg.lucide[class*="loader"] {
     animation: none !important;
   }
 }
+
+/*bg*/
+/* ---------- Local edition: the kitchen reacts ---------- */
+/* One switch: the app renders the Working plate only while a thread works (`if (working.length > 0)`), also with
+   the shelf collapsed. Working: the chochin over Dave lights and throws a stepped cone of light and a glint on the
+   counter, the noren's slits glow, the hut in the new-thread picture opens. Attention: the bell on the counter
+   rings (brass, ding strokes, a "!" tag). All static swaps: no animation, nothing for reduced motion to stop. */
+:root {
+  --sk-lamp: {{lantern_off}};
+  --sk-bell: {{bell_off}};
+  --sk-cone: none;
+  --sk-glint: none;
+  --sk-glow: none;
+  --sk-shut: 1;
+}
+html:has([data-testid="sidebar-working-header"]) {
+  --sk-lamp: {{lantern}};
+  --sk-cone: {{cone}};
+  --sk-glint: {{glint}};
+  --sk-glow: {{noren_lit}};
+  --sk-shut: 0;
+}
+html:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-indigo-600, .text-guest-foreground, .lucide-alarm-clock)) {
+  --sk-bell: {{bell}};
+}
+/* The lantern hangs on a short cord from a brass arm out of the right wall, over Dave (his centre is 60 px from the
+   edge); everything is anchored to the bottom, where the counter is. It paints behind the conversation's content:
+   the area isolates, or its own background would cover a z-index -1 child. */
+[data-workspace-area="conversation"] {
+  isolation: isolate;
+}
+[data-workspace-area="conversation"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  /* Dave's rule (--sk-d on the lane), measured here: this box is the lane's width, the lane's pseudo-elements 10 px more. */
+  --sk-k: calc((var(--chat-lane-inset-end, 0px) + max(0px, (100% - 832px - var(--chat-lane-inset-end, 0px)) / 2) - 72px) * 1e3);
+  background: var(--sk-lamp) right 38px bottom 186px / clamp(0px, var(--sk-k), 44px) 52px no-repeat, linear-gradient(#2e1d12, #2e1d12) right 59px bottom 230px / clamp(0px, var(--sk-k), 2px) 40px no-repeat, linear-gradient(#e9b44c 0 2px, #8f5f1e 0 4px, #2e1d12 0) right 0 bottom 268px / clamp(0px, var(--sk-k), 64px) 6px no-repeat, var(--sk-cone) right 0 bottom 60px / clamp(0px, var(--sk-k), 120px) 128px no-repeat;
+}
+/* The new thread shows our bar seen from the quay: a framed picture on two cords from brass nails, on a timber
+   sill with a fish crate. The hut's lights follow the switch (harbour_dark covers it while idle).
+   ponytail: shown only where the 660 px frame fits beside the sidebar and above the pad (1024x760 window). Trigger:
+   a narrower headline cuts the frame; then gate on the headline's width with a container query. */
+@media (min-width: 1024px) and (min-height: 760px) {
+  [data-chat-composer-stack] h1 {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  [data-chat-composer-stack] h1::before {
+    content: "";
+    flex: 0 0 660px;
+    height: 288px;
+    margin-bottom: 18px;
+    background: linear-gradient(#e9b44c, #e9b44c) 138px 0 / 6px 4px no-repeat, linear-gradient(#e9b44c, #e9b44c) 516px 0 / 6px 4px no-repeat, linear-gradient(#2e1d12, #2e1d12) 140px 0 / 2px 32px no-repeat, linear-gradient(#2e1d12, #2e1d12) 518px 0 / 2px 32px no-repeat, {{crate}} 596px 242px / 44px 20px no-repeat, linear-gradient(#8a5a3c 0 3px, #6e4630 0 9px, #4a2f1e 0 18px, #2e1d12 0 21px, #06101c80 0) 0 262px / 660px 26px no-repeat, {{harbour_dark}} 466px 92px / clamp(0px, var(--sk-shut) * 1000px, 184px) 92px no-repeat, {{harbour}} 10px 40px / 640px 214px no-repeat, linear-gradient(#6e4630, #6e4630) 4px 34px / 652px 226px no-repeat, linear-gradient(#2e1d12, #2e1d12) 0 30px / 660px 234px no-repeat;
+  }
+}
+/*/bg*/
 
 /* ---------- Textures and backgrounds ---------- */
 /* The dining room, the side panel and the settings room share one wallpaper: seigaiha waves in 3-5% white over

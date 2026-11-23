@@ -7,6 +7,30 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- LOCAL EDITION, THE KITCHEN REACTS (2026-11-23, built and checked, NOT published; local-only, full and lite
+  byte-identical, full still 49,996). Chosen by Roger after 4 mockup rounds and a 3-round council (Fable, Astra);
+  mocks in the session scratchpad. All rules sit in one `/*bg*/` section of `extras.css` ("Local edition: the kitchen
+  reacts") plus three inline `/*bg*/` layers (noren, lane ::before, lane ::after). Local 49,430 chars.
+  - One switch: `html:has([data-testid="sidebar-working-header"])`. Fact (app bundle): the plate is pushed only
+    `if (working.length > 0)`, so it holds with the shelf collapsed. Working: chochin over Dave lit, stepped cream
+    cone, glint on the counter lip, noren slits and fringe glow (`noren_lit` overlay), the hut in the new-thread
+    picture opens (`harbour_dark` covers it while idle, `clamp(0px, var(--sk-shut) * 1000px, 184px)`).
+  - Attention (the bubble selector): the service bell on the counter rings (brass, ding strokes, "!" tag).
+  - New thread (`[data-chat-composer-stack] h1::before`, 660x288, ≥ 1024x760 window): our bar seen from the quay,
+    framed, on a sill with a fish crate. `harbour.png` (320x107) and `harbour_dark.png` are pixelated original
+    generated art, in the atlas; their palette is their own colours (`own()` in sprites2.py). Both moons use the
+    header moon's ramp (NIGHT_P g #f0cc90, m #e4b460).
+  - Lantern, cone, bell, glint and noren glow are data: URIs (1.7k chars): they sit in window-high boxes, where atlas
+    neighbours would show. Lamp, bell and glint hide with Dave (`--sk-d`, now on `.chat-composer-lane`, and `--sk-k`,
+    the same rule measured on the conversation area). The area isolates so its `::after` paints over its background.
+  - J: `relayer` writes `var(--theme-background-image, none)` for background layers (31), so gradients and data:
+    layers survive until the app sets the image after first paint; masks keep no fallback (a `none` mask shows its box).
+  - Checks: check.js 0 invalid (439 blocks), rows 0 bad; cmp.js full before/after 0 diff (2,684 elements, the
+    `--sk-d` move); atlascheck new = HEAD (0 px both editions; HEAD's own a/b diff at zoom .5 is 2,045 px, fractional
+    cells); light = dark on the new-thread page except the sidebar's 1 px edge and the caret; 1024x768: hero fits,
+    lamp/bell/glint hidden with Dave; image unset: gradient and data: layers stay.
+  - Not done: idle CPU trace; window view B (mocked, pure-CSS gate proven, deferred); restaurant sign (Fable's
+    proposals, Roger to decide); publish (needs Roger).
 - LOCAL EDITION, COLUMN ATLAS (2026-11-23, PUBLISHED on this Mac, main 8fa32ab; Mac mini still on full): 23 of full's 28 sprites (30 uses; 4
   sprites before) now come from the theme image, as plain background or mask layers. `out2/local/dave-the-viber.webp` is a column
   atlas (640×2290, 3.3 KB): one sprite per row band at x = 0, 80 empty rows between, strips tiled across the width. The

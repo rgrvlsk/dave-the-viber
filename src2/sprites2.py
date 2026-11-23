@@ -36,6 +36,33 @@ DAVE_P = {"a": "#29282f", "b": "#2e211c", "c": "#4a3d38", "d": "#546973", "e": "
           "g": "#9cbbc2", "h": "#a4a5ab", "i": "#acc9d1", "j": "#b0b6c2", "k": "#b59065", "l": "#baf5f7",
           "m": "#e3aa6b", "n": "#f2ebd3", "o": "#fadbab", "p": "#fdc38d", "q": "#fdc994", "r": "#dfa76a",
           "s": "#d8a267", "t": "#cf9c64", "u": "#b6bcc6", "v": "#ebebeb", "w": "#29282f02"}
+# Local edition only: the kitchen reacts while agents work (rules in /*bg*/ spans of extras.css).
+# Chochin over Dave (14x18 in a 22x26 canvas, shown 2x); lit, it wears a dithered halo (h, i). Unlit: the same
+# lantern in dark reds, no halo.
+LANTERN_P = {"k": "#2e1d12", "o": "#a8283e", "r": "#e4506a", "R": "#ff8a6a", "Y": "#ffc98a", "W": "#fff0c8", "y": "#e9b44c",
+             "h": "#ffc87846", "i": "#ffc87826"}
+LANTERN_OFF_P = {"k": "#2e1d12", "o": "#2a0e14", "r": "#4e1626", "R": "#62202e", "Y": "#6e2834", "W": "#7a2e38", "y": "#5e3c14"}
+# Its light: a stepped cone in three dithered bands of cream (60x64, 2x) and a glint on the counter's lip (24x3, 2x).
+CONE_P = {"a": "#ffdc9622", "b": "#ffdc9614", "c": "#ffdc960a"}
+GLINT_P = {"a": "#ffd28a60", "b": "#ffe2a8b0"}
+# Service bell on the counter (20x16, 2x). Lit when a thread asks for attention: brass, ding strokes and a cream
+# "!" order tag (t, p, X, w), so the state reads without colour. At rest the tag and strokes are gone.
+BELL_P = {"k": "#3a2408", "y": "#e9b44c", "Y": "#ffe08f", "W": "#fff6d8", "d": "#8f5f1e",
+          "t": "#2e1d12", "p": "#fff3dc", "X": "#7a1e2e", "w": "#fff2c0"}
+BELL_OFF_P = {"k": "#3a2408", "y": "#9a7430", "Y": "#c49a46", "W": "#d8b468", "d": "#5e3c14"}
+# The noren lit from behind: the slit between panels and the gaps of the fringe glow warm (overlay on noren.png).
+NOREN_LIT_P = {"c": "#ffc46e", "e": "#3e5a9a", "f": "#ffb060"}
+# The new-thread picture: our bar seen from the quay (320x107, 2x), pixelated from original generated art; the hut
+# wears our noren and the moon the header moon's ramp (NIGHT_P g, m). harbour_dark is the hut with its lights out
+# (92x46 at art 228,26). A fish crate stands on the picture's sill (22x10).
+CRATE_P = {"k": "#2e1d12", "d": "#7a5030", "b": "#7f8ea0", "w": "#b07a4a", "s": "#cfd6dc"}
+def own(name):
+    """Palette of imported art: its own colours, each a letter or digit, in colour order."""
+    from PIL import Image
+    import os, sprites, string
+    cols = sorted(c for _, c in Image.open(os.path.join(sprites.SRC, name + ".png")).convert("RGBA").getcolors(4096) if c[3])
+    assert len(cols) <= 62, f"{name}.png: {len(cols)} colours"
+    return {ch: "#%02x%02x%02x%02x" % c for ch, c in zip(string.ascii_letters + string.digits, cols)}
 FISH = png("fish", FISH_P)
 PEG = png("peg", PEG_P)
 def rot90(art):
@@ -63,7 +90,7 @@ ATLAS_PLAN = {"drinks": "single", "noren": "strip", "counter": "strip", "sand": 
               "beam": ("block", 52), "specials": "single", "dave": "single", "peg_h": "single", "peg_shade": "single",
               "bubble": "single", "fish": "single", "fish_l": "single", "clip": "single", "base": "single",
               "weed_s": "single", "weed_a": "single", "coral": "single", "brain": "single", "chef": "fill",
-              "bracket": ("single", 120), "night": "strip"}
+              "bracket": ("single", 120), "harbour": "single", "harbour_dark": "single", "night": "strip"}
 TOKENS = {
     "atlas": multi(ATLAS, {"#": None}),
     "peg_h": multi(rot90(PEG), PEG_P),
@@ -97,4 +124,14 @@ TOKENS = {
     "bubbles": multi(png("bubbles", BUB_P), BUB_P),
     "stool": multi(png("stool", STOOL_P), STOOL_P),
     "dave": multi(png("dave", DAVE_P), DAVE_P),
+    "lantern": multi(png("lantern", LANTERN_P), LANTERN_P),
+    "lantern_off": multi(png("lantern", LANTERN_P), LANTERN_OFF_P),
+    "cone": multi(png("cone", CONE_P), CONE_P),
+    "glint": multi(png("glint", GLINT_P), GLINT_P),
+    "bell": multi(png("bell", BELL_P), BELL_P),
+    "bell_off": multi(png("bell", BELL_P), BELL_OFF_P),
+    "noren_lit": multi(png("noren_lit", NOREN_LIT_P), NOREN_LIT_P),
+    "crate": multi(png("crate", CRATE_P), CRATE_P),
+    "harbour": multi(png("harbour", own("harbour")), own("harbour")),
+    "harbour_dark": multi(png("harbour_dark", own("harbour_dark")), own("harbour_dark")),
 }

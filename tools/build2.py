@@ -89,8 +89,11 @@ def _position(ts):
     a, b = ts if len(ts) == 2 else (ts[0], "center")
     if a in ("top", "bottom") or b in ("left", "right"): a, b = b, a
     return ((KX[a], 0) if a in KX else _lp(a)), ((KY[b], 0) if b in KY else _lp(b))
-def _layer(k, text):
-    """One layer `<position> / <size> <rest>` of sprite k, as the same layer of the theme image."""
+def _layer(k, text, mask=False):
+    """One layer `<position> / <size> <rest>` of sprite k, as the same layer of the theme image. A background layer
+    reads the image with a `none` fallback: the app sets the variable after first paint, and an unset var() would void
+    the whole declaration (wood, counter and every gradient layer with it). A mask keeps no fallback: a `none` mask
+    would show its whole box."""
     kind, y0, (w, h) = LAYERS[k]
     ts = [t for t in _split(text.strip(), " ") if t]
     cut = ts.index("/")
@@ -107,7 +110,7 @@ def _layer(k, text):
     W, H = ATLAS_IMG.width * s, ATLAS_IMG.height * s
     px = lambda v: _num(v) + "px" * (_num(v) != "0")
     at = lambda p, o: px(o) if not p else f"calc({_num(p)}% {'-' if o < 0 else '+'} {px(abs(o))})" if px(o) != "0" else _num(p) + "%"
-    out = ["var(--theme-background-image)", at(xp, xo + xp / 100 * (W - w * s)), at(yp, yo - y0 * s + yp / 100 * (H - h * s)), "/",
+    out = ["var(--theme-background-image)" if mask else "var(--theme-background-image, none)", at(xp, xo + xp / 100 * (W - w * s)), at(yp, yo - y0 * s + yp / 100 * (H - h * s)), "/",
            f"clamp(0px, {m[1]}, {_num(W)}px)" if m[1] else _num(W) + "px", _num(H) + "px", to] + [t for t in rest if t != rep]
     return " ".join(out) + " " * text.endswith(" ")
 def relayer(css):
@@ -121,7 +124,8 @@ def relayer(css):
         if k not in LAYERS: continue
         j, d = m.end(), 0
         while d or css[j] not in ",;}!": d += (css[j] == "(") - (css[j] == ")"); j += 1
-        out += [css[i:m.start()], _layer(k, css[m.end():j])]; i = j
+        prop = re.search(r"([\w-]+)\s*:[^;{}]*$", css[:m.start()])
+        out += [css[i:m.start()], _layer(k, css[m.end():j], mask=bool(prop) and "mask" in prop[1])]; i = j
     return "".join(out) + css[i:]
 def fill(css):
     def rep(m):

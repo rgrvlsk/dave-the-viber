@@ -1550,6 +1550,55 @@ div:has(> [aria-label="T3 Code home"]) + div:has(> [data-slot="badge"]) {
 [data-slot="sidebar-wrapper"]:has([data-slot="sidebar"][data-state="expanded"]) [data-chat-header] {
   padding-left: 56px;
 }
+/* Update states on the counter front. The provider notice is a paper chit like the keys beside it, its ink by
+   tone (warning amber, error red); the countdown before it leaves is a soft shade sweeping across the paper. An
+   update run ("1 of 2 updated") is the gold update key stretched into a tag, its progress ring in ink. */
+[data-slot="sidebar-footer"] [class~="group/provider-update"],
+[data-slot="sidebar-footer"] div[class*="rounded-full"][class*="bg-sidebar-control-surface"] {
+  border-radius: 0;
+  clip-path: var(--sk-cut);
+  background: #fbf3e2;
+  box-shadow: inset 0 0 0 1px #241b15, inset 0 -3px #0003, inset 0 2px #fff9;
+  color: #241b15;
+  font-weight: 700;
+}
+[data-slot="sidebar-footer"] [class~="group/provider-update"]:has([data-provider-update-main]:hover) {
+  background: #ffdf9e;
+}
+[data-slot="sidebar-footer"] [class~="group/provider-update"][class*="text-warning"] {
+  background: #fbe7bd;
+  color: #7a4a00;
+}
+[data-slot="sidebar-footer"] [class~="group/provider-update"][class*="text-destructive"] {
+  background: #f9dccf;
+  color: #9c2f27;
+}
+[data-slot="sidebar-footer"] [class~="group/provider-update"] > div[aria-hidden] {
+  border-radius: 0;
+  border-right: 1px solid #241b1533;
+  background: #241b1512;
+  box-shadow: none;
+}
+[data-slot="sidebar-footer"] div[class*="rounded-full"][class*="bg-sidebar-control-surface"] {
+  background: #f2c25c;
+}
+[data-slot="sidebar-footer"] div[class*="rounded-full"][class*="bg-sidebar-control-surface"] > button {
+  border-radius: 0;
+}
+[data-slot="sidebar-footer"] div[class*="rounded-full"][class*="bg-sidebar-control-surface"] > button:hover {
+  background: #ffe08f;
+}
+[data-slot="sidebar-footer"] :is([class~="group/provider-update"], div[class*="rounded-full"][class*="bg-sidebar-control-surface"]) :is(button, a, svg) {
+  color: inherit;
+}
+[data-slot="sidebar-footer"] :is([class~="group/provider-update"], div[class*="rounded-full"][class*="bg-sidebar-control-surface"]) [class*="text-warning"] {
+  color: #9c2f27;
+}
+[data-slot="sidebar-footer"] :is([class~="group/provider-update"], div[class*="rounded-full"][class*="bg-sidebar-control-surface"]) button:focus-visible {
+  outline: 2px solid #241b15;
+  outline-offset: -4px;
+  box-shadow: none;
+}
 /* The search row stands on the facade's plank rail, level with the noren's hem: 2 px up, the list does not move. */
 [data-slot="sidebar-inner"] > div:first-child div:has(> div > [data-slot="input-control"]) {
   translate: 0 -2px;

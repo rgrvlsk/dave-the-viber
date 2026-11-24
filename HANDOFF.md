@@ -843,3 +843,38 @@ Local edition only (`/*bg*/` span). Commit on branch `codex/facade-busts`; insta
   Owner decision (2026-11-24): "f.k.a. T3 Code" shows only on wide sidebars, not at the default 256.
 - Captures in a background preview tab: timers throttle, so use synchronous evals (set the width, replace the sheet,
   force layout) and kill the neon animation with an override sheet instead of waiting for it.
+
+## The bill: thread details card (2026-11-24)
+Local edition only (`/*bg*/` block "Local edition: the bill" in `extras.css`); full has no room (49,996 / 50,000) and
+keeps the navy order board. Local 79,242 chars. Installed on this MacBook at Roger's request, thermal layer included
+(Mac mini not updated).
+- Roger asked for a restaurant bill without glare. Fable Medium consult: the bill is the right metaphor (the thread is
+  the order slip, this card is its bill) but only as cool thermal paper on a dark tray; warm paper would read as a
+  dim menu card. Fable's runners-up: lacquer bento box (jubako), wooden menu plaques (kifuda). Roger saw the bento
+  prototype beside the bill and kept the bill (scratch CSS only, not in the repo).
+- Look: paper #c8cdc4 → #bcc2b7 (luminance 0.50-0.60; slips 0.90), black lacquer tray #1d1517 with a gold hairline,
+  printed head "BRANCHO SUSHI" / "*** BILL · お会計 ***", dashed rules between sections, dot-matrix meters with a red
+  pen tick for the pace, Context as the TOTAL (double rule, bold mono), "THANK YOU · COME AGAIN" over a zigzag cut.
+  Brand marks print in the ink (grayscale filter).
+- Type: no condensed mono exists on macOS (SF Mono, Menlo, Monaco, Courier, PT Mono, Andale Mono: all 0.60 em) and the
+  app ships only Inter. Roger's MacBook has the user font IBM 3270 Narrow (0.488 em); the Mac mini does not. Roger
+  chose the hybrid: Inter labels, 3270 Narrow for the printed parts (slip title, section heads, figures, TOTAL,
+  thanks) with `font-size-adjust: 0.547` (3270 x-height 0.476 → Inter's / SF Mono's), so the fallback is unchanged.
+  Rejected: 3270 everywhere (thin, spaced strokes); embedding it as a data: font (est. 10-15k chars, unmeasured).
+- Curvature (Roger asked for "a shader"): a cylindrical light gradient across the paper plus sides that curve in ~3 px
+  towards the ends (ellipse mask 50% x 240%, `mask-composite: intersect, add, add` with the strip and teeth). Static
+  gradient + mask instead of an SVG displacement filter like `{{water}}`: text keeps its pixels, no re-render cost.
+- Thermal print (Roger asked the shader for it): paper `::after` over the print with `mix-blend-mode: lighten` in
+  #9ca199, at or under the darkest paper, so blank paper keeps its pixels and only ink lifts. Layers: noise grain
+  (`{{thermal}}`, feTurbulence thresholded, 96 px stitched tile, built in `build2.py`) and two dead-dot streaks at 37%
+  and 71%. Ink-median contrast (scratch `inkcheck.py`): median -2.8%, worst -26% on the tiny "…" icon; pixcheck
+  unchanged (text ≥ 5.00, icons ≥ 4.78). A head-pressure fade to the right was dropped: it cost the right column 25%.
+- Hooks: the tray needs `[data-thread-details-panel] [data-thread-details-card]` to beat the order board's `:is()`
+  (0,2,0). Context's only hook is its English `aria-label="Context window"`. The app's hover plates are layered
+  `!important` black 3.5% / white 8%: the card re-inks `--color-black` / `--color-white` so both modes match.
+  Narrow windows open the card in a popover (`data-thread-details-panel="popover"`, inside a menu-card popup): the bill
+  drops the popup's stock and frame and undoes the menu cards' pink label on the branch. Full still shows that pink
+  branch label in popover mode (pre-existing, no room to fix).
+- Checks (built-in browser, 1280x800, all six sections on): check.js 0 invalid; pixcheck text ≥ 5.00:1, icons ≥ 4.78:1
+  with the curvature shade (disabled rows 2.8:1, exempt); light vs dark 0 differing pixels outside the live context number and the overlay
+  scrollbar, hover plate equal within 1/255; popover mode at 900x700 seen. Desktop app not checked.

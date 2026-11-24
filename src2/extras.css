@@ -1689,6 +1689,175 @@ div:has(> [aria-label="T3 Code home"]) + div:has(> [data-slot="badge"]) {
 [data-slot="sidebar-inner"] [data-slot="sidebar-footer"]::before {
   backdrop-filter: {{water}};
 }
+
+/* ---------- Local edition: the bill ---------- */
+/* The thread details card is the order's bill: cool thermal paper on the black lacquer tray it is served on (Roger,
+   2026-11-24, after a Fable consult). Cool grey-green, not cream, so it reads apart from the menu cards and the
+   order slips, and dimmer than both (luminance 0.50-0.60; slips 0.90) so it does not glare on the night wall. One
+   ink, like a thermal printer: brand marks print in it too; only the diff and the pace mark keep a second ink.
+   Inks >= 4.6:1 on the paper's darkest end. The tray rule needs two attributes to beat the order board's :is().
+   Printed parts (slip title, section heads, figures, TOTAL, thanks) use IBM 3270 Narrow, a condensed terminal mono
+   that only Roger's MacBook has (user font; not on the Mac mini, not in the app): elsewhere the app's mono prints
+   them. font-size-adjust 0.547 lifts 3270's x-height (0.476) to the app mono's and Inter's, so the fallback is
+   unchanged; it must follow each `font` shorthand, which resets it. */
+[data-thread-details-panel] [data-thread-details-card] {
+  --sk-bill: #c2c8be;
+  --sk-bill-ink: #1b2433;
+  --sk-bill-mute: #3d4654;
+  --sk-bill-red: #7f2418;
+  --sk-bill-type: "IBM 3270 Narrow", var(--font-mono);
+  --sk-bill-rule: repeating-linear-gradient(90deg, #1b243370 0 4px, #0000 0 8px) 18px 0 / calc(100% - 36px) 2px no-repeat;
+  --card: var(--sk-bill);
+  --popover: var(--sk-bill);
+  --foreground: var(--sk-bill-ink);
+  --accent-foreground: var(--sk-bill-ink);
+  --contrast-foreground: var(--sk-bill-ink);
+  --contrast-popover-foreground: var(--sk-bill-ink);
+  --contrast-accent-foreground: var(--sk-bill-ink);
+  --contrast-secondary-foreground: var(--sk-bill-ink);
+  --muted-foreground: var(--sk-bill-mute);
+  --contrast-muted-foreground: var(--sk-bill-mute);
+  --contrast-secondary-label: var(--sk-bill-mute);
+  --contrast-icon-muted: var(--sk-bill-mute);
+  --contrast-border: #1b243340;
+  --ring: var(--sk-bill-ink);
+  --background: var(--sk-bill);
+  /* Hover plates are the app's black 3.5% (light OS) or white 8% (dark OS), !important in a layer, so not
+     overridable: re-ink their two colours so both land 6 levels under the paper (one look in both modes). */
+  --color-black: var(--sk-bill-ink);
+  --color-white: #7c8284;
+  --success-foreground: #17552d;
+  --diff-addition-foreground: #17552d;
+  --warning: #6a4000;
+  --warning-foreground: #6a4000;
+  --error: var(--sk-bill-red);
+  --error-foreground: var(--sk-bill-red);
+  --destructive-foreground: var(--sk-bill-red);
+  --diff-deletion-foreground: var(--sk-bill-red);
+  padding: 7px 7px 9px;
+  background: #1d1517;
+  color: var(--sk-bill-ink);
+  box-shadow: inset 0 0 0 2px #2c2022, inset 0 0 0 3px #a8844a, 0 0 0 2px #0c0808, 8px 8px 0 2px rgb(0 0 0 / 0.5);
+  /* The paper bows like a slip just off the roll: a cylindrical light across it (the lamp is on the left: a highlight
+     band left of centre, both edges in shade; inks stay >= 4.7:1) and sides that curve in ~3 px towards the ends (an
+     ellipse 2.4x the paper's height, intersected with the strip). It ends in the cutter's teeth. A static gradient and
+     mask, not an SVG filter: the text keeps its pixels and nothing re-renders when the card scrolls or updates. */
+  & > [role="presentation"] {
+    background: linear-gradient(90deg, #1b243324, #1b243300 18%, #ffffff14 40%, #ffffff00 62%, #1b243300 80%, #1b24332e), linear-gradient(#c8cdc4, #bcc2b7);
+    mask: radial-gradient(50% 240% at 50% 50%, #000 99.7%, #0000), linear-gradient(#000 0 0) 0 0 / 100% calc(100% - 6px) no-repeat, conic-gradient(from -45deg at 50% 100%, #000 90deg, #0000 0) 0 100% / 12px 6px repeat-x;
+    mask-composite: intersect, add, add;
+  }
+  /* Thermal print (Roger, 2026-11-24): over the print, lightened in #9ca199 (at or under the darkest paper, so blank
+     paper keeps its pixels and only ink lifts): grain from noise (the thermal token, build2.py) and two dead heating dots
+     as vertical streaks through every line. Median ink contrast -2.8%; a streak or speckle on a small glyph costs
+     up to ~25% locally. No fade across the head: it cost the right column up to 25%. Fixed to the paper, so the
+     streaks stay put while the card scrolls, like the printer's dead dots. */
+  & > [role="presentation"]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    mix-blend-mode: lighten;
+    background: linear-gradient(90deg, #0000 calc(37% - 1px), #9ca199b3 0 37%, #0000 0 calc(71% - 1px), #9ca19973 0 71%, #0000 0), {{thermal}} 0 0 / 96px 96px;
+  }
+  /* Printed head and foot: the house name, the slip's title, the thanks. Decorative, so silent ("/ ''"). */
+  & [data-slot="scroll-area-viewport"] > div::before {
+    content: "BRANCHO SUSHI" / "";
+    display: block;
+    padding: 12px 0 0;
+    text-align: center;
+    font: 400 16px/1.2 var(--sk-pixel);
+    letter-spacing: 0.1em;
+  }
+  & .group\/details-items::before,
+  & .group\/details-items::after {
+    display: block;
+    text-align: center;
+    font: 400 11px/1 var(--sk-bill-type);
+    font-size-adjust: 0.547;
+    letter-spacing: 0.18em;
+    color: var(--sk-bill-mute);
+  }
+  & .group\/details-items::before {
+    content: "*** BILL · お会計 ***" / "";
+    padding: 6px 0 8px;
+  }
+  & .group\/details-items::after {
+    content: "THANK YOU · COME AGAIN" / "";
+    padding: 14px 0 12px;
+    background: var(--sk-bill-rule);
+  }
+  & section {
+    border-top: 0;
+    background: var(--sk-bill-rule);
+  }
+  /* Square, like the rest of the pixel UI: hover plates, focus rings, the status dot. */
+  & * {
+    border-radius: 0;
+  }
+  & h3 {
+    font: 400 11px var(--sk-bill-type);
+    font-size-adjust: 0.547;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  & :is(.tabular-nums, .font-mono) {
+    font-family: var(--sk-bill-type);
+    font-size-adjust: 0.547;
+  }
+  /* Meters print as dot-matrix bars; the pace mark is the waiter's red pen tick. */
+  & .h-\[3px\] {
+    height: 6px;
+    border-radius: 0;
+    background: repeating-linear-gradient(90deg, #1b243338 0 3px, #0000 0 4px);
+  }
+  & .h-\[3px\] > .inset-y-0 {
+    border-radius: 0;
+    background: var(--sk-bill-ink);
+    mask: repeating-linear-gradient(90deg, #000 0 3px, #0000 0 4px);
+  }
+  & .h-\[3px\] > [aria-hidden] {
+    top: -4px;
+    width: 2px;
+    height: 14px;
+    background: var(--sk-bill-red);
+  }
+  /* Context closes the bill as its TOTAL: a double rule and bold type. The app's English section label is the
+     only hook (no data attribute); in another locale Context prints as a plain line. */
+  & section[aria-label="Context window"] {
+    padding-top: 12px;
+    background: linear-gradient(var(--sk-bill-ink) 0 0) 18px 0 / calc(100% - 36px) 2px no-repeat, linear-gradient(var(--sk-bill-ink) 0 0) 18px 4px / calc(100% - 36px) 2px no-repeat;
+  }
+  & section[aria-label="Context window"] :is(span, a) {
+    font-weight: 700;
+    color: var(--sk-bill-ink);
+  }
+  & section[aria-label="Context window"] .max-w-28 {
+    font-family: var(--sk-bill-type);
+    font-size-adjust: 0.547;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  & [data-slot="scroll-area-viewport"] svg:not(.lucide) {
+    filter: grayscale(1) brightness(0.3);
+  }
+  /* In a narrow window the card opens in a popover: the menu cards' pink label rule would catch the branch. */
+  & [data-slot="select-label"] {
+    width: auto;
+    margin: 0;
+    padding: 0 10px;
+    background: none;
+    color: inherit;
+    font: inherit;
+    clip-path: none;
+  }
+}
+/* ...and the popover is a menu card: drop its stock and frame so the tray stands alone. */
+[data-slot="popover-popup"]:has([data-thread-details-panel]) {
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
 /*/bg*/
 
 /* ---------- Textures and backgrounds ---------- */

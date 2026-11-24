@@ -30,6 +30,16 @@ def water():
          "<feMerge><feMergeNode in='SourceGraphic'/><feMergeNode/></feMerge></filter>")
     return 'url("' + uri("<svg xmlns='http://www.w3.org/2000/svg'>" + f + "</svg>") + '#w")'
 tok["water"] = water()
+def thermal():
+    """Thermal print grain for the bill (local edition): fractal noise thresholded into sparse speckles (alpha
+    8R - 5: from R 0.625, full at 0.75) in #9ca199, at or under the darkest paper. Blended with lighten over the print,
+    it lifts the ink only; blank paper keeps its pixels. One 96 px tile, stitched to repeat."""
+    f = ("<filter id='n' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'>"
+         "<feTurbulence type='fractalNoise' baseFrequency='.45' numOctaves='2' stitchTiles='stitch' seed='7'/>"
+         "<feColorMatrix values='0 0 0 0 .612 0 0 0 0 .631 0 0 0 0 .6 8 0 0 0 -5'/></filter>")
+    return 'url("' + uri("<svg xmlns='http://www.w3.org/2000/svg' width='96' height='96'>" + f
+                         + "<rect width='96' height='96' filter='url(#n)'/></svg>") + '")'
+tok["thermal"] = thermal()
 tok["tear_paper"] = multi(TEAR, {"#": "#fbf3e2"})
 extra_tok_path = os.path.join(root, "src2", "sprites2.py")
 if os.path.exists(extra_tok_path):

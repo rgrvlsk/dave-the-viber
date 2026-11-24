@@ -826,3 +826,20 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   bands have 0 differing pixels between light and dark captures. Test tabs closed; no prompt sent.
   The rewritten change commit is 194e680 (formerly c598606). Concurrent titlebar/bubble publishes preserved;
   latest installed CSS validated at 49,192 chars. Private QA captures stay outside the public repository.
+
+## Sidebar facade resize (2026-11-23)
+Local edition only (`/*bg*/` span). Commit on branch `codex/facade-busts`; installed in this instance.
+- The facade rule is generated from the box width B, not `--sidebar-width`: the app sets that variable only when a
+  drag ends (during the drag it writes inline `width` on `sidebar-gap` and `sidebar-container`), and the desktop app
+  can hold a stale value. In `background-size`, 100% = B; in `background-position`, 100% = B - the layer's width.
+  Thresholds are therefore box widths (sidebar width - 1 px border). The collapse key uses `anchor(--sk-sidebar right)`.
+- Sequence (R = left reserve: 66 px web Nightly pill, 76 px desktop green window key): at the minimum width BRANCHO is
+  centred between R and the edge; it follows the edge until the sign with both fish fits with 8 px each side, then
+  stays put with the whole facade. Fish from R + 188, first chochin R + 183, SUSHI's diamond plates from R + 209 (16 px
+  each, halo grows with them), letters R + 273, f.k.a. T3 Code plaque R + 429; a chochin every two bays once clear.
+- Colours: images and gradients go through the same colour conversion on screen; plain CSS colours do not. Seams
+  with the header use the noren sprite's source colours (#8a5a2b rail, #ffb060 dashes).
+- Council (Fable High + Opus High, 9 rounds): Fable 8, Opus 7 at the end; Roger closed the rounds on Fable's verdict.
+  Owner decision (2026-11-24): "f.k.a. T3 Code" shows only on wide sidebars, not at the default 256.
+- Captures in a background preview tab: timers throttle, so use synchronous evals (set the width, replace the sheet,
+  force layout) and kill the neon animation with an override sheet instead of waiting for it.

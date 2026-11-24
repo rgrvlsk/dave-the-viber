@@ -1394,13 +1394,219 @@ html:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-ind
   --sk-k: calc((var(--chat-lane-inset-end, 0px) + max(0px, (100% - 832px - var(--chat-lane-inset-end, 0px)) / 2) - 72px) * 1e3);
   background: var(--sk-lamp) right 38px bottom 186px / clamp(0px, var(--sk-k), 44px) 52px no-repeat, linear-gradient(#2e1d12, #2e1d12) right 59px bottom 230px / clamp(0px, var(--sk-k), 2px) 40px no-repeat, linear-gradient(#e9b44c 0 2px, #8f5f1e 0 4px, #2e1d12 0) right 0 bottom 268px / clamp(0px, var(--sk-k), 64px) 6px no-repeat, var(--sk-cone) right 0 bottom 60px / clamp(0px, var(--sk-k), 120px) 128px no-repeat;
 }
-/* The sidebar's top bar is the chat header's beam, and the restaurant's sign hangs on it where the app's logo was:
-   Brancho Sushi, f.k.a. T3 Code. The link and its label stay (hidden text, same target, the sign's width); the sign is
-   a layer of the bar, as tall as the beam, because the logo's row (32 px) clips what overflows it. It sits where the
-   link starts: the app's titlebar inset (L + 40 px, L = --workspace-controls-left), or L+20 px in the desktop app, whose room ends at Go back (L+118 px). A
-   data: URI, since the atlas cannot take a position in a variable. */
-[data-slot="sidebar-inner"] > div:first-child > div:first-child {
-  background: {{sign}} calc(var(--workspace-controls-left) + 40px) 0 / 94px 52px no-repeat, linear-gradient(transparent 50px, #1a110a 0) 0 0 / 100% 52px no-repeat, {{beam}} 0 0 / 64px 52px #4a2f1e;
+/* The sky, roof, frieze and planks run across the top, the whole width, in the chat header's bands: the eave ends at
+   52 px like the header's beam and the dark frieze spans the noren's 52-88 px, behind the search row; its gold
+   fascia continues the noren's rail, and while agents work a row of hem dashes lights in it (16 px apart, counted
+   from the sign, so the chochin tassels fall in the gaps). Everything reads the box width B (100% in background-
+   size, 100% + the layer's width in background-position), not --sidebar-width: the app moves that only when a drag
+   ends, so the facade follows the edge while it is dragged. The sign reads left to right, fixed from the left so
+   nothing slides once it fits: gold fish, BRANCHO, · SUSHI, gold fish, then the old wooden plaque "f.k.a. T3 Code"
+   hung from an arm on a pole planted on the roof. A piece shows only when all of it fits. The first R px belong to
+   the Nightly pill (web, R = 66) or the window keys (desktop, R = 76, the green key's right edge). At the minimum
+   width BRANCHO sits centred between R and the edge (8 px each side); it follows the edge until the whole sign with
+   both fish fits with 8 px on each side (R + 188), then it and the whole facade stay put. From R + 188 both fish,
+   and from R + 183 the first chochin; from R + 209 SUSHI's plates hang one by one (16 px each, the first with the
+   dot plate; each carries a hishi diamond) with the right fish after the last, and the lit halo grows with them;
+   from R + 273 the letters replace them; from R + 429 the plaque. Past that the roof grows: chochin hang mid-bay
+   every two 64 px bays once they clear the keys (the first under BRANCHO's middle), and an end tile covers the cut
+   tile at the right edge. Sky, roof and frieze are counted from the sign, so they move as one piece. No post shows
+   behind the key groups. Positions round to the 2 px grid. Thresholds are box widths (the sidebar's width minus its
+   1 px border).
+   Colours that meet the header's (fascia, hem dashes) use the noren sprite's own source colours: images and
+   gradients go through the same colour conversion on screen. At the sidebar
+   cap (T3 reserves 640 px), Cobranch and Brancho fill the far end once 130 px are free.
+   While agents work the sign powers on once, like neon: the tiles light left to right, three of them stutter, then the
+   halo, the fish and finally the chochin (1.6 s, steps, 14 repaints of this box; then still). Hovering the logo replays
+   it (the skin's rule for life on show: infinite while hovered, ends lit when the pointer leaves). Each lit piece is a layer whose width is a registered number (0 off, 1 on); idle is 0, working 1, and the
+   animation only walks between them, so reduced motion and a missed animation both end lit. */
+@property --sk-b0 { syntax: "<number>"; inherits: false; initial-value: 0 }
+@property --sk-b1 { syntax: "<number>"; inherits: false; initial-value: 0 }
+@property --sk-b2 { syntax: "<number>"; inherits: false; initial-value: 0 }
+@property --sk-b3 { syntax: "<number>"; inherits: false; initial-value: 0 }
+@property --sk-b4 { syntax: "<number>"; inherits: false; initial-value: 0 }
+@property --sk-b5 { syntax: "<number>"; inherits: false; initial-value: 0 }
+@property --sk-b6 { syntax: "<number>"; inherits: false; initial-value: 0 }
+@property --sk-bh { syntax: "<number>"; inherits: false; initial-value: 0 }
+@property --sk-bc { syntax: "<number>"; inherits: false; initial-value: 0 }
+@keyframes sk-neon {
+  0% { --sk-b0: 0; --sk-b1: 0; --sk-b2: 0; --sk-b3: 0; --sk-b4: 0; --sk-b5: 0; --sk-b6: 0; --sk-bh: 0; --sk-bc: 0; }
+  8% { --sk-b0: 1; }
+  12% { --sk-b0: 0; }
+  15% { --sk-b0: 1; --sk-b1: 1; }
+  22% { --sk-b2: 1; }
+  25% { --sk-b2: 0; }
+  28% { --sk-b2: 1; --sk-b3: 1; }
+  36% { --sk-b4: 1; }
+  43% { --sk-b5: 1; }
+  46% { --sk-b5: 0; }
+  49% { --sk-b5: 1; --sk-b6: 1; }
+  60% { --sk-bh: 1; }
+  76% { --sk-bc: 1; }
+  80% { --sk-bc: 0; }
+  84%, 100% { --sk-b0: 1; --sk-b1: 1; --sk-b2: 1; --sk-b3: 1; --sk-b4: 1; --sk-b5: 1; --sk-b6: 1; --sk-bh: 1; --sk-bc: 1; }
+}
+[data-slot="sidebar-inner"] > div:first-child {
+  --sk-w: var(--sidebar-width, 256px);
+  --sk-e: max(0px, var(--sk-w) - 480px);
+  --sk-hv: calc(clamp(0, sign(var(--sk-e) - 129px), 1) * (1 - sign(round(abs(100vw - 640px - var(--sidebar-width, 0px)), 1px))));
+  --sk-guest-scale: clamp(1.2, (var(--sk-e) - 10px) / 100px, 2);
+  --sk-r: 66px;
+  --sk-kl: 40px;
+  background:
+    {{cobranch}} right calc(8px + 28px * var(--sk-guest-scale)) top calc(100px - 48px * var(--sk-guest-scale)) / calc(71px * var(--sk-guest-scale) * var(--sk-hv)) calc(48px * var(--sk-guest-scale)) no-repeat,
+    {{brancho}} right 8px top calc(100px - 48px * var(--sk-guest-scale)) / calc(40px * var(--sk-guest-scale) * var(--sk-hv)) calc(48px * var(--sk-guest-scale)) no-repeat,
+    {{facade_chochin_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -76px)) + 34px, 2px) 50px / min(clamp(0px, var(--sk-bc) * 1e3px, 48px), clamp(0px, (100% - var(--sk-r) - 182.5px) * 1e3, 48px)) 36px no-repeat,
+    {{facade_chochin_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -76px)) + 162px, 2px) 50px / min(clamp(0px, var(--sk-bc) * 1e3px, 48px), clamp(0px, (100% - var(--sk-r) - 310.5px) * 1e3, 48px)) 36px no-repeat,
+    {{facade_chochin_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -76px)) + 290px, 2px) 50px / min(clamp(0px, var(--sk-bc) * 1e3px, 48px), clamp(0px, (100% - var(--sk-r) - 438.5px) * 1e3, 48px)) 36px no-repeat,
+    {{facade_chochin_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -76px)) + 418px, 2px) 50px / min(clamp(0px, var(--sk-bc) * 1e3px, 48px), clamp(0px, (100% - var(--sk-r) - 566.5px) * 1e3, 48px)) 36px no-repeat,
+    {{facade_chochin_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -76px)) + 546px, 2px) 50px / min(clamp(0px, var(--sk-bc) * 1e3px, 48px), clamp(0px, (100% - var(--sk-r) - 694.5px) * 1e3, 48px)) 36px no-repeat,
+    {{facade_chochin_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -76px)) + 674px, 2px) 50px / min(clamp(0px, var(--sk-bc) * 1e3px, 48px), clamp(0px, (100% - var(--sk-r) - 822.5px) * 1e3, 48px)) 36px no-repeat,
+    {{facade_chochin_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -76px)) + 802px, 2px) 50px / min(clamp(0px, var(--sk-bc) * 1e3px, 48px), clamp(0px, (100% - var(--sk-r) - 950.5px) * 1e3, 48px)) 36px no-repeat,
+    {{facade_chochin_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -76px)) + 930px, 2px) 50px / min(clamp(0px, var(--sk-bc) * 1e3px, 48px), clamp(0px, (100% - var(--sk-r) - 1078.5px) * 1e3, 48px)) 36px no-repeat,
+    {{facade_chochin}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -88px)) + 40px, 2px) 52px / clamp(0px, (100% - var(--sk-r) - 182.5px) * 1e3, 36px) 32px no-repeat,
+    {{facade_chochin}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -88px)) + 168px, 2px) 52px / clamp(0px, (100% - var(--sk-r) - 310.5px) * 1e3, 36px) 32px no-repeat,
+    {{facade_chochin}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -88px)) + 296px, 2px) 52px / clamp(0px, (100% - var(--sk-r) - 438.5px) * 1e3, 36px) 32px no-repeat,
+    {{facade_chochin}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -88px)) + 424px, 2px) 52px / clamp(0px, (100% - var(--sk-r) - 566.5px) * 1e3, 36px) 32px no-repeat,
+    {{facade_chochin}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -88px)) + 552px, 2px) 52px / clamp(0px, (100% - var(--sk-r) - 694.5px) * 1e3, 36px) 32px no-repeat,
+    {{facade_chochin}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -88px)) + 680px, 2px) 52px / clamp(0px, (100% - var(--sk-r) - 822.5px) * 1e3, 36px) 32px no-repeat,
+    {{facade_chochin}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -88px)) + 808px, 2px) 52px / clamp(0px, (100% - var(--sk-r) - 950.5px) * 1e3, 36px) 32px no-repeat,
+    {{facade_chochin}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -88px)) + 936px, 2px) 52px / clamp(0px, (100% - var(--sk-r) - 1078.5px) * 1e3, 36px) 32px no-repeat,
+    {{facade_fishl_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -94px)) - 28px, 2px) 12px / min(clamp(0px, (100% - var(--sk-r) - 187.5px) * 1e3, 30px), var(--sk-bh) * 1e3px) 24px no-repeat,
+    {{facade_fishr_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -92px)) + 116px + clamp(0px, round(down, 100% + 32px - max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -92px)) - 159px, 16px), 80px) + clamp(0px, clamp(0px, round(down, 100% + 32px - max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -92px)) - 159px, 16px), 80px) * 1e3, 8px), 2px) 12px / min(clamp(0px, (100% - var(--sk-r) - 187.5px) * 1e3, 32px), var(--sk-bh) * 1e3px) 24px no-repeat,
+    {{facade_fish_l}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -94px)) - 28px, 2px) 12px / clamp(0px, (100% - var(--sk-r) - 187.5px) * 1e3, 30px) 24px no-repeat,
+    {{facade_fish_r}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -92px)) + 116px + clamp(0px, round(down, 100% + 32px - max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -92px)) - 159px, 16px), 80px) + clamp(0px, clamp(0px, round(down, 100% + 32px - max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -92px)) - 159px, 16px), 80px) * 1e3, 8px), 2px) 12px / clamp(0px, (100% - var(--sk-r) - 187.5px) * 1e3, 32px) 24px no-repeat,
+    {{facade_roof_sign}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -12px)) + 252px, 2px) 4px / clamp(0px, (100% - var(--sk-r) - 428.5px) * 1e3, 112px) 38px no-repeat,
+    {{facade_sushi_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -34px)) + 114px, 2px) 14px / calc(clamp(0px, (100% - var(--sk-r) - 272.5px) * 1e3, 90px) * var(--sk-bh)) 22px no-repeat,
+    {{facade_plate0_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -114px)) + 114px, 2px) 14px / calc(min(clamp(0px, (100% - var(--sk-r) - 208.5px) * 1e3, 10px), clamp(0px, (var(--sk-r) + 272.5px - 100%) * 1e3, 10px)) * var(--sk-bh)) 22px no-repeat,
+    {{facade_plate_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -106px)) + 122px, 2px) 14px / calc(min(clamp(0px, (100% - var(--sk-r) - 208.5px) * 1e3, 18px), clamp(0px, (var(--sk-r) + 272.5px - 100%) * 1e3, 18px)) * var(--sk-bh)) 22px no-repeat,
+    {{facade_plate_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -106px)) + 138px, 2px) 14px / calc(min(clamp(0px, (100% - var(--sk-r) - 224.5px) * 1e3, 18px), clamp(0px, (var(--sk-r) + 272.5px - 100%) * 1e3, 18px)) * var(--sk-bh)) 22px no-repeat,
+    {{facade_plate_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -106px)) + 154px, 2px) 14px / calc(min(clamp(0px, (100% - var(--sk-r) - 240.5px) * 1e3, 18px), clamp(0px, (var(--sk-r) + 272.5px - 100%) * 1e3, 18px)) * var(--sk-bh)) 22px no-repeat,
+    {{facade_plate_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -106px)) + 170px, 2px) 14px / calc(min(clamp(0px, (100% - var(--sk-r) - 256.5px) * 1e3, 18px), clamp(0px, (var(--sk-r) + 272.5px - 100%) * 1e3, 18px)) * var(--sk-bh)) 22px no-repeat,
+    {{facade_tile0}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -108px)) + 2px, 2px) 14px / clamp(0px, var(--sk-b0) * 1e3px, 16px) 22px no-repeat,
+    {{facade_tile1}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -108px)) + 18px, 2px) 14px / clamp(0px, var(--sk-b1) * 1e3px, 16px) 22px no-repeat,
+    {{facade_tile2}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -108px)) + 34px, 2px) 14px / clamp(0px, var(--sk-b2) * 1e3px, 16px) 22px no-repeat,
+    {{facade_tile3}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -108px)) + 50px, 2px) 14px / clamp(0px, var(--sk-b3) * 1e3px, 16px) 22px no-repeat,
+    {{facade_tile4}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -108px)) + 66px, 2px) 14px / clamp(0px, var(--sk-b4) * 1e3px, 16px) 22px no-repeat,
+    {{facade_tile5}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -108px)) + 82px, 2px) 14px / clamp(0px, var(--sk-b5) * 1e3px, 16px) 22px no-repeat,
+    {{facade_tile6}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -108px)) + 98px, 2px) 14px / clamp(0px, var(--sk-b6) * 1e3px, 16px) 22px no-repeat,
+    {{facade_halo}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -2px)) - 2px, 2px) 12px / calc(clamp(0px, (var(--sk-r) + 208.5px - 100%) * 1e3, 122px) * var(--sk-bh)) 24px no-repeat,
+    {{facade_halo1}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 22px)) - 2px, 2px) 12px / calc(min(clamp(0px, (100% - var(--sk-r) - 208.5px) * 1e3, 146px), clamp(0px, (var(--sk-r) + 224.5px - 100%) * 1e3, 146px)) * var(--sk-bh)) 24px no-repeat,
+    {{facade_halo2}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 38px)) - 2px, 2px) 12px / calc(min(clamp(0px, (100% - var(--sk-r) - 224.5px) * 1e3, 162px), clamp(0px, (var(--sk-r) + 240.5px - 100%) * 1e3, 162px)) * var(--sk-bh)) 24px no-repeat,
+    {{facade_halo3}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 54px)) - 2px, 2px) 12px / calc(min(clamp(0px, (100% - var(--sk-r) - 240.5px) * 1e3, 178px), clamp(0px, (var(--sk-r) + 256.5px - 100%) * 1e3, 178px)) * var(--sk-bh)) 24px no-repeat,
+    {{facade_halo4}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 70px)) - 2px, 2px) 12px / calc(min(clamp(0px, (100% - var(--sk-r) - 256.5px) * 1e3, 194px), clamp(0px, (var(--sk-r) + 272.5px - 100%) * 1e3, 194px)) * var(--sk-bh)) 24px no-repeat,
+    {{facade_halo_wide}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 86px)) - 2px, 2px) 12px / calc(clamp(0px, (100% - var(--sk-r) - 272.5px) * 1e3, 210px) * var(--sk-bh)) 24px no-repeat,
+    {{facade_sushi}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -36px)) + 116px, 2px) 12px / clamp(0px, (100% - var(--sk-r) - 272.5px) * 1e3, 88px) 24px no-repeat,
+    {{facade_plate0}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -116px)) + 116px, 2px) 12px / min(clamp(0px, (100% - var(--sk-r) - 208.5px) * 1e3, 8px), clamp(0px, (var(--sk-r) + 272.5px - 100%) * 1e3, 8px)) 24px no-repeat,
+    {{facade_plate}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -106px)) + 122px, 2px) 12px / min(clamp(0px, (100% - var(--sk-r) - 208.5px) * 1e3, 18px), clamp(0px, (var(--sk-r) + 272.5px - 100%) * 1e3, 18px)) 24px no-repeat,
+    {{facade_plate}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -106px)) + 138px, 2px) 12px / min(clamp(0px, (100% - var(--sk-r) - 224.5px) * 1e3, 18px), clamp(0px, (var(--sk-r) + 272.5px - 100%) * 1e3, 18px)) 24px no-repeat,
+    {{facade_plate}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -106px)) + 154px, 2px) 12px / min(clamp(0px, (100% - var(--sk-r) - 240.5px) * 1e3, 18px), clamp(0px, (var(--sk-r) + 272.5px - 100%) * 1e3, 18px)) 24px no-repeat,
+    {{facade_plate}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -106px)) + 170px, 2px) 12px / min(clamp(0px, (100% - var(--sk-r) - 256.5px) * 1e3, 18px), clamp(0px, (var(--sk-r) + 272.5px - 100%) * 1e3, 18px)) 24px no-repeat,
+    {{facade_tiles}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -8px)), 2px) 12px / 116px 24px no-repeat,
+    {{facade_verge}} round(up, 100%, 2px) 36px / 16px 16px no-repeat,
+    {{facade_stars}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 84px)) - 94px, 2px) 0 / 208px 12px repeat-x,
+    {{facade_sky}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 132px)) - 86px, 2px) 0 / 256px 36px repeat-x,
+    {{facade_roof}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -108px)) - 102px, 2px) 36px / 16px 16px repeat-x,
+    linear-gradient(#8a5a2b 0 0) 0 52px / 100% 2px no-repeat,
+    linear-gradient(#2e1d12 0 0) 0 54px / var(--sk-kl) 34px no-repeat,
+    linear-gradient(#2e1d12 0 0) round(up, 100%, 2px) 54px / 72px 34px no-repeat,
+    linear-gradient(90deg, #ffb060 0 4px, #0000 0) round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -108px)) - 96px, 2px) 86px / 16px calc(2px * var(--sk-bh)) repeat-x,
+    {{facade_frieze}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -60px)) - 102px, 2px) 52px / 64px 36px repeat-x,
+    {{facade_planks}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -60px)) - 102px, 2px) 58px / 64px 42px repeat-x;
+}
+html:has([data-testid="sidebar-working-header"]) [data-slot="sidebar-inner"] > div:first-child {
+  --sk-b0: 1;
+  --sk-b1: 1;
+  --sk-b2: 1;
+  --sk-b3: 1;
+  --sk-b4: 1;
+  --sk-b5: 1;
+  --sk-b6: 1;
+  --sk-bh: 1;
+  --sk-bc: 1;
+  animation: sk-neon 1.6s steps(1);
+}
+html:has([data-testid="sidebar-working-header"]) [data-slot="sidebar-inner"] > div:first-child:has([aria-label="T3 Code home"]:hover) {
+  animation-iteration-count: infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-slot="sidebar-inner"] > div:first-child {
+    animation: none !important;
+  }
+}
+div:has(> [aria-label="T3 Code home"]) + div:has(> [data-slot="badge"]) {
+  position: absolute;
+  left: 4px;
+  top: 0;
+  margin: 0;
+}
+/* The collapse key sits 12 px right of the sidebar's live edge: --sidebar-width changes only when a drag ends. */
+[data-side="left"] > [data-slot="sidebar-container"] {
+  anchor-name: --sk-sidebar;
+  /* Its 1 px right border continues the facade's bands, then the app's hairline. */
+  border-image: linear-gradient(#18243c 0 36px, #5d6872 0 52px, #8a5a2b 0 54px, #2e1d12 0 88px, #3e2718 0 94px, #6e4630 0 96px, #4a2f1e 0 98px, #2e1d12 0 100px, rgb(243 231 211 / 0.08) 0) 0 1 0 0;
+}
+[data-slot="sidebar-wrapper"]:has([data-slot="sidebar"][data-state="expanded"]) > div:has(> [aria-label="Toggle main sidebar"]) {
+  left: calc(anchor(--sk-sidebar right, var(--sidebar-width)) + 12px);
+}
+[data-slot="sidebar-wrapper"]:has([data-slot="sidebar"][data-state="expanded"]) [data-chat-header] {
+  padding-left: 56px;
+}
+/* The search row stands on the facade's plank rail, level with the noren's hem: 2 px up, the list does not move. */
+[data-slot="sidebar-inner"] > div:first-child div:has(> div > [data-slot="input-control"]) {
+  translate: 0 -2px;
+}
+/* Desktop app: the back and forward keys leave the logo's row (it clips what overflows, so it shows them now; the
+   Nightly pill, which only fits the web app, goes) and stand on the sill left of the search as two glazed tiles
+   like the others, back to back; the search moves right to make room. The rule for all editions further down
+   puts them in the logo's row: these selectors are more specific. */
+[data-slot="sidebar-inner"] div:has(> div > [aria-label="T3 Code home"] + div [aria-label="Go back"]) {
+  overflow: visible;
+}
+[data-slot="sidebar-inner"] > div:first-child [aria-label="T3 Code home"] + div:has([aria-label="Go back"]) {
+  top: calc(100% + 18px);
+  left: 8px;
+  translate: none;
+  gap: 0;
+}
+[data-slot="sidebar-inner"] > div:first-child :is([aria-label="Go back"], [aria-label="Go forward"]) {
+  width: 28px;
+  min-width: 28px;
+  height: 28px;
+  border-radius: 0;
+  background: #24466a;
+  box-shadow: inset 2px 2px 0 #3f6c96, inset -2px -2px 0 #14283f;
+  clip-path: var(--sk-notch);
+  color: #fff3dc;
+}
+[data-slot="sidebar-inner"] > div:first-child :is([aria-label="Go back"], [aria-label="Go forward"]):hover:not(:disabled) {
+  background: #2f5a86;
+}
+[data-slot="sidebar-inner"] > div:first-child :is([aria-label="Go back"], [aria-label="Go forward"]):active:not(:disabled) {
+  box-shadow: inset 2px 2px 0 #14283f, inset -2px -2px 0 #3f6c96;
+}
+[data-slot="sidebar-inner"] > div:first-child :is([aria-label="Go back"], [aria-label="Go forward"]):disabled {
+  opacity: 1;
+  background: #1b3552;
+  box-shadow: inset 2px 2px 0 #24466a, inset -2px -2px 0 #102033;
+  color: #8ea3b8;
+}
+[data-slot="sidebar-inner"] > div:first-child :is([aria-label="Go back"], [aria-label="Go forward"]) > svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.25;
+  shape-rendering: crispEdges;
+  filter: drop-shadow(1px 1px 0 #0b1726);
+}
+[data-slot="sidebar-inner"]:has([aria-label="Go back"]) > div:first-child {
+  --sk-r: 76px;
+  --sk-kl: 104px;
+}
+[data-slot="sidebar-inner"]:has([aria-label="Go back"]) div:has(> [aria-label="T3 Code home"]) + div:has(> [data-slot="badge"]) {
+  display: none;
+}
+[data-slot="sidebar-inner"]:has([aria-label="Go back"]) div:has(> [data-slot="input-control"]),
+[data-slot="sidebar-inner"]:has([aria-label="Go back"]) div:has(> [data-slot="input-control"]):not(:focus-within, :has(input:not(:placeholder-shown))) {
+  margin-left: 64px;
 }
 [aria-label="T3 Code home"] {
   width: 94px;
@@ -1533,7 +1739,6 @@ html:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-ind
 }
 [data-slot="sidebar-inner"] > div:first-child > div:first-child:has([aria-label="Go back"]) {
   padding-right: 0;
-  /*bg*/background-position-x: calc(var(--workspace-controls-left) + 20px), 0, 0;/*/bg*/
 }
 [data-slot="sidebar-inner"] [aria-label="T3 Code home"]:has(+ div [aria-label="Go back"]) {
   margin-left: calc(var(--workspace-controls-left) + 20px);

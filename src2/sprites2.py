@@ -55,10 +55,11 @@ NOREN_LIT_P = {"c": "#ffc46e", "e": "#3e5a9a", "f": "#ffb060"}
 # The new-thread picture: our bar seen from the quay (320x107, 2x), pixelated from original generated art; the hut
 # wears our noren and the moon the header moon's ramp (NIGHT_P g, m). harbour_dark is the hut with its lights out
 # (92x46 at art 228,26). A fish crate stands on the picture's sill (22x10).
-# The restaurant's sign on the sidebar's beam, where the app's logo was (47x26, 2x): an indigo board in a wood frame,
-# BRANCHO in noren cream, SUSHI in moon gold between two fish, F.K.A. T3 CODE in a 3x5 micro font.
-SIGN_P = {"k": "#3a2414", "h": "#e2a866", "d": "#8a5a2b", "n": "#2a3f73", "c": "#efe2c8", "g": "#f0cc90", "f": "#f08a5d",
-          "e": "#10202f", "t": "#b9b3c9"}
+# The top of the sidebar: the restaurant across the street (Fable's 128x50 drawing after Luna's concept), cut into pieces
+# so it follows the sidebar's width: sky, roof, frieze and planks tile; the neon sign and the roof plaque stop at
+# 480 CSS px. The lit pieces (tile0-6, halo, fish, chochin) light while agents work. Palettes are their own.
+FACADE = ("sky", "stars", "plate0", "plate", "plate0_lit", "plate_lit", "halo1", "halo2", "halo3", "halo4", "verge", "roof", "frieze", "planks", "tiles", "sushi", "sushi_lit", "halo_wide", "roof_sign", "fish_l", "fish_r", "chochin", "halo",
+          "fishl_lit", "fishr_lit", "chochin_lit") + tuple(f"tile{k}" for k in range(7))
 CRATE_P = {"k": "#2e1d12", "d": "#7a5030", "b": "#7f8ea0", "w": "#b07a4a", "s": "#cfd6dc"}
 def own(name):
     """Palette of imported art: its own colours, each a letter or digit, in colour order."""
@@ -136,7 +137,11 @@ TOKENS = {
     "bell_off": multi(png("bell", BELL_P), BELL_OFF_P),
     "noren_lit": multi(png("noren_lit", NOREN_LIT_P), NOREN_LIT_P),
     "crate": multi(png("crate", CRATE_P), CRATE_P),
-    "sign": multi(png("sign", SIGN_P), SIGN_P),
     "harbour": multi(png("harbour", own("harbour")), own("harbour")),
     "harbour_dark": multi(png("harbour_dark", own("harbour_dark")), own("harbour_dark")),
 }
+TOKENS.update({"facade_" + n: multi(png("facade_" + n, own("facade_" + n)), own("facade_" + n)) for n in FACADE})
+# Close-up busts from Roger's supplied pixel grids. Crop the lower torso to fit 100 CSS px at 2x.
+for name in ("cobranch", "brancho"):
+    palette = own(name)
+    TOKENS[name] = multi("\n".join(png(name, palette).splitlines()[:48]), palette)

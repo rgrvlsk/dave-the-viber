@@ -1407,11 +1407,11 @@ html:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-ind
    both fish fits with 8 px on each side (R + 188), then it and the whole facade stay put. From R + 188 both fish,
    and from R + 183 the first chochin; from R + 209 SUSHI's plates hang one by one (16 px each, the first with the
    dot plate; each carries a hishi diamond) with the right fish after the last, and the lit halo grows with them;
-   from R + 273 the letters replace them; from R + 429 the plaque. Past that the roof grows: chochin hang mid-bay
-   every two 64 px bays once they clear the keys (the first under BRANCHO's middle), and an end tile covers the cut
-   tile at the right edge. Sky, roof and frieze are counted from the sign, so they move as one piece. No post shows
-   behind the key groups. Positions round to the 2 px grid. Thresholds are box widths (the sidebar's width minus its
-   1 px border).
+   from R + 273 the letters replace them; the lit sign is reflected on the tile ribs below it; from R + 429 the
+   plaque. Past that the roof grows: chochin hang mid-bay every two 64 px bays once they clear the keys (the first
+   under BRANCHO's middle), and an end tile covers the cut tile at the right edge. Sky, roof and frieze are counted
+   from the sign, so they move as one piece. No post shows behind the key groups. Positions round to the 2 px grid.
+   Thresholds are box widths (the sidebar's width minus its 1 px border).
    Colours that meet the header's (fascia, hem dashes) use the noren sprite's own source colours: images and
    gradients go through the same colour conversion on screen. At the sidebar
    cap (T3 reserves 640 px), Cobranch and Brancho fill the far end once 130 px are free.
@@ -1488,13 +1488,13 @@ html:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-ind
     {{facade_tile3}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -108px)) + 50px, 2px) 14px / clamp(0px, var(--sk-b3) * 1e3px, 16px) 22px no-repeat,
     {{facade_tile4}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -108px)) + 66px, 2px) 14px / clamp(0px, var(--sk-b4) * 1e3px, 16px) 22px no-repeat,
     {{facade_tile5}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -108px)) + 82px, 2px) 14px / clamp(0px, var(--sk-b5) * 1e3px, 16px) 22px no-repeat,
-    {{facade_tile6}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -108px)) + 98px, 2px) 14px / clamp(0px, var(--sk-b6) * 1e3px, 16px) 22px no-repeat,
-    {{facade_halo}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -2px)) - 2px, 2px) 12px / calc(clamp(0px, (var(--sk-r) + 208.5px - 100%) * 1e3, 122px) * var(--sk-bh)) 24px no-repeat,
-    {{facade_halo1}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 22px)) - 2px, 2px) 12px / calc(min(clamp(0px, (100% - var(--sk-r) - 208.5px) * 1e3, 146px), clamp(0px, (var(--sk-r) + 224.5px - 100%) * 1e3, 146px)) * var(--sk-bh)) 24px no-repeat,
-    {{facade_halo2}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 38px)) - 2px, 2px) 12px / calc(min(clamp(0px, (100% - var(--sk-r) - 224.5px) * 1e3, 162px), clamp(0px, (var(--sk-r) + 240.5px - 100%) * 1e3, 162px)) * var(--sk-bh)) 24px no-repeat,
-    {{facade_halo3}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 54px)) - 2px, 2px) 12px / calc(min(clamp(0px, (100% - var(--sk-r) - 240.5px) * 1e3, 178px), clamp(0px, (var(--sk-r) + 256.5px - 100%) * 1e3, 178px)) * var(--sk-bh)) 24px no-repeat,
-    {{facade_halo4}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 70px)) - 2px, 2px) 12px / calc(min(clamp(0px, (100% - var(--sk-r) - 256.5px) * 1e3, 194px), clamp(0px, (var(--sk-r) + 272.5px - 100%) * 1e3, 194px)) * var(--sk-bh)) 24px no-repeat,
-    {{facade_halo_wide}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 86px)) - 2px, 2px) 12px / calc(clamp(0px, (100% - var(--sk-r) - 272.5px) * 1e3, 210px) * var(--sk-bh)) 24px no-repeat,
+    {{facade_tile6}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -106px)) + 98px, 2px) 14px / clamp(0px, var(--sk-b6) * 1e3px, 18px) 22px no-repeat,
+    {{facade_halo}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -2px)) - 2px, 2px) 12px / calc(clamp(0px, (var(--sk-r) + 208.5px - 100%) * 1e3, 122px) * var(--sk-bh)) 32px no-repeat,
+    {{facade_halo1}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 22px)) - 2px, 2px) 12px / calc(min(clamp(0px, (100% - var(--sk-r) - 208.5px) * 1e3, 146px), clamp(0px, (var(--sk-r) + 224.5px - 100%) * 1e3, 146px)) * var(--sk-bh)) 32px no-repeat,
+    {{facade_halo2}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 38px)) - 2px, 2px) 12px / calc(min(clamp(0px, (100% - var(--sk-r) - 224.5px) * 1e3, 162px), clamp(0px, (var(--sk-r) + 240.5px - 100%) * 1e3, 162px)) * var(--sk-bh)) 32px no-repeat,
+    {{facade_halo3}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 54px)) - 2px, 2px) 12px / calc(min(clamp(0px, (100% - var(--sk-r) - 240.5px) * 1e3, 178px), clamp(0px, (var(--sk-r) + 256.5px - 100%) * 1e3, 178px)) * var(--sk-bh)) 32px no-repeat,
+    {{facade_halo4}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 70px)) - 2px, 2px) 12px / calc(min(clamp(0px, (100% - var(--sk-r) - 256.5px) * 1e3, 194px), clamp(0px, (var(--sk-r) + 272.5px - 100%) * 1e3, 194px)) * var(--sk-bh)) 32px no-repeat,
+    {{facade_halo_wide}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 86px)) - 2px, 2px) 12px / calc(clamp(0px, (100% - var(--sk-r) - 272.5px) * 1e3, 210px) * var(--sk-bh)) 32px no-repeat,
     {{facade_sushi}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -36px)) + 116px, 2px) 12px / clamp(0px, (100% - var(--sk-r) - 272.5px) * 1e3, 88px) 24px no-repeat,
     {{facade_plate0}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -116px)) + 116px, 2px) 12px / min(clamp(0px, (100% - var(--sk-r) - 208.5px) * 1e3, 8px), clamp(0px, (var(--sk-r) + 272.5px - 100%) * 1e3, 8px)) 24px no-repeat,
     {{facade_plate}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -106px)) + 122px, 2px) 12px / min(clamp(0px, (100% - var(--sk-r) - 208.5px) * 1e3, 18px), clamp(0px, (var(--sk-r) + 272.5px - 100%) * 1e3, 18px)) 24px no-repeat,

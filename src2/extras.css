@@ -1409,9 +1409,9 @@ html:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-ind
    dot plate; each carries a hishi diamond) with the right fish after the last, and the lit halo grows with them;
    from R + 273 the letters replace them; the lit sign is reflected on the tile ribs below it; from R + 429 the
    plaque. Past that the roof grows: chochin hang mid-bay every two 64 px bays once they clear the keys (the first
-   under BRANCHO's middle), and an end tile covers the cut tile at the right edge. Sky, roof and frieze are counted
-   from the sign, so they move as one piece. No post shows behind the key groups. Positions round to the 2 px grid.
-   Thresholds are box widths (the sidebar's width minus its 1 px border).
+   under BRANCHO's middle), and the roof runs out of view at the right edge like the sky and the frieze. Sky, roof
+   and frieze are counted from the sign, so they move as one piece. No post shows behind the key groups. Positions
+   round to the 2 px grid. Thresholds are box widths (the sidebar's width minus its 1 px border).
    Colours that meet the header's (fascia, hem dashes) use the noren sprite's own source colours: images and
    gradients go through the same colour conversion on screen. At the sidebar
    cap (T3 reserves 640 px), Cobranch and Brancho fill the far end once 130 px are free.
@@ -1502,7 +1502,6 @@ html:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-ind
     {{facade_plate}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -106px)) + 154px, 2px) 12px / min(clamp(0px, (100% - var(--sk-r) - 240.5px) * 1e3, 18px), clamp(0px, (var(--sk-r) + 272.5px - 100%) * 1e3, 18px)) 24px no-repeat,
     {{facade_plate}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -106px)) + 170px, 2px) 12px / min(clamp(0px, (100% - var(--sk-r) - 256.5px) * 1e3, 18px), clamp(0px, (var(--sk-r) + 272.5px - 100%) * 1e3, 18px)) 24px no-repeat,
     {{facade_tiles}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -8px)), 2px) 12px / 116px 24px no-repeat,
-    {{facade_verge}} round(up, 100%, 2px) 36px / 16px 16px no-repeat,
     {{facade_stars}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 84px)) - 94px, 2px) 0 / 208px 12px repeat-x,
     {{facade_sky}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + 132px)) - 86px, 2px) 0 / 256px 36px repeat-x,
     {{facade_roof}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -108px)) - 102px, 2px) 36px / 16px 16px repeat-x,
@@ -1543,7 +1542,7 @@ div:has(> [aria-label="T3 Code home"]) + div:has(> [data-slot="badge"]) {
 [data-side="left"] > [data-slot="sidebar-container"] {
   anchor-name: --sk-sidebar;
   /* Its 1 px right border continues the facade's bands, then the app's hairline. */
-  border-image: linear-gradient(#18243c 0 36px, #5d6872 0 52px, #8a5a2b 0 54px, #2e1d12 0 88px, #3e2718 0 94px, #6e4630 0 96px, #4a2f1e 0 98px, #2e1d12 0 100px, rgb(243 231 211 / 0.08) 0) 0 1 0 0;
+  border-image: linear-gradient(#18243c 0 36px, #5d6872 0 38px, #10202f 0 40px, #5d6872 0 50px, #10202f 0 52px, #8a5a2b 0 54px, #2e1d12 0 88px, #3e2718 0 94px, #6e4630 0 96px, #4a2f1e 0 98px, #2e1d12 0 100px, rgb(243 231 211 / 0.08) 0) 0 1 0 0;
 }
 [data-slot="sidebar-wrapper"]:has([data-slot="sidebar"][data-state="expanded"]) > div:has(> [aria-label="Toggle main sidebar"]) {
   left: calc(anchor(--sk-sidebar right, var(--sidebar-width)) + 12px);

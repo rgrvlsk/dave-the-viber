@@ -58,7 +58,7 @@ NOREN_LIT_P = {"c": "#ffc46e", "e": "#3e5a9a", "f": "#ffb060"}
 # The top of the sidebar: the restaurant across the street (Fable's 128x50 drawing after Luna's concept), cut into pieces
 # so it follows the sidebar's width: sky, roof, frieze and planks tile; the neon sign and the roof plaque stop at
 # 480 CSS px. The lit pieces (tile0-6, halo, fish, chochin) light while agents work. Palettes are their own.
-FACADE = ("sky", "stars", "plate0", "plate", "plate0_lit", "plate_lit", "halo1", "halo2", "halo3", "halo4", "verge", "roof", "frieze", "planks", "tiles", "sushi", "sushi_lit", "halo_wide", "roof_sign", "fish_l", "fish_r", "chochin", "halo",
+FACADE = ("sky", "stars", "plate0", "plate", "plate0_lit", "plate_lit", "halo1", "halo2", "halo3", "halo4", "roof", "frieze", "planks", "tiles", "sushi", "sushi_lit", "halo_wide", "roof_sign", "fish_l", "fish_r", "chochin", "halo",
           "fishl_lit", "fishr_lit", "chochin_lit") + tuple(f"tile{k}" for k in range(7))
 CRATE_P = {"k": "#2e1d12", "d": "#7a5030", "b": "#7f8ea0", "w": "#b07a4a", "s": "#cfd6dc"}
 def own(name):

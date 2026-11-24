@@ -1446,15 +1446,16 @@ html:has(.group\/sidebar-status-slot :is(.lucide-shield-question-mark, .text-ind
   84%, 100% { --sk-b0: 1; --sk-b1: 1; --sk-b2: 1; --sk-b3: 1; --sk-b4: 1; --sk-b5: 1; --sk-b6: 1; --sk-bh: 1; --sk-bc: 1; }
 }
 [data-slot="sidebar-inner"] > div:first-child {
-  --sk-w: var(--sidebar-width, 256px);
-  --sk-e: max(0px, var(--sk-w) - 480px);
-  --sk-hv: calc(clamp(0, sign(var(--sk-e) - 129px), 1) * (1 - sign(round(abs(100vw - 640px - var(--sidebar-width, 0px)), 1px))));
-  --sk-guest-scale: clamp(1.2, (var(--sk-e) - 10px) / 100px, 2);
+  /* The guests (Cobranch, Brancho) belong to the facade: they show while the edge is dragged, gated on the box width
+     B (100% in background-size) at the cap (B = 100vw - 641 px) with 200 px free past 480, and stand 64 px in from
+     the edge, clear of the Projects and New thread keys (right 8-64 px, top 60-88 px). Their scale reads 100vw: at
+     the cap it equals the free width, and it cannot follow B in background-position. */
+  --sk-guest-scale: clamp(1.2, (100vw - 1194px) / 100px, 2);
   --sk-r: 66px;
   --sk-kl: 40px;
   background:
-    {{cobranch}} right calc(8px + 28px * var(--sk-guest-scale)) top calc(100px - 48px * var(--sk-guest-scale)) / calc(71px * var(--sk-guest-scale) * var(--sk-hv)) calc(48px * var(--sk-guest-scale)) no-repeat,
-    {{brancho}} right 8px top calc(100px - 48px * var(--sk-guest-scale)) / calc(40px * var(--sk-guest-scale) * var(--sk-hv)) calc(48px * var(--sk-guest-scale)) no-repeat,
+    {{cobranch}} right calc(72px + 28px * var(--sk-guest-scale)) top calc(100px - 48px * var(--sk-guest-scale)) / min(clamp(0px, (100% - 671.5px) * 1e3, 71px * var(--sk-guest-scale)), clamp(0px, (100% - 100vw + 641.5px) * 1e3, 71px * var(--sk-guest-scale))) calc(48px * var(--sk-guest-scale)) no-repeat,
+    {{brancho}} right 72px top calc(100px - 48px * var(--sk-guest-scale)) / min(clamp(0px, (100% - 671.5px) * 1e3, 40px * var(--sk-guest-scale)), clamp(0px, (100% - 100vw + 641.5px) * 1e3, 40px * var(--sk-guest-scale))) calc(48px * var(--sk-guest-scale)) no-repeat,
     {{facade_chochin_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -76px)) + 34px, 2px) 50px / min(clamp(0px, var(--sk-bc) * 1e3px, 48px), clamp(0px, (100% - var(--sk-r) - 182.5px) * 1e3, 48px)) 36px no-repeat,
     {{facade_chochin_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -76px)) + 162px, 2px) 50px / min(clamp(0px, var(--sk-bc) * 1e3px, 48px), clamp(0px, (100% - var(--sk-r) - 310.5px) * 1e3, 48px)) 36px no-repeat,
     {{facade_chochin_lit}} round(down, max(var(--sk-r) + 6px, min(var(--sk-r) + 34px, 100% + -76px)) + 290px, 2px) 50px / min(clamp(0px, var(--sk-bc) * 1e3px, 48px), clamp(0px, (100% - var(--sk-r) - 438.5px) * 1e3, 48px)) 36px no-repeat,

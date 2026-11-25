@@ -61,6 +61,10 @@ NOREN_LIT_P = {"c": "#ffc46e", "e": "#3e5a9a", "f": "#ffb060"}
 FACADE = ("sky", "stars", "plate0", "plate", "plate0_lit", "plate_lit", "halo1", "halo2", "halo3", "halo4", "roof", "frieze", "planks", "tiles", "sushi", "sushi_lit", "halo_wide", "roof_sign", "fish_l", "fish_r", "chochin", "halo",
           "fishl_lit", "fishr_lit", "chochin_lit") + tuple(f"tile{k}" for k in range(7))
 CRATE_P = {"k": "#2e1d12", "d": "#7a5030", "b": "#7f8ea0", "w": "#b07a4a", "s": "#cfd6dc"}
+# An unsent draft is a page still on the order pad, with its pencil laid on it (30x6, 2x): eraser, ferrule, gold
+# paint, sharpened wood, graphite tip pointing right, and its shade on the paper (s), 1 px right and down.
+PENCIL_P = {"k": "#3a2414", "g": "#3a3b44", "w": "#f0cfa0", "v": "#c99a64", "Y": "#ffe08f", "y": "#f2c25c", "d": "#b9862a",
+            "m": "#dfe5ea", "n": "#a9b4bd", "o": "#5d6872", "p": "#ee8f9c", "P": "#c05a6c", "s": "#060e1a73"}
 def own(name):
     """Palette of imported art: its own colours, each a letter or digit, in colour order."""
     from PIL import Image
@@ -137,6 +141,7 @@ TOKENS = {
     "bell_off": multi(png("bell", BELL_P), BELL_OFF_P),
     "noren_lit": multi(png("noren_lit", NOREN_LIT_P), NOREN_LIT_P),
     "crate": multi(png("crate", CRATE_P), CRATE_P),
+    "pencil": multi(png("pencil", PENCIL_P), PENCIL_P),
     "harbour": multi(png("harbour", own("harbour")), own("harbour")),
     "harbour_dark": multi(png("harbour_dark", own("harbour_dark")), own("harbour_dark")),
 }

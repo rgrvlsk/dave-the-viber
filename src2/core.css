@@ -55,7 +55,8 @@ html[data-theme-id] [data-app-sidebar] {
   border-color: color-mix(in srgb, var(--contrast-sidebar-foreground) 8%, transparent);
 }
 
-/* Paper and ink, shared by tickets, slips, the order slip and the order pad. */
+/* Paper and ink, shared by tickets, slips, the order slip and the order pad (local: also its unsent pages). */
+/*bg*/[data-testid="sidebar-draft-row"],/*/bg*/
 [data-thread-item] > [data-testid$=row-card],
 [data-thread-item] > [data-testid$=w-slim]/*full*/,
 [data-user-message-bubble],
@@ -108,7 +109,9 @@ html[data-theme-id] [data-app-sidebar] {
 /* A twine runs down the left of the wall; each ticket is pegged to it at its top-left corner. The row paints its
    twine (--sk-tw) and grows 4 px into the gap and the next row's top (margin -4px keeps the layout), so the twine
    bridges the 1 px gap and its shade falls 3 px lower, like the box-shadow it replaced. The rows' ::before stays
-   free for the attention bubble (extras.css). */
+   free for the attention bubble (extras.css). Local: the order pad's pages hang over the rail beside the twine, so
+   their rows paint it too and the twine runs from the top of the list. */
+/*bg*/li:has(> [data-testid="sidebar-draft-row"]),/*/bg*/
 [data-thread-item]:has(> [data-testid$=row-card]) {
   position: relative;
   padding: 4px 4px 9px 20px;
@@ -267,7 +270,9 @@ ul:has(> [data-thread-item].z-20) {
 }
 /* The project's mark soaks into the paper as a big, faint, pixelated stain: each order gets its
    own tint without a second icon on the line. The mark is the line's first child, except when the
-   app puts the unsent-draft marker (the only leading role="img") in front of it. */
+   app puts the unsent-draft marker (the only leading role="img") in front of it. Local: a page on the order pad
+   wears its project's stain too; its mark follows the app's pencil, which the pad hides. */
+/*bg*/[data-testid="sidebar-draft-row"] > div > div:first-child > :nth-child(2):not(.flex-1),/*/bg*/
 [data-thread-item] > [data-testid$=row-card] > div > div:nth-child(1) > :is(:first-child:not([role="img"]), [role="img"]:first-child + *) {
   position: absolute !important;
   right: 18px;
@@ -281,6 +286,7 @@ ul:has(> [data-thread-item].z-20) {
   pointer-events: none;
 }
 /*full*/
+/*bg*/[data-testid="sidebar-draft-row"] > div > div:first-child > :nth-child(2):not(.flex-1) *,/*/bg*/
 [data-thread-item] > [data-testid$=row-card] > div > div:nth-child(1) > :is(:first-child:not([role="img"]), [role="img"]:first-child + *) * {
   image-rendering: pixelated;
 }
@@ -289,6 +295,7 @@ ul:has(> [data-thread-item].z-20) {
 [data-thread-item] > [data-testid$=row-card] > div > div:nth-child(1) {
   margin-top: 0.3rem;
 }
+/*bg*/[data-testid="sidebar-draft-row"] > div > div:first-child > .flex-1,/*/bg*/
 [data-thread-item] > [data-testid$=row-card] > div > div:nth-child(1) > .flex-1 {
   font-family: var(--font-mono);
   font-size: 0.65rem;
@@ -443,6 +450,7 @@ ul:has(> [data-thread-item].z-20) {
    for them, so the branch truncates and the PR and model marks move left. After 300 ms under the pointer
    the keys appear at once and push those marks left; they go at once on leave (no slide: Roger, 2026-11-17).
    Keyboard focus and an open menu show them without the delay. */
+/*bg*/[data-testid="sidebar-draft-row"] .ml-auto:not(:has(> [data-jump-hint])),/*/bg*/
 [data-thread-item] > [data-testid$=row-card] .group\/sidebar-status-slot > span:nth-child(n+2) {
   position: absolute !important;
   inset: 100% -0.3125rem auto auto !important;
@@ -455,6 +463,7 @@ ul:has(> [data-thread-item].z-20) {
 }
 /* Each is a pixel key in the peg colours: a 1-px outline with clipped corners, a lit top, a shaded
    bottom and an ink sprite. Pressed, the light moves to the bottom. 22 px + 2 px gap = 1.5rem a key. */
+/*bg*/[data-testid="sidebar-draft-row"] .ml-auto > button,/*/bg*/
 [data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2) > button {
   --sk-c: #c9d1d8;
   --sk-k: #3a4652;
@@ -471,12 +480,15 @@ ul:has(> [data-thread-item].z-20) {
   box-shadow: inset 0 0 0 1px var(--sk-k), inset 0 -3px #0003, inset 0 2px #fff6;
   clip-path: var(--sk-cut);
 }
+/*bg*/[data-testid="sidebar-draft-row"] .ml-auto > button:hover,/*/bg*/
 [data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2) > button:hover {
   background: color-mix(in srgb, var(--sk-c) 80%, #fff) !important;
 }
+/*bg*/[data-testid="sidebar-draft-row"] .ml-auto > button:active,/*/bg*/
 [data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2) > button:active {
   box-shadow: inset 0 0 0 1px var(--sk-k), inset 0 2px #0003;
 }
+/*bg*/[data-testid="sidebar-draft-row"] .ml-auto > button:focus-visible,/*/bg*/
 [data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2) > button:focus-visible {
   outline: 2px solid var(--sk-ink);
   outline-offset: -3px;
@@ -485,9 +497,11 @@ ul:has(> [data-thread-item].z-20) {
   width: 0.875rem !important;
   height: 0.875rem !important;
 }
+/*bg*/[data-testid="sidebar-draft-row"] .ml-auto > button svg,/*/bg*/
 [data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2) > button:is([aria-label^="Settle"], [aria-label^="Snooze"], [aria-label^="Discard"]) svg {
   display: none;
 }
+/*bg*/[data-testid="sidebar-draft-row"] .ml-auto > button::before,/*/bg*/
 [data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2) > button:is([aria-label^="Settle"], [aria-label^="Snooze"], [aria-label^="Discard"])::before {
   content: "";
   width: 12px;
@@ -506,6 +520,7 @@ ul:has(> [data-thread-item].z-20) {
   --sk-k: #3a2a0a;
   --sk-y: 146px;
 }
+/*bg*/[data-testid="sidebar-draft-row"] .ml-auto > button,/*/bg*/
 [data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2) > button[aria-label^="Discard"] {
   --sk-c: #e86f55;
   --sk-k: #3a1410;
@@ -521,6 +536,7 @@ ul:has(> [data-thread-item].z-20) {
   --sk-actions: 4.5rem;
 }
 @media (any-hover: hover) {
+  /*bg*/[data-testid="sidebar-draft-row"]:hover .ml-auto:not(:has(> [data-jump-hint])),/*/bg*/
   [data-thread-item]:hover > [data-testid$=row-card] .group\/sidebar-status-slot:not(:has(> [data-jump-hint])) > span:nth-child(n+2) {
     opacity: 1 !important;
     visibility: visible;
@@ -532,6 +548,7 @@ ul:has(> [data-thread-item].z-20) {
     transition: padding-inline-end 0s 300ms;
   }
 }
+/*bg*/[data-testid="sidebar-draft-row"]:is(:focus-visible, :has(:focus-visible)) .ml-auto,/*/bg*/
 [data-thread-item] > [data-testid$=row-card]:is(:focus-visible, :has(:focus-visible)) .group\/sidebar-status-slot:not(:has(> [data-jump-hint])) > span:nth-child(n+2),
 [data-thread-item] .group\/sidebar-status-slot > span:nth-child(n+2):has([data-popup-open], [aria-expanded="true"]) {
   opacity: 1 !important;

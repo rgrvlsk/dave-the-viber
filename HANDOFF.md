@@ -811,8 +811,9 @@ Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code proj
   (-418/-159, cascade risk), one merged `border-radius:0!important` rule (+753), `[class*=status-slot]` and
   `[class*=p\/sidebar-s]` (match other `group/...` classes), suffix matches on generic names (`r-host`,
   `r-footer`, `r-inner`, `r-inset`, `w-card`, `^=conv`).
-- The Mac mini dev server is still running; stop it (`kill $(cat /tmp/t3code-theme-dev.pid)`) and remove the
-  worktree (`git -C /Users/roger/t3code worktree remove /tmp/t3code-theme-demo`) when no longer needed — ask Roger.
+- Mac mini dev demo removed 2026-11-25 (Roger approved): its `vp run dev` processes stopped (by pid; the Mac mini's own
+  T3 Code Nightly kept running), `/tmp/t3code-theme-demo` deleted and pruned from `~/t3code`. `/tmp/t3code-dev` (dev
+  home) kept. To use it again, recreate the worktree and server as in "How to test" step 5.
 - History: `LEDGER.md` (hillclimb ledger), `council2/BRIEF-R*.md` (council briefs), `v1/` (first theme sources).
 
 
@@ -878,3 +879,30 @@ keeps the navy order board. Local 79,242 chars. Installed on this MacBook at Rog
 - Checks (built-in browser, 1280x800, all six sections on): check.js 0 invalid; pixcheck text ≥ 5.00:1, icons ≥ 4.78:1
   with the curvature shade (disabled rows 2.8:1, exempt); light vs dark 0 differing pixels outside the live context number and the overlay
   scrollbar, hover plate equal within 1/255; popover mode at 900x700 seen. Desktop app not checked.
+
+## Unsent drafts: pages on the order pad (2026-11-25)
+Local edition only (`/*bg*/`: block "Local edition: unsent drafts" in `extras.css`, plus `/*bg*/` selector spans in
+`core.css`); full has no room (49,996 / 50,000) and lite/full stay byte-identical. Local 83,003 chars.
+- App DOM (new): unsent new-thread drafts list above the rail as `li > [data-testid="sidebar-draft-row"]`
+  (`data-sidebar-row="draft:<id>"`, `aria-current="page"` on its route) > `div.relative.z-10` > line 1 [lucide
+  square-pen, project mark (img or `[data-slot=project-monogram]`), name `.flex-1`, `.ml-auto` > Discard button +
+  jump hint], line 2 [prompt]; then one `li[data-testid="sidebar-draft-divider"]`. No `data-thread-item`.
+- Look: a page still on the composer's order pad, hung on a nail: red cloth binding, perforation, blue ruled lines,
+  the prompt handwritten in pencil on line 1 (Noteworthy Bold, a macOS system font; Bradley Hand, then the rounded
+  face), the project on line 2 in the tickets' table type, the pencil (`pencil.png`, 30x6, 2x) on line 3, 5 px past
+  the left edge. Sent, the page becomes a printed ticket on the rail. The pages' rows paint the twine like ticket rows
+  and the app's divider is hidden, so the twine runs from the top of the list (Roger, 2026-11-25); pages get no peg.
+- The stain is placed from line 2 (it holds the Discard key's containing block): `top: 2px` centres it on the paper
+  under the binding (centre 43 of 78 px; Roger asked for it centred).
+- Consistency with tickets (Roger, 2026-11-25: an icon in front of the project was inconsistent): the project mark is
+  the tickets' stain, Discard is the tickets' red key at the end of line 3 with the same 300 ms delay, the page you
+  are on gets the akane frame, keyboard focus the dashed ink outline. These reuse the ticket rules through `/*bg*/`
+  selector spans (paper/ink tokens, table type, stain x3, key container, key, hover, active, focus, sprite, colours).
+- Checks (built-in browser, 1280x800): check.js 0 invalid; pixcheck pencil text 8.63:1, project 6.88:1, Discard
+  icon 5.56:1; light vs dark 0 differing pixels in the pad; rest, hover, active, focus, jump hint (⌘1 on line 2, like
+  the tickets'), sidebar at 13rem and 24rem seen; monogram and two pages seen on a DOM clone (the preview's New thread
+  button opens the command palette). Computed-style A/B/A of 09ab6b5 vs this build (1,821 elements, drift 0): outside
+  the draft rows only layout follows (list 9 px shorter, bubble anchors, one minified anchor name); scan.js flags the
+  same 19 texts before and after, none on the pad. Rows have no slim variant (app source). Desktop app: theme seen
+  loaded; no draft was open, so the pad itself was not seen there. App source (Mac mini `~/t3code`,
+  `SidebarDraftBlock.tsx`) puts a `span.sr-only` first in the row; the `> div` selectors hold with and without it.

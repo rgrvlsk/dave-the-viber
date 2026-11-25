@@ -23,6 +23,7 @@
 
 
 /* The ticket's stain is softened with a light blur. */
+/*bg*/[data-testid="sidebar-draft-row"] > div > div:first-child > :nth-child(2):not(.flex-1),/*/bg*/
 [data-thread-item] > [data-testid$=row-card] > div > div:nth-child(1) > :is(:first-child:not([role="img"]), [role="img"]:first-child + *) {
   filter: blur(0.75px) saturate(1.6);
   opacity: 0.2;
@@ -1858,6 +1859,91 @@ div:has(> [aria-label="T3 Code home"]) + div:has(> [data-slot="badge"]) {
   background: none;
   border: 0;
   box-shadow: none;
+}
+
+/* ---------- Local edition: unsent drafts ---------- */
+/* An unsent draft is a page still on the order pad (the composer), hung on a nail over the rail: a red cloth binding,
+   the perforation it will tear along, blue ruled lines, the order written by hand in pencil, and the pencil laid on
+   the page. Sent, the page is torn off and the kitchen prints it as a ticket on the rail. The app's lines are project
+   then prompt; the prompt goes first, like the dish on a ticket, and the app's pencil mark goes (the pencil is on the
+   page). Noteworthy is a macOS system font; Bradley Hand next, then the rounded face. Graphite #474853 is 8.4:1 on
+   the paper. Paper and ink tokens: core.css. */
+[data-testid="sidebar-draft-row"] {
+  overflow: visible;
+  border-radius: 0;
+  color: var(--contrast-foreground);
+  background:
+    radial-gradient(circle at 4px 10px, #0e1620 0 1.2px, transparent 1.7px) 0 0 / 8px 12px repeat-x,
+    linear-gradient(#a33a2a 0 1px, #7e2a1f 0 7px, #5a1d15 0 8px) 0 0 / 100% 8px no-repeat,
+    linear-gradient(#8fb0cf66 0 0) 0 35px / 100% 1px no-repeat,
+    linear-gradient(#8fb0cf66 0 0) 0 57px / 100% 1px no-repeat,
+    var(--sk-paper);
+  /* Under the page: the next sheet, the last one and the pad's board, then the shade on the wall. */
+  --sk-pad: 0 2px #f1e2b4, 0 3px #c7b085, 0 5px #8a7458, 3px 8px var(--sk-shade);
+  box-shadow: inset 0 0 0 1px var(--sk-edge), var(--sk-pad);
+}
+[data-testid="sidebar-draft-row"]:hover {
+  --sk-paper: var(--sk-paper-hover);
+}
+/* The nail it hangs on, over the binding and over the frame below. */
+[data-testid="sidebar-draft-row"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(50% - 3px);
+  z-index: 11;
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(#eef3f6 0 0) 1px 1px / 2px 2px no-repeat, linear-gradient(#a9b4bd 0 0) 1px 1px / 4px 4px no-repeat, #0e1620;
+  pointer-events: none;
+}
+/* The page you are writing: framed in akane, like the order you are on. */
+[data-testid="sidebar-draft-row"][aria-current]:not([aria-current="false"]) {
+  box-shadow: inset 0 0 0 2px var(--sk-pass), inset 0 0 0 4px var(--sk-paper), inset 0 0 0 5px color-mix(in srgb, var(--sk-pass) 45%, transparent), var(--sk-pad);
+}
+[data-testid="sidebar-draft-row"]:focus-visible {
+  outline: 2px dashed var(--contrast-foreground);
+  outline-offset: -4px;
+}
+[data-testid="sidebar-draft-row"] > div {
+  display: flex;
+  flex-direction: column;
+  padding-top: 11px;
+}
+[data-testid="sidebar-draft-row"] > div > div:nth-child(2) {
+  order: -1;
+  height: 1.375rem;
+  margin: 0;
+  color: color-mix(in oklab, #474853, #000 var(--sk-up));
+  font: 700 0.95rem / 1.375rem "Noteworthy", "Bradley Hand", var(--sk-round);
+}
+[data-testid="sidebar-draft-row"] svg.lucide-square-pen {
+  display: none;
+}
+/* Discard is the tickets' red key at the end of line 3 (core.css), placed from line 2, which holds it. */
+[data-testid="sidebar-draft-row"] > div > div:first-child {
+  position: relative;
+}
+/* So the stain is placed from line 2 too: 2 px centres it there, the middle of the paper under the binding. */
+[data-testid="sidebar-draft-row"] > div > div:first-child > :nth-child(2):not(.flex-1) {
+  top: 2px;
+}
+/* The pencil lies on the page's empty third line, tip in, and runs 5 px past its left edge, clear of the twine: the
+   right end is the Discard key's. */
+[data-testid="sidebar-draft-row"]::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  bottom: 7px;
+  z-index: 11;
+  width: 60px;
+  height: 12px;
+  background: {{pencil}} 0 0 / 100% 100%;
+  pointer-events: none;
+}
+/* The pages and the tickets share the twine; the app's rule between them goes. */
+[data-testid="sidebar-draft-divider"] {
+  display: none;
 }
 /*/bg*/
 

@@ -7,6 +7,15 @@ Fallbacks kept untouched: `pixel-sushi` (v1) and Roger's `status-edge` ("Minimal
 Folder: `/Users/roger/.t3/projects/dave-the-viber/` (call it `$D`). T3 Code project "Dave the Viber" (id `mcp:58b738ca-6192-4af5-a039-e107ef713625`) with scripts "Build + validate" and "Static server :8765". The old scratch path and `~/.t3/projects/pixel-sushi-rail` are symlinks to this folder.
 
 ## State
+- Thread details popover ink (2026-11-27, Roger's screenshot + "color"). In a narrow window the Thread details card
+  opens inside a `popover-popup` (`data-workspace-area=details`). The menu-card rule re-inked its tokens to brown
+  ink, so the navy card (grey under the desktop glass) showed dark text and pale icons. That popup is now excluded
+  (`[data-slot=popover-popup]:not([data-workspace-area])`); other popovers (checks) keep the cream card. Paid by
+  dropping `dialog-popup`/`alert-dialog-popup` from the `border-radius: 0` `:is()`, already matched by
+  `[data-slot$=popup]`. Full 49,967 (33 free), lite 14,690 unchanged; validator ok; check.js 130 rules, 0 invalid.
+  Live (browser, 1000 px): card #283246, title 0.93 L ink in light and dark. Published locally: file copied (equal to the build); after a reload the
+  server serves the new rule. `t3_theme_set` was denied for that thread (not full access). Not on the galleries.
+  Left: the PR icons are emerald-600 in light and emerald-300 in dark (app `dark:` utility; ≥3:1 both; no room).
 - LOCAL EDITION, BRANCHO SUSHI (2026-11-23, PUBLISHED on this Mac with the kitchen below; Mac mini not updated).
   Roger named the restaurant (Fable's proposals: Vibancho, Brancho, Tokencho, Basho, Agentcho) and asked for the sign in
   place of the app's logo, with a small f.k.a. T3 Code, and for the night view to leave the sidebar top (the landscape

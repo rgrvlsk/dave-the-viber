@@ -660,8 +660,10 @@ svg.lucide[class*="loader"] {
 
 /* ---------- Controls: the house menu card ---------- */
 /* Menus, pickers and lists are printed menu cards: cream card stock in a copper frame with a dark
-   outline and a hard pixel shadow. The card re-inks the app's tokens, so every child follows. */
-[data-slot="popover-popup"],
+   outline and a hard pixel shadow. The card re-inks the app's tokens, so every child follows.
+   A popover that hosts a workspace panel (Thread details in a narrow window) stays the navy board:
+   the menu ink on the navy card was unreadable. */
+[data-slot="popover-popup"]:not([data-workspace-area]),
 [data-slot="menu-popup"],
 [data-slot="combobox-popup"],
 [data-slot="select-popup"],
@@ -704,7 +706,7 @@ svg.lucide[class*="loader"] {
   backdrop-filter: none;
   box-shadow: inset 0 0 0 3px #a86030, inset 0 0 0 4px #f0cc90, 0 0 0 2px #2a1810, 8px 8px 0 2px rgb(0 0 0 / 0.5);
 }
-:is([data-slot="dialog-popup"], [data-slot="alert-dialog-popup"], [data-slot$="popup"], [data-slot$="popup"] *, [data-slot="button"], [data-slot="toggle"], [data-slot="input"], [data-slot="select-trigger"]) {
+:is([data-slot$="popup"], [data-slot$="popup"] *, [data-slot="button"], [data-slot="toggle"], [data-slot="input"], [data-slot="select-trigger"]) {
   border-radius: 0;
 }
 :is([data-slot="popover-popup"], [data-slot="menu-popup"], [data-slot="combobox-popup"], [data-slot="select-popup"], [data-slot="command-dialog-popup"]) :is(svg[class*="dark:fill-white"], [class*="dark:text-white"]) {

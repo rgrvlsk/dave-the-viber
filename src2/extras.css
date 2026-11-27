@@ -1738,6 +1738,17 @@ div:has(> [aria-label="T3 Code home"]) + div:has(> [data-slot="badge"]) {
   --error-foreground: var(--sk-bill-red);
   --destructive-foreground: var(--sk-bill-red);
   --diff-deletion-foreground: var(--sk-bill-red);
+  /* PR state and check marks use the app's fixed palette (open/success emerald, closed/failed red, merged violet,
+     pending amber), 600 in light and 300 at 90% in dark: the 300s were 1.2:1 on the paper (Roger, 2026-11-27).
+     Both print in the bill's inks, so the marks read the same in both modes (>= 4.2:1 at 90%). */
+  --color-emerald-600: #17552d;
+  --color-emerald-300: #17552d;
+  --color-red-600: var(--sk-bill-red);
+  --color-red-300: var(--sk-bill-red);
+  --color-violet-600: #4f2a80;
+  --color-violet-300: #4f2a80;
+  --color-amber-600: #6a4000;
+  --color-amber-300: #6a4000;
   padding: 7px 7px 9px;
   background: #1d1517;
   color: var(--sk-bill-ink);
